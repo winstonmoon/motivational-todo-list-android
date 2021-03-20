@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Motivatinal Todo List</string>
+    <string name="app_name">Motivational Todo List</string>
+    <string name="title_daily">Daily</string>
+    <string name="title_monthly">Monthly</string>
+    <string name="title_weekly">Weekly</string>
+    <string name="title_add">Add</string>
+
+    <!-- Preferences -->
+    <string name="header_options">Options</string>
+    <string name="title_notify_tasks">Notify Tasks</string>
+    <string name="title_dark_mode">Dark Mode</string>
+
+    <!-- Dialog -->
+    <string name="button_add">Add</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="label_goal_task">Set As Goal Task?</string>
+    <string name="label_time">Time</string>
+    <string name="hint_input_task">Input Your New Task</string>
+    <string name="hint_input_time">00:00</string>
+
 </resources>

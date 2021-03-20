@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/floor_input_task"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/borderline_round"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/floor_input_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/input_task"
+                android:inputType="text"
+                android:hint="@string/hint_input_task"
+                android:fontFamily="sans-serif"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="4dp"
+                app:layout_constraintTop_toTopOf="@id/floor_input_task"
+                app:layout_constraintBottom_toBottomOf="@id/floor_input_task"
+                app:layout_constraintRight_toRightOf="@id/floor_input_task" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/floor_input_time"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/borderline_round"
+            app:layout_constraintTop_toBottomOf="@id/floor_input_task"
+            app:layout_constraintBottom_toTopOf="@id/floor_switch_goal_task"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/label_time"
+                android:text="@string/label_time"
+                android:autoSizeTextType="uniform"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                app:layout_constraintTop_toBottomOf="@id/floor_input_time"
+                app:layout_constraintBottom_toTopOf="@id/floor_input_time"
+                app:layout_constraintLeft_toLeftOf="@id/floor_input_time" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/input_time"
+                android:inputType="time"
+                android:hint="@string/hint_input_time"
+                android:fontFamily="sans-serif"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="4dp"
+                app:layout_constraintTop_toTopOf="@id/floor_input_time"
+                app:layout_constraintBottom_toBottomOf="@id/floor_input_time"
+                app:layout_constraintRight_toRightOf="@id/floor_input_time" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/floor_switch_goal_task"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/borderline_round"
+            app:layout_constraintTop_toBottomOf="@id/floor_input_time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/label_goal_task"
+                android:text="@string/label_goal_task"
+                android:autoSizeTextType="uniform"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                app:layout_constraintTop_toTopOf="@id/floor_switch_goal_task"
+                app:layout_constraintBottom_toBottomOf="@id/floor_switch_goal_task"
+                app:layout_constraintLeft_toLeftOf="@id/floor_switch_goal_task" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_goal_task"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginRight="4dp"
+                app:layout_constraintTop_toTopOf="@id/floor_switch_goal_task"
+                app:layout_constraintBottom_toBottomOf="@id/floor_switch_goal_task"
+                app:layout_constraintRight_toRightOf="@id/floor_switch_goal_task"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

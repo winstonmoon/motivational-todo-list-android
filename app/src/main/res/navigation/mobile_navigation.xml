@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_daily">
+
+    <fragment
+        android:id="@+id/navigation_daily"
+        android:name="com.moonwinston.motivationaltodolist.ui.daily.DailyFragment"
+        android:label="@string/title_daily"
+        tools:layout="@layout/fragment_daily" />
+
+    <fragment
+        android:id="@+id/navigation_monthly"
+        android:name="com.moonwinston.motivationaltodolist.ui.monthly.MonthlyFragment"
+        android:label="@string/title_monthly"
+        tools:layout="@layout/fragment_monthly" />
+
+    <fragment
+        android:id="@+id/navigation_weekly"
+        android:name="com.moonwinston.motivationaltodolist.ui.weekly.WeeklyFragment"
+        android:label="@string/title_weekly"
+        tools:layout="@layout/fragment_weekly" />
+
+    <dialog
+        android:id="@+id/navigation_add"
+        android:name="com.moonwinston.motivationaltodolist.ui.add.AddDialogFragment"
+        android:label="@string/title_add"
+        tools:layout="@layout/dialog_add" />
+
+</navigation>

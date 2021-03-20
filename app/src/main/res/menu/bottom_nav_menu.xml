@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_daily"
+        android:icon="@mipmap/ic_daily"
+        android:title="@string/title_daily" />
+
+    <item
+        android:id="@+id/navigation_weekly"
+        android:icon="@mipmap/ic_weekly"
+        android:title="@string/title_weekly" />
+
+    <item
+        android:id="@+id/navigation_monthly"
+        android:icon="@mipmap/ic_monthly"
+        android:title="@string/title_monthly" />
+
+    <item
+        android:id="@+id/navigation_add"
+        android:icon="@mipmap/ic_add"
+        android:title="@string/title_add" />
+</menu>
