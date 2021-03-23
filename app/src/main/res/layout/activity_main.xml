@@ -26,7 +26,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_date"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:autoSizeTextType="uniform"
                 android:text="TextView"
@@ -42,6 +42,7 @@
                 android:layout_height="24dp"
                 android:layout_marginRight="10dp"
                 android:scaleType="fitXY"
+                android:background="@null"
                 app:layout_constraintLeft_toRightOf="@id/text_date"
                 app:layout_constraintRight_toRightOf="@+id/toolbar"
                 app:layout_constraintTop_toTopOf="@+id/toolbar"
