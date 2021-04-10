@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_monthly" />
 
     <fragment
+        android:id="@+id/navigation_reward"
+        android:name="com.moonwinston.motivationaltodolist.ui.reward.RewardFragment"
+        android:label="@string/title_reward"
+        tools:layout="@layout/fragment_reward" />
+
+    <fragment
         android:id="@+id/navigation_weekly"
         android:name="com.moonwinston.motivationaltodolist.ui.weekly.WeeklyFragment"
         android:label="@string/title_weekly"
