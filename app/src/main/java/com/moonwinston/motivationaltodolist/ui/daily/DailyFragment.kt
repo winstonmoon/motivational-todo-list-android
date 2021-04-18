@@ -8,10 +8,14 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 
 class DailyFragment : Fragment() {
 
+    private lateinit var binding: FragmentDailyBinding
     private lateinit var dailyViewModel: DailyViewModel
 
     override fun onCreateView(
@@ -21,11 +25,16 @@ class DailyFragment : Fragment() {
     ): View? {
         dailyViewModel =
                 ViewModelProvider(this).get(DailyViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_daily, container, false)
-        val textView: TextView = root.findViewById(R.id.text_daily)
-        dailyViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        binding = FragmentDailyBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerview_daily_todo)
+        val layoutManager = LinearLayoutManager(view.context)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = DailyTaskAdapter(dailyViewModel.tasks)
     }
 }
