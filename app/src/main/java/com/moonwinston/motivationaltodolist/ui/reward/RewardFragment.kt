@@ -8,11 +8,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.R
-import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
+import com.moonwinston.motivationaltodolist.databinding.FragmentRewardBinding
 
 class RewardFragment : Fragment() {
 
+    private lateinit var binding: FragmentRewardBinding
     private lateinit var rewardViewModel: RewardViewModel
 
     override fun onCreateView(
@@ -22,11 +26,15 @@ class RewardFragment : Fragment() {
     ): View? {
         rewardViewModel =
             ViewModelProvider(this).get(RewardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_reward, container, false)
-        val textView: TextView = root.findViewById(R.id.text_reward)
-        rewardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        binding = FragmentRewardBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerView: RecyclerView = view.findViewById(R.id.reward_view)
+        val layoutManager = GridLayoutManager(view.context, 2)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = RewardAdapter(rewardViewModel.tasks)
     }
 }
