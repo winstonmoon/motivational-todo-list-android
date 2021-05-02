@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.ui.reward
+package com.moonwinston.motivationaltodolist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.adapters.RewardAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardBinding
+import com.moonwinston.motivationaltodolist.viewmodels.RewardViewModel
 
 class RewardFragment : Fragment() {
 

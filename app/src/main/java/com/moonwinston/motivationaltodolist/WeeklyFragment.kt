@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.ui.weekly
+package com.moonwinston.motivationaltodolist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.adapters.WeeklyCalendarAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
+import com.moonwinston.motivationaltodolist.adapters.WeeklyTaskAdapter
+import com.moonwinston.motivationaltodolist.viewmodels.WeeklyViewModel
 
 class WeeklyFragment : Fragment() {
 

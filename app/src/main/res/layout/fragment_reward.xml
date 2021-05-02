@@ -8,7 +8,7 @@
 
         <variable
             name="fragment"
-            type="com.moonwinston.motivationaltodolist.ui.reward.RewardFragment" />
+            type="com.moonwinston.motivationaltodolist.RewardFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
