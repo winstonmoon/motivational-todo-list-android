@@ -1,12 +1,10 @@
-package com.moonwinston.motivationaltodolist.ui.reward
+package com.moonwinston.motivationaltodolist.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.data.Task
-import com.moonwinston.motivationaltodolist.databinding.ItemDailyTasksBinding
 import com.moonwinston.motivationaltodolist.databinding.ItemRewardBinding
-import com.moonwinston.motivationaltodolist.ui.daily.DailyTaskAdapter
 
 class RewardAdapter(private val tasks: List<Task> = arrayListOf()) :
         RecyclerView.Adapter<RewardAdapter.TaskHolder>() {

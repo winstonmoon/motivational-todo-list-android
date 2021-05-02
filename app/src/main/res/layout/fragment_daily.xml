@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="fragment" type="com.moonwinston.motivationaltodolist.ui.daily.DailyFragment"/>
+        <variable name="fragment" type="com.moonwinston.motivationaltodolist.DailyFragment"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_fragment_daily"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.moonwinston.motivationaltodolist.ui.daily.DailyFragment">
+        tools:context="com.moonwinston.motivationaltodolist.DailyFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_goal"

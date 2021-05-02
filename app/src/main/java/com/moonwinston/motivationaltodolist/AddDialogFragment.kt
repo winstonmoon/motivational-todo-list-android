@@ -1,11 +1,10 @@
-package com.moonwinston.motivationaltodolist.ui.add
+package com.moonwinston.motivationaltodolist
 
 import android.app.AlertDialog
 import android.os.Bundle
 import android.app.Dialog
 import android.content.DialogInterface
 import androidx.fragment.app.DialogFragment
-import com.moonwinston.motivationaltodolist.R
 
 class AddDialogFragment : DialogFragment() {
 
