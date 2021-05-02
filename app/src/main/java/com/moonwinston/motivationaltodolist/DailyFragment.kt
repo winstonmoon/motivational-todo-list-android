@@ -31,10 +31,9 @@ class DailyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerview_daily_todo)
         val layoutManager = LinearLayoutManager(view.context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = DailyTaskAdapter(dailyViewModel.tasks)
+        binding.recyclerviewDailyTodo.layoutManager = layoutManager
+        binding.recyclerviewDailyTodo.adapter = DailyTaskAdapter(dailyViewModel.tasks)
     }
 }

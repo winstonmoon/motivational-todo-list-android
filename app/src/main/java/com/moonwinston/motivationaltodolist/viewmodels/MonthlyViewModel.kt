@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.ui.monthly
+package com.moonwinston.motivationaltodolist.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
