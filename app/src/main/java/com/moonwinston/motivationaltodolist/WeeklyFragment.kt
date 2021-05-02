@@ -32,14 +32,12 @@ class WeeklyFragment : Fragment() {
 
         val calendarLayoutManager = LinearLayoutManager(view.context)
         calendarLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        val weeklyCalendarRecyclerView: RecyclerView = view.findViewById(R.id.recyclerview_weekly_calendar)
-        weeklyCalendarRecyclerView.layoutManager = calendarLayoutManager
-        weeklyCalendarRecyclerView.adapter = WeeklyCalendarAdapter(weeklyViewModel.tasks)
+        binding.recyclerviewWeeklyCalendar.layoutManager = calendarLayoutManager
+        binding.recyclerviewWeeklyCalendar.adapter = WeeklyCalendarAdapter(weeklyViewModel.tasks)
 
         val taskLayoutManager = LinearLayoutManager(view.context)
         taskLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        val weeklyTodoRecyclerView: RecyclerView = view.findViewById(R.id.recyclerview_weekly_todo)
-        weeklyTodoRecyclerView.layoutManager = taskLayoutManager
-        weeklyTodoRecyclerView.adapter = WeeklyTaskAdapter(weeklyViewModel.tasks)
+        binding.recyclerviewWeeklyTodo.layoutManager = taskLayoutManager
+        binding.recyclerviewWeeklyTodo.adapter = WeeklyTaskAdapter(weeklyViewModel.tasks)
     }
 }
