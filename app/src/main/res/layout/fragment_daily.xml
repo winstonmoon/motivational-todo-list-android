@@ -73,7 +73,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
                     android:id="@+id/pie_chart_goal"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
