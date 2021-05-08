@@ -16,6 +16,8 @@ class AchievementPieChartView@JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
     private var percentage: Float = 0.0F
+    private var borderStrokeWidth: Float = 40F
+    private var progressiveStrokeWidth: Float = 20F
 
     override fun onDraw(canvas: Canvas?) {
         val centerX = measuredWidth / 2
@@ -30,28 +32,30 @@ class AchievementPieChartView@JvmOverloads constructor(
         val paint = Paint()
         paint.style = Paint.Style.STROKE;
 
-        drawPieChart(canvas, rectF, paint)
-        drawProgressivePieChart(canvas, rectF, paint)
+        drawPieChart(canvas, borderStrokeWidth, rectF, paint)
+        drawProgressivePieChart(canvas, progressiveStrokeWidth, rectF, paint)
     }
 
-    private fun drawPieChart(canvas: Canvas?, rectF: RectF, paint: Paint) {
+    private fun drawPieChart(canvas: Canvas?, borderStrokeWidth: Float, rectF: RectF, paint: Paint) {
         paint.apply {
-            strokeWidth = 40F;
+            strokeWidth = borderStrokeWidth;
             color = Color.parseColor("#8E8C8C")
         }
         canvas?.drawArc(rectF, 270F, 360F, false, paint)
     }
 
-    private fun drawProgressivePieChart(canvas: Canvas?, rectF: RectF, paint: Paint) {
+    private fun drawProgressivePieChart(canvas: Canvas?, progressiveStrokeWidth: Float, rectF: RectF, paint: Paint) {
         paint.apply {
-            strokeWidth = 20F;
+            strokeWidth = progressiveStrokeWidth;
             color = Color.parseColor("#2E2D2D")
         }
         canvas?.drawArc(rectF, 270F, percentage * 360F, false, paint)
     }
 
-    fun setPercent(percent: Float) {
+    fun setPercentAndBoardWidthAndProgressiveWidth(percent: Float, borderWidth: Float, progressiveWidth: Float) {
         percentage = percent
+        borderStrokeWidth = borderWidth
+        progressiveStrokeWidth = progressiveWidth
         invalidate()
         requestLayout()
     }

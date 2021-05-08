@@ -10,9 +10,6 @@
         android:id="@+id/container_dialog_add"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--
-        android:paddingTop="?attr/actionBarSize">
-        -->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"

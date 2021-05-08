@@ -25,7 +25,9 @@ class DailyFragment : Fragment() {
                 ViewModelProvider(this).get(DailyViewModel::class.java)
         binding = FragmentDailyBinding.inflate(inflater, container, false)
         //TODO get percentage from viewmodel and set
-        binding.pieChartGoal.setPercent(0.5F)
+        binding.pieChartGoal.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
+        //TODO edit make percentage
+        binding.textGoalPercent.text = "50%"
         return binding.root
     }
 

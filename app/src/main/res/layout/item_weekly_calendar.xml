@@ -1,42 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="task"
             type="com.moonwinston.motivationaltodolist.data.Task" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_margin="5dp">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_weekly_calendar"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_mon"
+            android:text= "M"
             android:autoSizeTextType="uniform"
-            android:gravity="center"
-            android:text="test"
-            app:layout_constraintBottom_toTopOf="@id/pie_chart_weekly_calendar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/pie_chart_weekly_calendar"
+            android:gravity="center_horizontal"
             android:layout_width="0dp"
-            android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_weekly_calendar" />
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/text_tue"
+            android:text= "T"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_wed"
+            android:text= "W"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_thu"
+            android:text= "T"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_fri"
+            android:text= "F"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_sat"
+            android:text= "S"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_sun"
+            android:text= "S"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+
+        <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
+            android:id="@+id/pie_chart_weekly_mon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
+            android:id="@+id/pie_chart_weekly_tue"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
+            android:id="@+id/pie_chart_weekly_wed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
+            android:id="@+id/pie_chart_weekly_thu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
+            android:id="@+id/pie_chart_weekly_fri"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
+            android:id="@+id/pie_chart_weekly_sat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
+            android:id="@+id/pie_chart_weekly_sun"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
