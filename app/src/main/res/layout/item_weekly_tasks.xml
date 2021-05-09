@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <import type="android.view.View" />
-        <variable name="task" type ="com.moonwinston.motivationaltodolist.data.Task" />
+
+        <variable
+            name="task"
+            type="com.moonwinston.motivationaltodolist.data.Task" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="48dp"
         android:layout_margin="5dp">
 
         <androidx.appcompat.widget.AppCompatCheckBox
@@ -18,32 +22,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="@{task.isGoalSet? View.VISIBLE : View.INVISIBLE }"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/text_daily_tasks"/>
+            app:layout_constraintRight_toLeftOf="@id/text_daily_tasks"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_daily_tasks"
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="24dp"
             android:autoSizeTextType="uniform"
             android:text="@{task.task}"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/time_daily_tasks"
             app:layout_constraintLeft_toRightOf="@id/checkbox_daily_tasks"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/time_daily_tasks"
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="24dp"
             android:autoSizeTextType="uniform"
             android:text="@{task.time}"
-            app:layout_constraintTop_toBottomOf="@id/text_daily_tasks"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/checkbox_daily_tasks"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_daily_tasks" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

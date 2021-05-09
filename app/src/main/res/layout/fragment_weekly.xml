@@ -11,19 +11,43 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_fragment_weekly"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_date"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="TextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/button_settings"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_settings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            app:layout_constraintLeft_toRightOf="@id/text_date"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@mipmap/ic_settings" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_weekly_calendar"
             android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:paddingTop="10dp"
+            android:layout_height="96dp"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_weekly_todo"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/text_date" />
 
         <View
             android:layout_width="match_parent"
