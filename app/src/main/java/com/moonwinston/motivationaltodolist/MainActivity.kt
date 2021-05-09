@@ -21,16 +21,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navController = findNavController(R.id.fragment_nav_host)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-//        val appBarConfiguration = AppBarConfiguration(setOf(
-//                R.id.navigation_daily, R.id.navigation_monthly, R.id.navigation_weekly, R.id.navigation_reward, R.id.navigation_add))
-//        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.viewNav.setupWithNavController(navController)
 
-        binding.buttonSettings.setOnClickListener {
-            val settingsIntent = Intent(this, SettingsActivity::class.java)
-            startActivity(settingsIntent)
-        }
+//        binding.buttonSettings.setOnClickListener {
+//            val settingsIntent = Intent(this, SettingsActivity::class.java)
+//            startActivity(settingsIntent)
+//        }
     }
 }

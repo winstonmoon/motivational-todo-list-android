@@ -31,7 +31,7 @@ class RewardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView = binding.rewardView
-        val gridLayoutManager = GridLayoutManager(view.context, 3)
+        val gridLayoutManager = GridLayoutManager(view.context, 5)
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = RewardAdapter(rewardViewModel.tasks)
     }

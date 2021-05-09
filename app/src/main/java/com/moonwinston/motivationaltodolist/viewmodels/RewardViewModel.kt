@@ -13,5 +13,13 @@ class RewardViewModel : ViewModel() {
             Task(isGoalSet = false, task = "test3", time = "10:00"),
             Task(isGoalSet = true, task = "test3", time = "11:00"),
             Task(isGoalSet = false, task = "test3", time = "12:00"),
+        Task(isGoalSet = false, task = "test3", time = "12:00"),
+        Task(isGoalSet = false, task = "test3", time = "12:00"),
+        Task(isGoalSet = false, task = "test3", time = "12:00"),
+        Task(isGoalSet = false, task = "test3", time = "12:00"),
+        Task(isGoalSet = false, task = "test3", time = "12:00"),
+        Task(isGoalSet = false, task = "test3", time = "12:00"),
+        Task(isGoalSet = false, task = "test3", time = "12:00"),
+        Task(isGoalSet = false, task = "test3", time = "12:00")
     )
 }

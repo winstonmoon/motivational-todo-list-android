@@ -1,51 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="activity" type="com.moonwinston.motivationaltodolist.MainActivity"/>
+
+        <variable
+            name="activity"
+            type="com.moonwinston.motivationaltodolist.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_dialog_add"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toTopOf="parent"
+
+        <fragment
+            android:id="@+id/fragment_nav_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/view_nav"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_date"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:autoSizeTextType="uniform"
-                android:text="TextView"
-                android:gravity="center_horizontal"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintTop_toTopOf="@+id/toolbar"
-                app:layout_constraintLeft_toLeftOf="@+id/toolbar"
-                app:layout_constraintRight_toLeftOf="@id/button_settings"/>
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/button_settings"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitXY"
-                android:background="@null"
-                app:layout_constraintLeft_toRightOf="@id/text_date"
-                app:layout_constraintRight_toRightOf="@+id/toolbar"
-                app:layout_constraintTop_toTopOf="@+id/toolbar"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:srcCompat="@mipmap/ic_settings" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/mobile_navigation" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/view_nav"
@@ -58,18 +38,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_nav_menu" />
-
-        <fragment
-            android:id="@+id/fragment_nav_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@id/view_nav"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:navGraph="@navigation/mobile_navigation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,174 +4,150 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="fragment" type="com.moonwinston.motivationaltodolist.DailyFragment"/>
+
+        <variable
+            name="fragment"
+            type="com.moonwinston.motivationaltodolist.DailyFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_fragment_daily"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.moonwinston.motivationaltodolist.DailyFragment">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_goal"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_date"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="48dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="TextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/button_settings"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/container_todo"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_settings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            app:layout_constraintLeft_toRightOf="@id/text_date"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHeight_percent="0.5">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@mipmap/ic_settings" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/floor_goal"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/floor_goal_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon_goal"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/label_goal"
+            app:layout_constraintTop_toBottomOf="@id/text_date"
+            app:srcCompat="@mipmap/ic_aim" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/icon_goal"
-                    app:srcCompat="@mipmap/ic_aim"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/label_goal" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/label_goal"
-                    android:text="@string/label_goal"
-                    android:autoSizeTextType="uniform"
-                    android:gravity="center_vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/icon_goal" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/floor_goal_content"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/borderline_round"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintTop_toBottomOf="@id/floor_goal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
-
-                <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
-                    android:id="@+id/pie_chart_goal"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/text_goal_percent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/text_goal_percent"
-                   android:layout_width="0dp"
-                   android:layout_height="0dp"
-                   android:text="test"
-                   android:autoSizeTextType="uniform"
-                   android:gravity="center"
-                   android:padding="10dp"
-                   app:layout_constraintTop_toTopOf="parent"
-                   app:layout_constraintBottom_toBottomOf="parent"
-                   app:layout_constraintLeft_toRightOf="@id/pie_chart_goal"
-                   app:layout_constraintRight_toRightOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_goal"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/label_goal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icon_goal"
+            app:layout_constraintTop_toBottomOf="@id/text_date" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_todo"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/container_goal"
+            android:layout_margin="5dp"
+            android:background="@drawable/borderline_round"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon_goal" />
+
+        <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
+            android:id="@+id/pie_chart_goal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon_goal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_goal_percent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="test"
+            android:textSize="72sp"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+            app:layout_constraintTop_toBottomOf="@id/icon_goal" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon_todo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            app:layout_constraintRight_toLeftOf="@id/label_todo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_horizontal"
+            app:srcCompat="@mipmap/ic_todo" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_todo"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:autoSizeTextType="uniform"
+            android:padding="10dp"
+            android:text="@string/label_todo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icon_todo"
+            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/borderline_round"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHeight_percent="0.5">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon_todo" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/floor_todo"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/floor_todo_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/icon_todo"
-                    app:srcCompat="@mipmap/ic_todo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/label_todo" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/label_todo"
-                    android:text="@string/label_todo"
-                    android:autoSizeTextType="uniform"
-                    android:gravity="center_vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/icon_todo"
-                    app:layout_constraintRight_toRightOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/floor_todo_content"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/borderline_round"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintTop_toBottomOf="@id/floor_todo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_daily_todo"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_daily_todo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon_todo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
