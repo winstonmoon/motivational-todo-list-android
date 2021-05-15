@@ -31,13 +31,16 @@ class RewardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView: RecyclerView = binding.rewardView
         val gridLayoutManager = GridLayoutManager(view.context, 5)
-        recyclerView.layoutManager = gridLayoutManager
-        recyclerView.adapter = RewardAdapter(rewardViewModel.tasks)
+        binding.recyclerviewReward.layoutManager = gridLayoutManager
+        binding.recyclerviewReward.adapter = RewardAdapter(rewardViewModel.tasks)
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_reward_to_settings)
+        }
+
+        binding.buttonAdd.setOnClickListener {
+            it.findNavController().navigate(R.id.action_reward_to_add)
         }
     }
 }

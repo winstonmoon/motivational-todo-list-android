@@ -26,8 +26,8 @@ class MonthlyCalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMonthlyCalendarBinding.inflate(inflater, container, false)
-        binding.millis.text = DateTime(millis).toString("yyyy-MM")
-        binding.calendarView.initCalendar(DateTime(millis), getMonthList(DateTime(millis)))
+        binding.textMillis.text = DateTime(millis).toString("yyyy-MM")
+        binding.customviewCalendar.initCalendar(DateTime(millis), getMonthList(DateTime(millis)))
         return binding.root
     }
 

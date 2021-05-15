@@ -30,12 +30,16 @@ class MonthlyFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         monthlyScreenSlidePagerAdapter = MonthlyScreenSlidePagerAdapter(this)
 
-        binding.calendar.adapter = monthlyScreenSlidePagerAdapter
+        binding.viewpagerCalendar.adapter = monthlyScreenSlidePagerAdapter
 //        binding.calendar.setCurrentItem(monthlyScreenSlidePagerAdapter.START_POSITION, false)
-        binding.calendar.setCurrentItem(Int.MAX_VALUE / 2, false)
+        binding.viewpagerCalendar.setCurrentItem(Int.MAX_VALUE / 2, false)
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_monthly_to_settings)
+        }
+
+        binding.buttonAdd.setOnClickListener {
+            it.findNavController().navigate(R.id.action_monthly_to_add)
         }
     }
 }

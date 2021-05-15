@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_dialog_add"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/floor_input_task"
+            android:id="@+id/container_input_task"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginLeft="10dp"
@@ -16,7 +15,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/borderline_round"
-            app:layout_constraintBottom_toTopOf="@id/floor_calendar"
+            app:layout_constraintBottom_toTopOf="@id/container_calendar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -37,7 +36,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/floor_calendar"
+            android:id="@+id/container_calendar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -45,10 +44,10 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/borderline_round"
-            app:layout_constraintBottom_toTopOf="@id/floor_input_time"
+            app:layout_constraintBottom_toTopOf="@id/container_input_time"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/floor_input_task">
+            app:layout_constraintTop_toBottomOf="@id/container_input_task">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/label_date"
@@ -59,12 +58,12 @@
                 android:autoSizeTextType="uniform"
                 android:gravity="center_vertical"
                 android:text="@string/label_date"
-                app:layout_constraintBottom_toTopOf="@id/calendar"
+                app:layout_constraintBottom_toTopOf="@id/view_calendar"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <CalendarView
-                android:id="@+id/calendar"
+                android:id="@+id/view_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -74,7 +73,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/floor_input_time"
+            android:id="@+id/container_input_time"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginLeft="10dp"
@@ -82,10 +81,10 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/borderline_round"
-            app:layout_constraintBottom_toTopOf="@id/floor_switch_goal_task"
+            app:layout_constraintBottom_toTopOf="@id/container_switch_goal_task"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/floor_calendar">
+            app:layout_constraintTop_toBottomOf="@id/container_calendar">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/label_time"
@@ -115,7 +114,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/floor_switch_goal_task"
+            android:id="@+id/container_switch_goal_task"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginLeft="10dp"
@@ -126,7 +125,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/floor_input_time">
+            app:layout_constraintTop_toBottomOf="@id/container_input_time">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/label_goal_task"

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_daily_to_settings"
             app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/action_daily_to_add"
+            app:destination="@id/navigation_add" />
     </fragment>
 
     <fragment
@@ -23,6 +26,9 @@
         <action
             android:id="@+id/action_monthly_to_settings"
             app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/action_monthly_to_add"
+            app:destination="@id/navigation_add" />
     </fragment>
 
     <fragment
@@ -33,6 +39,9 @@
         <action
             android:id="@+id/action_reward_to_settings"
             app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/action_reward_to_add"
+            app:destination="@id/navigation_add" />
     </fragment>
 
     <fragment
@@ -43,6 +52,9 @@
         <action
             android:id="@+id/action_weekly_to_settings"
             app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/action_weekly_to_add"
+            app:destination="@id/navigation_add" />
     </fragment>
 
     <fragment
@@ -53,7 +65,6 @@
     <dialog
         android:id="@+id/navigation_add"
         android:name="com.moonwinston.motivationaltodolist.AddDialogFragment"
-        android:label="@string/title_add"
         tools:layout="@layout/dialog_add" />
 
 </navigation>

@@ -21,8 +21,4 @@
         android:icon="@mipmap/ic_reward"
         android:title="@string/title_reward" />
 
-    <item
-        android:id="@+id/navigation_add"
-        android:icon="@mipmap/ic_add"
-        android:title="@string/title_add" />
 </menu>

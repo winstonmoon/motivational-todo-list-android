@@ -20,13 +20,13 @@ class WeeklyCalendarAdapter(private val tasks: List<Task> = arrayListOf()) :
 
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
         holder.onBindViewHolder(tasks[position])
-        holder.binding.pieChartWeeklyMon.setPercentAndBoardWidthAndProgressiveWidth(0.10F, 20F, 10F)
-        holder.binding.pieChartWeeklyTue.setPercentAndBoardWidthAndProgressiveWidth(0.20F, 20F, 10F)
-        holder.binding.pieChartWeeklyWed.setPercentAndBoardWidthAndProgressiveWidth(0.30F, 20F, 10F)
-        holder.binding.pieChartWeeklyThu.setPercentAndBoardWidthAndProgressiveWidth(0.40F, 20F, 10F)
-        holder.binding.pieChartWeeklyFri.setPercentAndBoardWidthAndProgressiveWidth(0.50F, 20F, 10F)
-        holder.binding.pieChartWeeklySat.setPercentAndBoardWidthAndProgressiveWidth(0.60F, 20F, 10F)
-        holder.binding.pieChartWeeklySun.setPercentAndBoardWidthAndProgressiveWidth(0.70F, 20F, 10F)
+        holder.binding.customviewPiechartWeeklyMon.setPercentAndBoardWidthAndProgressiveWidth(0.10F, 20F, 10F)
+        holder.binding.customviewPiechartWeeklyTue.setPercentAndBoardWidthAndProgressiveWidth(0.20F, 20F, 10F)
+        holder.binding.customviewPiechartWeeklyWed.setPercentAndBoardWidthAndProgressiveWidth(0.30F, 20F, 10F)
+        holder.binding.customviewPiechartWeeklyThu.setPercentAndBoardWidthAndProgressiveWidth(0.40F, 20F, 10F)
+        holder.binding.customviewPiechartWeeklyFri.setPercentAndBoardWidthAndProgressiveWidth(0.50F, 20F, 10F)
+        holder.binding.customviewPiechartWeeklySat.setPercentAndBoardWidthAndProgressiveWidth(0.60F, 20F, 10F)
+        holder.binding.customviewPiechartWeeklySun.setPercentAndBoardWidthAndProgressiveWidth(0.70F, 20F, 10F)
         holder.binding.executePendingBindings()
     }
 
@@ -41,25 +41,25 @@ class WeeklyCalendarAdapter(private val tasks: List<Task> = arrayListOf()) :
     }
 
     private fun initDaySelectable(binding: ItemWeeklyCalendarBinding) {
-        binding.pieChartWeeklyMon.setOnClickListener {
+        binding.customviewPiechartWeeklyMon.setOnClickListener {
             Toast.makeText(it.context, "test", Toast.LENGTH_SHORT).show()
         }
-        binding.pieChartWeeklyTue.setOnClickListener {
+        binding.customviewPiechartWeeklyTue.setOnClickListener {
             Toast.makeText(it.context, "test", Toast.LENGTH_SHORT).show()
         }
-        binding.pieChartWeeklyWed.setOnClickListener {
+        binding.customviewPiechartWeeklyWed.setOnClickListener {
             Toast.makeText(it.context, "test", Toast.LENGTH_SHORT).show()
         }
-        binding.pieChartWeeklyThu.setOnClickListener {
+        binding.customviewPiechartWeeklyThu.setOnClickListener {
             Toast.makeText(it.context, "test", Toast.LENGTH_SHORT).show()
         }
-        binding.pieChartWeeklyFri.setOnClickListener {
+        binding.customviewPiechartWeeklyFri.setOnClickListener {
             Toast.makeText(it.context, "test", Toast.LENGTH_SHORT).show()
         }
-        binding.pieChartWeeklySat.setOnClickListener {
+        binding.customviewPiechartWeeklySat.setOnClickListener {
             Toast.makeText(it.context, "test", Toast.LENGTH_SHORT).show()
         }
-        binding.pieChartWeeklySun.setOnClickListener {
+        binding.customviewPiechartWeeklySun.setOnClickListener {
             Toast.makeText(it.context, "test", Toast.LENGTH_SHORT).show()
         }
     }
