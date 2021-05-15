@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.adapters.MonthlyScreenSlidePagerAdapter
 
@@ -32,6 +33,9 @@ class MonthlyFragment : Fragment(){
         binding.calendar.adapter = monthlyScreenSlidePagerAdapter
 //        binding.calendar.setCurrentItem(monthlyScreenSlidePagerAdapter.START_POSITION, false)
         binding.calendar.setCurrentItem(Int.MAX_VALUE / 2, false)
-    }
 
+        binding.buttonSettings.setOnClickListener {
+            it.findNavController().navigate(R.id.action_monthly_to_settings)
+        }
+    }
 }
