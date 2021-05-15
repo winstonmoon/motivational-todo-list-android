@@ -8,32 +8,33 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.adapters.RewardAdapter
-import com.moonwinston.motivationaltodolist.databinding.FragmentRewardBinding
-import com.moonwinston.motivationaltodolist.viewmodels.RewardViewModel
+import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
+import com.moonwinston.motivationaltodolist.viewmodels.RewardsViewModel
 
-class RewardFragment : Fragment() {
+class RewardsFragment : Fragment() {
 
-    private lateinit var binding: FragmentRewardBinding
-    private lateinit var rewardViewModel: RewardViewModel
+    private lateinit var binding: FragmentRewardsBinding
+    private lateinit var rewardsViewModel: RewardsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        rewardViewModel =
-            ViewModelProvider(this).get(RewardViewModel::class.java)
-        binding = FragmentRewardBinding.inflate(inflater, container, false)
+        rewardsViewModel =
+            ViewModelProvider(this).get(RewardsViewModel::class.java)
+        binding = FragmentRewardsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        binding.textDate.text = rewardsViewModel.rewardsTitle
+
         val gridLayoutManager = GridLayoutManager(view.context, 5)
-        binding.recyclerviewReward.layoutManager = gridLayoutManager
-        binding.recyclerviewReward.adapter = RewardAdapter(rewardViewModel.tasks)
+        binding.recyclerviewRewards.layoutManager = gridLayoutManager
+        binding.recyclerviewRewards.adapter = RewardAdapter(rewardsViewModel.tasks)
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_reward_to_settings)

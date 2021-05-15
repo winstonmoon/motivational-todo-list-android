@@ -3,7 +3,7 @@
     <string name="title_daily">Daily</string>
     <string name="title_weekly">Weekly</string>
     <string name="title_monthly">Monthly</string>
-    <string name="title_reward">Reward</string>
+    <string name="title_reward">Rewards</string>
     <string name="title_add">Add</string>
 
     <!-- Preferences -->
@@ -14,7 +14,7 @@
     <!-- Dialog Add-->
     <string name="button_add">Add</string>
     <string name="button_cancel">Cancel</string>
-    <string name="label_goal_task">Set As Goal Task?</string>
+    <string name="label_goal_task">Set as Achievement Selectable Task</string>
     <string name="label_date">Date</string>
     <string name="label_time">Time</string>
     <string name="hint_input_task">Input Your New Task</string>

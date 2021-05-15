@@ -7,7 +7,7 @@
 
         <variable
             name="fragment"
-            type="com.moonwinston.motivationaltodolist.RewardFragment" />
+            type="com.moonwinston.motivationaltodolist.RewardsFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +41,7 @@
             app:srcCompat="@mipmap/ic_settings" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_reward"
+            android:id="@+id/recyclerview_rewards"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

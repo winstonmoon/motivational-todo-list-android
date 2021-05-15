@@ -33,7 +33,6 @@ class WeeklyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.viewpagerWeeklyCalendar.adapter = WeeklyCalendarAdapter(weeklyViewModel.tasks)
 
         val taskLayoutManager = LinearLayoutManager(view.context)
