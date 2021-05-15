@@ -22,10 +22,5 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.fragment_nav_host)
         binding.viewNav.setupWithNavController(navController)
-
-//        binding.buttonSettings.setOnClickListener {
-//            val settingsIntent = Intent(this, SettingsActivity::class.java)
-//            startActivity(settingsIntent)
-//        }
     }
 }

@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.adapters.DailyTaskAdapter
+import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.viewmodels.DailyViewModel
+
 
 class DailyFragment : Fragment() {
 
@@ -17,9 +19,9 @@ class DailyFragment : Fragment() {
     private lateinit var dailyViewModel: DailyViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         dailyViewModel =
                 ViewModelProvider(this).get(DailyViewModel::class.java)
@@ -28,6 +30,7 @@ class DailyFragment : Fragment() {
         binding.pieChartGoal.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
         //TODO edit make percentage
         binding.textGoalPercent.text = "50%"
+
         return binding.root
     }
 
@@ -37,5 +40,9 @@ class DailyFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerviewDailyTodo.layoutManager = layoutManager
         binding.recyclerviewDailyTodo.adapter = DailyTaskAdapter(dailyViewModel.tasks)
+
+        binding.buttonSettings.setOnClickListener {
+            it.findNavController().navigate(R.id.action_daily_to_settings)
+        }
     }
 }

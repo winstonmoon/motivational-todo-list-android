@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.adapters.RewardAdapter
@@ -34,5 +35,9 @@ class RewardFragment : Fragment() {
         val gridLayoutManager = GridLayoutManager(view.context, 5)
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = RewardAdapter(rewardViewModel.tasks)
+
+        binding.buttonSettings.setOnClickListener {
+            it.findNavController().navigate(R.id.action_reward_to_settings)
+        }
     }
 }
