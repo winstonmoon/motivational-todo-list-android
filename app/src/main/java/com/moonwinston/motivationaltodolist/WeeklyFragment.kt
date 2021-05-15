@@ -44,5 +44,9 @@ class WeeklyFragment : Fragment() {
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_weekly_to_settings)
         }
+
+        binding.buttonAdd.setOnClickListener {
+            it.findNavController().navigate(R.id.action_weekly_to_add)
+        }
     }
 }

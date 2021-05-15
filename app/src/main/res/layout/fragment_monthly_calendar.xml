@@ -8,12 +8,12 @@
         android:layout_height="match_parent">
 
         <com.moonwinston.motivationaltodolist.views.CalendarView
-            android:id="@+id/calendarView"
+            android:id="@+id/customview_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/millis"
+            android:id="@+id/text_millis"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center" />

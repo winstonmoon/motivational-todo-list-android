@@ -27,7 +27,7 @@ class DailyFragment : Fragment() {
                 ViewModelProvider(this).get(DailyViewModel::class.java)
         binding = FragmentDailyBinding.inflate(inflater, container, false)
         //TODO get percentage from viewmodel and set
-        binding.pieChartGoal.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
+        binding.customviewPiechartDaily.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
         //TODO edit make percentage
         binding.textGoalPercent.text = "50%"
 
@@ -43,6 +43,10 @@ class DailyFragment : Fragment() {
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_daily_to_settings)
+        }
+
+        binding.buttonAdd.setOnClickListener {
+            it.findNavController().navigate(R.id.action_daily_to_add)
         }
     }
 }
