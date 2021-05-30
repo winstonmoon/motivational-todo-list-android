@@ -4,10 +4,12 @@ import java.sql.Time
 import java.util.*
 
 data class Task(
-        //val date: Date,
+//        var month: Int,
+//        var dayOfMonth: Int,
+//        var dayOfWeek: Int,
         //val time: Time,
-        val time: String,
-        val task: String,
-        val isGoalSet: Boolean,
-        //val isCompleted: Boolean
+        var time: String,
+        var task: String,
+        var isGoalSet: Boolean,
+//        var isCompleted: Boolean
 )

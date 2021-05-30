@@ -14,7 +14,6 @@ class AchievementPieChartView@JvmOverloads constructor(
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
-
     private var percentage: Float = 0.0F
     private var borderStrokeWidth: Float = 40F
     private var progressiveStrokeWidth: Float = 20F
