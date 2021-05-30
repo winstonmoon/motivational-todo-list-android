@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moonwinston.motivationaltodolist.adapters.WeeklyCalendarAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.adapters.WeeklyTaskAdapter
+import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import com.moonwinston.motivationaltodolist.viewmodels.WeeklyViewModel
 import kotlinx.android.synthetic.main.item_weekly_calendar.view.*
 
@@ -19,6 +20,15 @@ class WeeklyFragment : Fragment() {
 
     private lateinit var binding: FragmentWeeklyBinding
     private lateinit var weeklyViewModel: WeeklyViewModel
+    private lateinit var sharedViewModel : SharedViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.run {
+            sharedViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+                .get(SharedViewModel::class.java)
+        }
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,

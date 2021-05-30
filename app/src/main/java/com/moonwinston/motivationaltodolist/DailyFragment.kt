@@ -11,12 +11,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moonwinston.motivationaltodolist.adapters.DailyTaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.viewmodels.DailyViewModel
+import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 
 
 class DailyFragment : Fragment() {
 
     private lateinit var binding: FragmentDailyBinding
     private lateinit var dailyViewModel: DailyViewModel
+    private lateinit var sharedViewModel : SharedViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.run {
+            sharedViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+                .get(SharedViewModel::class.java)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
