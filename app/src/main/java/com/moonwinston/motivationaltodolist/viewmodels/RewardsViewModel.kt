@@ -10,7 +10,7 @@ class RewardsViewModel : ViewModel() {
     companion object {
         const val REWARDS_TITLE = "Rewards"
     }
-    
+
     val tasks: List<Task> = arrayListOf(
             Task(isGoalSet = false, task = "test1", time = "8:00"),
             Task(isGoalSet = true, task = "test2", time = "9:00"),

@@ -3,20 +3,107 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.moonwinston.motivationaltodolist.views.CalendarView
-            android:id="@+id/customview_calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_monthly_month"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:text="MM"
+            app:layout_constraintBottom_toTopOf="@id/linear_monthly_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_millis"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_monthly_date"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_monthly_month"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_monthly_calendar">
 
-    </FrameLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_monthly_mon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal"
+                android:text="M" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_monthly_tue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal"
+                android:text="T" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_monthly_wed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal"
+                android:text="W" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_monthly_thu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal"
+                android:text="T" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_monthly_fri"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal"
+                android:text="F" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_monthly_sat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal"
+                android:text="S" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_monthly_sun"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal"
+                android:text="S" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_monthly_calendar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear_monthly_date"
+            app:spanCount="7"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

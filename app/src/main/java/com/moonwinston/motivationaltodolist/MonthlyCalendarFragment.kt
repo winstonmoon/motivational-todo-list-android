@@ -1,43 +1,75 @@
 package com.moonwinston.motivationaltodolist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.moonwinston.motivationaltodolist.adapters.MonthlyCalendarAdapter
+import com.moonwinston.motivationaltodolist.data.CalendarData
+import com.moonwinston.motivationaltodolist.data.MonthEnum
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
-import com.moonwinston.motivationaltodolist.util.CalendarUtil.Companion.getMonthList
-import org.joda.time.DateTime
+import com.moonwinston.motivationaltodolist.viewmodels.MonthlyCalendarViewModel
+import java.util.*
 
 class MonthlyCalendarFragment : Fragment() {
 
     private lateinit var binding: FragmentMonthlyCalendarBinding
-    private var millis: Long = 0L
+    private lateinit var monthlyCalendarViewModel: MonthlyCalendarViewModel
+    private var diffMonth: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            millis = it.getLong(MILLIS)
+            diffMonth = it.getInt(DIFF_MOTH)
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        monthlyCalendarViewModel =
+            ViewModelProvider(this).get(MonthlyCalendarViewModel::class.java)
         binding = FragmentMonthlyCalendarBinding.inflate(inflater, container, false)
-        binding.textMillis.text = DateTime(millis).toString("yyyy-MM")
-        binding.customviewCalendar.initCalendar(DateTime(millis), getMonthList(DateTime(millis)))
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = MonthlyCalendarAdapter()
+        binding.recyclerviewMonthlyCalendar.adapter = adapter
+
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.apply {
+            add(Calendar.MONTH, diffMonth)
+            set(Calendar.DAY_OF_MONTH, 1)
+            firstDayOfWeek = Calendar.MONDAY
+        }
+
+        val maxDate: Int = calendar.getActualMaximum(Calendar.DATE)
+        val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY
+        val month: Int = calendar.get(Calendar.MONTH)
+        val dayOfMonthList: MutableList<CalendarData> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarData()})
+        for (i in 1..maxDate) {
+            dayOfMonthList.add(
+                CalendarData(i)
+            )
+        }
+        adapter.submitList(dayOfMonthList)
+        binding.textMonthlyMonth.text = MonthEnum.values()[month].name
     }
 
     companion object {
 
-        private const val MILLIS = "MILLIS"
+        private const val DIFF_MOTH = "diffMonth"
 
-        fun newInstance(millis: Long) = MonthlyCalendarFragment().apply {
+        fun newInstance(diffMoth: Int) = MonthlyCalendarFragment().apply {
             arguments = Bundle().apply {
-                putLong(MILLIS, millis)
+                putInt(DIFF_MOTH, diffMoth)
             }
         }
     }

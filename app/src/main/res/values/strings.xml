@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Motivational Todo List</string>
+
+    <!-- Menu -->
     <string name="title_daily">Daily</string>
     <string name="title_weekly">Weekly</string>
     <string name="title_monthly">Monthly</string>
@@ -7,7 +9,7 @@
     <string name="title_add">Add</string>
 
     <!-- Preferences -->
-    <string name="header_options">Options</string>
+    <string name="header_options">Settings</string>
     <string name="title_notify_tasks">Notify Tasks</string>
     <string name="title_dark_mode">Dark Mode</string>
 

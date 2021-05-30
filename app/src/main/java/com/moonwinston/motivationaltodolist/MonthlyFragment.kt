@@ -10,18 +10,16 @@ import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.adapters.MonthlyScreenSlidePagerAdapter
 import com.moonwinston.motivationaltodolist.viewmodels.MonthlyViewModel
-import com.moonwinston.motivationaltodolist.viewmodels.WeeklyViewModel
 
 class MonthlyFragment : Fragment(){
 
     private lateinit var binding: FragmentMonthlyBinding
     private lateinit var monthlyViewModel: MonthlyViewModel
-    private lateinit var monthlyScreenSlidePagerAdapter: MonthlyScreenSlidePagerAdapter
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         monthlyViewModel =
             ViewModelProvider(this).get(MonthlyViewModel::class.java)
@@ -31,11 +29,9 @@ class MonthlyFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        monthlyScreenSlidePagerAdapter = MonthlyScreenSlidePagerAdapter(this)
 
-        binding.viewpagerCalendar.adapter = monthlyScreenSlidePagerAdapter
-//        binding.calendar.setCurrentItem(monthlyScreenSlidePagerAdapter.START_POSITION, false)
-        binding.viewpagerCalendar.setCurrentItem(Int.MAX_VALUE / 2, false)
+        binding.viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this)
+        binding.viewpagerCalendar.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_monthly_to_settings)
