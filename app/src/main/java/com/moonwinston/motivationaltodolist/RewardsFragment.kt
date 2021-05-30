@@ -30,7 +30,7 @@ class RewardsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding.textDate.text = rewardsViewModel.rewardsTitle
+        binding.textDate.text = RewardsViewModel.REWARDS_TITLE
 
         val gridLayoutManager = GridLayoutManager(view.context, 5)
         binding.recyclerviewRewards.layoutManager = gridLayoutManager
