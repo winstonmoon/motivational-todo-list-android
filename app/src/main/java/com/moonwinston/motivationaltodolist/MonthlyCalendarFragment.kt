@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.moonwinston.motivationaltodolist.adapters.MonthlyCalendarAdapter
-import com.moonwinston.motivationaltodolist.data.CalendarData
+import com.moonwinston.motivationaltodolist.data.CalendarDate
 import com.moonwinston.motivationaltodolist.data.MonthEnum
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.viewmodels.MonthlyCalendarViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MonthlyCalendarFragment : Fragment() {
@@ -51,16 +52,17 @@ class MonthlyCalendarFragment : Fragment() {
         }
 
         val maxDate: Int = calendar.getActualMaximum(Calendar.DATE)
-        val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY
-        val month: Int = calendar.get(Calendar.MONTH)
-        val dayOfMonthList: MutableList<CalendarData> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarData()})
-        for (i in 1..maxDate) {
+        val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - 2
+        val year: Int = calendar.get(Calendar.YEAR)
+        val month: Int = calendar.get(Calendar.MONTH) + 1
+        val dayOfMonthList: MutableList<CalendarDate> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate()})
+        for (date in 1..maxDate) {
             dayOfMonthList.add(
-                CalendarData(i)
+                CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$month-$date"))
             )
         }
         adapter.submitList(dayOfMonthList)
-        binding.textMonthlyMonth.text = MonthEnum.values()[month].name
+        binding.textMonthlyMonth.text = MonthEnum.values()[month -1].name
     }
 
     companion object {

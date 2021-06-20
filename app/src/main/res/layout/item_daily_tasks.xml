@@ -3,15 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="task"
-            type="com.moonwinston.motivationaltodolist.data.Task" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -21,10 +12,10 @@
             android:id="@+id/checkbox_daily_tasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{task.isGoalSet? View.VISIBLE : View.INVISIBLE }"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/text_daily_tasks"
+            app:layout_constraintEnd_toStartOf="@id/text_daily_tasks"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -32,10 +23,10 @@
             android:layout_width="0dp"
             android:layout_height="24dp"
             android:autoSizeTextType="uniform"
-            android:text="@{task.task}"
+            android:text="test task"
             app:layout_constraintBottom_toTopOf="@id/time_daily_tasks"
-            app:layout_constraintLeft_toRightOf="@id/checkbox_daily_tasks"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imagebutton_daily_tasks"
+            app:layout_constraintStart_toEndOf="@id/checkbox_daily_tasks"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -43,11 +34,23 @@
             android:layout_width="0dp"
             android:layout_height="24dp"
             android:autoSizeTextType="uniform"
-            android:text="@{task.time}"
+            android:text="12:00"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/checkbox_daily_tasks"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imagebutton_daily_tasks"
+            app:layout_constraintStart_toEndOf="@id/checkbox_daily_tasks"
             app:layout_constraintTop_toBottomOf="@id/text_daily_tasks" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imagebutton_daily_tasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_daily_tasks"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

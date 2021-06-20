@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moonwinston.motivationaltodolist.adapters.WeeklyCalendarAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.adapters.WeeklyTaskAdapter
+import com.moonwinston.motivationaltodolist.data.Task
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import com.moonwinston.motivationaltodolist.viewmodels.WeeklyViewModel
-import kotlinx.android.synthetic.main.item_weekly_calendar.view.*
 
 class WeeklyFragment : Fragment() {
 
@@ -43,12 +43,12 @@ class WeeklyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewpagerWeeklyCalendar.adapter = WeeklyCalendarAdapter(weeklyViewModel.tasks)
+        binding.viewpagerWeeklyCalendar.adapter = WeeklyCalendarAdapter()
 
         val taskLayoutManager = LinearLayoutManager(view.context)
         taskLayoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerviewWeeklyTodo.layoutManager = taskLayoutManager
-        binding.recyclerviewWeeklyTodo.adapter = WeeklyTaskAdapter(weeklyViewModel.tasks)
+        binding.recyclerviewWeeklyTodo.adapter = WeeklyTaskAdapter()
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_weekly_to_settings)
