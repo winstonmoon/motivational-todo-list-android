@@ -34,7 +34,7 @@ class RewardsFragment : Fragment() {
 
         val gridLayoutManager = GridLayoutManager(view.context, 5)
         binding.recyclerviewRewards.layoutManager = gridLayoutManager
-        binding.recyclerviewRewards.adapter = RewardAdapter(rewardsViewModel.tasks)
+        binding.recyclerviewRewards.adapter = RewardAdapter()
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_reward_to_settings)

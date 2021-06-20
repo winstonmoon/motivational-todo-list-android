@@ -49,7 +49,7 @@ class DailyFragment : Fragment() {
         val layoutManager = LinearLayoutManager(view.context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerviewDailyTodo.layoutManager = layoutManager
-        binding.recyclerviewDailyTodo.adapter = DailyTaskAdapter(dailyViewModel.tasks)
+        binding.recyclerviewDailyTodo.adapter = DailyTaskAdapter()
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_daily_to_settings)
