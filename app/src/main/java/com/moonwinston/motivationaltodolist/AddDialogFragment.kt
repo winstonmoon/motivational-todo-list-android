@@ -38,7 +38,7 @@ class AddDialogFragment : DialogFragment() {
                             val formatTime = SimpleDateFormat("HH:mm")
                             val timeTest: Date = formatTime.parse(binding.inputTime.text.toString())
                             val stringTimeTest = formatTime.format(timeTest)
-                            Toast.makeText(context, stringTimeTest, Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "$stringDateTest $stringTimeTest", Toast.LENGTH_LONG).show()
 
                         })
                     .setNegativeButton(R.string.button_cancel,

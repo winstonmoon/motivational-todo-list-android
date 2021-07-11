@@ -9,7 +9,7 @@
 
         <variable
             name="task"
-            type="com.moonwinston.motivationaltodolist.data.Task" />
+            type="com.moonwinston.motivationaltodolist.data.entity.TaskEntity" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat

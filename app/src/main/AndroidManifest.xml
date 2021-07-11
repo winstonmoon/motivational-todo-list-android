@@ -3,6 +3,7 @@
     package="com.moonwinston.motivationaltodolist">
 
     <application
+        android:name=".MotivationalTodoListApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_motivational_todo_list"
         android:label="@string/app_name"

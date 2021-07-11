@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.data
+package com.moonwinston.motivationaltodolist.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 @Entity(tableName = "task")
-data class Task(
+data class TaskEntity(
 //        val time: String,
 //        var task: String,
 //        var isGoalSet: Boolean
