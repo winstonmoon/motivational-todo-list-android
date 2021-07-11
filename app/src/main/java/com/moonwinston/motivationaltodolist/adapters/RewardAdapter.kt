@@ -1,18 +1,14 @@
 package com.moonwinston.motivationaltodolist.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.moonwinston.motivationaltodolist.data.CalendarDate
-import com.moonwinston.motivationaltodolist.data.Task
-import com.moonwinston.motivationaltodolist.databinding.ItemMonthlyCalendarBinding
+import com.moonwinston.motivationaltodolist.data.entity.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemRewardsBinding
-import java.text.SimpleDateFormat
 
-class RewardAdapter : ListAdapter<Task, RewardAdapter.ViewHolder>(RewardAdapter.diffUtil) {
+class RewardAdapter : ListAdapter<TaskEntity, RewardAdapter.ViewHolder>(RewardAdapter.diffUtil) {
 
     //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskHolder {
 //        val binding = ItemRewardsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,9 +33,9 @@ class RewardAdapter : ListAdapter<Task, RewardAdapter.ViewHolder>(RewardAdapter.
     inner class ViewHolder(private val binding: ItemRewardsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(task: Task) {
+        fun bind(taskEntity: TaskEntity) {
             //TODO fix format
-            binding.textAchieveddate.text = task.taskDate.toString()
+            binding.textAchieveddate.text = taskEntity.taskDate.toString()
         }
     }
 
@@ -58,12 +54,12 @@ class RewardAdapter : ListAdapter<Task, RewardAdapter.ViewHolder>(RewardAdapter.
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<Task>() {
-            override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<TaskEntity>() {
+            override fun areItemsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+            override fun areContentsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
                 return oldItem == newItem
             }
         }

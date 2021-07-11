@@ -2,16 +2,13 @@ package com.moonwinston.motivationaltodolist.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.moonwinston.motivationaltodolist.data.Task
-import com.moonwinston.motivationaltodolist.databinding.ItemDailyTasksBinding
+import com.moonwinston.motivationaltodolist.data.entity.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemWeeklyCalendarBinding
 
-class WeeklyCalendarAdapter: ListAdapter<Task, WeeklyCalendarAdapter.ViewHolder>(diffUtil){
+class WeeklyCalendarAdapter: ListAdapter<TaskEntity, WeeklyCalendarAdapter.ViewHolder>(diffUtil){
 
 //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskHolder {
 //        val binding = ItemWeeklyCalendarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -68,7 +65,7 @@ class WeeklyCalendarAdapter: ListAdapter<Task, WeeklyCalendarAdapter.ViewHolder>
 //}
 inner class ViewHolder(private val binding: ItemWeeklyCalendarBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(task: Task) {
+    fun bind(taskEntity: TaskEntity) {
         //TODO fix
         binding.customviewPiechartWeeklyMon.setPercentAndBoardWidthAndProgressiveWidth(0.10F, 20F, 10F)
         binding.customviewPiechartWeeklyTue.setPercentAndBoardWidthAndProgressiveWidth(0.10F, 20F, 10F)
@@ -89,11 +86,11 @@ inner class ViewHolder(private val binding: ItemWeeklyCalendarBinding) : Recycle
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<Task>() {
-            override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<TaskEntity>() {
+            override fun areItemsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
                 return oldItem == newItem
             }
-            override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+            override fun areContentsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
                 return oldItem == newItem
             }
         }
