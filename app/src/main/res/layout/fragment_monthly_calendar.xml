@@ -14,6 +14,7 @@
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:text="MM"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@id/linear_monthly_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,10 +24,10 @@
             android:id="@+id/linear_monthly_date"
             android:layout_width="0dp"
             android:layout_height="24dp"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_monthly_calendar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_monthly_month"
-            app:layout_constraintBottom_toTopOf="@id/recyclerview_monthly_calendar">
+            app:layout_constraintTop_toBottomOf="@id/text_monthly_month">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_monthly_mon"
@@ -102,7 +103,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linear_monthly_date"
-            app:spanCount="7"/>
+            app:spanCount="7" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,22 +3,22 @@
 
     <item
         android:id="@+id/navigation_daily"
-        android:icon="@mipmap/ic_daily"
+        android:icon="@drawable/ic_daily_gray"
         android:title="@string/title_daily" />
 
     <item
         android:id="@+id/navigation_weekly"
-        android:icon="@mipmap/ic_weekly"
+        android:icon="@drawable/ic_weekly_gray"
         android:title="@string/title_weekly" />
 
     <item
         android:id="@+id/navigation_monthly"
-        android:icon="@mipmap/ic_monthly"
+        android:icon="@drawable/ic_monthly_gray"
         android:title="@string/title_monthly" />
 
     <item
         android:id="@+id/navigation_reward"
-        android:icon="@mipmap/ic_reward"
+        android:icon="@drawable/ic_rewards_gray"
         android:title="@string/title_reward" />
 
 </menu>

@@ -17,7 +17,7 @@ class AddDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            val builder = AlertDialog.Builder(it)
+            val builder = AlertDialog.Builder(it, R.style.CustomAlertDialog)
             binding = DialogAddBinding.inflate(layoutInflater)
 
             builder.setView(binding.root)

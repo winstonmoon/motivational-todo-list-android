@@ -29,7 +29,8 @@
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal"
-                android:text="M" />
+                android:text="M"
+                android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/text_tue"
@@ -38,7 +39,8 @@
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal"
-                android:text="T" />
+                android:text="T"
+                android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/text_wed"
@@ -47,7 +49,8 @@
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal"
-                android:text="W" />
+                android:text="W"
+                android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/text_thu"
@@ -56,7 +59,8 @@
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal"
-                android:text="T" />
+                android:text="T"
+                android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/text_fri"
@@ -65,7 +69,8 @@
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal"
-                android:text="F" />
+                android:text="F"
+                android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/text_sat"
@@ -74,7 +79,8 @@
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal"
-                android:text="S" />
+                android:text="S"
+                android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/text_sun"
@@ -83,7 +89,8 @@
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal"
-                android:text="S" />
+                android:text="S"
+                android:textColor="@color/gray" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
