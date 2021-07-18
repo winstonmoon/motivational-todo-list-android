@@ -38,7 +38,7 @@ class AchievementPieChartView@JvmOverloads constructor(
     private fun drawPieChart(canvas: Canvas?, borderStrokeWidth: Float, rectF: RectF, paint: Paint) {
         paint.apply {
             strokeWidth = borderStrokeWidth;
-            color = Color.parseColor("#8E8C8C")
+            color = Color.parseColor("#D67EFF")
         }
         canvas?.drawArc(rectF, 270F, 360F, false, paint)
     }
@@ -46,7 +46,7 @@ class AchievementPieChartView@JvmOverloads constructor(
     private fun drawProgressivePieChart(canvas: Canvas?, progressiveStrokeWidth: Float, rectF: RectF, paint: Paint) {
         paint.apply {
             strokeWidth = progressiveStrokeWidth;
-            color = Color.parseColor("#2E2D2D")
+            color = Color.parseColor("#760780")
         }
         canvas?.drawArc(rectF, 270F, percentage * 360F, false, paint)
     }
