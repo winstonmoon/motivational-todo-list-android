@@ -5,9 +5,9 @@ import java.util.*
 
 interface TaskRepository {
 
-    suspend fun loadAllTasksByDate(taskDate: Date): List<TaskEntity>
+    suspend fun getTasks(taskDate: Date): List<TaskEntity>
 
-    suspend fun loadAllAchievementsByDate(taskDate: Date): List<TaskEntity>
+//    suspend fun getAchievementStatus(taskDate: Date): List<TaskEntity>
 
     suspend fun updateTask(taskEntity: TaskEntity)
 
