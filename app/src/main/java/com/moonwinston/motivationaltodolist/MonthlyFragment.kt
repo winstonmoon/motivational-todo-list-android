@@ -11,20 +11,13 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.adapters.MonthlyScreenSlidePagerAdapter
 import com.moonwinston.motivationaltodolist.viewmodels.MonthlyViewModel
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MonthlyFragment : Fragment(){
 
     private lateinit var binding: FragmentMonthlyBinding
     private lateinit var monthlyViewModel: MonthlyViewModel
-    private lateinit var sharedViewModel : SharedViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.run {
-            sharedViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-                .get(SharedViewModel::class.java)
-        }
-    }
+    private val sharedViewModel: SharedViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -13,20 +13,13 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.adapters.WeeklyTaskAdapter
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import com.moonwinston.motivationaltodolist.viewmodels.WeeklyViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class WeeklyFragment : Fragment() {
 
     private lateinit var binding: FragmentWeeklyBinding
     private lateinit var weeklyViewModel: WeeklyViewModel
-    private lateinit var sharedViewModel : SharedViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.run {
-            sharedViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-                .get(SharedViewModel::class.java)
-        }
-    }
+    private val sharedViewModel: SharedViewModel by viewModel()
 
     override fun onCreateView(
             inflater: LayoutInflater,

@@ -8,17 +8,17 @@ import java.util.*
 interface TaskDao {
 
     @Query("SELECT * FROM task WHERE taskDate IN (:taskDate)")
-    fun loadAllTasksByDate(taskDate: Date): List<TaskEntity>
+    suspend fun loadAllTasksByDate(taskDate: Date): List<TaskEntity>
 
 //    @Query("SELECT isGoalSet, isCompleted FROM task WHERE taskDate IN (:taskDate)")
 //    fun loadAllAchievementsByDate(taskDate: Date): List<TaskEntity>
 
     @Update()
-    fun updateTask(taskEntity: TaskEntity)
+    suspend fun updateTask(taskEntity: TaskEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTask(taskEntity: TaskEntity)
+    suspend fun insertTask(taskEntity: TaskEntity)
 
     @Query("DELETE FROM task WHERE taskDate=:taskDate AND taskTime=:taskTime")
-    fun deleteTask(taskDate: Date, taskTime: Date)
+    suspend fun deleteTask(taskDate: Date, taskTime: Date)
 }
