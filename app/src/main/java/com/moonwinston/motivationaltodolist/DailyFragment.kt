@@ -12,21 +12,15 @@ import com.moonwinston.motivationaltodolist.adapters.DailyTaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.viewmodels.DailyViewModel
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
 
 
 class DailyFragment : Fragment() {
 
     private lateinit var binding: FragmentDailyBinding
     private lateinit var dailyViewModel: DailyViewModel
-    private lateinit var sharedViewModel : SharedViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.run {
-            sharedViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-                .get(SharedViewModel::class.java)
-        }
-    }
+    private val sharedViewModel: SharedViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +34,9 @@ class DailyFragment : Fragment() {
         binding.customviewPiechartDaily.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
         //TODO edit make percentage
         binding.textGoalPercent.text = "50%"
+//        val c = Calendar.getInstance().time
+//        sharedViewModel.getTasks(c)
+//        binding.textGoalPercent.text =
 
         return binding.root
     }
@@ -50,6 +47,10 @@ class DailyFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerviewDailyTodo.layoutManager = layoutManager
         binding.recyclerviewDailyTodo.adapter = DailyTaskAdapter()
+
+        val c = Calendar.getInstance().time
+
+//        binding.recyclerviewDailyTodo.adapter.setTask(sharedViewModel.getTasks(c))
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_daily_to_settings)

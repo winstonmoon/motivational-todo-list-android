@@ -6,6 +6,7 @@ import com.moonwinston.motivationaltodolist.data.db.provideDB
 import com.moonwinston.motivationaltodolist.data.db.provideTaskDao
 import com.moonwinston.motivationaltodolist.data.repository.DefaultTaskRepository
 import com.moonwinston.motivationaltodolist.data.repository.TaskRepository
+import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.dsl.module
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
@@ -19,9 +20,10 @@ internal val appModule = module {
 
     single<TaskRepository> { DefaultTaskRepository(get(), get()) }
 
-    // Database
     single { provideDB(androidApplication()) }
     single { provideTaskDao(get()) }
+
+    viewModel { SharedViewModel(get()) }
 }
 
 
