@@ -1,7 +1,5 @@
-package com.moonwinston.motivationaltodolist.data.repository
+package com.moonwinston.motivationaltodolist.data
 
-import com.moonwinston.motivationaltodolist.data.db.dao.TaskDao
-import com.moonwinston.motivationaltodolist.data.entity.TaskEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.util.*

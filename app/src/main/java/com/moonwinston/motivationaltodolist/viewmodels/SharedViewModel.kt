@@ -2,8 +2,8 @@ package com.moonwinston.motivationaltodolist.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.moonwinston.motivationaltodolist.data.entity.TaskEntity
-import com.moonwinston.motivationaltodolist.data.repository.TaskRepository
+import com.moonwinston.motivationaltodolist.data.TaskEntity
+import com.moonwinston.motivationaltodolist.data.TaskRepository
 import kotlinx.coroutines.launch
 import java.util.*
 

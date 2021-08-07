@@ -1,6 +1,6 @@
-package com.moonwinston.motivationaltodolist.data.repository
+package com.moonwinston.motivationaltodolist.data
 
-import com.moonwinston.motivationaltodolist.data.entity.TaskEntity
+import com.moonwinston.motivationaltodolist.data.TaskEntity
 import java.util.*
 
 interface TaskRepository {
