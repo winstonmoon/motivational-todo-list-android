@@ -1,9 +1,9 @@
-package com.moonwinston.motivationaltodolist.util
+package com.moonwinston.motivationaltodolist.utilities
 
 import androidx.room.TypeConverter
 import java.util.*
 
-class Converters {
+class RoomTypeConverters {
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return value?.let { Date(it) }

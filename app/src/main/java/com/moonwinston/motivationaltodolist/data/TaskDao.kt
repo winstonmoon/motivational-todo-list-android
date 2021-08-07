@@ -1,7 +1,6 @@
-package com.moonwinston.motivationaltodolist.data.db.dao
+package com.moonwinston.motivationaltodolist.data
 
 import androidx.room.*
-import com.moonwinston.motivationaltodolist.data.entity.TaskEntity
 import java.util.*
 
 @Dao
@@ -11,7 +10,7 @@ interface TaskDao {
     suspend fun loadAllTasksByDate(taskDate: Date): List<TaskEntity>
 
 //    @Query("SELECT isGoalSet, isCompleted FROM task WHERE taskDate IN (:taskDate)")
-//    fun loadAllAchievementsByDate(taskDate: Date): List<TaskEntity>
+//    suspend fun loadAllAchievementsByDate(taskDate: Date): List<TaskEntity>
 
     @Update()
     suspend fun updateTask(taskEntity: TaskEntity)

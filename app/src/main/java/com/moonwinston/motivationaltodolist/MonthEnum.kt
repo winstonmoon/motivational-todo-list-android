@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.data
+package com.moonwinston.motivationaltodolist
 
 enum class MonthEnum(val monthInt: Int) {
     JAN(0),

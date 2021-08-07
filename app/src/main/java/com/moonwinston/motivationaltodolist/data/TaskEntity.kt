@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.data.entity
+package com.moonwinston.motivationaltodolist.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -10,14 +10,10 @@ import java.util.*
 
 @Entity(tableName = "task")
 data class TaskEntity(
-//        val time: String,
-//        var task: String,
-//        var isGoalSet: Boolean
-//){constructor():this("12:00","test",true)}
-        @PrimaryKey(autoGenerate = true) val uid: Int,
+        @PrimaryKey(autoGenerate = true) val uid: Long = 0,
         @ColumnInfo(name = "taskDate")var taskDate: Date,
         @ColumnInfo(name = "taskTime")var taskTime: Date,
         @ColumnInfo(name = "task")var task: String,
-        @ColumnInfo(name = "isGoalSet")var isGoalSet: Boolean,
-        @ColumnInfo(name = "isCompleted") var isCompleted: Boolean
+        @ColumnInfo(name = "isGoalSet")var isGoalSet: Boolean?,
+        @ColumnInfo(name = "isCompleted") var isCompleted: Boolean?
 )

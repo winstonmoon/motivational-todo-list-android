@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.moonwinston.motivationaltodolist.adapters.MonthlyCalendarAdapter
 import com.moonwinston.motivationaltodolist.data.CalendarDate
-import com.moonwinston.motivationaltodolist.data.MonthEnum
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.viewmodels.MonthlyCalendarViewModel
 import java.text.SimpleDateFormat

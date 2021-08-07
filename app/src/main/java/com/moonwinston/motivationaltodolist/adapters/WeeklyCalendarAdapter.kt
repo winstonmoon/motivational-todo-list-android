@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.moonwinston.motivationaltodolist.data.entity.TaskEntity
+import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemWeeklyCalendarBinding
 
 class WeeklyCalendarAdapter: ListAdapter<TaskEntity, WeeklyCalendarAdapter.ViewHolder>(diffUtil){
