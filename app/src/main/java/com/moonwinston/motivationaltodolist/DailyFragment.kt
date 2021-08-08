@@ -34,9 +34,6 @@ class DailyFragment : Fragment() {
         binding.customviewPiechartDaily.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
         //TODO edit make percentage
         binding.textGoalPercent.text = "50%"
-//        val c = Calendar.getInstance().time
-//        sharedViewModel.getTasks(c)
-//        binding.textGoalPercent.text =
 
         return binding.root
     }
@@ -46,11 +43,14 @@ class DailyFragment : Fragment() {
         val layoutManager = LinearLayoutManager(view.context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerviewDailyTodo.layoutManager = layoutManager
-        binding.recyclerviewDailyTodo.adapter = DailyTaskAdapter()
+        val adapter = DailyTaskAdapter()
+        binding.recyclerviewDailyTodo.adapter = adapter
 
-        val today = CalendarUtil.getToday()
+        sharedViewModel.getTasks(CalendarUtil.getToday())
 
-//        binding.recyclerviewDailyTodo.adapter.setTask(sharedViewModel.getTasks(today))
+        sharedViewModel.todayTaskListLiveData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_daily_to_settings)

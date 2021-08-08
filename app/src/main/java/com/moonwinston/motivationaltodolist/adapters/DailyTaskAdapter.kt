@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemDailyTasksBinding
+import java.text.SimpleDateFormat
 
 class DailyTaskAdapter : ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(diffUtil) {
 
-    private var taskList: List<TaskEntity> = listOf()
+//    private var taskList: List<TaskEntity> = listOf()
 
     inner class ViewHolder(private val binding: ItemDailyTasksBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -19,7 +20,9 @@ class DailyTaskAdapter : ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(di
 //        binding.checkboxDailyTasks.isVisible = taskEntity.isGoalSet
             binding.textDailyTasks.text = taskEntity.task
             //TODO fix format
-            binding.timeDailyTasks.text = taskEntity.taskTime.toString()
+            val formatTime = SimpleDateFormat("HH:mm")
+            val time = formatTime.format(taskEntity.taskTime)
+            binding.timeDailyTasks.text = time
 //        binding.imagebuttonDailyTasks.isVisible = taskEntity.isCompleted
         }
     }
@@ -35,12 +38,8 @@ class DailyTaskAdapter : ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(di
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(taskList[position])
-    }
-
-    fun setTask(taskList: List<TaskEntity>) {
-        this.taskList = taskList
-        notifyDataSetChanged()
+//        holder.bind(taskList[position])
+        holder.bind(currentList[position])
     }
 
     companion object {

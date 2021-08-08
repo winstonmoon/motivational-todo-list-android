@@ -50,18 +50,20 @@ class MonthlyCalendarFragment : Fragment() {
             firstDayOfWeek = Calendar.MONDAY
         }
 
+        //TODO fix dayOfWeek logic more simple
         val maxDate: Int = calendar.getActualMaximum(Calendar.DATE)
         val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - 2
         val year: Int = calendar.get(Calendar.YEAR)
-        val month: Int = calendar.get(Calendar.MONTH) + 1
+        val month: Int = calendar.get(Calendar.MONTH)
+        val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
         val dayOfMonthList: MutableList<CalendarDate> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate()})
         for (date in 1..maxDate) {
             dayOfMonthList.add(
-                CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$month-$date"))
+                CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
             )
         }
         adapter.submitList(dayOfMonthList)
-        binding.textMonthlyMonth.text = MonthEnum.values()[month -1].name
+        binding.textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
     }
 
     companion object {
