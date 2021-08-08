@@ -17,7 +17,8 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
 
     fun getTasks(taskDate: Date) = viewModelScope.launch {
         val list = taskRepository.getTasks(taskDate)
-        _todayTaskListLiveData.value = list.map {
+        val sortedList = list.sortedBy { it.taskTime }
+        _todayTaskListLiveData.value = sortedList.map {
             TaskEntity(
                 uid = it.uid,
                 taskDate = it.taskDate,
