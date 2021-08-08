@@ -6,7 +6,7 @@ import java.util.*
 @Dao
 interface TaskDao {
 
-    @Query("SELECT * FROM task WHERE taskDate IN (:taskDate)")
+    @Query("SELECT * FROM task WHERE taskDate=:taskDate")
     suspend fun loadAllTasksByDate(taskDate: Date): List<TaskEntity>
 
 //    @Query("SELECT isGoalSet, isCompleted FROM task WHERE taskDate IN (:taskDate)")
