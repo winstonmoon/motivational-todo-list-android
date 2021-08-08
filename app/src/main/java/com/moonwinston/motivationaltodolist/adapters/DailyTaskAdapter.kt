@@ -1,7 +1,9 @@
 package com.moonwinston.motivationaltodolist.adapters
 
 import android.view.LayoutInflater
+import android.view.View.*
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,19 +13,21 @@ import java.text.SimpleDateFormat
 
 class DailyTaskAdapter : ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(diffUtil) {
 
-//    private var taskList: List<TaskEntity> = listOf()
-
     inner class ViewHolder(private val binding: ItemDailyTasksBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
-//        binding.checkboxDailyTasks.isVisible = taskEntity.isGoalSet
+            if (taskEntity.isGoalSet) {
+                binding.checkboxDailyTasks.visibility = VISIBLE
+            } else {
+                binding.checkboxDailyTasks.visibility = INVISIBLE
+            }
             binding.textDailyTasks.text = taskEntity.task
             //TODO fix format
             val formatTime = SimpleDateFormat("HH:mm")
             val time = formatTime.format(taskEntity.taskTime)
             binding.timeDailyTasks.text = time
-//        binding.imagebuttonDailyTasks.isVisible = taskEntity.isCompleted
+            binding.imagebuttonDailyTasks.isVisible = taskEntity.isCompleted.not()
         }
     }
 
@@ -38,7 +42,6 @@ class DailyTaskAdapter : ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(di
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.bind(taskList[position])
         holder.bind(currentList[position])
     }
 

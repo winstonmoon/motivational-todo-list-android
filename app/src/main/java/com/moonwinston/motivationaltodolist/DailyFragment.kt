@@ -49,6 +49,7 @@ class DailyFragment : Fragment() {
         sharedViewModel.getTasks(CalendarUtil.getToday())
 
         sharedViewModel.todayTaskListLiveData.observe(viewLifecycleOwner) {
+            sharedViewModel.getTasks(CalendarUtil.getToday())
             adapter.submitList(it)
         }
 
