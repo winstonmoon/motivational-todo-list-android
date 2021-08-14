@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.moonwinston.motivationaltodolist.adapters.RewardAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import com.moonwinston.motivationaltodolist.viewmodels.RewardsViewModel
@@ -30,10 +29,6 @@ class RewardsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textDate.text = RewardsViewModel.REWARDS_TITLE
-
-        val gridLayoutManager = GridLayoutManager(view.context, 5)
-        binding.recyclerviewRewards.layoutManager = gridLayoutManager
         binding.recyclerviewRewards.adapter = RewardAdapter()
 
         binding.buttonSettings.setOnClickListener {

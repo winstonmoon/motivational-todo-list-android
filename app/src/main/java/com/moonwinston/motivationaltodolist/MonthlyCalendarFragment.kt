@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.moonwinston.motivationaltodolist.adapters.MonthlyCalendarAdapter
 import com.moonwinston.motivationaltodolist.data.CalendarDate
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
-import com.moonwinston.motivationaltodolist.viewmodels.MonthlyCalendarViewModel
+import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MonthlyCalendarFragment : Fragment() {
 
     private lateinit var binding: FragmentMonthlyCalendarBinding
-    private lateinit var monthlyCalendarViewModel: MonthlyCalendarViewModel
+    private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffMonth: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,17 +31,12 @@ class MonthlyCalendarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        monthlyCalendarViewModel =
-            ViewModelProvider(this).get(MonthlyCalendarViewModel::class.java)
         binding = FragmentMonthlyCalendarBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val adapter = MonthlyCalendarAdapter()
-        binding.recyclerviewMonthlyCalendar.adapter = adapter
 
         val calendar: Calendar = Calendar.getInstance()
         calendar.apply {
@@ -62,6 +57,12 @@ class MonthlyCalendarFragment : Fragment() {
                 CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
             )
         }
+
+        sharedViewModel.setMonthlyTitle(month, year)
+
+        val adapter = MonthlyCalendarAdapter()
+        binding.recyclerviewMonthlyCalendar.adapter = adapter
+
         adapter.submitList(dayOfMonthList)
         binding.textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import kotlinx.coroutines.launch
@@ -32,5 +33,14 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
 
     fun insert(taskEntity: TaskEntity) = viewModelScope.launch {
         taskRepository.insertTask(taskEntity)
+    }
+
+    private var _monthlyTitle = MutableLiveData<String>()
+    val monthlyTitle: LiveData<String>
+        get() = _monthlyTitle
+
+    fun setMonthlyTitle(month: Int, year: Int) = viewModelScope.launch {
+        val parsedMonth = MonthEnum.values()[month].name
+        _monthlyTitle.value = "$parsedMonth $year"
     }
 }

@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="entries_notify_tasks">
+
+    <string-array name="notify_array">
         <item>0ff</item>
         <item>5 min</item>
         <item>10 min</item>
@@ -8,19 +10,18 @@
         <item>1 hour</item>
     </string-array>
 
-    <string-array name="values_notify_tasks">
-        <item>0</item>
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
+    <string-array name="theme_array">
+        <item>follow system</item>
+        <item>dark</item>
+        <item>light</item>
     </string-array>
 
-    <declare-styleable name="CalendarView">
-        <attr name="calendarViewStyle" format="reference" />
-        <attr name="itemViewStyle" format="reference" />
-        <attr name="dayHeight" format="dimension"/>
-        <attr name="dayTextSize" format="dimension"/>
-    </declare-styleable>
+    <string-array name="language_array">
+        <item>follow system</item>
+        <item>English</item>
+        <item>한국어</item>
+        <item>日本語</item>
+        <item>简体字</item>
+    </string-array>
+
 </resources>

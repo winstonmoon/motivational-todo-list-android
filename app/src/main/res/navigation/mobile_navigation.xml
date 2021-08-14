@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/navigation_reward"
         android:name="com.moonwinston.motivationaltodolist.RewardsFragment"
-        android:label="@string/title_reward"
+        android:label="@string/title_rewards"
         tools:layout="@layout/fragment_rewards">
         <action
             android:id="@+id/action_reward_to_settings"
@@ -60,7 +60,8 @@
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.moonwinston.motivationaltodolist.SettingsFragment"
-        tools:xml="@xml/root_preferences" />
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
 
     <dialog
         android:id="@+id/navigation_add"

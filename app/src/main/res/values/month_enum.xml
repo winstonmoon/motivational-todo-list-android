@@ -13,18 +13,18 @@
     <string name="nov_number">11</string>
     <string name="dec_number">12</string>
 
-    <string name="jan_abbreviation">JAN</string>
-    <string name="feb_abbreviation">FEB</string>
-    <string name="mar_abbreviation">MAR</string>
-    <string name="apr_abbreviation">APR</string>
-    <string name="may_abbreviation">MAY</string>
-    <string name="jun_abbreviation">JUN</string>
-    <string name="jul_abbreviation">JUL</string>
-    <string name="aug_abbreviation">AUG</string>
-    <string name="sep_abbreviation">SEP</string>
-    <string name="oct_abbreviation">OCT</string>
-    <string name="nov_abbreviation">NOV</string>
-    <string name="dec_abbreviation">DEC</string>
+    <string name="jan_abbreviation">Jan</string>
+    <string name="feb_abbreviation">Feb</string>
+    <string name="mar_abbreviation">Mar</string>
+    <string name="apr_abbreviation">Apr</string>
+    <string name="may_abbreviation">May</string>
+    <string name="jun_abbreviation">Jun</string>
+    <string name="jul_abbreviation">Jul</string>
+    <string name="aug_abbreviation">Aug</string>
+    <string name="sep_abbreviation">Sep</string>
+    <string name="oct_abbreviation">Oct</string>
+    <string name="nov_abbreviation">Nov</string>
+    <string name="dec_abbreviation">Dec</string>
 
 
 </resources>
