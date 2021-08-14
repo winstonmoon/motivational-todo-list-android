@@ -5,16 +5,13 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
-import android.view.WindowManager
-import android.widget.CalendarView
 import androidx.fragment.app.DialogFragment
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
-import org.koin.android.ext.android.bind
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddDialogFragment : DialogFragment() {
     private lateinit var binding: DialogAddBinding
@@ -24,7 +21,7 @@ class AddDialogFragment : DialogFragment() {
 
     private var isDateChanged = false
 
-    private val sharedViewModel: SharedViewModel by viewModel()
+    private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -47,8 +44,6 @@ class AddDialogFragment : DialogFragment() {
             builder.setView(binding.root)
                 .setPositiveButton(R.string.button_add,
                     DialogInterface.OnClickListener { _, _ ->
-//                        date = Date(binding.viewCalendar.date)
-
                         if (isDateChanged.not()) {
                             val todayString = formatDate.format(Date(binding.viewCalendar.date))
                             date = formatDate.parse(todayString)

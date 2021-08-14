@@ -1,26 +1,24 @@
 package com.moonwinston.motivationaltodolist
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.moonwinston.motivationaltodolist.adapters.DailyTaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 import com.moonwinston.motivationaltodolist.viewmodels.DailyViewModel
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import java.util.*
 
 
 class DailyFragment : Fragment() {
 
     private lateinit var binding: FragmentDailyBinding
     private lateinit var dailyViewModel: DailyViewModel
-    private val sharedViewModel: SharedViewModel by viewModel()
+    private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,11 +38,15 @@ class DailyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val layoutManager = LinearLayoutManager(view.context)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding.recyclerviewDailyTodo.layoutManager = layoutManager
         val adapter = DailyTaskAdapter()
         binding.recyclerviewDailyTodo.adapter = adapter
+
+        //TODO fix
+        val date = Calendar.getInstance().get(Calendar.DATE)
+        val month = Calendar.getInstance().get(Calendar.MONTH)
+        val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
+        val year = Calendar.getInstance().get(Calendar.YEAR)
+        binding.textDate.text = "Today, $parsedMonth $date, $year"
 
         sharedViewModel.getTasks(CalendarUtil.getToday())
 

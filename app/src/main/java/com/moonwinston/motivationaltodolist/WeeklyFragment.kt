@@ -7,19 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.moonwinston.motivationaltodolist.adapters.WeeklyCalendarAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.adapters.WeeklyTaskAdapter
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import com.moonwinston.motivationaltodolist.viewmodels.WeeklyViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class WeeklyFragment : Fragment() {
 
     private lateinit var binding: FragmentWeeklyBinding
     private lateinit var weeklyViewModel: WeeklyViewModel
-    private val sharedViewModel: SharedViewModel by viewModel()
+    private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -35,10 +34,6 @@ class WeeklyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewpagerWeeklyCalendar.adapter = WeeklyCalendarAdapter()
-
-        val taskLayoutManager = LinearLayoutManager(view.context)
-        taskLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding.recyclerviewWeeklyTodo.layoutManager = taskLayoutManager
         binding.recyclerviewWeeklyTodo.adapter = WeeklyTaskAdapter()
 
         binding.buttonSettings.setOnClickListener {
