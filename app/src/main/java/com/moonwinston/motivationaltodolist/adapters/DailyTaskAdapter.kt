@@ -14,6 +14,7 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemDailyTasksBinding
 import java.text.SimpleDateFormat
+import java.util.*
 
 class DailyTaskAdapter : ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(diffUtil) {
 
@@ -48,7 +49,6 @@ class DailyTaskAdapter : ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(di
                 }
                 popupMenu.show()
             }
-
             binding.imagebuttonDailyTasks.isVisible = taskEntity.isCompleted.not()
         }
     }

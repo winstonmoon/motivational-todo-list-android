@@ -6,27 +6,55 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.CalendarDate
 import com.moonwinston.motivationaltodolist.databinding.ItemMonthlyCalendarBinding
-import java.text.SimpleDateFormat
+import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 
-class MonthlyCalendarAdapter: ListAdapter<CalendarDate, MonthlyCalendarAdapter.ViewHolder>(diffUtil){
+class MonthlyCalendarAdapter :
+    ListAdapter<CalendarDate, MonthlyCalendarAdapter.ViewHolder>(diffUtil) {
 
-    inner class ViewHolder(private val binding: ItemMonthlyCalendarBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemMonthlyCalendarBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        private val nonExistDate = CalendarUtil.getNonExistDate()
+        private val today = CalendarUtil.getToday()
 
         fun bind(calendarDate: CalendarDate) {
-                if (calendarDate.calendarDate == SimpleDateFormat("yyyy-MM-dd").parse("0000-00-00")) {
-                binding.textMonthlyDate.visibility = View.GONE
-                binding.customviewPiechartMonthly.visibility = View.GONE
-            } else {
-                binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
-                binding.customviewPiechartMonthly.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 10F, 5F)
+            when (calendarDate.calendarDate) {
+                nonExistDate -> {
+                    binding.textMonthlyDate.visibility = View.GONE
+                    binding.customviewPiechartMonthly.visibility = View.GONE
+                }
+                today -> {
+                    binding.textMonthlyDate.setBackgroundResource(R.drawable.bg_shape_oval_red)
+                    binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
+                    binding.customviewPiechartMonthly.setPercentAndBoardWidthAndProgressiveWidth(
+                        0.5F,
+                        10F,
+                        5F
+                    )
+                }
+                else -> {
+                    binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
+                    binding.customviewPiechartMonthly.setPercentAndBoardWidthAndProgressiveWidth(
+                        0.5F,
+                        10F,
+                        5F
+                    )
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemMonthlyCalendarBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(
+            ItemMonthlyCalendarBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -38,6 +66,7 @@ class MonthlyCalendarAdapter: ListAdapter<CalendarDate, MonthlyCalendarAdapter.V
             override fun areItemsTheSame(oldItem: CalendarDate, newItem: CalendarDate): Boolean {
                 return oldItem == newItem
             }
+
             override fun areContentsTheSame(oldItem: CalendarDate, newItem: CalendarDate): Boolean {
                 return oldItem == newItem
             }
