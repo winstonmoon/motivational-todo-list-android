@@ -22,7 +22,7 @@ class MonthlyCalendarFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            diffMonth = it.getInt(DIFF_MOTH)
+            diffMonth = it.getInt(DIFF_MONTH)
         }
     }
 
@@ -46,6 +46,7 @@ class MonthlyCalendarFragment : Fragment() {
         }
 
         //TODO fix dayOfWeek logic more simple
+        //TODO viewmodel
         val maxDate: Int = calendar.getActualMaximum(Calendar.DATE)
         val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - 2
         val year: Int = calendar.get(Calendar.YEAR)
@@ -69,11 +70,11 @@ class MonthlyCalendarFragment : Fragment() {
 
     companion object {
 
-        private const val DIFF_MOTH = "diffMonth"
+        private const val DIFF_MONTH = "diffMonth"
 
-        fun newInstance(diffMoth: Int) = MonthlyCalendarFragment().apply {
+        fun newInstance(diffMonth: Int) = MonthlyCalendarFragment().apply {
             arguments = Bundle().apply {
-                putInt(DIFF_MOTH, diffMoth)
+                putInt(DIFF_MONTH, diffMonth)
             }
         }
     }

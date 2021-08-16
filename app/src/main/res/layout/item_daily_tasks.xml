@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_margin="5dp">
 
         <androidx.appcompat.widget.AppCompatCheckBox
@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view_underline"
             app:layout_constraintEnd_toStartOf="@id/text_daily_tasks"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
             android:autoSizeTextType="uniform"
             android:text="12:00"
             android:textColor="@color/gray"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view_underline"
             app:layout_constraintEnd_toStartOf="@id/imagebutton_daily_tasks"
             app:layout_constraintStart_toEndOf="@id/checkbox_daily_tasks"
             app:layout_constraintTop_toBottomOf="@id/text_daily_tasks" />
@@ -49,10 +49,21 @@
             android:background="@drawable/bg_ripple_oval"
             android:src="@drawable/ic_baseline_edit_24"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view_underline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/text_daily_tasks"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_underline"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"
+            android:layout_marginTop="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/checkbox_daily_tasks"
+            app:layout_constraintTop_toBottomOf="@id/time_daily_tasks" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

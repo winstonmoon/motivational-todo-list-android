@@ -5,7 +5,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.moonwinston.motivationaltodolist.MonthlyCalendarFragment
 
 class MonthlyScreenSlidePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-
     override fun createFragment(position: Int): MonthlyCalendarFragment {
         val diffMonth = position - START_POSITION
         return MonthlyCalendarFragment.newInstance(diffMonth)

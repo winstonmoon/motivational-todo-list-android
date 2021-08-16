@@ -39,7 +39,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/bg_shape_round_charcoal"
+            android:background="@drawable/bg_shape_roundedrectangle_charcoal"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
