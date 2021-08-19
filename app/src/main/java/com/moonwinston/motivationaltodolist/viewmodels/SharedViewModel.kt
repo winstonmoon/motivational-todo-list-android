@@ -35,12 +35,68 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         taskRepository.insertTask(taskEntity)
     }
 
-    private var _monthlyTitle = MutableLiveData<String>()
-    val monthlyTitle: LiveData<String>
-        get() = _monthlyTitle
+    private var _monthlyTitleLiveData = MutableLiveData<String>()
+    val monthlyTitleLiveData: LiveData<String>
+        get() = _monthlyTitleLiveData
 
     fun setMonthlyTitle(month: Int, year: Int) = viewModelScope.launch {
         val parsedMonth = MonthEnum.values()[month].name
-        _monthlyTitle.value = "$parsedMonth $year"
+        _monthlyTitleLiveData.value = "$parsedMonth $year"
+    }
+
+    private var _isMondaySelectedLiveData = MutableLiveData<Boolean>()
+    val isMondaySelectedLiveData: LiveData<Boolean>
+        get() = _isMondaySelectedLiveData
+
+    fun selectMonday() = viewModelScope.launch {
+        _isMondaySelectedLiveData.value = true
+    }
+
+    private var _isTuesdaySelectedLiveData = MutableLiveData<Boolean>()
+    val isTuesdaySelectedLiveData: LiveData<Boolean>
+        get() = _isTuesdaySelectedLiveData
+
+    fun selectTuesday() = viewModelScope.launch {
+        _isTuesdaySelectedLiveData.value = true
+    }
+
+    private var _isWednesdaySelectedLiveData = MutableLiveData<Boolean>()
+    val isWednesdaySelectedLiveData: LiveData<Boolean>
+        get() = _isWednesdaySelectedLiveData
+
+    fun selectWednesday() = viewModelScope.launch {
+        _isWednesdaySelectedLiveData.value = true
+    }
+
+    private var _isThursdaySelectedLiveData = MutableLiveData<Boolean>()
+    val isThursdaySelectedLiveData: LiveData<Boolean>
+        get() = _isThursdaySelectedLiveData
+
+    fun selectThursday() = viewModelScope.launch {
+        _isThursdaySelectedLiveData.value = true
+    }
+
+    private var _isFridaySelectedLiveData = MutableLiveData<Boolean>()
+    val isFridaySelectedLiveData: LiveData<Boolean>
+        get() = _isFridaySelectedLiveData
+
+    fun selectFriday() = viewModelScope.launch {
+        _isFridaySelectedLiveData.value = true
+    }
+
+    private var _isSaturdaySelectedLiveData = MutableLiveData<Boolean>()
+    val isSaturdaySelectedLiveData: LiveData<Boolean>
+        get() = _isSaturdaySelectedLiveData
+
+    fun selectSaturday() = viewModelScope.launch {
+        _isSaturdaySelectedLiveData.value = true
+    }
+
+    private var _isSundaySelectedLiveData = MutableLiveData<Boolean>()
+    val isSundaySelectedLiveData: LiveData<Boolean>
+        get() = _isSundaySelectedLiveData
+
+    fun selectSunday() = viewModelScope.launch {
+        _isSundaySelectedLiveData.value = true
     }
 }

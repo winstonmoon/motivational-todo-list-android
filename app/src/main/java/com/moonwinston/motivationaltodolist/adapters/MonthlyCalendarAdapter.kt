@@ -27,7 +27,7 @@ class MonthlyCalendarAdapter :
                     binding.customviewPiechartMonthly.visibility = View.GONE
                 }
                 today -> {
-                    binding.textMonthlyDate.setBackgroundResource(R.drawable.bg_shape_oval_red)
+                    binding.textMonthlyDate.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
                     binding.customviewPiechartMonthly.setPercentAndBoardWidthAndProgressiveWidth(
                         0.5F,

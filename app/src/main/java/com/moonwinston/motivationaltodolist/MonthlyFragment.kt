@@ -42,7 +42,7 @@ class MonthlyFragment : Fragment(){
 //            }
 //        })
 
-        sharedViewModel.monthlyTitle.observe(viewLifecycleOwner) {
+        sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
             binding.textDate.text = it
         }
 

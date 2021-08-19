@@ -9,6 +9,7 @@ import com.moonwinston.motivationaltodolist.adapters.WeeklyCalendarAdapter
 import com.moonwinston.motivationaltodolist.data.CalendarDate
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -56,9 +57,70 @@ class WeeklyCalendarFragment : Fragment() {
             )
         }
 
-        val adapter = WeeklyCalendarAdapter()
-        binding.recyclerviewWeeklyCalendar.adapter = adapter
-        adapter.submitList(dayOfWeekList)
+        binding.customviewPiechartMonday.setPercentAndBoardWidthAndProgressiveWidth(
+            0.5F,
+            10F,
+            5F
+        )
+        binding.customviewPiechartTuesday.setPercentAndBoardWidthAndProgressiveWidth(
+            0.5F,
+            10F,
+            5F
+        )
+        binding.customviewPiechartWednesday.setPercentAndBoardWidthAndProgressiveWidth(
+            0.5F,
+            10F,
+            5F
+        )
+        binding.customviewPiechartWednesday.setPercentAndBoardWidthAndProgressiveWidth(
+            0.5F,
+            10F,
+            5F
+        )
+        binding.customviewPiechartThursday.setPercentAndBoardWidthAndProgressiveWidth(
+            0.5F,
+            10F,
+            5F
+        )
+        binding.customviewPiechartFriday.setPercentAndBoardWidthAndProgressiveWidth(
+            0.5F,
+            10F,
+            5F
+        )
+        binding.customviewPiechartSaturday.setPercentAndBoardWidthAndProgressiveWidth(
+            0.5F,
+            10F,
+            5F
+        )
+        binding.customviewPiechartSunday.setPercentAndBoardWidthAndProgressiveWidth(
+            0.5F,
+            10F,
+            5F
+        )
+
+
+        binding.customviewPiechartMonday.setOnClickListener {
+            sharedViewModel.selectMonday()
+        }
+        binding.customviewPiechartTuesday.setOnClickListener {
+            sharedViewModel.selectTuesday()
+        }
+        binding.customviewPiechartWednesday.setOnClickListener {
+            sharedViewModel.selectWednesday()
+        }
+        binding.customviewPiechartThursday.setOnClickListener {
+            sharedViewModel.selectThursday()
+        }
+
+        binding.customviewPiechartFriday.setOnClickListener {
+            sharedViewModel.selectFriday()
+        }
+        binding.customviewPiechartSaturday.setOnClickListener {
+            sharedViewModel.selectSaturday()
+        }
+        binding.customviewPiechartSunday.setOnClickListener {
+            sharedViewModel.selectSunday()
+        }
     }
 
     companion object {
