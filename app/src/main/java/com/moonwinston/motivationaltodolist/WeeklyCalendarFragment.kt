@@ -40,20 +40,15 @@ class WeeklyCalendarFragment : Fragment() {
 
         val calendar: Calendar = Calendar.getInstance()
         calendar.apply {
-//            add(Calendar.WEEK_OF_YEAR, diffWeek)
-//            set(Calendar.DAY_OF_MONTH, 1)
             firstDayOfWeek = Calendar.MONDAY
         }
 
         //TODO fix dayOfWeek logic more simple
         //TODO viewmodel
-//        val maxDate: Int = calendar.getActualMaximum(Calendar.DATE)
-//        val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - 2
         val year: Int = calendar.get(Calendar.YEAR)
         val month: Int = calendar.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
         val dayOfWeekList: MutableList<CalendarDate> = mutableListOf<CalendarDate>()
-//            MutableList(if (dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate() })
 
         for (date in 1..7) {
             dayOfWeekList.add(
@@ -61,13 +56,6 @@ class WeeklyCalendarFragment : Fragment() {
             )
         }
 
-//        val dayOfMonthList: MutableList<CalendarDate> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate() })
-//        for (date in 1..maxDate) {
-//            dayOfMonthList.add(
-//                CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
-//            )
-//        }
-//        sharedViewModel.setMonthlyTitle(month, year)
         val adapter = WeeklyCalendarAdapter()
         binding.recyclerviewWeeklyCalendar.adapter = adapter
         adapter.submitList(dayOfWeekList)
