@@ -19,6 +19,11 @@ class MonthlyCalendarFragment : Fragment() {
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffMonth: Int = 0
 
+    //TODO fix
+    private var year: Int = 0
+    private var month: Int = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -49,8 +54,8 @@ class MonthlyCalendarFragment : Fragment() {
         //TODO viewmodel
         val maxDate: Int = calendar.getActualMaximum(Calendar.DATE)
         val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - 2
-        val year: Int = calendar.get(Calendar.YEAR)
-        val month: Int = calendar.get(Calendar.MONTH)
+        year = calendar.get(Calendar.YEAR)
+        month = calendar.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
         val dayOfMonthList: MutableList<CalendarDate> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate()})
         for (date in 1..maxDate) {
@@ -66,6 +71,11 @@ class MonthlyCalendarFragment : Fragment() {
 
         adapter.submitList(dayOfMonthList)
         binding.textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.setMonthlyTitle(month, year)
     }
 
     companion object {
