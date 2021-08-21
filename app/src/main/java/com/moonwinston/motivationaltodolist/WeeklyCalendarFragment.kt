@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.moonwinston.motivationaltodolist.adapters.WeeklyCalendarAdapter
 import com.moonwinston.motivationaltodolist.data.CalendarDate
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
@@ -37,28 +36,126 @@ class WeeklyCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        diffWeek *= 7
         val calendar: Calendar = Calendar.getInstance()
         calendar.apply {
+            add(Calendar.DATE, diffWeek)
             firstDayOfWeek = Calendar.MONDAY
         }
 
         //TODO fix dayOfWeek logic more simple
         //TODO viewmodel
-        val year: Int = calendar.get(Calendar.YEAR)
-        val month: Int = calendar.get(Calendar.MONTH)
-        val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-        val dayOfWeekList: MutableList<CalendarDate> = mutableListOf<CalendarDate>()
+        val diffDate: Int = 2 - calendar.get(Calendar.DAY_OF_WEEK)
+        calendar.add(Calendar.DATE, diffDate)
+        val weekList: MutableList<CalendarDate> = mutableListOf<CalendarDate>()
 
         for (date in 1..7) {
-            dayOfWeekList.add(
+            val year: Int = calendar.get(Calendar.YEAR)
+            val month: Int = calendar.get(Calendar.MONTH)
+            val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
+            val date: Int = calendar.get(Calendar.DATE)
+
+            weekList.add(
                 CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
+            )
+            calendar.add(Calendar.DATE, 1)
+        }
+
+        binding.customviewPiechartMonday.apply {
+            setCalendarDate(weekList[0].calendarDate)
+            setPercentAndBoardWidthAndProgressiveWidth(
+                0.5F,
+                10F,
+                5F
             )
         }
 
-        val adapter = WeeklyCalendarAdapter()
-        binding.recyclerviewWeeklyCalendar.adapter = adapter
-        adapter.submitList(dayOfWeekList)
+        binding.customviewPiechartTuesday.apply {
+            setCalendarDate(weekList[1].calendarDate)
+            setPercentAndBoardWidthAndProgressiveWidth(
+                0.5F,
+                10F,
+                5F
+            )
+        }
+
+        binding.customviewPiechartWednesday.apply {
+            setCalendarDate(weekList[2].calendarDate)
+            setPercentAndBoardWidthAndProgressiveWidth(
+                0.5F,
+                10F,
+                5F
+            )
+        }
+
+        binding.customviewPiechartThursday.apply {
+            setCalendarDate(weekList[3].calendarDate)
+            setPercentAndBoardWidthAndProgressiveWidth(
+                0.5F,
+                10F,
+                5F
+            )
+        }
+
+        binding.customviewPiechartFriday.apply {
+            setCalendarDate(weekList[4].calendarDate)
+            setPercentAndBoardWidthAndProgressiveWidth(
+                0.5F,
+                10F,
+                5F
+            )
+        }
+
+        binding.customviewPiechartSaturday.apply {
+            setCalendarDate(weekList[5].calendarDate)
+            setPercentAndBoardWidthAndProgressiveWidth(
+                0.5F,
+                10F,
+                5F
+            )
+        }
+        binding.customviewPiechartSunday.apply {
+            setCalendarDate(weekList[6].calendarDate)
+            setPercentAndBoardWidthAndProgressiveWidth(
+                0.5F,
+                10F,
+                5F
+            )
+        }
+
+        //TODO implement set date
+        binding.customviewPiechartMonday.setOnClickListener {
+            sharedViewModel.selectMonday(binding.customviewPiechartMonday.getCalendarDate())
+        }
+        binding.customviewPiechartTuesday.setOnClickListener {
+            sharedViewModel.selectTuesday(binding.customviewPiechartTuesday.getCalendarDate())
+        }
+        binding.customviewPiechartWednesday.setOnClickListener {
+            sharedViewModel.selectWednesday(binding.customviewPiechartWednesday.getCalendarDate())
+        }
+        binding.customviewPiechartThursday.setOnClickListener {
+            sharedViewModel.selectThursday(binding.customviewPiechartThursday.getCalendarDate())
+        }
+
+        binding.customviewPiechartFriday.setOnClickListener {
+            sharedViewModel.selectFriday(binding.customviewPiechartFriday.getCalendarDate())
+        }
+        binding.customviewPiechartSaturday.setOnClickListener {
+            sharedViewModel.selectSaturday(binding.customviewPiechartSaturday.getCalendarDate())
+        }
+        binding.customviewPiechartSunday.setOnClickListener {
+            sharedViewModel.selectSunday(binding.customviewPiechartSunday.getCalendarDate())
+        }
+    }
+
+    private fun formatDate(calendarDate: Date): String {
+        val year = calendarDate.year
+        val month = calendarDate.month
+        val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
+        val date = calendarDate.day
+
+        val fixedDate = "Today, $parsedMonth $date, $year"
+        return fixedDate
     }
 
     companion object {
