@@ -44,59 +44,75 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         _monthlyTitleLiveData.value = "$parsedMonth $year"
     }
 
-    private var _isMondaySelectedLiveData = MutableLiveData<Boolean>()
-    val isMondaySelectedLiveData: LiveData<Boolean>
+    private var _isMondaySelectedLiveData = MutableLiveData<Date>()
+    val isMondaySelectedLiveData: LiveData<Date>
         get() = _isMondaySelectedLiveData
 
-    fun selectMonday() = viewModelScope.launch {
-        _isMondaySelectedLiveData.value = true
+    fun selectMonday(weeklyTitle: Date) = viewModelScope.launch {
+        _isMondaySelectedLiveData.value = weeklyTitle
     }
 
-    private var _isTuesdaySelectedLiveData = MutableLiveData<Boolean>()
-    val isTuesdaySelectedLiveData: LiveData<Boolean>
+    private var _isTuesdaySelectedLiveData = MutableLiveData<Date>()
+    val isTuesdaySelectedLiveData: LiveData<Date>
         get() = _isTuesdaySelectedLiveData
 
-    fun selectTuesday() = viewModelScope.launch {
-        _isTuesdaySelectedLiveData.value = true
+    fun selectTuesday(weeklyTitle: Date) = viewModelScope.launch {
+        _isTuesdaySelectedLiveData.value = weeklyTitle
     }
 
-    private var _isWednesdaySelectedLiveData = MutableLiveData<Boolean>()
-    val isWednesdaySelectedLiveData: LiveData<Boolean>
+    private var _isWednesdaySelectedLiveData = MutableLiveData<Date>()
+    val isWednesdaySelectedLiveData: LiveData<Date>
         get() = _isWednesdaySelectedLiveData
 
-    fun selectWednesday() = viewModelScope.launch {
-        _isWednesdaySelectedLiveData.value = true
+    fun selectWednesday(weeklyTitle: Date) = viewModelScope.launch {
+        _isWednesdaySelectedLiveData.value = weeklyTitle
     }
 
-    private var _isThursdaySelectedLiveData = MutableLiveData<Boolean>()
-    val isThursdaySelectedLiveData: LiveData<Boolean>
+    private var _isThursdaySelectedLiveData = MutableLiveData<Date>()
+    val isThursdaySelectedLiveData: LiveData<Date>
         get() = _isThursdaySelectedLiveData
 
-    fun selectThursday() = viewModelScope.launch {
-        _isThursdaySelectedLiveData.value = true
+    fun selectThursday(weeklyTitle: Date) = viewModelScope.launch {
+        _isThursdaySelectedLiveData.value = weeklyTitle
     }
 
-    private var _isFridaySelectedLiveData = MutableLiveData<Boolean>()
-    val isFridaySelectedLiveData: LiveData<Boolean>
+    private var _isFridaySelectedLiveData = MutableLiveData<Date>()
+    val isFridaySelectedLiveData: LiveData<Date>
         get() = _isFridaySelectedLiveData
 
-    fun selectFriday() = viewModelScope.launch {
-        _isFridaySelectedLiveData.value = true
+    fun selectFriday(weeklyTitle: Date) = viewModelScope.launch {
+        _isFridaySelectedLiveData.value = weeklyTitle
     }
 
-    private var _isSaturdaySelectedLiveData = MutableLiveData<Boolean>()
-    val isSaturdaySelectedLiveData: LiveData<Boolean>
+    private var _isSaturdaySelectedLiveData = MutableLiveData<Date>()
+    val isSaturdaySelectedLiveData: LiveData<Date>
         get() = _isSaturdaySelectedLiveData
 
-    fun selectSaturday() = viewModelScope.launch {
-        _isSaturdaySelectedLiveData.value = true
+    fun selectSaturday(weeklyTitle: Date) = viewModelScope.launch {
+        _isSaturdaySelectedLiveData.value = weeklyTitle
     }
 
-    private var _isSundaySelectedLiveData = MutableLiveData<Boolean>()
-    val isSundaySelectedLiveData: LiveData<Boolean>
+    private var _isSundaySelectedLiveData = MutableLiveData<Date>()
+    val isSundaySelectedLiveData: LiveData<Date>
         get() = _isSundaySelectedLiveData
 
-    fun selectSunday() = viewModelScope.launch {
-        _isSundaySelectedLiveData.value = true
+    fun selectSunday(weeklyTitle: Date) = viewModelScope.launch {
+        _isSundaySelectedLiveData.value = weeklyTitle
+    }
+
+    fun getArchivementRate(taskDate: Date): Float {
+        val list = taskRepository.getTasks(taskDate)
+        val sortedList = list.sortedBy { it.taskTime }
+        _todayTaskListLiveData.value = sortedList.map {
+            TaskEntity(
+                uid = it.uid,
+                taskDate = it.taskDate,
+                taskTime = it.taskTime,
+                task = it.task,
+                isGoalSet = it.isGoalSet,
+                isCompleted = it.isCompleted
+            )
+        }
+        return 0F
     }
 }

@@ -32,16 +32,6 @@ class MonthlyFragment : Fragment(){
         binding.viewpagerCalendar.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
         binding.viewpagerCalendar.setPageTransformer(ZoomOutPageTransformer())
 
-//        binding.viewpagerCalendar.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-//            override fun onPageSelected(position: Int) {
-//                super.onPageSelected(position)
-//
-//                sharedViewModel.monthlyTitle.observe(viewLifecycleOwner) {
-//                    binding.textDate.text = it
-//                }
-//            }
-//        })
-
         sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
             binding.textDate.text = it
         }

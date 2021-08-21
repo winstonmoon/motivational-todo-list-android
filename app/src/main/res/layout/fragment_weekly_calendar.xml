@@ -12,50 +12,43 @@
             android:id="@+id/customview_piechart_monday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
         <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
             android:id="@+id/customview_piechart_tuesday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
         <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
             android:id="@+id/customview_piechart_wednesday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
         <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
             android:id="@+id/customview_piechart_thursday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
         <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
             android:id="@+id/customview_piechart_friday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
         <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
             android:id="@+id/customview_piechart_saturday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
         <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
             android:id="@+id/customview_piechart_sunday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
     </LinearLayout>
 

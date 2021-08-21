@@ -21,12 +21,12 @@ class MonthlyCalendarAdapter :
         private val today = CalendarUtil.getToday()
 
         fun bind(calendarDate: CalendarDate) {
-            when (calendarDate.calendarDate) {
-                nonExistDate -> {
+            when {
+                calendarDate.calendarDate == nonExistDate -> {
                     binding.textMonthlyDate.visibility = View.GONE
                     binding.customviewPiechartMonthly.visibility = View.GONE
                 }
-                today -> {
+                calendarDate.calendarDate == today -> {
                     binding.textMonthlyDate.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
                     binding.customviewPiechartMonthly.setPercentAndBoardWidthAndProgressiveWidth(
@@ -34,6 +34,10 @@ class MonthlyCalendarAdapter :
                         10F,
                         5F
                     )
+                }
+                calendarDate.calendarDate.after(today) -> {
+                    binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
+                    binding.customviewPiechartMonthly.visibility = View.INVISIBLE
                 }
                 else -> {
                     binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
