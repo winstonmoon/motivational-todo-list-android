@@ -99,20 +99,4 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
     fun selectSunday(weeklyTitle: Date) = viewModelScope.launch {
         _isSundaySelectedLiveData.value = weeklyTitle
     }
-
-    fun getArchivementRate(taskDate: Date): Float {
-        val list = taskRepository.getTasks(taskDate)
-        val sortedList = list.sortedBy { it.taskTime }
-        _todayTaskListLiveData.value = sortedList.map {
-            TaskEntity(
-                uid = it.uid,
-                taskDate = it.taskDate,
-                taskTime = it.taskTime,
-                task = it.task,
-                isGoalSet = it.isGoalSet,
-                isCompleted = it.isCompleted
-            )
-        }
-        return 0F
-    }
 }
