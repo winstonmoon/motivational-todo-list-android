@@ -8,6 +8,7 @@ import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() {
@@ -98,5 +99,38 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
 
     fun selectSunday(weeklyTitle: Date) = viewModelScope.launch {
         _isSundaySelectedLiveData.value = weeklyTitle
+    }
+
+    //TODO fix
+    suspend fun getRate(date: Date) =
+        withContext(viewModelScope.coroutineContext) {
+            var allNumber: Int = 0
+            var doneNumber: Int = 0
+            val list = taskRepository.getTasks(date)
+            for (a in list) {
+                if (a.isCompleted) {
+                    allNumber += 1
+                }
+                if (a.isGoalSet) {
+                    doneNumber += 1
+                }
+            }
+            allNumber / doneNumber
+        }
+
+    private var _selectedTaskListLiveData = MutableLiveData<List<TaskEntity>>()
+    val selectedTaskListLiveData: LiveData<List<TaskEntity>>
+        get() = _selectedTaskListLiveData
+
+    fun updateTasks(taskEntity: TaskEntity) = viewModelScope.launch {
+        val list = taskRepository.updateTask(taskEntity)
+    }
+
+    private var _deleteTaskListLiveData = MutableLiveData<List<TaskEntity>>()
+    val deleteTaskListLiveData: LiveData<List<TaskEntity>>
+        get() = _deleteTaskListLiveData
+
+    fun deleteTasks(taskEntity: TaskEntity) = viewModelScope.launch {
+        val list = taskRepository.updateTask(taskEntity)
     }
 }

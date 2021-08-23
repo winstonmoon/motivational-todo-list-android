@@ -17,14 +17,30 @@ class AddDialogFragment : DialogFragment() {
     private lateinit var binding: DialogAddBinding
     private lateinit var date: Date
 
+    private lateinit var dmlState: DmlState
+    private lateinit var taskEntity: TaskEntity
+
     private val formatDate = SimpleDateFormat("yyyy-MM-dd")
 
     private var isDateChanged = false
 
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        dmlState = arguments?.getParcelable<DmlState>("dmlState") as DmlState
+        taskEntity = arguments?.getParcelable<TaskEntity>("taskEntity") as TaskEntity
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
+            when(dmlState) {
+                DmlState.Insert -> insert()
+
+                DmlState.Update -> update(taskEntity)
+
+            }
+            //TODO fix
             val builder = AlertDialog.Builder(it, R.style.CustomAlertDialog)
             binding = DialogAddBinding.inflate(layoutInflater)
             binding.inputTime.setIs24HourView(true)
@@ -77,5 +93,13 @@ class AddDialogFragment : DialogFragment() {
                     })
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    private fun insert() {
+
+    }
+
+    private fun update(taskEntity: TaskEntity) {
+
     }
 }

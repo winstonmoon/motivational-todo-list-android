@@ -47,9 +47,13 @@ class WeeklyCalendarFragment : Fragment() {
         //TODO viewmodel
         val diffDate: Int = 2 - calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, diffDate)
+        //TODO
+        val today = Calendar.getInstance().time
         val weekList: MutableList<CalendarDate> = mutableListOf<CalendarDate>()
 
         for (date in 1..7) {
+            //TODO
+            val today = Calendar.getInstance().time
             val year: Int = calendar.get(Calendar.YEAR)
             val month: Int = calendar.get(Calendar.MONTH)
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
