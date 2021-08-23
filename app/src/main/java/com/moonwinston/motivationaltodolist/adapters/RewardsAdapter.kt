@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemRewardsBinding
 
-class RewardAdapter : ListAdapter<TaskEntity, RewardAdapter.ViewHolder>(RewardAdapter.diffUtil) {
+class RewardsAdapter : ListAdapter<TaskEntity, RewardsAdapter.ViewHolder>(RewardsAdapter.diffUtil) {
 
     //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskHolder {
 //        val binding = ItemRewardsBinding.inflate(LayoutInflater.from(parent.context), parent, false)

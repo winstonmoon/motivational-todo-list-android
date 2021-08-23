@@ -2,6 +2,7 @@ package com.moonwinston.motivationaltodolist
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -17,7 +18,6 @@ import java.util.*
 class DailyFragment : Fragment() {
 
     private lateinit var binding: FragmentDailyBinding
-    private lateinit var dailyViewModel: DailyViewModel
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     override fun onCreateView(
@@ -25,8 +25,6 @@ class DailyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dailyViewModel =
-            ViewModelProvider(this).get(DailyViewModel::class.java)
         binding = FragmentDailyBinding.inflate(inflater, container, false)
         //TODO get percentage from viewmodel and set
         binding.customviewPiechartDaily.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
@@ -38,7 +36,10 @@ class DailyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = DailyTaskAdapter()
+        val adapter = DailyTaskAdapter(callback = { taskEntity, dmlState ->
+            val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+            view.findNavController().navigate(R.id.action_daily_to_add, bundle)
+        })
         binding.recyclerviewDailyTodo.adapter = adapter
 
         //TODO fix
@@ -61,7 +62,8 @@ class DailyFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-            it.findNavController().navigate(R.id.action_daily_to_add)
+            val bundle = bundleOf("dmlState" to DmlState.Insert, "taskEntity" to null)
+            it.findNavController().navigate(R.id.action_daily_to_add, bundle)
         }
     }
 }

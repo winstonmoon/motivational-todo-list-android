@@ -10,13 +10,15 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemDailyTasksBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DailyTaskAdapter : ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(diffUtil) {
+class DailyTaskAdapter(val callback: (TaskEntity, DmlState) -> Unit) :
+    ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemDailyTasksBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -40,10 +42,13 @@ class DailyTaskAdapter : ListAdapter<TaskEntity, DailyTaskAdapter.ViewHolder>(di
                     when (item.itemId) {
                         R.id.edit ->
                             //TODO edit task function
-                            Toast.makeText(it.context, "edit", Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(it.context, "edit", Toast.LENGTH_SHORT).show()
+                        callback(taskEntity, DmlState.Update)
+
                         R.id.delete ->
                             //TODO delete task function
-                            Toast.makeText(it.context, "delete", Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(it.context, "delete", Toast.LENGTH_SHORT).show()
+                        callback(taskEntity, DmlState.Delete)
                     }
                     false
                 }

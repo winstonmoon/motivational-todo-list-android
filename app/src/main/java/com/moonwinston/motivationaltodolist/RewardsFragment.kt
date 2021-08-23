@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.moonwinston.motivationaltodolist.adapters.RewardAdapter
+import com.moonwinston.motivationaltodolist.adapters.RewardsAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import com.moonwinston.motivationaltodolist.viewmodels.RewardsViewModel
 
@@ -29,14 +29,10 @@ class RewardsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerviewRewards.adapter = RewardAdapter()
+        binding.recyclerviewRewards.adapter = RewardsAdapter()
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_reward_to_settings)
-        }
-
-        binding.buttonAdd.setOnClickListener {
-            it.findNavController().navigate(R.id.action_reward_to_add)
         }
     }
 }
