@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.adapters.DailyTaskAdapter
 import com.moonwinston.motivationaltodolist.adapters.WeeklyScreenSlidePagerAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.adapters.WeeklyTaskAdapter
+import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -117,7 +119,17 @@ class WeeklyFragment : Fragment() {
             binding.textWeeklyMon.background = null
         }
 
-        val adapter = WeeklyTaskAdapter()
+        val adapter = WeeklyTaskAdapter(callback = { taskEntity, dmlState ->
+            when (dmlState) {
+                DmlState.Update -> {
+                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                    view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
+                }
+                DmlState.Delete -> {
+                    sharedViewModel.deleteTasks(taskEntity.uid)
+                }
+            }
+        })
         binding.recyclerviewWeeklyTodo.adapter = adapter
 
         sharedViewModel.getTasks(selectedDate)
@@ -133,7 +145,8 @@ class WeeklyFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-            it.findNavController().navigate(R.id.action_weekly_to_add)
+            val bundle = bundleOf("dmlState" to DmlState.Insert, "taskEntity" to TaskEntity(taskDate = Date(), taskTime = Date(), task = "",isGoalSet = false, isCompleted = false))
+            it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
         }
     }
 
