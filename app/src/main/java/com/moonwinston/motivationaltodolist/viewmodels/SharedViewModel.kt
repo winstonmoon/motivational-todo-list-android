@@ -130,7 +130,7 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
     val deleteTaskListLiveData: LiveData<List<TaskEntity>>
         get() = _deleteTaskListLiveData
 
-    fun deleteTasks(taskEntity: TaskEntity) = viewModelScope.launch {
-        val list = taskRepository.updateTask(taskEntity)
+    fun deleteTasks(uid: Long) = viewModelScope.launch {
+        val list = taskRepository.deleteTask(uid)
     }
 }

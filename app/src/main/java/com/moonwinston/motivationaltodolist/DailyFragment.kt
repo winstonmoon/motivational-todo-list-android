@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.adapters.DailyTaskAdapter
+import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 import com.moonwinston.motivationaltodolist.viewmodels.DailyViewModel
@@ -37,8 +38,15 @@ class DailyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = DailyTaskAdapter(callback = { taskEntity, dmlState ->
-            val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-            view.findNavController().navigate(R.id.action_daily_to_add, bundle)
+            when (dmlState) {
+                DmlState.Update -> {
+                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                    view.findNavController().navigate(R.id.action_daily_to_add, bundle)
+                }
+                DmlState.Delete -> {
+                    sharedViewModel.deleteTasks(taskEntity.uid)
+                }
+            }
         })
         binding.recyclerviewDailyTodo.adapter = adapter
 
@@ -62,7 +70,7 @@ class DailyFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-            val bundle = bundleOf("dmlState" to DmlState.Insert, "taskEntity" to null)
+            val bundle = bundleOf("dmlState" to DmlState.Insert, "taskEntity" to TaskEntity(taskDate = Date(), taskTime = Date(), task = "",isGoalSet = false, isCompleted = false))
             it.findNavController().navigate(R.id.action_daily_to_add, bundle)
         }
     }

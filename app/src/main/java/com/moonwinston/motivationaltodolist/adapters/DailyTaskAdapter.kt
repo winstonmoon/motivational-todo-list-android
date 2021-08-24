@@ -41,14 +41,9 @@ class DailyTaskAdapter(val callback: (TaskEntity, DmlState) -> Unit) :
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.edit ->
-                            //TODO edit task function
-//                            Toast.makeText(it.context, "edit", Toast.LENGTH_SHORT).show()
-                        callback(taskEntity, DmlState.Update)
-
+                            callback(taskEntity, DmlState.Update)
                         R.id.delete ->
-                            //TODO delete task function
-//                            Toast.makeText(it.context, "delete", Toast.LENGTH_SHORT).show()
-                        callback(taskEntity, DmlState.Delete)
+                            callback(taskEntity, DmlState.Delete)
                     }
                     false
                 }
