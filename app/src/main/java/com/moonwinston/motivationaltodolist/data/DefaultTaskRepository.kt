@@ -25,7 +25,7 @@ class DefaultTaskRepository(
         taskDao.insertTask(taskEntity)
     }
 
-    override suspend fun deleteTask(taskDate: Date, taskTime: Date) = withContext(ioDispatcher) {
-        taskDao.deleteTask(taskDate, taskTime)
+    override suspend fun deleteTask(uid: Long) = withContext(ioDispatcher) {
+        taskDao.deleteTask(uid)
     }
 }

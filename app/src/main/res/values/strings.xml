@@ -15,6 +15,7 @@
 
     <!-- Dialog Add-->
     <string name="button_add">Add</string>
+    <string name="button_edit">Edit</string>
     <string name="button_cancel">Cancel</string>
     <string name="label_goal_task">Set as Achievement Selectable Task</string>
     <string name="label_date">Date</string>
