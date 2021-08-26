@@ -44,75 +44,125 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_date">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_weekly_mon"
+            <LinearLayout
+                android:id="@+id/container_mon"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="24dp"
                 android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
-                android:text="M"
-                android:textColor="@color/gray" />
+                android:gravity="center_horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_weekly_tue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
-                android:text="T"
-                android:textColor="@color/gray" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_weekly_mon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal"
+                    android:text="M"
+                    android:textColor="@color/gray" />
+            </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_weekly_wed"
+            <LinearLayout
+                android:id="@+id/container_tue"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="24dp"
                 android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
-                android:text="W"
-                android:textColor="@color/gray" />
+                android:gravity="center_horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_weekly_thu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
-                android:text="T"
-                android:textColor="@color/gray" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_weekly_tue"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal"
+                    android:text="T"
+                    android:textColor="@color/gray" />
+            </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_weekly_fri"
+            <LinearLayout
+                android:id="@+id/container_wed"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="24dp"
                 android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
-                android:text="F"
-                android:textColor="@color/gray" />
+                android:gravity="center_horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_weekly_sat"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
-                android:text="S"
-                android:textColor="@color/gray" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_weekly_wed"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal"
+                    android:text="W"
+                    android:textColor="@color/gray" />
+            </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_weekly_sun"
+            <LinearLayout
+                android:id="@+id/container_thu"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="24dp"
                 android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
-                android:text="S"
-                android:textColor="@color/gray" />
+                android:gravity="center_horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_weekly_thu"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal"
+                    android:text="T"
+                    android:textColor="@color/gray" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_fri"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_weekly_fri"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal"
+                    android:text="F"
+                    android:textColor="@color/gray" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_sat"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_weekly_sat"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal"
+                    android:text="S"
+                    android:textColor="@color/gray" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/container_sun"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_weekly_sun"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal"
+                    android:text="S"
+                    android:textColor="@color/gray" />
+            </LinearLayout>
 
         </LinearLayout>
 
