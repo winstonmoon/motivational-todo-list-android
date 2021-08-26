@@ -128,6 +128,7 @@ class WeeklyFragment : Fragment() {
                 DmlState.Delete -> {
                     sharedViewModel.deleteTasks(taskEntity.uid)
                 }
+                else -> Unit
             }
         })
         binding.recyclerviewWeeklyTodo.adapter = adapter
@@ -145,7 +146,16 @@ class WeeklyFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-            val bundle = bundleOf("dmlState" to DmlState.Insert, "taskEntity" to TaskEntity(taskDate = Date(), taskTime = Date(), task = "",isGoalSet = false, isCompleted = false))
+            val bundle = bundleOf(
+                "dmlState" to DmlState.Insert,
+                "taskEntity" to TaskEntity(
+                    taskDate = Date(),
+                    taskTime = Date(),
+                    task = "",
+                    isGoalSet = false,
+                    isCompleted = false
+                )
+            )
             it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
         }
     }
@@ -167,5 +177,4 @@ class WeeklyFragment : Fragment() {
             }
         return "$day, $parsedMonth $date, $year"
     }
-
 }
