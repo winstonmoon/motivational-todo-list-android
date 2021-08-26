@@ -46,6 +46,7 @@ class DailyFragment : Fragment() {
                 DmlState.Delete -> {
                     sharedViewModel.deleteTasks(taskEntity.uid)
                 }
+                else -> Unit
             }
         })
         binding.recyclerviewDailyTodo.adapter = adapter
@@ -70,7 +71,16 @@ class DailyFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-            val bundle = bundleOf("dmlState" to DmlState.Insert, "taskEntity" to TaskEntity(taskDate = Date(), taskTime = Date(), task = "",isGoalSet = false, isCompleted = false))
+            val bundle = bundleOf(
+                "dmlState" to DmlState.Insert,
+                "taskEntity" to TaskEntity(
+                    taskDate = Date(),
+                    taskTime = Date(),
+                    task = "",
+                    isGoalSet = false,
+                    isCompleted = false
+                )
+            )
             it.findNavController().navigate(R.id.action_daily_to_add, bundle)
         }
     }
