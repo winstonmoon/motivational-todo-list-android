@@ -8,15 +8,15 @@
     <string name="title_rewards">Rewards</string>
     <string name="title_settings">Settings</string>
 
-    <!-- Preferences -->
-    <string name="header_options">Settings</string>
-    <string name="title_notify_tasks">Notify Tasks</string>
-    <string name="title_dark_mode">Dark Mode</string>
+    <!-- Common -->
+    <string name="message_dialog_confirm_complete">Did you complete this task?</string>
+    <string name="button_ok">Ok</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="message_toast_uneditable">Cannot edit complete task</string>
 
     <!-- Dialog Add-->
     <string name="button_add">Add</string>
     <string name="button_edit">Edit</string>
-    <string name="button_cancel">Cancel</string>
     <string name="label_goal_task">Set as Achievement Selectable Task</string>
     <string name="label_date">Date</string>
     <string name="label_time">Time</string>
