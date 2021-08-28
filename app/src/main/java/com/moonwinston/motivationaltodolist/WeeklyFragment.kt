@@ -7,15 +7,13 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.moonwinston.motivationaltodolist.adapters.DailyTaskAdapter
+import com.moonwinston.motivationaltodolist.adapters.TaskAdapter
 import com.moonwinston.motivationaltodolist.adapters.WeeklyScreenSlidePagerAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
-import com.moonwinston.motivationaltodolist.adapters.WeeklyTaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyFragment : Fragment() {
@@ -119,7 +117,7 @@ class WeeklyFragment : Fragment() {
             binding.textWeeklyMon.background = null
         }
 
-        val adapter = WeeklyTaskAdapter(callback = { taskEntity, dmlState ->
+        val adapter = TaskAdapter(meatballsmenuCallback = { taskEntity, dmlState ->
             when (dmlState) {
                 DmlState.Update -> {
                     val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
@@ -130,7 +128,10 @@ class WeeklyFragment : Fragment() {
                 }
                 else -> Unit
             }
-        })
+        },
+            radioButtonCalllback = {
+
+            })
         binding.recyclerviewWeeklyTodo.adapter = adapter
 
         sharedViewModel.getTasks(selectedDate)

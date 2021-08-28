@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.moonwinston.motivationaltodolist.adapters.DailyTaskAdapter
+import com.moonwinston.motivationaltodolist.adapters.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
-import com.moonwinston.motivationaltodolist.viewmodels.DailyViewModel
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.util.*
@@ -37,7 +35,7 @@ class DailyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = DailyTaskAdapter(callback = { taskEntity, dmlState ->
+        val adapter = TaskAdapter(meatballsmenuCallback = { taskEntity, dmlState ->
             when (dmlState) {
                 DmlState.Update -> {
                     val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
@@ -48,7 +46,10 @@ class DailyFragment : Fragment() {
                 }
                 else -> Unit
             }
-        })
+        },
+            radioButtonCalllback = {
+                sharedViewModel.insert(it)
+            })
         binding.recyclerviewDailyTodo.adapter = adapter
 
         //TODO fix

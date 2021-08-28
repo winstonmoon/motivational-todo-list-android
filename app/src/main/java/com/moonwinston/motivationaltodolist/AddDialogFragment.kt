@@ -32,11 +32,7 @@ class AddDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             binding = DialogAddBinding.inflate(layoutInflater)
-            binding.inputTime.setIs24HourView(true)
-            binding.viewCalendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
-                val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-                date = formatDate.parse("$year-$parsedMonth-$dayOfMonth")
-            }
+            initView(binding)
             var positiveButton: Int? = null
             when (dmlState) {
                 DmlState.Insert -> {
@@ -77,8 +73,12 @@ class AddDialogFragment : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    private fun initView() {
-
+    private fun initView(binding: DialogAddBinding) {
+        binding.inputTime.setIs24HourView(true)
+        binding.viewCalendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
+            date = formatDate.parse("$year-$parsedMonth-$dayOfMonth")
+        }
     }
 
     private fun initInsert(binding: DialogAddBinding) {
