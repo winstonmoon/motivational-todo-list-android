@@ -5,9 +5,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
@@ -56,19 +54,17 @@ class AddDialogFragment : DialogFragment() {
             builder.setView(binding.root)
                 .setPositiveButton(positiveButton ?: R.string.button_add,
                     DialogInterface.OnClickListener { _, _ ->
-                        val hour by lazy {
+                        val hour =
                             if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentHour else binding.inputTime.hour
-                        }
-                        val minute by lazy {
+
+                        val minute =
                             if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentMinute else binding.inputTime.minute
-                        }
 
                         var insertTaskEntity = TaskEntity(
                             uid = taskEntity?.uid,
                             taskDate = date,
                             taskTime = formatTime.parse("%02d:%02d".format(hour, minute)),
                             task = binding.inputTask.text.toString(),
-                            isGoalSet = binding.switchGoalTask.isChecked,
                             isCompleted = false
                         )
                         sharedViewModel.insert(insertTaskEntity)
@@ -79,6 +75,10 @@ class AddDialogFragment : DialogFragment() {
                     })
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    private fun initView() {
+
     }
 
     private fun initInsert(binding: DialogAddBinding) {
@@ -106,7 +106,6 @@ class AddDialogFragment : DialogFragment() {
         binding.viewCalendar.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
         binding.inputTask.setText(taskEntity.task)
-        binding.switchGoalTask.isChecked = taskEntity.isGoalSet
     }
 }
 

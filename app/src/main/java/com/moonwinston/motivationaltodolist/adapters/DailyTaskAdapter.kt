@@ -24,11 +24,6 @@ class DailyTaskAdapter(val callback: (TaskEntity, DmlState) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
-            if (taskEntity.isGoalSet) {
-                binding.checkboxDailyTasks.visibility = VISIBLE
-            } else {
-                binding.checkboxDailyTasks.visibility = INVISIBLE
-            }
             binding.textDailyTasks.text = taskEntity.task
 
             val formatTime = SimpleDateFormat("HH:mm")

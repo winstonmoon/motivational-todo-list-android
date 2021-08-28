@@ -21,11 +21,6 @@ class WeeklyTaskAdapter (val callback: (TaskEntity, DmlState) -> Unit) : ListAda
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
-            if (taskEntity.isGoalSet) {
-                binding.checkboxWeeklyTasks.visibility = View.VISIBLE
-            } else {
-                binding.checkboxWeeklyTasks.visibility = View.INVISIBLE
-            }
             binding.textWeeklyTasks.text = taskEntity.task
 
             val formatTime = SimpleDateFormat("HH:mm")
