@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
@@ -32,15 +33,15 @@ class AddDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             binding = DialogAddBinding.inflate(layoutInflater)
-            initView(binding)
-            var positiveButton: Int? = null
+            var positiveButton: Int = R.string.button_add
+
+            initCommonView(binding)
             when (dmlState) {
                 DmlState.Insert -> {
-                    initInsert(binding)
-                    positiveButton = R.string.button_add
+                    initInsertView(binding)
                 }
                 DmlState.Update -> {
-                    initUpdate(binding, taskEntity)
+                    initUpdateView(binding, taskEntity)
                     positiveButton = R.string.button_edit
                 }
                 else -> Unit
@@ -48,7 +49,7 @@ class AddDialogFragment : DialogFragment() {
 
             val builder = AlertDialog.Builder(it, R.style.CustomAlertDialog)
             builder.setView(binding.root)
-                .setPositiveButton(positiveButton ?: R.string.button_add,
+                .setPositiveButton(positiveButton,
                     DialogInterface.OnClickListener { _, _ ->
                         val hour =
                             if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentHour else binding.inputTime.hour
@@ -73,7 +74,7 @@ class AddDialogFragment : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    private fun initView(binding: DialogAddBinding) {
+    private fun initCommonView(binding: DialogAddBinding) {
         binding.inputTime.setIs24HourView(true)
         binding.viewCalendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
@@ -81,7 +82,7 @@ class AddDialogFragment : DialogFragment() {
         }
     }
 
-    private fun initInsert(binding: DialogAddBinding) {
+    private fun initInsertView(binding: DialogAddBinding) {
         if (Build.VERSION.SDK_INT <= 23) {
             binding.inputTime.currentHour
             binding.inputTime.currentMinute
@@ -89,12 +90,11 @@ class AddDialogFragment : DialogFragment() {
             binding.inputTime.hour
             binding.inputTime.minute
         }
-
         binding.viewCalendar.date = CalendarUtil.getToday().time
         date = CalendarUtil.getToday()
     }
 
-    private fun initUpdate(binding: DialogAddBinding, taskEntity: TaskEntity) {
+    private fun initUpdateView(binding: DialogAddBinding, taskEntity: TaskEntity) {
         if (Build.VERSION.SDK_INT <= 23) {
             binding.inputTime.currentHour = taskEntity.taskTime.hours
             binding.inputTime.currentMinute = taskEntity.taskTime.minutes
@@ -102,10 +102,13 @@ class AddDialogFragment : DialogFragment() {
             binding.inputTime.hour = taskEntity.taskTime.hours
             binding.inputTime.minute = taskEntity.taskTime.minutes
         }
-
         binding.viewCalendar.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
         binding.inputTask.setText(taskEntity.task)
+    }
+
+    private fun createDialogBuilder(fragmentActivity: FragmentActivity?, binding: DialogAddBinding, positiveButton: Int) {
+
     }
 }
 

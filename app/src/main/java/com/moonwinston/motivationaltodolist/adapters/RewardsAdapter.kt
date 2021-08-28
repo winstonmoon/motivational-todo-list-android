@@ -5,37 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemRewardsBinding
 
-class RewardsAdapter : ListAdapter<TaskEntity, RewardsAdapter.ViewHolder>(RewardsAdapter.diffUtil) {
+class RewardsAdapter : ListAdapter<TaskEntity, RewardsAdapter.ViewHolder>(diffUtil) {
 
-    //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskHolder {
-//        val binding = ItemRewardsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-//        return TaskHolder(binding)
-//    }
-//
-//    override fun onBindViewHolder(holder: TaskHolder, position: Int) {
-//        holder.onBindViewHolder(tasks[position])
-//        holder.binding.executePendingBindings()
-//    }
-//
-//    override fun getItemCount(): Int {
-//        return tasks.size
-//    }
-//
-//    inner class TaskHolder(val binding: ItemRewardsBinding) : RecyclerView.ViewHolder(binding.root) {
-//        fun onBindViewHolder(task: Task) {
-//            binding.task = task
-//        }
-//    }
-//}
     inner class ViewHolder(private val binding: ItemRewardsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
             //TODO fix format
             binding.textAchieveddate.text = taskEntity.taskDate.toString()
+            Glide.with(itemView)
+                .load(R.drawable.trophy)
+                .into(binding.imageReward)
         }
     }
 

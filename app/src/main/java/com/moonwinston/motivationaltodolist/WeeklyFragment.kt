@@ -130,7 +130,7 @@ class WeeklyFragment : Fragment() {
             }
         },
             radioButtonCalllback = {
-
+                sharedViewModel.insert(it)
             })
         binding.recyclerviewWeeklyTodo.adapter = adapter
 
