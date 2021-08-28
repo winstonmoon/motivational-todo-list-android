@@ -14,6 +14,5 @@ data class TaskEntity(
         @ColumnInfo(name = "taskDate") var taskDate: Date,
         @ColumnInfo(name = "taskTime") var taskTime: Date,
         @ColumnInfo(name = "task") var task: String,
-        @ColumnInfo(name = "isGoalSet") var isGoalSet: Boolean,
         @ColumnInfo(name = "isCompleted") var isCompleted: Boolean
 ): Parcelable

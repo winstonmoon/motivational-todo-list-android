@@ -26,7 +26,6 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
                 taskDate = it.taskDate,
                 taskTime = it.taskTime,
                 task = it.task,
-                isGoalSet = it.isGoalSet,
                 isCompleted = it.isCompleted
             )
         }
@@ -108,10 +107,8 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
             var doneNumber: Int = 0
             val list = taskRepository.getTasks(date)
             for (a in list) {
+                allNumber += 1
                 if (a.isCompleted) {
-                    allNumber += 1
-                }
-                if (a.isGoalSet) {
                     doneNumber += 1
                 }
             }

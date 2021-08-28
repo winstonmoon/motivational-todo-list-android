@@ -77,7 +77,6 @@ class DailyFragment : Fragment() {
                     taskDate = Date(),
                     taskTime = Date(),
                     task = "",
-                    isGoalSet = false,
                     isCompleted = false
                 )
             )

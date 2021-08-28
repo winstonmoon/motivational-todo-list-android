@@ -8,11 +8,10 @@
         android:layout_height="50dp"
         android:layout_margin="5dp">
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/checkbox_weekly_tasks"
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/radiobutton_weekly_tasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/view_underline"
             app:layout_constraintEnd_toStartOf="@id/text_weekly_tasks"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +26,7 @@
             android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@id/time_weekly_tasks"
             app:layout_constraintEnd_toStartOf="@id/imagebutton_weekly_tasks"
-            app:layout_constraintStart_toEndOf="@id/checkbox_weekly_tasks"
+            app:layout_constraintStart_toEndOf="@id/radiobutton_weekly_tasks"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -39,7 +38,7 @@
             android:textColor="@color/gray"
             app:layout_constraintBottom_toTopOf="@id/view_underline"
             app:layout_constraintEnd_toStartOf="@id/imagebutton_weekly_tasks"
-            app:layout_constraintStart_toEndOf="@id/checkbox_weekly_tasks"
+            app:layout_constraintStart_toEndOf="@id/radiobutton_weekly_tasks"
             app:layout_constraintTop_toBottomOf="@id/text_weekly_tasks" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -62,7 +61,7 @@
             android:layout_marginTop="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/checkbox_weekly_tasks"
+            app:layout_constraintStart_toEndOf="@id/radiobutton_weekly_tasks"
             app:layout_constraintTop_toBottomOf="@id/time_weekly_tasks" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
