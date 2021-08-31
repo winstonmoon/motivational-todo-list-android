@@ -13,6 +13,6 @@ class WeeklyScreenSlidePagerAdapter(fragment: Fragment) : FragmentStateAdapter(f
     override fun getItemCount(): Int = Int.MAX_VALUE
 
     companion object {
-        const val START_POSITION = Int.MAX_VALUE / 2
+        const val START_POSITION = Int.MAX_VALUE -1
     }
 }

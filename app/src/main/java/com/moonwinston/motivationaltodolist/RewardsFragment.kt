@@ -37,7 +37,7 @@ class RewardsFragment : Fragment() {
         val adapter = RewardsAdapter()
         binding.recyclerviewRewards.adapter = adapter
         val testTaskEntity: MutableList<TaskEntity> = mutableListOf<TaskEntity>()
-        for (a in 1..3) {
+        for (a in 1..9) {
             testTaskEntity.add(
                 TaskEntity(taskDate = Date(), taskTime = Date(), task = "", isCompleted = false)
             )

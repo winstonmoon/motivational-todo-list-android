@@ -37,9 +37,9 @@ class TaskAdapter(
                     Toast.makeText(it.context, R.string.message_toast_uneditable, Toast.LENGTH_SHORT).show()
                 }
             } else {
+                binding.radiobuttonTasks.isChecked = false
                 binding.textTasks.text = taskEntity.task
                 binding.timeTasks.text = formatTime.format(taskEntity.taskTime)
-                binding.radiobuttonTasks.isChecked = false
 
                 binding.radiobuttonTasks.setOnClickListener {
                     val builder = AlertDialog.Builder(it.context)
