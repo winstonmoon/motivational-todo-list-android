@@ -13,6 +13,7 @@ class MonthlyScreenSlidePagerAdapter(fragment: Fragment) : FragmentStateAdapter(
     override fun getItemCount(): Int = Int.MAX_VALUE
 
     companion object {
-        const val START_POSITION = Int.MAX_VALUE / 2
+        //TODO fix
+        const val START_POSITION = Int.MAX_VALUE -1
     }
 }
