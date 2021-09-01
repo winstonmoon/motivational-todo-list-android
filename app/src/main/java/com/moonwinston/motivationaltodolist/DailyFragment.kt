@@ -26,9 +26,9 @@ class DailyFragment : Fragment() {
     ): View? {
         binding = FragmentDailyBinding.inflate(inflater, container, false)
         //TODO get percentage from viewmodel and set
-        binding.customviewPiechartDaily.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
+//        binding.customviewPiechartDaily.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
         //TODO edit make percentage
-        binding.textGoalPercent.text = "50%"
+//        binding.textGoalPercent.text = "50%"
 
         return binding.root
     }
@@ -65,6 +65,10 @@ class DailyFragment : Fragment() {
             //TODO fix
             sharedViewModel.getTasks(CalendarUtil.getToday())
             adapter.submitList(it)
+            val rate = sharedViewModel.getRate(it)
+            binding.customviewPiechartDaily.setPercentAndBoardWidthAndProgressiveWidth(rate, 40F, 20F)
+            val ratePercent = rate.toInt() * 100
+            binding.textGoalPercent.text = "$ratePercent%"
         }
 
         binding.buttonSettings.setOnClickListener {

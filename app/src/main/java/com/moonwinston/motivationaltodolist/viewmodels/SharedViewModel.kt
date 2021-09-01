@@ -105,19 +105,19 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
     }
 
     //TODO fix
-    suspend fun getRate(date: Date) =
-        withContext(viewModelScope.coroutineContext) {
-            var allNumber: Int = 0
-            var doneNumber: Int = 0
-            val list = taskRepository.getTasks(date)
-            for (a in list) {
-                allNumber += 1
-                if (a.isCompleted) {
-                    doneNumber += 1
-                }
-            }
-            allNumber / doneNumber
-        }
+//    suspend fun getRate(date: Date) =
+//        withContext(viewModelScope.coroutineContext) {
+//            var allNumber: Int = 0
+//            var doneNumber: Int = 0
+//            val list = taskRepository.getTasks(date)
+//            for (a in list) {
+//                allNumber += 1
+//                if (a.isCompleted) {
+//                    doneNumber += 1
+//                }
+//            }
+//            allNumber / doneNumber
+//        }
 
     private var _selectedTaskListLiveData = MutableLiveData<List<TaskEntity>>()
     val selectedTaskListLiveData: LiveData<List<TaskEntity>>
@@ -130,4 +130,19 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
     private var _deleteTaskListLiveData = MutableLiveData<List<TaskEntity>>()
     val deleteTaskListLiveData: LiveData<List<TaskEntity>>
         get() = _deleteTaskListLiveData
+
+    fun getRate(list: List<TaskEntity>): Float {
+        var allNumber: Float = 0F
+        var doneNumber: Float = 0F
+        for (a in list) {
+            allNumber += 1
+            if (a.isCompleted) {
+                doneNumber += 1
+            }
+        }
+        if (allNumber == 0F || doneNumber == 0F) {
+            return 0F
+        }
+        return doneNumber / allNumber
+    }
 }
