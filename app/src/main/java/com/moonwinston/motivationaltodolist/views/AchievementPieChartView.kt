@@ -10,7 +10,7 @@ import android.view.View
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AchievementPieChartView@JvmOverloads constructor(
+class AchievementPieChartView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
@@ -38,7 +38,12 @@ class AchievementPieChartView@JvmOverloads constructor(
         drawProgressivePieChart(canvas, progressiveStrokeWidth, rectF, paint)
     }
 
-    private fun drawPieChart(canvas: Canvas?, borderStrokeWidth: Float, rectF: RectF, paint: Paint) {
+    private fun drawPieChart(
+        canvas: Canvas?,
+        borderStrokeWidth: Float,
+        rectF: RectF,
+        paint: Paint
+    ) {
         paint.apply {
             strokeWidth = borderStrokeWidth;
             color = Color.parseColor("#D67EFF")
@@ -46,7 +51,12 @@ class AchievementPieChartView@JvmOverloads constructor(
         canvas?.drawArc(rectF, 270F, 360F, false, paint)
     }
 
-    private fun drawProgressivePieChart(canvas: Canvas?, progressiveStrokeWidth: Float, rectF: RectF, paint: Paint) {
+    private fun drawProgressivePieChart(
+        canvas: Canvas?,
+        progressiveStrokeWidth: Float,
+        rectF: RectF,
+        paint: Paint
+    ) {
         paint.apply {
             strokeWidth = progressiveStrokeWidth;
             color = Color.parseColor("#760780")
@@ -54,10 +64,16 @@ class AchievementPieChartView@JvmOverloads constructor(
         canvas?.drawArc(rectF, 270F, percentage * 360F, false, paint)
     }
 
-    fun setPercentAndBoardWidthAndProgressiveWidth(percent: Float, borderWidth: Float, progressiveWidth: Float) {
-        percentage = percent
+    fun setBorderStrokeWidth(borderWidth: Float) {
         borderStrokeWidth = borderWidth
+    }
+
+    fun setProgressiveStrokeWidth(progressiveWidth: Float) {
         progressiveStrokeWidth = progressiveWidth
+    }
+
+    fun setPercentage(percent: Float) {
+        percentage = percent
         invalidate()
         requestLayout()
     }
