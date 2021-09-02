@@ -8,7 +8,6 @@ import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
 
 class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() {
@@ -104,21 +103,6 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         _isSundaySelectedLiveData.value = weeklyTitle
     }
 
-    //TODO fix
-//    suspend fun getRate(date: Date) =
-//        withContext(viewModelScope.coroutineContext) {
-//            var allNumber: Int = 0
-//            var doneNumber: Int = 0
-//            val list = taskRepository.getTasks(date)
-//            for (a in list) {
-//                allNumber += 1
-//                if (a.isCompleted) {
-//                    doneNumber += 1
-//                }
-//            }
-//            allNumber / doneNumber
-//        }
-
     private var _selectedTaskListLiveData = MutableLiveData<List<TaskEntity>>()
     val selectedTaskListLiveData: LiveData<List<TaskEntity>>
         get() = _selectedTaskListLiveData
@@ -131,18 +115,13 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
     val deleteTaskListLiveData: LiveData<List<TaskEntity>>
         get() = _deleteTaskListLiveData
 
-    fun getRate(list: List<TaskEntity>): Float {
-        var allNumber: Float = 0F
-        var doneNumber: Float = 0F
-        for (a in list) {
-            allNumber += 1
-            if (a.isCompleted) {
-                doneNumber += 1
-            }
+    fun getRate(tasksList: List<TaskEntity>): Float {
+        var totalTasks: Float = 0F
+        var doneTasks: Float = 0F
+        for (task in tasksList) {
+            totalTasks += 1
+            if (task.isCompleted) doneTasks += 1
         }
-        if (allNumber == 0F || doneNumber == 0F) {
-            return 0F
-        }
-        return doneNumber / allNumber
+        return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }
 }

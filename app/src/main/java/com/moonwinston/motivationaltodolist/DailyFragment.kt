@@ -12,6 +12,7 @@ import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.util.*
+import kotlin.math.roundToInt
 
 
 class DailyFragment : Fragment() {
@@ -25,11 +26,8 @@ class DailyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDailyBinding.inflate(inflater, container, false)
-        //TODO get percentage from viewmodel and set
-//        binding.customviewPiechartDaily.setPercentAndBoardWidthAndProgressiveWidth(0.5F, 40F, 20F)
-        //TODO edit make percentage
-//        binding.textGoalPercent.text = "50%"
-
+        binding.customviewPiechartDaily.setBorderStrokeWidth(40F)
+        binding.customviewPiechartDaily.setProgressiveStrokeWidth(20F)
         return binding.root
     }
 
@@ -66,9 +64,8 @@ class DailyFragment : Fragment() {
             sharedViewModel.getTasks(CalendarUtil.getToday())
             adapter.submitList(it)
             val rate = sharedViewModel.getRate(it)
-            binding.customviewPiechartDaily.setPercentAndBoardWidthAndProgressiveWidth(rate, 40F, 20F)
-            val ratePercent = rate.toInt() * 100
-            binding.textGoalPercent.text = "$ratePercent%"
+            binding.customviewPiechartDaily.setPercentage(rate)
+            binding.textGoalPercent.text = "${(rate * 100).roundToInt()}%"
         }
 
         binding.buttonSettings.setOnClickListener {

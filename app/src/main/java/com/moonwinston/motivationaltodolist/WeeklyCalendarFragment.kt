@@ -48,12 +48,10 @@ class WeeklyCalendarFragment : Fragment() {
         val diffDate: Int = 2 - calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, diffDate)
         //TODO
-        val today = Calendar.getInstance().time
         val weekList: MutableList<CalendarDate> = mutableListOf<CalendarDate>()
 
         for (date in 1..7) {
             //TODO
-            val today = Calendar.getInstance().time
             val year: Int = calendar.get(Calendar.YEAR)
             val month: Int = calendar.get(Calendar.MONTH)
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
@@ -67,64 +65,50 @@ class WeeklyCalendarFragment : Fragment() {
 
         binding.customviewPiechartMonday.apply {
             setCalendarDate(weekList[0].calendarDate)
-            setPercentAndBoardWidthAndProgressiveWidth(
-                0.5F,
-                10F,
-                5F
-            )
+            setBorderStrokeWidth(10F)
+            setProgressiveStrokeWidth(5F)
+            setPercentage(0.5F)
         }
 
         binding.customviewPiechartTuesday.apply {
             setCalendarDate(weekList[1].calendarDate)
-            setPercentAndBoardWidthAndProgressiveWidth(
-                0.5F,
-                10F,
-                5F
-            )
+            setBorderStrokeWidth(10F)
+            setProgressiveStrokeWidth(5F)
+            setPercentage(0.5F)
         }
 
         binding.customviewPiechartWednesday.apply {
             setCalendarDate(weekList[2].calendarDate)
-            setPercentAndBoardWidthAndProgressiveWidth(
-                0.5F,
-                10F,
-                5F
-            )
+            setBorderStrokeWidth(10F)
+            setProgressiveStrokeWidth(5F)
+            setPercentage(0.5F)
         }
 
         binding.customviewPiechartThursday.apply {
             setCalendarDate(weekList[3].calendarDate)
-            setPercentAndBoardWidthAndProgressiveWidth(
-                0.5F,
-                10F,
-                5F
-            )
+            setBorderStrokeWidth(10F)
+            setProgressiveStrokeWidth(5F)
+            setPercentage(0.5F)
         }
 
         binding.customviewPiechartFriday.apply {
             setCalendarDate(weekList[4].calendarDate)
-            setPercentAndBoardWidthAndProgressiveWidth(
-                0.5F,
-                10F,
-                5F
-            )
+            setBorderStrokeWidth(10F)
+            setProgressiveStrokeWidth(5F)
+            setPercentage(0.5F)
         }
 
         binding.customviewPiechartSaturday.apply {
             setCalendarDate(weekList[5].calendarDate)
-            setPercentAndBoardWidthAndProgressiveWidth(
-                0.5F,
-                10F,
-                5F
-            )
+            setBorderStrokeWidth(10F)
+            setProgressiveStrokeWidth(5F)
+            setPercentage(0.5F)
         }
         binding.customviewPiechartSunday.apply {
             setCalendarDate(weekList[6].calendarDate)
-            setPercentAndBoardWidthAndProgressiveWidth(
-                0.5F,
-                10F,
-                5F
-            )
+            setBorderStrokeWidth(10F)
+            setProgressiveStrokeWidth(5F)
+            setPercentage(0.5F)
         }
 
         //TODO implement set date
@@ -150,16 +134,6 @@ class WeeklyCalendarFragment : Fragment() {
         binding.customviewPiechartSunday.setOnClickListener {
             sharedViewModel.selectSunday(binding.customviewPiechartSunday.getCalendarDate())
         }
-    }
-
-    private fun formatDate(calendarDate: Date): String {
-        val year = calendarDate.year
-        val month = calendarDate.month
-        val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
-        val date = calendarDate.day
-
-        val fixedDate = "Today, $parsedMonth $date, $year"
-        return fixedDate
     }
 
     companion object {

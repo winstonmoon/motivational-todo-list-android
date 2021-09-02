@@ -16,11 +16,15 @@ class MonthlyCalendarAdapter :
 
     inner class ViewHolder(private val binding: ItemMonthlyCalendarBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         private val nonExistDate = CalendarUtil.getNonExistDate()
         private val today = CalendarUtil.getToday()
 
         fun bind(calendarDate: CalendarDate) {
+            binding.customviewPiechartMonthly.apply {
+                setBorderStrokeWidth(10F)
+                setProgressiveStrokeWidth(5F)
+            }
+
             when {
                 calendarDate.calendarDate == nonExistDate -> {
                     binding.textMonthlyDate.visibility = View.GONE
@@ -29,11 +33,7 @@ class MonthlyCalendarAdapter :
                 calendarDate.calendarDate == today -> {
                     binding.textMonthlyDate.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
-                    binding.customviewPiechartMonthly.setPercentAndBoardWidthAndProgressiveWidth(
-                        0.5F,
-                        10F,
-                        5F
-                    )
+                    binding.customviewPiechartMonthly.setPercentage(0.5F)
                 }
                 calendarDate.calendarDate.after(today) -> {
                     binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
@@ -41,11 +41,7 @@ class MonthlyCalendarAdapter :
                 }
                 else -> {
                     binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
-                    binding.customviewPiechartMonthly.setPercentAndBoardWidthAndProgressiveWidth(
-                        0.5F,
-                        10F,
-                        5F
-                    )
+                    binding.customviewPiechartMonthly.setPercentage(0.5F)
                 }
             }
         }
