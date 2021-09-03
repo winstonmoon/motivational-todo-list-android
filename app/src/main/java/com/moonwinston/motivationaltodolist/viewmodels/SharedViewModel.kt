@@ -103,18 +103,6 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         _isSundaySelectedLiveData.value = weeklyTitle
     }
 
-    private var _selectedTaskListLiveData = MutableLiveData<List<TaskEntity>>()
-    val selectedTaskListLiveData: LiveData<List<TaskEntity>>
-        get() = _selectedTaskListLiveData
-
-    fun updateTasks(taskEntity: TaskEntity) = viewModelScope.launch {
-        val list = taskRepository.updateTask(taskEntity)
-    }
-
-    private var _deleteTaskListLiveData = MutableLiveData<List<TaskEntity>>()
-    val deleteTaskListLiveData: LiveData<List<TaskEntity>>
-        get() = _deleteTaskListLiveData
-
     fun getRate(tasksList: List<TaskEntity>): Float {
         var totalTasks: Float = 0F
         var doneTasks: Float = 0F

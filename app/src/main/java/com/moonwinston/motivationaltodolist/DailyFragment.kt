@@ -9,7 +9,9 @@ import com.moonwinston.motivationaltodolist.adapters.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
+import com.moonwinston.motivationaltodolist.viewmodels.DailyViewModel
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.util.*
 import kotlin.math.roundToInt
@@ -18,6 +20,7 @@ import kotlin.math.roundToInt
 class DailyFragment : Fragment() {
 
     private lateinit var binding: FragmentDailyBinding
+    private val dailyViewModel by viewModel<DailyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     override fun onCreateView(
@@ -65,6 +68,9 @@ class DailyFragment : Fragment() {
             adapter.submitList(it)
             val rate = sharedViewModel.getRate(it)
             binding.customviewPiechartDaily.setPercentage(rate)
+            if (rate == 0.0F) {
+                binding.customviewPiechartDaily.alpha = 0.1F
+            }
             binding.textGoalPercent.text = "${(rate * 100).roundToInt()}%"
         }
 
