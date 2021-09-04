@@ -14,15 +14,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MonthlyCalendarFragment : Fragment() {
-
     private lateinit var binding: FragmentMonthlyCalendarBinding
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffMonth: Int = 0
-
     //TODO fix
     private var year: Int = 0
     private var month: Int = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,19 +54,22 @@ class MonthlyCalendarFragment : Fragment() {
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-        val dayOfMonthList: MutableList<CalendarDate> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate()})
+        val monthList: MutableList<CalendarDate> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate()})
         for (date in 1..maxDate) {
-            dayOfMonthList.add(
+            monthList.add(
                 CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
             )
         }
 
         sharedViewModel.setMonthlyTitle(month, year)
 
-        val adapter = MonthlyCalendarAdapter()
-        binding.recyclerviewMonthlyCalendar.adapter = adapter
+        sharedViewModel.getAllByDates(monthList)
+        val list = sharedViewModel.multipleDaysTasksList
 
-        adapter.submitList(dayOfMonthList)
+        val adapter = MonthlyCalendarAdapter(list)
+        binding.recyclerviewMonthlyCalendar.adapter = adapter
+        adapter.submitList(monthList)
+
         binding.textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
     }
 
@@ -79,9 +79,7 @@ class MonthlyCalendarFragment : Fragment() {
     }
 
     companion object {
-
         private const val DIFF_MONTH = "diffMonth"
-
         fun newInstance(diffMonth: Int) = MonthlyCalendarFragment().apply {
             arguments = Bundle().apply {
                 putInt(DIFF_MONTH, diffMonth)

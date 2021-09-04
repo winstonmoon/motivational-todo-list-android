@@ -9,23 +9,19 @@ class DefaultTaskRepository(
     private val ioDispatcher: CoroutineDispatcher
 ) : TaskRepository {
 
-    override suspend fun getTasks(taskDate: Date): List<TaskEntity> = withContext(ioDispatcher) {
-        taskDao.loadAllTasksByDate(taskDate)
+    override suspend fun getAllTasksByDate(taskDate: Date): List<TaskEntity> = withContext(ioDispatcher) {
+        taskDao.getAllByDate(taskDate)
     }
 
-//    override suspend fun getAchievementStatus(taskDate: Date): List<TaskEntity> = withContext(ioDispatcher) {
-//        taskDao.loadAllAchievementsByDate(taskDate)
-//    }
-
-    override suspend fun updateTask(taskEntity: TaskEntity) = withContext(ioDispatcher) {
-        taskDao.updateTask(taskEntity)
+    override suspend fun getAllTasksByDates(taskDatesList: List<CalendarDate>): List<TaskEntity> = withContext(ioDispatcher) {
+        taskDao.getAllByDates(taskDatesList)
     }
 
     override suspend fun insertTask(taskEntity: TaskEntity) = withContext(ioDispatcher) {
-        taskDao.insertTask(taskEntity)
+        taskDao.insert(taskEntity)
     }
 
     override suspend fun deleteTask(uid: Long) = withContext(ioDispatcher) {
-        taskDao.deleteTask(uid)
+        taskDao.delete(uid)
     }
 }

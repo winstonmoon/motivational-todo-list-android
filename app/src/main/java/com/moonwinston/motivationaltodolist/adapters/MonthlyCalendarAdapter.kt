@@ -8,22 +8,32 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.CalendarDate
+import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 
-class MonthlyCalendarAdapter :
+class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
     ListAdapter<CalendarDate, MonthlyCalendarAdapter.ViewHolder>(diffUtil) {
+    private val testList = monthTasksList
 
     inner class ViewHolder(private val binding: ItemMonthlyCalendarBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val nonExistDate = CalendarUtil.getNonExistDate()
         private val today = CalendarUtil.getToday()
+        private val testtList = testList
 
         fun bind(calendarDate: CalendarDate) {
             binding.customviewPiechartMonthly.apply {
                 setBorderStrokeWidth(10F)
                 setProgressiveStrokeWidth(5F)
             }
+            var testteList = mutableListOf<TaskEntity>()
+                for (date in testtList){
+                    if (date.taskDate.equals(calendarDate)) {
+                        testteList.add(date)
+                    }
+                }
+            val rate = getRate(testteList)
 
             when {
                 calendarDate.calendarDate == nonExistDate -> {
@@ -33,7 +43,7 @@ class MonthlyCalendarAdapter :
                 calendarDate.calendarDate == today -> {
                     binding.textMonthlyDate.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
-                    binding.customviewPiechartMonthly.setPercentage(0.5F)
+                    binding.customviewPiechartMonthly.setPercentage(rate)
                 }
                 calendarDate.calendarDate.after(today) -> {
                     binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
@@ -41,9 +51,19 @@ class MonthlyCalendarAdapter :
                 }
                 else -> {
                     binding.textMonthlyDate.text = calendarDate.calendarDate.date.toString()
-                    binding.customviewPiechartMonthly.setPercentage(0.5F)
+                    binding.customviewPiechartMonthly.setPercentage(rate)
                 }
             }
+        }
+
+        private fun getRate(tasksList: List<TaskEntity>): Float {
+            var totalTasks: Float = 0F
+            var doneTasks: Float = 0F
+            for (task in tasksList) {
+                totalTasks += 1F
+                if (task.isCompleted) doneTasks += 1F
+            }
+            return if (doneTasks == 0F) 0F else doneTasks / totalTasks
         }
     }
 

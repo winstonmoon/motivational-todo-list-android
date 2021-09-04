@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.MonthEnum
+import com.moonwinston.motivationaltodolist.data.CalendarDate
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import kotlinx.coroutines.launch
@@ -12,14 +13,33 @@ import java.util.*
 
 class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() {
 
-    private var _todayTaskListLiveData = MutableLiveData<List<TaskEntity>>()
-    val todayTaskListLiveData: LiveData<List<TaskEntity>>
-        get() = _todayTaskListLiveData
+    private var _singleDayTasksListLiveData = MutableLiveData<List<TaskEntity>>()
+    val singleDayTasksListLiveData: LiveData<List<TaskEntity>>
+        get() = _singleDayTasksListLiveData
 
-    fun getTasks(taskDate: Date) = viewModelScope.launch {
-        val list = taskRepository.getTasks(taskDate)
+    fun getAllByDate(taskDate: Date) = viewModelScope.launch {
+        val list = taskRepository.getAllTasksByDate(taskDate)
         val sortedList = list.sortedBy { it.taskTime }
-        _todayTaskListLiveData.value = sortedList.map {
+        _singleDayTasksListLiveData.value = sortedList.map {
+            TaskEntity(
+                uid = it.uid,
+                taskDate = it.taskDate,
+                taskTime = it.taskTime,
+                task = it.task,
+                isCompleted = it.isCompleted
+            )
+        }
+    }
+
+    //TODO fix
+    private var _multipleDaysTasksList = listOf<TaskEntity>()
+    val multipleDaysTasksList: List<TaskEntity>
+        get() = _multipleDaysTasksList
+
+    fun getAllByDates(taskDatesList: List<CalendarDate>) = viewModelScope.launch {
+        val list = taskRepository.getAllTasksByDates(taskDatesList)
+        val sortedList = list.sortedBy { it.taskDate }
+        _multipleDaysTasksList = sortedList.map {
             TaskEntity(
                 uid = it.uid,
                 taskDate = it.taskDate,
@@ -34,7 +54,7 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         taskRepository.insertTask(taskEntity)
     }
 
-    fun deleteTasks(uid: Long) = viewModelScope.launch {
+    fun delete(uid: Long) = viewModelScope.launch {
         taskRepository.deleteTask(uid)
     }
 
@@ -107,8 +127,8 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         var totalTasks: Float = 0F
         var doneTasks: Float = 0F
         for (task in tasksList) {
-            totalTasks += 1
-            if (task.isCompleted) doneTasks += 1
+            totalTasks += 1F
+            if (task.isCompleted) doneTasks += 1F
         }
         return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }

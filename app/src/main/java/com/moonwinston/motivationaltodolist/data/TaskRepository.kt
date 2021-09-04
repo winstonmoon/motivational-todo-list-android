@@ -5,11 +5,9 @@ import java.util.*
 
 interface TaskRepository {
 
-    suspend fun getTasks(taskDate: Date): List<TaskEntity>
+    suspend fun getAllTasksByDate(taskDate: Date): List<TaskEntity>
 
-//    suspend fun getAchievementStatus(taskDate: Date): List<TaskEntity>
-
-    suspend fun updateTask(taskEntity: TaskEntity)
+    suspend fun getAllTasksByDates(taskDatesList: List<CalendarDate>): List<TaskEntity>
 
     suspend fun insertTask(taskEntity: TaskEntity)
 

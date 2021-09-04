@@ -14,8 +14,8 @@ class DailyViewModel(private val taskRepository: TaskRepository) : ViewModel() {
     val todayTaskListLiveData: LiveData<List<TaskEntity>>
         get() = _todayTaskListLiveData
 
-    fun getTasks(taskDate: Date) = viewModelScope.launch {
-        val list = taskRepository.getTasks(taskDate)
+    fun getAllByDate(taskDate: Date) = viewModelScope.launch {
+        val list = taskRepository.getAllTasksByDate(taskDate)
         val sortedList = list.sortedBy { it.taskTime }
         _todayTaskListLiveData.value = sortedList.map {
             TaskEntity(
@@ -32,7 +32,7 @@ class DailyViewModel(private val taskRepository: TaskRepository) : ViewModel() {
         taskRepository.insertTask(taskEntity)
     }
 
-    fun deleteTasks(uid: Long) = viewModelScope.launch {
+    fun delete(uid: Long) = viewModelScope.launch {
         taskRepository.deleteTask(uid)
     }
 
