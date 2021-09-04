@@ -29,25 +29,28 @@ class DailyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDailyBinding.inflate(inflater, container, false)
-        binding.customviewPiechartDaily.setBorderStrokeWidth(40F)
-        binding.customviewPiechartDaily.setProgressiveStrokeWidth(20F)
+        binding.customviewPiechartDaily.apply {
+            setBorderStrokeWidth(40F)
+            setProgressiveStrokeWidth(20F)
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = TaskAdapter(meatballsmenuCallback = { taskEntity, dmlState ->
-            when (dmlState) {
-                DmlState.Update -> {
-                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                    view.findNavController().navigate(R.id.action_daily_to_add, bundle)
+        val adapter = TaskAdapter(
+            meatballsmenuCallback = { taskEntity, dmlState ->
+                when (dmlState) {
+                    DmlState.Update -> {
+                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        view.findNavController().navigate(R.id.action_daily_to_add, bundle)
+                    }
+                    DmlState.Delete -> {
+                        sharedViewModel.delete(taskEntity.uid)
+                    }
+                    else -> Unit
                 }
-                DmlState.Delete -> {
-                    sharedViewModel.deleteTasks(taskEntity.uid)
-                }
-                else -> Unit
-            }
-        },
+            },
             radioButtonCalllback = {
                 sharedViewModel.insert(it)
             })
@@ -60,11 +63,11 @@ class DailyFragment : Fragment() {
         val year = Calendar.getInstance().get(Calendar.YEAR)
         binding.textDate.text = "Today, $parsedMonth $date, $year"
 
-        sharedViewModel.getTasks(CalendarUtil.getToday())
+        sharedViewModel.getAllByDate(CalendarUtil.getToday())
 
-        sharedViewModel.todayTaskListLiveData.observe(viewLifecycleOwner) {
+        sharedViewModel.singleDayTasksListLiveData.observe(viewLifecycleOwner) {
             //TODO fix
-            sharedViewModel.getTasks(CalendarUtil.getToday())
+            sharedViewModel.getAllByDate(CalendarUtil.getToday())
             adapter.submitList(it)
             val rate = sharedViewModel.getRate(it)
             binding.customviewPiechartDaily.setPercentage(rate)

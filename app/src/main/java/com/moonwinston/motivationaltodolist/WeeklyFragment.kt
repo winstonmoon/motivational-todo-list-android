@@ -117,28 +117,28 @@ class WeeklyFragment : Fragment() {
             binding.textWeeklyMon.background = null
         }
 
-        val adapter = TaskAdapter(meatballsmenuCallback = { taskEntity, dmlState ->
-            when (dmlState) {
-                DmlState.Update -> {
-                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                    view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
+        val adapter = TaskAdapter(
+            meatballsmenuCallback = { taskEntity, dmlState ->
+                when (dmlState) {
+                    DmlState.Update -> {
+                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
+                    }
+                    DmlState.Delete -> {
+                        sharedViewModel.delete(taskEntity.uid)
+                    }
+                    else -> Unit
                 }
-                DmlState.Delete -> {
-                    sharedViewModel.deleteTasks(taskEntity.uid)
-                }
-                else -> Unit
-            }
-        },
+            },
             radioButtonCalllback = {
                 sharedViewModel.insert(it)
             })
         binding.recyclerviewWeeklyTodo.adapter = adapter
 
-        sharedViewModel.getTasks(selectedDate)
-
-        sharedViewModel.todayTaskListLiveData.observe(viewLifecycleOwner) {
+        sharedViewModel.getAllByDate(selectedDate)
+        sharedViewModel.singleDayTasksListLiveData.observe(viewLifecycleOwner) {
             //TODO fix
-            sharedViewModel.getTasks(selectedDate)
+            sharedViewModel.getAllByDate(selectedDate)
             adapter.submitList(it)
         }
 

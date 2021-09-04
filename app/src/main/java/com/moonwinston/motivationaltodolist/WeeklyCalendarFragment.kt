@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyCalendarFragment : Fragment() {
-
     private lateinit var binding: FragmentWeeklyCalendarBinding
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffWeek: Int = 0
@@ -48,8 +47,7 @@ class WeeklyCalendarFragment : Fragment() {
         val diffDate: Int = 2 - calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, diffDate)
         //TODO
-        val weekList: MutableList<CalendarDate> = mutableListOf<CalendarDate>()
-
+        val weekList = mutableListOf<CalendarDate>()
         for (date in 1..7) {
             //TODO
             val year: Int = calendar.get(Calendar.YEAR)
@@ -137,9 +135,7 @@ class WeeklyCalendarFragment : Fragment() {
     }
 
     companion object {
-
         private const val DIFF_WEEK = "diffWeek"
-
         fun newInstance(diffWeek: Int) = WeeklyCalendarFragment().apply {
             arguments = Bundle().apply {
                 putInt(DIFF_WEEK, diffWeek)
