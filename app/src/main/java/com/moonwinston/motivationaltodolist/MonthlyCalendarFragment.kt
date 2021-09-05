@@ -63,13 +63,12 @@ class MonthlyCalendarFragment : Fragment() {
 
         sharedViewModel.setMonthlyTitle(month, year)
 
-        sharedViewModel.getAllByDates(monthList)
-        val list = sharedViewModel.multipleDaysTasksList
-
-        val adapter = MonthlyCalendarAdapter(list)
-        binding.recyclerviewMonthlyCalendar.adapter = adapter
-        adapter.submitList(monthList)
-
+//        sharedViewModel.getAllByDates(monthList)
+        sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
+            val adapter = MonthlyCalendarAdapter(it)
+            binding.recyclerviewMonthlyCalendar.adapter = adapter
+            adapter.submitList(monthList)
+        }
         binding.textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
     }
 

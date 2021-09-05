@@ -31,15 +31,15 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         }
     }
 
-    //TODO fix
-    private var _multipleDaysTasksList = listOf<TaskEntity>()
-    val multipleDaysTasksList: List<TaskEntity>
+    private var _multipleDaysTasksList = MutableLiveData<List<TaskEntity>>()
+    val multipleDaysTasksList: LiveData<List<TaskEntity>>
         get() = _multipleDaysTasksList
 
-    fun getAllByDates(taskDatesList: List<CalendarDate>) = viewModelScope.launch {
+//    fun getAllByDates(taskDatesList: MutableList<CalendarDate>) = viewModelScope.launch {
+        fun getAllByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch {
         val list = taskRepository.getAllTasksByDates(taskDatesList)
         val sortedList = list.sortedBy { it.taskDate }
-        _multipleDaysTasksList = sortedList.map {
+        _multipleDaysTasksList.value = sortedList.map {
             TaskEntity(
                 uid = it.uid,
                 taskDate = it.taskDate,
