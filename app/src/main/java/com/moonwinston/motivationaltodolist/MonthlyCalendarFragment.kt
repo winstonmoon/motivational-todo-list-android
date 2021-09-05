@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.moonwinston.motivationaltodolist.adapters.MonthlyCalendarAdapter
-import com.moonwinston.motivationaltodolist.data.CalendarDate
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -54,16 +53,22 @@ class MonthlyCalendarFragment : Fragment() {
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-        val monthList: MutableList<CalendarDate> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate()})
+//        val monthList: MutableList<CalendarDate> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate()})
+//        for (date in 1..maxDate) {
+//            monthList.add(
+//                CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
+//            )
+//        }
+        val monthList: MutableList<Date> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { Date()})
         for (date in 1..maxDate) {
             monthList.add(
-                CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
+                SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")
             )
         }
 
         sharedViewModel.setMonthlyTitle(month, year)
 
-//        sharedViewModel.getAllByDates(monthList)
+        sharedViewModel.getAllByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
             val adapter = MonthlyCalendarAdapter(it)
             binding.recyclerviewMonthlyCalendar.adapter = adapter

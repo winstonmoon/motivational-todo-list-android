@@ -6,6 +6,9 @@ import java.util.*
 @Dao
 interface TaskDao {
 
+    @Query("SELECT * FROM task")
+    suspend fun getAll(): List<TaskEntity>
+
     @Query("SELECT * FROM task WHERE taskDate=:taskDate")
     suspend fun getAllByDate(taskDate: Date): List<TaskEntity>
 

@@ -3,13 +3,10 @@ package com.moonwinston.motivationaltodolist.adapters
 import android.content.DialogInterface
 import android.graphics.Paint
 import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +17,8 @@ import com.moonwinston.motivationaltodolist.databinding.ItemTasksBinding
 import java.text.SimpleDateFormat
 
 class TaskAdapter(
-    val meatballsmenuCallback: (TaskEntity, DmlState) -> Unit,
-    val radioButtonCalllback: (TaskEntity) -> Unit
+    val meatballsMenuCallback: (TaskEntity, DmlState) -> Unit,
+    val radioButtonCallback: (TaskEntity) -> Unit
 ) : ListAdapter<TaskEntity, TaskAdapter.ViewHolder>(diffUtil) {
     val formatTime = SimpleDateFormat("HH:mm")
 
@@ -53,14 +50,14 @@ class TaskAdapter(
                                     task = taskEntity.task,
                                     isCompleted = true
                                 )
-                                radioButtonCalllback(insertTaskEntity)
+                                radioButtonCallback(insertTaskEntity)
                             })
                         .setNegativeButton(R.string.button_cancel,
                             DialogInterface.OnClickListener { _, _ ->
                                 binding.radiobuttonTasks.isChecked = false
                             })
                     builder.show()
-                    radioButtonCalllback(taskEntity)
+                    radioButtonCallback(taskEntity)
                 }
 
                 binding.meatballsmenuTasks.setOnClickListener {
@@ -69,9 +66,9 @@ class TaskAdapter(
                     popupMenu.setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.edit ->
-                                meatballsmenuCallback(taskEntity, DmlState.Update)
+                                meatballsMenuCallback(taskEntity, DmlState.Update)
                             R.id.delete ->
-                                meatballsmenuCallback(taskEntity, DmlState.Delete)
+                                meatballsMenuCallback(taskEntity, DmlState.Delete)
                         }
                         false
                     }

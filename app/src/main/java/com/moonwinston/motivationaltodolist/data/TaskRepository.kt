@@ -5,6 +5,8 @@ import java.util.*
 
 interface TaskRepository {
 
+    suspend fun getAllTasks(): List<TaskEntity>
+
     suspend fun getAllTasksByDate(taskDate: Date): List<TaskEntity>
 
 //    suspend fun getAllTasksByDates(taskDatesList: MutableList<CalendarDate>): List<TaskEntity>
