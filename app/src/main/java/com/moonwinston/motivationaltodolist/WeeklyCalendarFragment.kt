@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.moonwinston.motivationaltodolist.data.CalendarDate
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
@@ -61,8 +60,8 @@ class WeeklyCalendarFragment : Fragment() {
             calendar.add(Calendar.DATE, 1)
         }
 
-        sharedViewModel.getAllByDates(weekList)
-        sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
+        sharedViewModel.getAll()
+        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             var monList = mutableListOf<TaskEntity>()
             var tueList = mutableListOf<TaskEntity>()
             var wedList = mutableListOf<TaskEntity>()
@@ -158,7 +157,7 @@ class WeeklyCalendarFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        sharedViewModel.getAllByDates(weekList)
+        sharedViewModel.getAll()
     }
 
     companion object {

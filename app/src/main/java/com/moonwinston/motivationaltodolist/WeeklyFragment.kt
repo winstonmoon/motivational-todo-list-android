@@ -118,7 +118,7 @@ class WeeklyFragment : Fragment() {
         }
 
         val adapter = TaskAdapter(
-            meatballsmenuCallback = { taskEntity, dmlState ->
+            meatballsMenuCallback = { taskEntity, dmlState ->
                 when (dmlState) {
                     DmlState.Update -> {
                         val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
@@ -130,16 +130,21 @@ class WeeklyFragment : Fragment() {
                     else -> Unit
                 }
             },
-            radioButtonCalllback = {
+            radioButtonCallback = {
                 sharedViewModel.insert(it)
             })
         binding.recyclerviewWeeklyTodo.adapter = adapter
 
-        sharedViewModel.getAllByDate(selectedDate)
-        sharedViewModel.singleDayTasksListLiveData.observe(viewLifecycleOwner) {
+        sharedViewModel.getAll()
+        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             //TODO fix
-            sharedViewModel.getAllByDate(selectedDate)
-            adapter.submitList(it)
+            var selectedDayTasksList = mutableListOf<TaskEntity>()
+            for (taskEntity in it) {
+                if (taskEntity.taskDate == selectedDate) {
+                    selectedDayTasksList.add(taskEntity)
+                }
+            }
+            adapter.submitList(selectedDayTasksList)
         }
 
         binding.buttonSettings.setOnClickListener {

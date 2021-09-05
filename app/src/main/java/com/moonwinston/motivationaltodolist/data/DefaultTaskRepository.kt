@@ -9,6 +9,10 @@ class DefaultTaskRepository(
     private val ioDispatcher: CoroutineDispatcher
 ) : TaskRepository {
 
+    override suspend fun getAllTasks(): List<TaskEntity> = withContext(ioDispatcher) {
+        taskDao.getAll()
+    }
+
     override suspend fun getAllTasksByDate(taskDate: Date): List<TaskEntity> = withContext(ioDispatcher) {
         taskDao.getAllByDate(taskDate)
     }

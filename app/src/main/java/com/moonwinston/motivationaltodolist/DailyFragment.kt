@@ -39,7 +39,7 @@ class DailyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = TaskAdapter(
-            meatballsmenuCallback = { taskEntity, dmlState ->
+            meatballsMenuCallback = { taskEntity, dmlState ->
                 when (dmlState) {
                     DmlState.Update -> {
                         val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
@@ -51,7 +51,7 @@ class DailyFragment : Fragment() {
                     else -> Unit
                 }
             },
-            radioButtonCalllback = {
+            radioButtonCallback = {
                 sharedViewModel.insert(it)
             })
         binding.recyclerviewDailyTodo.adapter = adapter
@@ -63,12 +63,16 @@ class DailyFragment : Fragment() {
         val year = Calendar.getInstance().get(Calendar.YEAR)
         binding.textDate.text = "Today, $parsedMonth $date, $year"
 
-        sharedViewModel.getAllByDate(CalendarUtil.getToday())
-
-        sharedViewModel.singleDayTasksListLiveData.observe(viewLifecycleOwner) {
+        sharedViewModel.getAll()
+        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             //TODO fix
-            sharedViewModel.getAllByDate(CalendarUtil.getToday())
-            adapter.submitList(it)
+            var todayTasksList = mutableListOf<TaskEntity>()
+            for (taskEntity in it) {
+                if (taskEntity.taskDate == CalendarUtil.getToday()) {
+                    todayTasksList.add(taskEntity)
+                }
+            }
+            adapter.submitList(todayTasksList)
             val rate = sharedViewModel.getRate(it)
             binding.customviewPiechartDaily.setPercentage(rate)
             if (rate == 0.0F) {

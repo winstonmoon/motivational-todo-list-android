@@ -5,13 +5,30 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.MonthEnum
-import com.moonwinston.motivationaltodolist.data.CalendarDate
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
 class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() {
+
+    private var _tasksListLiveData = MutableLiveData<List<TaskEntity>>()
+    val tasksListLiveData: LiveData<List<TaskEntity>>
+        get() = _tasksListLiveData
+
+    fun getAll() = viewModelScope.launch {
+        val list = taskRepository.getAllTasks()
+        val sortedList = list.sortedBy { it.taskDate }
+        _tasksListLiveData.value = sortedList.map {
+            TaskEntity(
+                uid = it.uid,
+                taskDate = it.taskDate,
+                taskTime = it.taskTime,
+                task = it.task,
+                isCompleted = it.isCompleted
+            )
+        }
+    }
 
     private var _singleDayTasksListLiveData = MutableLiveData<List<TaskEntity>>()
     val singleDayTasksListLiveData: LiveData<List<TaskEntity>>
@@ -35,8 +52,8 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
     val multipleDaysTasksList: LiveData<List<TaskEntity>>
         get() = _multipleDaysTasksList
 
-//    fun getAllByDates(taskDatesList: MutableList<CalendarDate>) = viewModelScope.launch {
-        fun getAllByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch {
+    //    fun getAllByDates(taskDatesList: MutableList<CalendarDate>) = viewModelScope.launch {
+    fun getAllByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch {
         val list = taskRepository.getAllTasksByDates(taskDatesList)
         val sortedList = list.sortedBy { it.taskDate }
         _multipleDaysTasksList.value = sortedList.map {
@@ -52,10 +69,14 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
 
     fun insert(taskEntity: TaskEntity) = viewModelScope.launch {
         taskRepository.insertTask(taskEntity)
+        //TODO test
+        getAll()
     }
 
     fun delete(uid: Long) = viewModelScope.launch {
         taskRepository.deleteTask(uid)
+        //TODO test
+        getAll()
     }
 
     private var _monthlyTitleLiveData = MutableLiveData<String>()
