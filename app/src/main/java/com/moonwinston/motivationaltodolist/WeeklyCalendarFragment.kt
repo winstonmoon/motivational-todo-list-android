@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.moonwinston.motivationaltodolist.data.CalendarDate
+import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -16,6 +17,7 @@ class WeeklyCalendarFragment : Fragment() {
     private lateinit var binding: FragmentWeeklyCalendarBinding
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffWeek: Int = 0
+    val weekList = mutableListOf<Date>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +44,10 @@ class WeeklyCalendarFragment : Fragment() {
             firstDayOfWeek = Calendar.MONDAY
         }
 
-        //TODO fix dayOfWeek logic more simple
-        //TODO viewmodel
+        //TODO fix dayOfWeek logic more simple, viewmodel
         val diffDate: Int = 2 - calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, diffDate)
         //TODO
-        val weekList = mutableListOf<CalendarDate>()
         for (date in 1..7) {
             //TODO
             val year: Int = calendar.get(Calendar.YEAR)
@@ -56,57 +56,80 @@ class WeeklyCalendarFragment : Fragment() {
             val date: Int = calendar.get(Calendar.DATE)
 
             weekList.add(
-                CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
+                SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")
             )
             calendar.add(Calendar.DATE, 1)
         }
 
+        sharedViewModel.getAllByDates(weekList)
+        sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
+            var monList = mutableListOf<TaskEntity>()
+            var tueList = mutableListOf<TaskEntity>()
+            var wedList = mutableListOf<TaskEntity>()
+            var thuList = mutableListOf<TaskEntity>()
+            var friList = mutableListOf<TaskEntity>()
+            var satList = mutableListOf<TaskEntity>()
+            var sunList = mutableListOf<TaskEntity>()
+            for (taskEntity in it) {
+                when (taskEntity.taskDate) {
+                    weekList[0] -> monList.add(taskEntity)
+                    weekList[1] -> tueList.add(taskEntity)
+                    weekList[2] -> wedList.add(taskEntity)
+                    weekList[3] -> thuList.add(taskEntity)
+                    weekList[4] -> friList.add(taskEntity)
+                    weekList[5] -> satList.add(taskEntity)
+                    weekList[6] -> sunList.add(taskEntity)
+                }
+            }
+            binding.customviewPiechartMonday.setPercentage(sharedViewModel.getRate(monList))
+            binding.customviewPiechartTuesday.setPercentage(sharedViewModel.getRate(tueList))
+            binding.customviewPiechartWednesday.setPercentage(sharedViewModel.getRate(wedList))
+            binding.customviewPiechartThursday.setPercentage(sharedViewModel.getRate(thuList))
+            binding.customviewPiechartFriday.setPercentage(sharedViewModel.getRate(friList))
+            binding.customviewPiechartSaturday.setPercentage(sharedViewModel.getRate(satList))
+            binding.customviewPiechartSunday.setPercentage(sharedViewModel.getRate(sunList))
+        }
+
         binding.customviewPiechartMonday.apply {
-            setCalendarDate(weekList[0].calendarDate)
+            setCalendarDate(weekList[0])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
-            setPercentage(0.5F)
         }
 
         binding.customviewPiechartTuesday.apply {
-            setCalendarDate(weekList[1].calendarDate)
+            setCalendarDate(weekList[1])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
-            setPercentage(0.5F)
         }
 
         binding.customviewPiechartWednesday.apply {
-            setCalendarDate(weekList[2].calendarDate)
+            setCalendarDate(weekList[2])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
-            setPercentage(0.5F)
         }
 
         binding.customviewPiechartThursday.apply {
-            setCalendarDate(weekList[3].calendarDate)
+            setCalendarDate(weekList[3])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
-            setPercentage(0.5F)
         }
 
         binding.customviewPiechartFriday.apply {
-            setCalendarDate(weekList[4].calendarDate)
+            setCalendarDate(weekList[4])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
-            setPercentage(0.5F)
         }
 
         binding.customviewPiechartSaturday.apply {
-            setCalendarDate(weekList[5].calendarDate)
+            setCalendarDate(weekList[5])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
-            setPercentage(0.5F)
         }
+
         binding.customviewPiechartSunday.apply {
-            setCalendarDate(weekList[6].calendarDate)
+            setCalendarDate(weekList[6])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
-            setPercentage(0.5F)
         }
 
         //TODO implement set date
@@ -122,7 +145,6 @@ class WeeklyCalendarFragment : Fragment() {
         binding.customviewPiechartThursday.setOnClickListener {
             sharedViewModel.selectThursday(binding.customviewPiechartThursday.getCalendarDate())
         }
-
         binding.customviewPiechartFriday.setOnClickListener {
             sharedViewModel.selectFriday(binding.customviewPiechartFriday.getCalendarDate())
         }
@@ -132,6 +154,11 @@ class WeeklyCalendarFragment : Fragment() {
         binding.customviewPiechartSunday.setOnClickListener {
             sharedViewModel.selectSunday(binding.customviewPiechartSunday.getCalendarDate())
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.getAllByDates(weekList)
     }
 
     companion object {
