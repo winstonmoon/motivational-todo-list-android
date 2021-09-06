@@ -17,7 +17,6 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 class WeeklyFragment : Fragment() {
-
     private lateinit var binding: FragmentWeeklyBinding
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var selectedDate: Date = CalendarUtil.getToday()

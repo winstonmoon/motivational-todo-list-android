@@ -16,7 +16,7 @@ class WeeklyCalendarFragment : Fragment() {
     private lateinit var binding: FragmentWeeklyCalendarBinding
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffWeek: Int = 0
-    val weekList = mutableListOf<Date>()
+    private val weekList = mutableListOf<Date>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,68 +90,68 @@ class WeeklyCalendarFragment : Fragment() {
         }
 
         binding.customviewPiechartMonday.apply {
-            setCalendarDate(weekList[0])
+            setPieChartViewDate(weekList[0])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
         }
 
         binding.customviewPiechartTuesday.apply {
-            setCalendarDate(weekList[1])
+            setPieChartViewDate(weekList[1])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
         }
 
         binding.customviewPiechartWednesday.apply {
-            setCalendarDate(weekList[2])
+            setPieChartViewDate(weekList[2])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
         }
 
         binding.customviewPiechartThursday.apply {
-            setCalendarDate(weekList[3])
+            setPieChartViewDate(weekList[3])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
         }
 
         binding.customviewPiechartFriday.apply {
-            setCalendarDate(weekList[4])
+            setPieChartViewDate(weekList[4])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
         }
 
         binding.customviewPiechartSaturday.apply {
-            setCalendarDate(weekList[5])
+            setPieChartViewDate(weekList[5])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
         }
 
         binding.customviewPiechartSunday.apply {
-            setCalendarDate(weekList[6])
+            setPieChartViewDate(weekList[6])
             setBorderStrokeWidth(10F)
             setProgressiveStrokeWidth(5F)
         }
 
         //TODO implement set date
         binding.customviewPiechartMonday.setOnClickListener {
-            sharedViewModel.selectMonday(binding.customviewPiechartMonday.getCalendarDate())
+            sharedViewModel.selectMonday(binding.customviewPiechartMonday.getPieChartViewDate())
         }
         binding.customviewPiechartTuesday.setOnClickListener {
-            sharedViewModel.selectTuesday(binding.customviewPiechartTuesday.getCalendarDate())
+            sharedViewModel.selectTuesday(binding.customviewPiechartTuesday.getPieChartViewDate())
         }
         binding.customviewPiechartWednesday.setOnClickListener {
-            sharedViewModel.selectWednesday(binding.customviewPiechartWednesday.getCalendarDate())
+            sharedViewModel.selectWednesday(binding.customviewPiechartWednesday.getPieChartViewDate())
         }
         binding.customviewPiechartThursday.setOnClickListener {
-            sharedViewModel.selectThursday(binding.customviewPiechartThursday.getCalendarDate())
+            sharedViewModel.selectThursday(binding.customviewPiechartThursday.getPieChartViewDate())
         }
         binding.customviewPiechartFriday.setOnClickListener {
-            sharedViewModel.selectFriday(binding.customviewPiechartFriday.getCalendarDate())
+            sharedViewModel.selectFriday(binding.customviewPiechartFriday.getPieChartViewDate())
         }
         binding.customviewPiechartSaturday.setOnClickListener {
-            sharedViewModel.selectSaturday(binding.customviewPiechartSaturday.getCalendarDate())
+            sharedViewModel.selectSaturday(binding.customviewPiechartSaturday.getPieChartViewDate())
         }
         binding.customviewPiechartSunday.setOnClickListener {
-            sharedViewModel.selectSunday(binding.customviewPiechartSunday.getCalendarDate())
+            sharedViewModel.selectSunday(binding.customviewPiechartSunday.getPieChartViewDate())
         }
     }
 

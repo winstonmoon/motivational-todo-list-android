@@ -73,7 +73,7 @@ class DailyFragment : Fragment() {
                 }
             }
             adapter.submitList(todayTasksList)
-            val rate = sharedViewModel.getRate(it)
+            var rate = sharedViewModel.getRate(todayTasksList)
             binding.customviewPiechartDaily.setPercentage(rate)
             if (rate == 0.0F) {
                 binding.customviewPiechartDaily.alpha = 0.1F
