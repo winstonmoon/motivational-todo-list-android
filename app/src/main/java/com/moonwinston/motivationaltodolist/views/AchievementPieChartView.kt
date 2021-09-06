@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
-import java.text.SimpleDateFormat
+import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 import java.util.*
 
 class AchievementPieChartView @JvmOverloads constructor(
@@ -19,7 +19,7 @@ class AchievementPieChartView @JvmOverloads constructor(
     private var percentage: Float = 0.0F
     private var borderStrokeWidth: Float = 40F
     private var progressiveStrokeWidth: Float = 20F
-    var calendarDate: Date = SimpleDateFormat("yyyy-MM-dd").parse("0000-00-00")
+    private var pieChartViewDate: Date = CalendarUtil.getNonExistDate()
 
     override fun onDraw(canvas: Canvas?) {
         val centerX = measuredWidth / 2
@@ -78,13 +78,13 @@ class AchievementPieChartView @JvmOverloads constructor(
         requestLayout()
     }
 
-    @JvmName("setCalendarDate1")
-    fun setCalendarDate(date: Date) {
-        calendarDate = date
+    @JvmName("setPieChartViewDate1")
+    fun setPieChartViewDate(date: Date) {
+        pieChartViewDate = date
     }
 
-    @JvmName("getCalendarDate1")
-    fun getCalendarDate(): Date {
-        return calendarDate
+    @JvmName("getPieChartViewDate1")
+    fun getPieChartViewDate(): Date {
+        return pieChartViewDate
     }
 }

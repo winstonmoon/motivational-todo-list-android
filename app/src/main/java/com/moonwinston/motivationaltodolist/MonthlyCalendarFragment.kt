@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.moonwinston.motivationaltodolist.adapters.MonthlyCalendarAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
+import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
@@ -16,6 +17,7 @@ class MonthlyCalendarFragment : Fragment() {
     private lateinit var binding: FragmentMonthlyCalendarBinding
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffMonth: Int = 0
+
     //TODO fix
     private var year: Int = 0
     private var month: Int = 0
@@ -46,20 +48,15 @@ class MonthlyCalendarFragment : Fragment() {
             firstDayOfWeek = Calendar.MONDAY
         }
 
-        //TODO fix dayOfWeek logic more simple
-        //TODO viewmodel
+        //TODO fix dayOfWeek logic more simple, viewmodel
         val maxDate: Int = calendar.getActualMaximum(Calendar.DATE)
         val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - 2
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-//        val monthList: MutableList<CalendarDate> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { CalendarDate()})
-//        for (date in 1..maxDate) {
-//            monthList.add(
-//                CalendarDate(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
-//            )
-//        }
-        val monthList: MutableList<Date> = MutableList(if(dayOfWeek == -1) 6 else dayOfWeek, init = { Date()})
+        val monthList: MutableList<Date> = MutableList(
+            if (dayOfWeek == -1) 6 else dayOfWeek,
+            init = { CalendarUtil.getNonExistDate() })
         for (date in 1..maxDate) {
             monthList.add(
                 SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")
