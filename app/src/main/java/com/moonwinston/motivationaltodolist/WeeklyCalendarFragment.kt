@@ -133,25 +133,25 @@ class WeeklyCalendarFragment : Fragment() {
 
         //TODO implement set date
         binding.customviewPiechartMonday.setOnClickListener {
-            sharedViewModel.selectMonday(binding.customviewPiechartMonday.getPieChartViewDate())
+            sharedViewModel.setSelectedDate(binding.customviewPiechartMonday.getPieChartViewDate())
         }
         binding.customviewPiechartTuesday.setOnClickListener {
-            sharedViewModel.selectTuesday(binding.customviewPiechartTuesday.getPieChartViewDate())
+            sharedViewModel.setSelectedDate(binding.customviewPiechartTuesday.getPieChartViewDate())
         }
         binding.customviewPiechartWednesday.setOnClickListener {
-            sharedViewModel.selectWednesday(binding.customviewPiechartWednesday.getPieChartViewDate())
+            sharedViewModel.setSelectedDate(binding.customviewPiechartWednesday.getPieChartViewDate())
         }
         binding.customviewPiechartThursday.setOnClickListener {
-            sharedViewModel.selectThursday(binding.customviewPiechartThursday.getPieChartViewDate())
+            sharedViewModel.setSelectedDate(binding.customviewPiechartThursday.getPieChartViewDate())
         }
         binding.customviewPiechartFriday.setOnClickListener {
-            sharedViewModel.selectFriday(binding.customviewPiechartFriday.getPieChartViewDate())
+            sharedViewModel.setSelectedDate(binding.customviewPiechartFriday.getPieChartViewDate())
         }
         binding.customviewPiechartSaturday.setOnClickListener {
-            sharedViewModel.selectSaturday(binding.customviewPiechartSaturday.getPieChartViewDate())
+            sharedViewModel.setSelectedDate(binding.customviewPiechartSaturday.getPieChartViewDate())
         }
         binding.customviewPiechartSunday.setOnClickListener {
-            sharedViewModel.selectSunday(binding.customviewPiechartSunday.getPieChartViewDate())
+            sharedViewModel.setSelectedDate(binding.customviewPiechartSunday.getPieChartViewDate())
         }
     }
 
