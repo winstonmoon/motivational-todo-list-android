@@ -5,11 +5,7 @@ import java.util.*
 
 object CalendarUtil {
 
-    fun getToday(): Date {
-        val formatDate = SimpleDateFormat("yyyy-MM-dd")
-        val todayString = formatDate.format(Calendar.getInstance().time)
-        return formatDate.parse(todayString)
-    }
+    fun getToday(): Date = Calendar.getInstance().time
 
     fun getNonExistDate(): Date = SimpleDateFormat("yyyy-MM-dd").parse("0000-00-00")
 }

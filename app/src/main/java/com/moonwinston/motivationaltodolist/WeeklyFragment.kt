@@ -14,6 +14,7 @@ import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyFragment : Fragment() {
@@ -38,89 +39,96 @@ class WeeklyFragment : Fragment() {
             false
         )
 
-        sharedViewModel.isMondaySelectedLiveData.observe(viewLifecycleOwner) {
-            selectedDate = it
+        sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
+//            sharedViewModel.setSelectedDate(it)
             binding.textDate.text = getWeeklyTitle(it)
-            binding.textWeeklyMon.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            binding.textWeeklyTue.background = null
-            binding.textWeeklyWed.background = null
-            binding.textWeeklyThu.background = null
-            binding.textWeeklyFri.background = null
-            binding.textWeeklySat.background = null
-            binding.textWeeklySun.background = null
-        }
-        sharedViewModel.isTuesdaySelectedLiveData.observe(viewLifecycleOwner) {
-            selectedDate = it
-            binding.textDate.text = getWeeklyTitle(it)
-            binding.textWeeklyTue.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            binding.textWeeklyMon.background = null
-            binding.textWeeklyWed.background = null
-            binding.textWeeklyThu.background = null
-            binding.textWeeklyFri.background = null
-            binding.textWeeklySat.background = null
-            binding.textWeeklySun.background = null
-        }
-        sharedViewModel.isWednesdaySelectedLiveData.observe(viewLifecycleOwner) {
-            selectedDate = it
-            binding.textDate.text = getWeeklyTitle(it)
-            binding.textWeeklyWed.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            binding.textWeeklyTue.background = null
-            binding.textWeeklyMon.background = null
-            binding.textWeeklyThu.background = null
-            binding.textWeeklyFri.background = null
-            binding.textWeeklySat.background = null
-            binding.textWeeklySun.background = null
-        }
-        sharedViewModel.isThursdaySelectedLiveData.observe(viewLifecycleOwner) {
-            selectedDate = it
-            binding.textDate.text = getWeeklyTitle(it)
-            binding.textWeeklyThu.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            binding.textWeeklyTue.background = null
-            binding.textWeeklyWed.background = null
-            binding.textWeeklyMon.background = null
-            binding.textWeeklyFri.background = null
-            binding.textWeeklySat.background = null
-            binding.textWeeklySun.background = null
-        }
-        sharedViewModel.isFridaySelectedLiveData.observe(viewLifecycleOwner) {
-            selectedDate = it
-            binding.textDate.text = getWeeklyTitle(it)
-            binding.textWeeklyFri.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            binding.textWeeklyTue.background = null
-            binding.textWeeklyWed.background = null
-            binding.textWeeklyThu.background = null
-            binding.textWeeklyMon.background = null
-            binding.textWeeklySat.background = null
-            binding.textWeeklySun.background = null
-        }
-        sharedViewModel.isSaturdaySelectedLiveData.observe(viewLifecycleOwner) {
-            selectedDate = it
-            binding.textDate.text = getWeeklyTitle(it)
-            binding.textWeeklySat.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            binding.textWeeklyTue.background = null
-            binding.textWeeklyWed.background = null
-            binding.textWeeklyThu.background = null
-            binding.textWeeklyFri.background = null
-            binding.textWeeklyMon.background = null
-            binding.textWeeklySun.background = null
-        }
-        sharedViewModel.isSundaySelectedLiveData.observe(viewLifecycleOwner) {
-            selectedDate = it
-            binding.textDate.text = getWeeklyTitle(it)
-            binding.textWeeklySun.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            binding.textWeeklyTue.background = null
-            binding.textWeeklyWed.background = null
-            binding.textWeeklyThu.background = null
-            binding.textWeeklyFri.background = null
-            binding.textWeeklySat.background = null
-            binding.textWeeklyMon.background = null
+            //TODO day number of week
+            when (SimpleDateFormat("u").format(it)) {
+                "1" -> {
+                    binding.apply {
+                        textWeeklyMon.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        textWeeklyTue.background = null
+                        textWeeklyWed.background = null
+                        textWeeklyThu.background = null
+                        textWeeklyFri.background = null
+                        textWeeklySat.background = null
+                        textWeeklySun.background = null
+                    }
+                }
+                "2" -> {
+                    binding.apply {
+                        textWeeklyTue.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        textWeeklyMon.background = null
+                        textWeeklyWed.background = null
+                        textWeeklyThu.background = null
+                        textWeeklySat.background = null
+                        textWeeklySun.background = null
+                    }
+                }
+                "3" -> {
+                    binding.apply {
+                        textWeeklyWed.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        textWeeklyTue.background = null
+                        textWeeklyMon.background = null
+                        textWeeklyThu.background = null
+                        textWeeklyFri.background = null
+                        textWeeklySat.background = null
+                        textWeeklySun.background = null
+                    }
+                }
+                "4" -> {
+                    binding.apply {
+                        textWeeklyThu.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        textWeeklyTue.background = null
+                        textWeeklyWed.background = null
+                        textWeeklyMon.background = null
+                        textWeeklyFri.background = null
+                        textWeeklySat.background = null
+                        textWeeklySun.background = null
+                    }
+                }
+                "5" -> {
+                    binding.apply {
+                        textWeeklyFri.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        textWeeklyTue.background = null
+                        textWeeklyWed.background = null
+                        textWeeklyThu.background = null
+                        textWeeklyMon.background = null
+                        textWeeklySat.background = null
+                        textWeeklySun.background = null
+                    }
+                }
+                "6" -> {
+                    binding.apply {
+                        textWeeklySat.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        textWeeklyTue.background = null
+                        textWeeklyWed.background = null
+                        textWeeklyThu.background = null
+                        textWeeklyFri.background = null
+                        textWeeklyMon.background = null
+                        textWeeklySun.background = null
+                    }
+                }
+                "7" -> {
+                    binding.apply {
+                        textWeeklySun.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        textWeeklyTue.background = null
+                        textWeeklyWed.background = null
+                        textWeeklyThu.background = null
+                        textWeeklyFri.background = null
+                        textWeeklySat.background = null
+                        textWeeklyMon.background = null
+                    }
+                }
+            }
         }
 
         val adapter = TaskAdapter(
             meatballsMenuCallback = { taskEntity, dmlState ->
                 when (dmlState) {
                     DmlState.Update -> {
-                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        val bundle =
+                            bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                         view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
                     }
                     DmlState.Delete -> {
@@ -133,6 +141,10 @@ class WeeklyFragment : Fragment() {
                 sharedViewModel.insert(it)
             })
         binding.recyclerviewWeeklyTodo.adapter = adapter
+
+        sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
+            selectedDate = it
+        }
 
         sharedViewModel.getAll()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
@@ -167,18 +179,10 @@ class WeeklyFragment : Fragment() {
     private fun getWeeklyTitle(selectedDate: Date): String {
         val year = selectedDate.year
         val month = selectedDate.month
-        val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
         val date = selectedDate.date
-        val day =
-            when (selectedDate.day) {
-                1 -> "Monday"
-                2 -> "Tuesday"
-                3 -> "Wednesday"
-                4 -> "Thursday"
-                5 -> "Friday"
-                6 -> "Saturday"
-                else -> "Sunday"
-            }
-        return "$day, $parsedMonth $date, $year"
+        val dayOfWeek = selectedDate.day
+        val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
+        val parsedDayOfWeek = resources.getString(DayOfWeekEnum.values()[dayOfWeek].dayOfWeek)
+        return "$parsedDayOfWeek, $parsedMonth $date, $year"
     }
 }

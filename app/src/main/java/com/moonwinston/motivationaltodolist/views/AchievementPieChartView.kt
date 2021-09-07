@@ -78,12 +78,10 @@ class AchievementPieChartView @JvmOverloads constructor(
         requestLayout()
     }
 
-    @JvmName("setPieChartViewDate1")
     fun setPieChartViewDate(date: Date) {
         pieChartViewDate = date
     }
 
-    @JvmName("getPieChartViewDate1")
     fun getPieChartViewDate(): Date {
         return pieChartViewDate
     }

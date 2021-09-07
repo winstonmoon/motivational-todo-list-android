@@ -21,6 +21,7 @@ class MonthlyCalendarFragment : Fragment() {
     //TODO fix
     private var year: Int = 0
     private var month: Int = 0
+    private var monthList: MutableList<Date> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +50,12 @@ class MonthlyCalendarFragment : Fragment() {
         }
 
         //TODO fix dayOfWeek logic more simple, viewmodel
-        val maxDate: Int = calendar.getActualMaximum(Calendar.DATE)
+        val maxDate: Int  = calendar.getActualMaximum(Calendar.DATE)
         val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - 2
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-        val monthList: MutableList<Date> = MutableList(
+        monthList = MutableList(
             if (dayOfWeek == -1) 6 else dayOfWeek,
             init = { CalendarUtil.getNonExistDate() })
         for (date in 1..maxDate) {
@@ -65,6 +66,7 @@ class MonthlyCalendarFragment : Fragment() {
 
         sharedViewModel.setMonthlyTitle(month, year)
 
+        //TODO fix to use getAll instead of getAllByDates
         sharedViewModel.getAllByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
             val adapter = MonthlyCalendarAdapter(it)
@@ -77,6 +79,14 @@ class MonthlyCalendarFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         sharedViewModel.setMonthlyTitle(month, year)
+
+        //TODO fix to use getAll instead of getAllByDates
+        sharedViewModel.getAllByDates(monthList)
+        sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
+            val adapter = MonthlyCalendarAdapter(it)
+            binding.recyclerviewMonthlyCalendar.adapter = adapter
+            adapter.submitList(monthList)
+        }
     }
 
     companion object {
