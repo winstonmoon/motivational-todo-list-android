@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="none_number">0</string>
-    <string name="mon_number">1</string>
-    <string name="tue_number">2</string>
-    <string name="wed_number">3</string>
-    <string name="thu_number">4</string>
-    <string name="fri_number">5</string>
-    <string name="sat_number">6</string>
-    <string name="sun_number">7</string>
+    <string name="sun_number">1</string>
+    <string name="mon_number">2</string>
+    <string name="tue_number">3</string>
+    <string name="wed_number">4</string>
+    <string name="thu_number">5</string>
+    <string name="fri_number">6</string>
+    <string name="sat_number">7</string>
 
     <string name="none_string">None</string>
     <string name="mon_string">Monday</string>
