@@ -41,6 +41,9 @@ class WeeklyFragment : Fragment() {
 
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
 //            sharedViewModel.setSelectedDate(it)
+
+            sharedViewModel.getAll()
+
             binding.textDate.text = getWeeklyTitle(it)
             //TODO day number of week
             when (SimpleDateFormat("u").format(it)) {
@@ -177,10 +180,14 @@ class WeeklyFragment : Fragment() {
     }
 
     private fun getWeeklyTitle(selectedDate: Date): String {
-        val year = selectedDate.year
-        val month = selectedDate.month
-        val date = selectedDate.date
-        val dayOfWeek = selectedDate.day
+        val y = SimpleDateFormat("y").format(selectedDate).toInt()
+        val m = SimpleDateFormat("M").format(selectedDate).toInt()
+        val d = SimpleDateFormat("d").format(selectedDate).toInt()
+        val gregorianCalendar = GregorianCalendar(y,m,d)
+        val year = gregorianCalendar.get(Calendar.YEAR)
+        val month = gregorianCalendar.get(Calendar.MONTH)
+        val date = gregorianCalendar.get(Calendar.DATE)
+        val dayOfWeek = gregorianCalendar.get(Calendar.DAY_OF_WEEK)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
         val parsedDayOfWeek = resources.getString(DayOfWeekEnum.values()[dayOfWeek].dayOfWeek)
         return "$parsedDayOfWeek, $parsedMonth $date, $year"
