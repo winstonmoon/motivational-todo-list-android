@@ -100,7 +100,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
     inner class ViewHolder(private val binding: ItemMonthlyCalendarBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val nonExistDate = CalendarUtil.getNonExistDate()
-        private val today = CalendarUtil.getToday()
+        private val today = CalendarUtil.getTodayDate()
         private val testtList = testList
 
         fun bind(testDate: Date) {

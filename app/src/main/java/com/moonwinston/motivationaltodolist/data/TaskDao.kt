@@ -13,7 +13,6 @@ interface TaskDao {
     suspend fun getAllByDate(taskDate: Date): List<TaskEntity>
 
     @Query("SELECT * FROM task WHERE taskDate IN(:taskDatesList)")
-//    suspend fun getAllByDates(taskDatesList: MutableList<CalendarDate>): List<TaskEntity>
     suspend fun getAllByDates(taskDatesList: MutableList<Date>): List<TaskEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -47,12 +47,16 @@ class DailyFragment : Fragment() {
                     }
                     DmlState.Delete -> {
                         sharedViewModel.delete(taskEntity.uid)
+                        //TODO
+                        sharedViewModel.getAll()
                     }
                     else -> Unit
                 }
             },
             radioButtonCallback = {
                 sharedViewModel.insert(it)
+                //TODO
+                sharedViewModel.getAll()
             })
         binding.recyclerviewDailyTodo.adapter = adapter
 
@@ -68,11 +72,11 @@ class DailyFragment : Fragment() {
             //TODO fix
             var todayTasksList = mutableListOf<TaskEntity>()
             for (taskEntity in it) {
-                if (taskEntity.taskDate == CalendarUtil.getToday()) {
+                if (taskEntity.taskDate == CalendarUtil.getTodayDate()) {
                     todayTasksList.add(taskEntity)
                 }
             }
-            adapter.submitList(todayTasksList)
+            adapter.submitList(todayTasksList.sortedBy { it.taskTime })
             var rate = sharedViewModel.getRate(todayTasksList)
             binding.customviewPiechartDaily.setPercentage(rate)
             if (rate == 0.0F) {

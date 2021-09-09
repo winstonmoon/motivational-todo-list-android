@@ -13,14 +13,15 @@ class DefaultTaskRepository(
         taskDao.getAll()
     }
 
-    override suspend fun getAllTasksByDate(taskDate: Date): List<TaskEntity> = withContext(ioDispatcher) {
-        taskDao.getAllByDate(taskDate)
-    }
+    override suspend fun getAllTasksByDate(taskDate: Date): List<TaskEntity> =
+        withContext(ioDispatcher) {
+            taskDao.getAllByDate(taskDate)
+        }
 
-//    override suspend fun getAllTasksByDates(taskDatesList: MutableList<CalendarDate>): List<TaskEntity> = withContext(ioDispatcher) {
-        override suspend fun getAllTasksByDates(taskDatesList: MutableList<Date>): List<TaskEntity> = withContext(ioDispatcher) {
-        taskDao.getAllByDates(taskDatesList)
-    }
+    override suspend fun getAllTasksByDates(taskDatesList: MutableList<Date>): List<TaskEntity> =
+        withContext(ioDispatcher) {
+            taskDao.getAllByDates(taskDatesList)
+        }
 
     override suspend fun insertTask(taskEntity: TaskEntity) = withContext(ioDispatcher) {
         taskDao.insert(taskEntity)

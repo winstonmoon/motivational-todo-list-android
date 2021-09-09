@@ -9,8 +9,7 @@ interface TaskRepository {
 
     suspend fun getAllTasksByDate(taskDate: Date): List<TaskEntity>
 
-//    suspend fun getAllTasksByDates(taskDatesList: MutableList<CalendarDate>): List<TaskEntity>
-suspend fun getAllTasksByDates(taskDatesList: MutableList<Date>): List<TaskEntity>
+    suspend fun getAllTasksByDates(taskDatesList: MutableList<Date>): List<TaskEntity>
 
     suspend fun insertTask(taskEntity: TaskEntity)
 
