@@ -20,13 +20,14 @@ import java.util.*
 class WeeklyFragment : Fragment() {
     private lateinit var binding: FragmentWeeklyBinding
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
-    private var selectedDate: Date = CalendarUtil.getToday()
+    private lateinit var selectedDate: Date
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        selectedDate = CalendarUtil.getTodayDate()
         binding = FragmentWeeklyBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,11 +40,91 @@ class WeeklyFragment : Fragment() {
             false
         )
 
+        //TODO
+        binding.textDate.text = getWeeklyTitle(CalendarUtil.getTodayDate())
+        //TODO day number of week
+        when (SimpleDateFormat("u").format(CalendarUtil.getTodayDate())) {
+            "1" -> {
+                binding.apply {
+                    textWeeklyMon.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyFri.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "2" -> {
+                binding.apply {
+                    textWeeklyTue.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyMon.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "3" -> {
+                binding.apply {
+                    textWeeklyWed.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyMon.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyFri.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "4" -> {
+                binding.apply {
+                    textWeeklyThu.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyMon.background = null
+                    textWeeklyFri.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "5" -> {
+                binding.apply {
+                    textWeeklyFri.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyMon.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "6" -> {
+                binding.apply {
+                    textWeeklySat.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyFri.background = null
+                    textWeeklyMon.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "7" -> {
+                binding.apply {
+                    textWeeklySun.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyFri.background = null
+                    textWeeklySat.background = null
+                    textWeeklyMon.background = null
+                }
+            }
+        }
+        //TODO
+
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
-//            sharedViewModel.setSelectedDate(it)
-
             sharedViewModel.getAll()
-
             binding.textDate.text = getWeeklyTitle(it)
             //TODO day number of week
             when (SimpleDateFormat("u").format(it)) {
@@ -136,12 +217,16 @@ class WeeklyFragment : Fragment() {
                     }
                     DmlState.Delete -> {
                         sharedViewModel.delete(taskEntity.uid)
+                        //TODO
+                        sharedViewModel.getAll()
                     }
                     else -> Unit
                 }
             },
             radioButtonCallback = {
                 sharedViewModel.insert(it)
+                //TODO
+                sharedViewModel.getAll()
             })
         binding.recyclerviewWeeklyTodo.adapter = adapter
 
@@ -152,13 +237,13 @@ class WeeklyFragment : Fragment() {
         sharedViewModel.getAll()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             //TODO fix
-            var selectedDayTasksList = mutableListOf<TaskEntity>()
+            val selectedDayTasksList = mutableListOf<TaskEntity>()
             for (taskEntity in it) {
                 if (taskEntity.taskDate == selectedDate) {
                     selectedDayTasksList.add(taskEntity)
                 }
             }
-            adapter.submitList(selectedDayTasksList)
+            adapter.submitList(selectedDayTasksList.sortedBy { it.taskTime })
         }
 
         binding.buttonSettings.setOnClickListener {
@@ -169,7 +254,7 @@ class WeeklyFragment : Fragment() {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert,
                 "taskEntity" to TaskEntity(
-                    taskDate = Date(),
+                    taskDate = selectedDate,
                     taskTime = Date(),
                     task = "",
                     isCompleted = false
@@ -179,11 +264,97 @@ class WeeklyFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        //TODO
+        sharedViewModel.setSelectedDate(CalendarUtil.getTodayDate())
+        binding.textDate.text = getWeeklyTitle(CalendarUtil.getTodayDate())
+        when (SimpleDateFormat("u").format(CalendarUtil.getTodayDate())) {
+            "1" -> {
+                binding.apply {
+                    textWeeklyMon.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyFri.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "2" -> {
+                binding.apply {
+                    textWeeklyTue.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyMon.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "3" -> {
+                binding.apply {
+                    textWeeklyWed.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyMon.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyFri.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "4" -> {
+                binding.apply {
+                    textWeeklyThu.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyMon.background = null
+                    textWeeklyFri.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "5" -> {
+                binding.apply {
+                    textWeeklyFri.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyMon.background = null
+                    textWeeklySat.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "6" -> {
+                binding.apply {
+                    textWeeklySat.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyFri.background = null
+                    textWeeklyMon.background = null
+                    textWeeklySun.background = null
+                }
+            }
+            "7" -> {
+                binding.apply {
+                    textWeeklySun.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    textWeeklyTue.background = null
+                    textWeeklyWed.background = null
+                    textWeeklyThu.background = null
+                    textWeeklyFri.background = null
+                    textWeeklySat.background = null
+                    textWeeklyMon.background = null
+                }
+            }
+        }
+        //TODO
+    }
+
     private fun getWeeklyTitle(selectedDate: Date): String {
         val y = SimpleDateFormat("y").format(selectedDate).toInt()
         val m = SimpleDateFormat("M").format(selectedDate).toInt()
         val d = SimpleDateFormat("d").format(selectedDate).toInt()
-        val gregorianCalendar = GregorianCalendar(y,m,d)
+        val gregorianCalendar = GregorianCalendar(y,m-1,d)
         val year = gregorianCalendar.get(Calendar.YEAR)
         val month = gregorianCalendar.get(Calendar.MONTH)
         val date = gregorianCalendar.get(Calendar.DATE)

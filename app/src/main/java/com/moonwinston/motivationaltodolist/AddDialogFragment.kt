@@ -38,7 +38,7 @@ class AddDialogFragment : DialogFragment() {
             initCommonView(binding)
             when (dmlState) {
                 DmlState.Insert -> {
-                    initInsertView(binding)
+                    initInsertView(binding, taskEntity)
                 }
                 DmlState.Update -> {
                     initUpdateView(binding, taskEntity)
@@ -65,6 +65,8 @@ class AddDialogFragment : DialogFragment() {
                             isCompleted = false
                         )
                         sharedViewModel.insert(insertTaskEntity)
+                        //TODO
+                        sharedViewModel.getAll()
                     })
                 .setNegativeButton(R.string.button_cancel,
                     DialogInterface.OnClickListener { _, _ ->
@@ -82,7 +84,7 @@ class AddDialogFragment : DialogFragment() {
         }
     }
 
-    private fun initInsertView(binding: DialogAddBinding) {
+    private fun initInsertView(binding: DialogAddBinding, taskEntity: TaskEntity) {
         if (Build.VERSION.SDK_INT <= 23) {
             binding.inputTime.currentHour
             binding.inputTime.currentMinute
@@ -90,8 +92,8 @@ class AddDialogFragment : DialogFragment() {
             binding.inputTime.hour
             binding.inputTime.minute
         }
-        binding.viewCalendar.date = CalendarUtil.getToday().time
-        date = CalendarUtil.getToday()
+        binding.viewCalendar.date = taskEntity.taskDate.time
+        date = taskEntity.taskDate
     }
 
     private fun initUpdateView(binding: DialogAddBinding, taskEntity: TaskEntity) {

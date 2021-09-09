@@ -69,14 +69,10 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
 
     fun insert(taskEntity: TaskEntity) = viewModelScope.launch {
         taskRepository.insertTask(taskEntity)
-        //TODO test
-        getAll()
     }
 
     fun delete(uid: Long) = viewModelScope.launch {
         taskRepository.deleteTask(uid)
-        //TODO test
-        getAll()
     }
 
     private var _monthlyTitleLiveData = MutableLiveData<String>()
