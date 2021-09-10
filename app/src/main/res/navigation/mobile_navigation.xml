@@ -26,9 +26,6 @@
         <action
             android:id="@+id/action_monthly_to_settings"
             app:destination="@id/navigation_settings" />
-        <action
-            android:id="@+id/action_monthly_to_add"
-            app:destination="@id/navigation_add" />
     </fragment>
 
     <fragment
@@ -39,9 +36,6 @@
         <action
             android:id="@+id/action_reward_to_settings"
             app:destination="@id/navigation_settings" />
-        <action
-            android:id="@+id/action_reward_to_add"
-            app:destination="@id/navigation_add" />
     </fragment>
 
     <fragment

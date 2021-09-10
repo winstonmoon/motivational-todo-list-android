@@ -12,7 +12,7 @@ import com.moonwinston.motivationaltodolist.adapters.MonthlyScreenSlidePagerAdap
 import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
-class MonthlyFragment : Fragment(){
+class MonthlyFragment : Fragment() {
 
     private lateinit var binding: FragmentMonthlyBinding
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
@@ -29,7 +29,10 @@ class MonthlyFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this)
-        binding.viewpagerCalendar.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
+        binding.viewpagerCalendar.setCurrentItem(
+            MonthlyScreenSlidePagerAdapter.START_POSITION,
+            false
+        )
         binding.viewpagerCalendar.setPageTransformer(ZoomOutPageTransformer())
 
         sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
@@ -38,10 +41,6 @@ class MonthlyFragment : Fragment(){
 
         binding.buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_monthly_to_settings)
-        }
-
-        binding.buttonAdd.setOnClickListener {
-            it.findNavController().navigate(R.id.action_monthly_to_add)
         }
     }
 
