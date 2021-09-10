@@ -36,10 +36,10 @@ class WeeklyCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        diffWeek *= 7
+         val diffDays = diffWeek * 7
         val calendar: Calendar = Calendar.getInstance()
         calendar.apply {
-            add(Calendar.DATE, diffWeek)
+            add(Calendar.DATE, diffDays)
             firstDayOfWeek = Calendar.MONDAY
         }
 
@@ -62,13 +62,13 @@ class WeeklyCalendarFragment : Fragment() {
 
         sharedViewModel.getAll()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
-            var monList = mutableListOf<TaskEntity>()
-            var tueList = mutableListOf<TaskEntity>()
-            var wedList = mutableListOf<TaskEntity>()
-            var thuList = mutableListOf<TaskEntity>()
-            var friList = mutableListOf<TaskEntity>()
-            var satList = mutableListOf<TaskEntity>()
-            var sunList = mutableListOf<TaskEntity>()
+            val monList = mutableListOf<TaskEntity>()
+            val tueList = mutableListOf<TaskEntity>()
+            val wedList = mutableListOf<TaskEntity>()
+            val thuList = mutableListOf<TaskEntity>()
+            val friList = mutableListOf<TaskEntity>()
+            val satList = mutableListOf<TaskEntity>()
+            val sunList = mutableListOf<TaskEntity>()
             for (taskEntity in it) {
                 when (taskEntity.taskDate) {
                     weekList[0] -> monList.add(taskEntity)
@@ -79,6 +79,27 @@ class WeeklyCalendarFragment : Fragment() {
                     weekList[5] -> satList.add(taskEntity)
                     weekList[6] -> sunList.add(taskEntity)
                 }
+            }
+            if (sharedViewModel.getRate(monList) == 0F) {
+                binding.customviewPiechartMonday.alpha = 0.2F
+            }
+            if (sharedViewModel.getRate(tueList) == 0F) {
+                binding.customviewPiechartTuesday.alpha = 0.2F
+            }
+            if (sharedViewModel.getRate(wedList) == 0F) {
+                binding.customviewPiechartWednesday.alpha = 0.2F
+            }
+            if (sharedViewModel.getRate(thuList) == 0F) {
+                binding.customviewPiechartThursday.alpha = 0.2F
+            }
+            if (sharedViewModel.getRate(friList) == 0F) {
+                binding.customviewPiechartFriday.alpha = 0.2F
+            }
+            if (sharedViewModel.getRate(satList) == 0F) {
+                binding.customviewPiechartSaturday.alpha = 0.2F
+            }
+            if (sharedViewModel.getRate(sunList) == 0F) {
+                binding.customviewPiechartSunday.alpha = 0.2F
             }
             binding.customviewPiechartMonday.setPercentage(sharedViewModel.getRate(monList))
             binding.customviewPiechartTuesday.setPercentage(sharedViewModel.getRate(tueList))

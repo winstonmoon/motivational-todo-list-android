@@ -80,7 +80,7 @@ class DailyFragment : Fragment() {
             var rate = sharedViewModel.getRate(todayTasksList)
             binding.customviewPiechartDaily.setPercentage(rate)
             if (rate == 0.0F) {
-                binding.customviewPiechartDaily.alpha = 0.1F
+                binding.customviewPiechartDaily.alpha = 0.2F
             }
             binding.textGoalPercent.text = "${(rate * 100).roundToInt()}%"
         }
