@@ -12,6 +12,8 @@ import com.moonwinston.motivationaltodolist.adapters.RewardsAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import com.moonwinston.motivationaltodolist.viewmodels.RewardsViewModel
+import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,11 +21,12 @@ class RewardsFragment : Fragment() {
 
     private lateinit var binding: FragmentRewardsBinding
     private lateinit var rewardsViewModel: RewardsViewModel
+    private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         rewardsViewModel =
             ViewModelProvider(this).get(RewardsViewModel::class.java)
@@ -41,6 +44,16 @@ class RewardsFragment : Fragment() {
                 TaskEntity(taskDate = Date(), taskTime = Date(), task = "", isCompleted = false)
             )
         }
+//        var taskDateList = mutableListOf<Date>()
+//        sharedViewModel.getAll()
+//        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
+//            for (task in it) {
+//                if (sharedViewModel.getRate(it) == 100F) {
+//                    taskDateList.add(task.taskDate)
+//                }
+//
+//            }
+//        }
         adapter.submitList(testTaskEntity)
 
 

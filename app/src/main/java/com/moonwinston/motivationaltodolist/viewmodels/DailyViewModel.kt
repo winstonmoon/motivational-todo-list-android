@@ -10,23 +10,6 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class DailyViewModel(private val taskRepository: TaskRepository) : ViewModel() {
-    private var _todayTaskListLiveData = MutableLiveData<List<TaskEntity>>()
-    val todayTaskListLiveData: LiveData<List<TaskEntity>>
-        get() = _todayTaskListLiveData
-
-    fun getAllByDate(taskDate: Date) = viewModelScope.launch {
-        val list = taskRepository.getAllTasksByDate(taskDate)
-        val sortedList = list.sortedBy { it.taskTime }
-        _todayTaskListLiveData.value = sortedList.map {
-            TaskEntity(
-                uid = it.uid,
-                taskDate = it.taskDate,
-                taskTime = it.taskTime,
-                task = it.task,
-                isCompleted = it.isCompleted
-            )
-        }
-    }
 
     fun insert(taskEntity: TaskEntity) = viewModelScope.launch {
         taskRepository.insertTask(taskEntity)
