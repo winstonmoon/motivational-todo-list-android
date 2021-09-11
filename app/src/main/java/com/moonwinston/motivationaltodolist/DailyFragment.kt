@@ -18,7 +18,6 @@ import kotlin.math.roundToInt
 
 
 class DailyFragment : Fragment() {
-
     private lateinit var binding: FragmentDailyBinding
     private val dailyViewModel by viewModel<DailyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
@@ -61,10 +60,11 @@ class DailyFragment : Fragment() {
         binding.recyclerviewDailyTodo.adapter = adapter
 
         //TODO fix
-        val date = Calendar.getInstance().get(Calendar.DATE)
-        val month = Calendar.getInstance().get(Calendar.MONTH)
+        val cal = Calendar.getInstance()
+        val date = cal.get(Calendar.DATE)
+        val month = cal.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
-        val year = Calendar.getInstance().get(Calendar.YEAR)
+        val year = cal.get(Calendar.YEAR)
         binding.textDate.text = "Today, $parsedMonth $date, $year"
 
         sharedViewModel.getAll()

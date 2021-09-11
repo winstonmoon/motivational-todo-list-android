@@ -52,7 +52,6 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
     val multipleDaysTasksList: LiveData<List<TaskEntity>>
         get() = _multipleDaysTasksList
 
-    //    fun getAllByDates(taskDatesList: MutableList<CalendarDate>) = viewModelScope.launch {
     fun getAllByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch {
         val list = taskRepository.getAllTasksByDates(taskDatesList)
         val sortedList = list.sortedBy { it.taskDate }
