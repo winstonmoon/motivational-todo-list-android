@@ -1,16 +1,11 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
-import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
-import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -18,12 +13,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalendarBinding>() {
-    override fun getViewBinding(): FragmentWeeklyCalendarBinding =
-        FragmentWeeklyCalendarBinding.inflate(layoutInflater)
-
+    override fun getViewBinding() = FragmentWeeklyCalendarBinding.inflate(layoutInflater)
     override val viewModel by viewModel<WeeklyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
-    private var diffWeek: Int = 0
+    private var diffWeek = 0
     private val weekList = mutableListOf<Date>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,23 +29,23 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val diffDays = diffWeek * 7
-        val calendar: Calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         calendar.apply {
             add(Calendar.DATE, diffDays)
             firstDayOfWeek = Calendar.MONDAY
         }
 
         //TODO fix dayOfWeek logic more simple, viewmodel
-        val diffDate: Int =
+        val diffDateFromMonday: Int =
             if (calendar.get(Calendar.DAY_OF_WEEK) == 1) -6 else 2 - calendar.get(Calendar.DAY_OF_WEEK)
-        calendar.add(Calendar.DATE, diffDate)
+        calendar.add(Calendar.DATE, diffDateFromMonday)
         //TODO
         for (date in 1..7) {
             //TODO
-            val year: Int = calendar.get(Calendar.YEAR)
-            val month: Int = calendar.get(Calendar.MONTH)
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-            val date: Int = calendar.get(Calendar.DATE)
+            val date = calendar.get(Calendar.DATE)
 
             weekList.add(
                 SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")

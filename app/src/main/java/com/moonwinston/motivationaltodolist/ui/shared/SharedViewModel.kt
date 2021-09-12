@@ -7,12 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
 class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() {
-
     private var _tasksListLiveData = MutableLiveData<List<TaskEntity>>()
     val tasksListLiveData: LiveData<List<TaskEntity>>
         get() = _tasksListLiveData
@@ -51,10 +49,14 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
 
     fun insert(taskEntity: TaskEntity) = viewModelScope.launch {
         taskRepository.insertTask(taskEntity)
+        //TODO
+        getAll()
     }
 
     fun delete(uid: Long) = viewModelScope.launch {
         taskRepository.deleteTask(uid)
+        //TODO
+        getAll()
     }
 
     private var _monthlyTitleLiveData = MutableLiveData<String>()

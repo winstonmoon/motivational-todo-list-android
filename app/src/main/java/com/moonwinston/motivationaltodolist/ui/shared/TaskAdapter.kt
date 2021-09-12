@@ -20,37 +20,42 @@ class TaskAdapter(
     val meatballsMenuCallback: (TaskEntity, DmlState) -> Unit,
     val radioButtonCallback: (TaskEntity) -> Unit
 ) : ListAdapter<TaskEntity, TaskAdapter.ViewHolder>(diffUtil) {
-    val formatTime = SimpleDateFormat("HH:mm")
-
     inner class ViewHolder(private val binding: ItemTasksBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
             if (taskEntity.isCompleted) {
                 binding.radiobuttonTasks.isChecked = true
-                binding.textTasks.paintFlags = binding.textTasks.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                binding.textTasks.paintFlags =
+                    binding.textTasks.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 binding.textTasks.text = taskEntity.task
                 binding.meatballsmenuTasks.setOnClickListener {
-                    Toast.makeText(it.context, R.string.message_toast_uneditable, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        it.context,
+                        R.string.message_toast_uneditable,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
                 binding.radiobuttonTasks.isChecked = false
+                //TODO fix
+                binding.textTasks.paintFlags = 0
                 binding.textTasks.text = taskEntity.task
-                binding.timeTasks.text = formatTime.format(taskEntity.taskTime)
+                binding.timeTasks.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
 
                 binding.radiobuttonTasks.setOnClickListener {
                     val builder = AlertDialog.Builder(it.context)
                     builder.setMessage(R.string.message_dialog_confirm_complete)
                         .setPositiveButton(R.string.button_ok,
                             DialogInterface.OnClickListener { _, _ ->
-                                val insertTaskEntity = TaskEntity(
+                                val taskEntity = TaskEntity(
                                     uid = taskEntity.uid,
                                     taskDate = taskEntity.taskDate,
                                     taskTime = taskEntity.taskTime,
                                     task = taskEntity.task,
                                     isCompleted = true
                                 )
-                                radioButtonCallback(insertTaskEntity)
+                                radioButtonCallback(taskEntity)
                             })
                         .setNegativeButton(R.string.button_cancel,
                             DialogInterface.OnClickListener { _, _ ->

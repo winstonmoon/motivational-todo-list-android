@@ -16,7 +16,6 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 
 internal val appModule = module {
-
     single { Dispatchers.Main }
     single { Dispatchers.IO }
 
@@ -26,7 +25,7 @@ internal val appModule = module {
     single { provideTaskDao(get()) }
 
     viewModel { MainViewModel() }
-    viewModel { DailyViewModel(get()) }
+    viewModel { DailyViewModel() }
     viewModel { MonthlyViewModel() }
     viewModel { RewardsViewModel() }
     viewModel { WeeklyViewModel() }

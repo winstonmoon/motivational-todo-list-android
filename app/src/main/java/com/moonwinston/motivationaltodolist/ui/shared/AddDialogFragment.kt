@@ -21,8 +21,6 @@ class AddDialogFragment : DialogFragment() {
     private lateinit var date: Date
     private lateinit var dmlState: DmlState
     private lateinit var taskEntity: TaskEntity
-    private val formatDate = SimpleDateFormat("yyyy-MM-dd")
-    private val formatTime = SimpleDateFormat("HH:mm")
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,16 +56,16 @@ class AddDialogFragment : DialogFragment() {
                         val minute =
                             if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentMinute else binding.inputTime.minute
 
-                        var insertTaskEntity = TaskEntity(
+                        var taskEntity = TaskEntity(
                             uid = taskEntity?.uid,
                             taskDate = date,
-                            taskTime = formatTime.parse("%02d:%02d".format(hour, minute)),
+                            taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
                             task = binding.inputTask.text.toString(),
                             isCompleted = false
                         )
-                        sharedViewModel.insert(insertTaskEntity)
+                        sharedViewModel.insert(taskEntity)
                         //TODO
-                        sharedViewModel.getAll()
+//                        sharedViewModel.getAll()
                     })
                 .setNegativeButton(
                     R.string.button_cancel,
@@ -82,7 +80,7 @@ class AddDialogFragment : DialogFragment() {
         binding.inputTime.setIs24HourView(true)
         binding.viewCalendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-            date = formatDate.parse("$year-$parsedMonth-$dayOfMonth")
+            date = SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$dayOfMonth")
         }
     }
 

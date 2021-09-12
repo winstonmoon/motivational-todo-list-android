@@ -20,8 +20,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.math.roundToInt
 
 class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>() {
-    override fun getViewBinding(): FragmentMonthlyBinding =
-        FragmentMonthlyBinding.inflate(layoutInflater)
+    override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
     override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
@@ -42,7 +41,6 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
 
     //TODO fix
     inner class ZoomOutPageTransformer : ViewPager2.PageTransformer {
-
         private val MIN_SCALE = 0.85f
         private val MIN_ALPHA = 0.5f
 

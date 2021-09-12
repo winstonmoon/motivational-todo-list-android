@@ -7,10 +7,7 @@ import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
-
-    override fun getViewBinding(): ActivityMainBinding =
-        ActivityMainBinding.inflate(layoutInflater)
-
+    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
     override val viewModel by viewModel<MainViewModel>()
 
     override fun initViews() = with(binding) {
