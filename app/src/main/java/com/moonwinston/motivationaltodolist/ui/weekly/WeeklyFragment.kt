@@ -26,8 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
-    override fun getViewBinding(): FragmentWeeklyBinding =
-        FragmentWeeklyBinding.inflate(layoutInflater)
+    override fun getViewBinding() = FragmentWeeklyBinding.inflate(layoutInflater)
     override val viewModel by viewModel<WeeklyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private lateinit var selectedDate: Date
@@ -37,8 +36,8 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         selectedDate = CalendarUtil.getTodayDate()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(
             this,
-            callback = { diffWeek ->
-                val diffDays = diffWeek * 7
+            callback = { test ->
+                val diffDays = test * 7
                 val y = SimpleDateFormat("y").format(selectedDate).toInt()
                 val m = SimpleDateFormat("M").format(selectedDate).toInt()
                 val d = SimpleDateFormat("d").format(selectedDate).toInt()
@@ -148,7 +147,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
                     DmlState.Delete -> {
                         sharedViewModel.delete(taskEntity.uid)
                         //TODO
-                        sharedViewModel.getAll()
+//                        sharedViewModel.getAll()
                     }
                     else -> Unit
                 }
@@ -156,7 +155,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             radioButtonCallback = {
                 sharedViewModel.insert(it)
                 //TODO
-                sharedViewModel.getAll()
+//                sharedViewModel.getAll()
             })
         binding.recyclerviewWeeklyTodo.adapter = adapter
 

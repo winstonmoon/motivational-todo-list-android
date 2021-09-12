@@ -22,12 +22,8 @@ import java.util.*
 import kotlin.math.roundToInt
 
 class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>() {
-
-    override fun getViewBinding(): FragmentRewardsBinding =
-        FragmentRewardsBinding.inflate(layoutInflater)
-
+    override fun getViewBinding() = FragmentRewardsBinding.inflate(layoutInflater)
     override val viewModel by viewModel<RewardsViewModel>()
-
     private val adapter = RewardsAdapter()
 
     override fun initViews() = with(binding) {

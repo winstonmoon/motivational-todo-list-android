@@ -12,7 +12,6 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
-
     private lateinit var binding: FragmentSettingsBinding
 
     override fun onCreateView(

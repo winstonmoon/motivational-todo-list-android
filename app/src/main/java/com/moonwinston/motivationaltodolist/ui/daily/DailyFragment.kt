@@ -20,19 +20,16 @@ import kotlin.math.roundToInt
 
 
 class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
-
-    override fun getViewBinding(): FragmentDailyBinding =
-        FragmentDailyBinding.inflate(layoutInflater)
+    override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
     override val viewModel by viewModel<DailyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
-
     private lateinit var adapter: TaskAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        //TODO move to fetchData
-        sharedViewModel.getAll()
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        //TODO move to fetchData
+//        sharedViewModel.getAll()
+//    }
 
     override fun initViews() = with(binding) {
         customviewPiechartDaily.setBorderStrokeWidth(40F)
@@ -56,7 +53,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
                     DmlState.Delete -> {
                         sharedViewModel.delete(taskEntity.uid)
                         //TODO
-                        sharedViewModel.getAll()
+//                        sharedViewModel.getAll()
                     }
                     else -> Unit
                 }
@@ -64,7 +61,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             radioButtonCallback = {
                 sharedViewModel.insert(it)
                 //TODO
-                sharedViewModel.getAll()
+//                sharedViewModel.getAll()
             })
         recyclerviewDailyTodo.adapter = adapter
         buttonSettings.setOnClickListener {
@@ -74,7 +71,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert,
                 "taskEntity" to TaskEntity(
-                    taskDate = Date(),
+                    taskDate = CalendarUtil.getTodayDate(),
                     taskTime = Date(),
                     task = "",
                     isCompleted = false
@@ -85,6 +82,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     }
 
     override fun observeData() {
+        sharedViewModel.getAll()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             //TODO fix
             var todayTasksList = mutableListOf<TaskEntity>()

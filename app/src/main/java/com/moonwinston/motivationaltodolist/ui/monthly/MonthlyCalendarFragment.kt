@@ -13,16 +13,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCalendarBinding>() {
-    override fun getViewBinding(): FragmentMonthlyCalendarBinding =
-        FragmentMonthlyCalendarBinding.inflate(layoutInflater)
+    override fun getViewBinding() = FragmentMonthlyCalendarBinding.inflate(layoutInflater)
     override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
-    private var diffMonth: Int = 0
+    private var diffMonth = 0
 
     //TODO fix
-    private var year: Int = 0
-    private var month: Int = 0
-    private var monthList: MutableList<Date> = mutableListOf()
+    private var year = 0
+    private var month = 0
+    private var monthList = mutableListOf<Date>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +33,7 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val calendar: Calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         calendar.apply {
             add(Calendar.MONTH, diffMonth)
             set(Calendar.DAY_OF_MONTH, 1)
@@ -42,13 +41,14 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
         }
 
         //TODO fix dayOfWeek logic more simple, viewmodel
-        val maxDate: Int  = calendar.getActualMaximum(Calendar.DATE)
-        val dayOfWeek: Int = calendar.get(Calendar.DAY_OF_WEEK) - 2
+        val maxDate = calendar.getActualMaximum(Calendar.DATE)
+        val dayOfWeek =
+            if (calendar.get(Calendar.DAY_OF_WEEK) == 1) 6 else calendar.get(Calendar.DAY_OF_WEEK) - 2
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
         monthList = MutableList(
-            if (dayOfWeek == -1) 6 else dayOfWeek,
+            dayOfWeek,
             init = { CalendarUtil.getNonExistDate() })
         for (date in 1..maxDate) {
             monthList.add(
