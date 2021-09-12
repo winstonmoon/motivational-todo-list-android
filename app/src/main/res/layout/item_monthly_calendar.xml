@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.moonwinston.motivationaltodolist.views.AchievementPieChartView
+        <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_monthly"
             android:layout_width="wrap_content"
             android:layout_height="72dp"

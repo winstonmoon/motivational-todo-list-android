@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.adapters
+package com.moonwinston.motivationaltodolist.ui.monthly
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemMonthlyCalendarBinding
-import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
+import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import java.text.SimpleDateFormat
 import java.util.*
 

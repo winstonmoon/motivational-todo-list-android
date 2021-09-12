@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist
+package com.moonwinston.motivationaltodolist.ui.monthly
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,40 +7,37 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.data.TaskEntity
+import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
-import com.moonwinston.motivationaltodolist.adapters.MonthlyScreenSlidePagerAdapter
-import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
+import com.moonwinston.motivationaltodolist.ui.daily.DailyViewModel
+import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
+import kotlin.math.roundToInt
 
-class MonthlyFragment : Fragment() {
+class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>() {
 
-    private lateinit var binding: FragmentMonthlyBinding
+    override fun getViewBinding(): FragmentMonthlyBinding =
+        FragmentMonthlyBinding.inflate(layoutInflater)
+    override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMonthlyBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun initViews() = with(binding) {
+        viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
+        viewpagerCalendar.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
+        viewpagerCalendar.setPageTransformer(ZoomOutPageTransformer())
+        buttonSettings.setOnClickListener {
+            it.findNavController().navigate(R.id.action_monthly_to_settings)
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this)
-        binding.viewpagerCalendar.setCurrentItem(
-            MonthlyScreenSlidePagerAdapter.START_POSITION,
-            false
-        )
-        binding.viewpagerCalendar.setPageTransformer(ZoomOutPageTransformer())
-
+    override fun observeData() {
         sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
             binding.textDate.text = it
-        }
-
-        binding.buttonSettings.setOnClickListener {
-            it.findNavController().navigate(R.id.action_monthly_to_settings)
         }
     }
 

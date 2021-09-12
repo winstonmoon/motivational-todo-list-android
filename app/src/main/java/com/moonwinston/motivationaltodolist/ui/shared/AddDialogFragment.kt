@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist
+package com.moonwinston.motivationaltodolist.ui.shared
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,10 +7,11 @@ import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import com.moonwinston.motivationaltodolist.DmlState
+import com.moonwinston.motivationaltodolist.MonthEnum
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
-import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
-import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,7 +69,8 @@ class AddDialogFragment : DialogFragment() {
                         //TODO
                         sharedViewModel.getAll()
                     })
-                .setNegativeButton(R.string.button_cancel,
+                .setNegativeButton(
+                    R.string.button_cancel,
                     DialogInterface.OnClickListener { _, _ ->
                         dialog?.cancel()
                     })

@@ -1,14 +1,14 @@
-package com.moonwinston.motivationaltodolist
+package com.moonwinston.motivationaltodolist.ui.monthly
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.moonwinston.motivationaltodolist.adapters.MonthlyCalendarAdapter
+import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
-import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
-import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import com.moonwinston.motivationaltodolist.utils.CalendarUtil
+import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*

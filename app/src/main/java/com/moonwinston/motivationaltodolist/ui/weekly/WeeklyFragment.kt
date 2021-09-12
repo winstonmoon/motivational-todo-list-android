@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist
+package com.moonwinston.motivationaltodolist.ui.weekly
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.moonwinston.motivationaltodolist.adapters.TaskAdapter
-import com.moonwinston.motivationaltodolist.adapters.WeeklyScreenSlidePagerAdapter
+import com.moonwinston.motivationaltodolist.DayOfWeekEnum
+import com.moonwinston.motivationaltodolist.DmlState
+import com.moonwinston.motivationaltodolist.MonthEnum
+import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.data.TaskEntity
-import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
-import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import com.moonwinston.motivationaltodolist.utils.CalendarUtil
+import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*

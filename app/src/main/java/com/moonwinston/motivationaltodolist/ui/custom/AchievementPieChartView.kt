@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.views
+package com.moonwinston.motivationaltodolist.ui.custom
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
-import com.moonwinston.motivationaltodolist.utilities.CalendarUtil
+import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import java.util.*
 
 class AchievementPieChartView @JvmOverloads constructor(
