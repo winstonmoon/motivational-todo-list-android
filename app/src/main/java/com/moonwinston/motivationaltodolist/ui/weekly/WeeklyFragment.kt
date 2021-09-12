@@ -14,29 +14,27 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.data.TaskEntity
+import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
+import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
+import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyScreenSlidePagerAdapter
+import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WeeklyFragment : Fragment() {
-    private lateinit var binding: FragmentWeeklyBinding
+class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
+    override fun getViewBinding(): FragmentWeeklyBinding =
+        FragmentWeeklyBinding.inflate(layoutInflater)
+    override val viewModel by viewModel<WeeklyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private lateinit var selectedDate: Date
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        selectedDate = CalendarUtil.getTodayDate()
-        binding = FragmentWeeklyBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        selectedDate = CalendarUtil.getTodayDate()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(
             this,
             callback = { diffWeek ->
@@ -189,6 +187,12 @@ class WeeklyFragment : Fragment() {
             )
             it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
         }
+    }
+
+    override fun initViews() = with(binding) {
+    }
+
+    override fun observeData() {
     }
 
     override fun onResume() {

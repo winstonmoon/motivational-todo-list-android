@@ -1,20 +1,21 @@
 package com.moonwinston.motivationaltodolist.ui.monthly
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
+import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MonthlyCalendarFragment : Fragment() {
-    private lateinit var binding: FragmentMonthlyCalendarBinding
+class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCalendarBinding>() {
+    override fun getViewBinding(): FragmentMonthlyCalendarBinding =
+        FragmentMonthlyCalendarBinding.inflate(layoutInflater)
+    override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffMonth: Int = 0
 
@@ -28,15 +29,6 @@ class MonthlyCalendarFragment : Fragment() {
         arguments?.let {
             diffMonth = it.getInt(DIFF_MONTH)
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMonthlyCalendarBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,6 +66,14 @@ class MonthlyCalendarFragment : Fragment() {
             adapter.submitList(monthList)
         }
         binding.textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
+    }
+
+    override fun initViews() = with(binding) {
+
+    }
+
+    override fun observeData() {
+
     }
 
     override fun onResume() {
