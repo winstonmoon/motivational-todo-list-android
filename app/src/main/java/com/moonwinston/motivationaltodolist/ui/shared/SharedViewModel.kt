@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.viewmodels
+package com.moonwinston.motivationaltodolist.ui.shared
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -20,24 +21,6 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         val list = taskRepository.getAllTasks()
         val sortedList = list.sortedBy { it.taskDate }
         _tasksListLiveData.value = sortedList.map {
-            TaskEntity(
-                uid = it.uid,
-                taskDate = it.taskDate,
-                taskTime = it.taskTime,
-                task = it.task,
-                isCompleted = it.isCompleted
-            )
-        }
-    }
-
-    private var _singleDayTasksListLiveData = MutableLiveData<List<TaskEntity>>()
-    val singleDayTasksListLiveData: LiveData<List<TaskEntity>>
-        get() = _singleDayTasksListLiveData
-
-    fun getAllByDate(taskDate: Date) = viewModelScope.launch {
-        val list = taskRepository.getAllTasksByDate(taskDate)
-        val sortedList = list.sortedBy { it.taskTime }
-        _singleDayTasksListLiveData.value = sortedList.map {
             TaskEntity(
                 uid = it.uid,
                 taskDate = it.taskDate,

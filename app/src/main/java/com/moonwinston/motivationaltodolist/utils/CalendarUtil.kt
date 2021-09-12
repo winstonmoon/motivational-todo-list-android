@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.utilities
+package com.moonwinston.motivationaltodolist.utils
 
 import java.text.SimpleDateFormat
 import java.util.*

@@ -1,8 +1,7 @@
-package com.moonwinston.motivationaltodolist.adapters
+package com.moonwinston.motivationaltodolist.ui.monthly
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.moonwinston.motivationaltodolist.MonthlyCalendarFragment
 
 class MonthlyScreenSlidePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun createFragment(position: Int): MonthlyCalendarFragment {

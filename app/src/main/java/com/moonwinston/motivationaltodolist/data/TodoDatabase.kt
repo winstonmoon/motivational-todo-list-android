@@ -3,7 +3,7 @@ package com.moonwinston.motivationaltodolist.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.moonwinston.motivationaltodolist.utilities.RoomTypeConverters
+import com.moonwinston.motivationaltodolist.utils.RoomTypeConverters
 
 @Database(
     entities = [TaskEntity::class],

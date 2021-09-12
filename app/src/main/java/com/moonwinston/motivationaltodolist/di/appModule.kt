@@ -1,11 +1,15 @@
 package com.moonwinston.motivationaltodolist.di
 
-import com.moonwinston.motivationaltodolist.data.db.provideDB
-import com.moonwinston.motivationaltodolist.data.db.provideTaskDao
+import com.moonwinston.motivationaltodolist.MainViewModel
+import com.moonwinston.motivationaltodolist.di.provideDB
+import com.moonwinston.motivationaltodolist.di.provideTaskDao
 import com.moonwinston.motivationaltodolist.data.DefaultTaskRepository
 import com.moonwinston.motivationaltodolist.data.TaskRepository
-import com.moonwinston.motivationaltodolist.viewmodels.DailyViewModel
-import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.daily.DailyViewModel
+import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
+import com.moonwinston.motivationaltodolist.ui.rewards.RewardsViewModel
+import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.weekly.WeeklyViewModel
 import org.koin.dsl.module
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
@@ -21,7 +25,11 @@ internal val appModule = module {
     single { provideDB(androidApplication()) }
     single { provideTaskDao(get()) }
 
+    viewModel { MainViewModel() }
     viewModel { DailyViewModel(get()) }
+    viewModel { MonthlyViewModel() }
+    viewModel { RewardsViewModel() }
+    viewModel { WeeklyViewModel() }
     viewModel { SharedViewModel(get()) }
 }
 

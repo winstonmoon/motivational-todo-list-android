@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.viewmodels
+package com.moonwinston.motivationaltodolist.ui.monthly
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.viewmodels
+package com.moonwinston.motivationaltodolist.ui.daily
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
+import com.moonwinston.motivationaltodolist.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 import java.util.*
 
-class DailyViewModel(private val taskRepository: TaskRepository) : ViewModel() {
+class DailyViewModel(private val taskRepository: TaskRepository) : BaseViewModel() {
 
     fun insert(taskEntity: TaskEntity) = viewModelScope.launch {
         taskRepository.insertTask(taskEntity)

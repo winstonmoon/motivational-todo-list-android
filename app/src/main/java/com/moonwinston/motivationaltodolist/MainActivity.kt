@@ -1,25 +1,22 @@
 package com.moonwinston.motivationaltodolist
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
-import com.moonwinston.motivationaltodolist.viewmodels.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
-    private lateinit var binding: ActivityMainBinding
-    private val sharedViewModel: SharedViewModel by viewModel()
+    override fun getViewBinding(): ActivityMainBinding =
+        ActivityMainBinding.inflate(layoutInflater)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override val viewModel by viewModel<MainViewModel>()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+    override fun initViews() = with(binding) {
         val navController = findNavController(R.id.fragment_nav_host)
-        binding.viewNav.setupWithNavController(navController)
+        viewNav.setupWithNavController(navController)
     }
+
+    override fun observeData() {}
 }

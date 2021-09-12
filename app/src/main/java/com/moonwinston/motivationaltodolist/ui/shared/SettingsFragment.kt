@@ -1,15 +1,14 @@
-package com.moonwinston.motivationaltodolist
+package com.moonwinston.motivationaltodolist.ui.shared
 
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -39,7 +38,8 @@ class SettingsFragment : Fragment() {
 
                         dialog.dismiss()
                     })
-                .setNegativeButton(R.string.button_cancel,
+                .setNegativeButton(
+                    R.string.button_cancel,
                     DialogInterface.OnClickListener { dialog, _ ->
                         dialog?.cancel()
                     })
@@ -56,7 +56,8 @@ class SettingsFragment : Fragment() {
 
                         dialog.dismiss()
                     })
-                .setNegativeButton(R.string.button_cancel,
+                .setNegativeButton(
+                    R.string.button_cancel,
                     DialogInterface.OnClickListener { dialog, _ ->
                         dialog?.cancel()
                     })
@@ -74,7 +75,8 @@ class SettingsFragment : Fragment() {
 
                         dialog.dismiss()
                     })
-                .setNegativeButton(R.string.button_cancel,
+                .setNegativeButton(
+                    R.string.button_cancel,
                     DialogInterface.OnClickListener { dialog, _ ->
                         dialog?.cancel()
                     })

@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.data.db
+package com.moonwinston.motivationaltodolist.di
 
 import android.content.Context
 import androidx.room.Room

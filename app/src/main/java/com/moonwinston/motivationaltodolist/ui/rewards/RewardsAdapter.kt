@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.adapters
+package com.moonwinston.motivationaltodolist.ui.rewards
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
