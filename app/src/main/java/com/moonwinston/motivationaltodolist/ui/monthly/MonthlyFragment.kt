@@ -20,7 +20,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.math.roundToInt
 
 class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>() {
-
     override fun getViewBinding(): FragmentMonthlyBinding =
         FragmentMonthlyBinding.inflate(layoutInflater)
     override val viewModel by viewModel<MonthlyViewModel>()

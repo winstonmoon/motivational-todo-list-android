@@ -7,14 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
+import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
+import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
+import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WeeklyCalendarFragment : Fragment() {
-    private lateinit var binding: FragmentWeeklyCalendarBinding
+class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalendarBinding>() {
+    override fun getViewBinding(): FragmentWeeklyCalendarBinding =
+        FragmentWeeklyCalendarBinding.inflate(layoutInflater)
+
+    override val viewModel by viewModel<WeeklyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffWeek: Int = 0
     private val weekList = mutableListOf<Date>()
@@ -26,18 +33,9 @@ class WeeklyCalendarFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentWeeklyCalendarBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         val diffDays = diffWeek * 7
+        val diffDays = diffWeek * 7
         val calendar: Calendar = Calendar.getInstance()
         calendar.apply {
             add(Calendar.DATE, diffDays)
@@ -45,7 +43,8 @@ class WeeklyCalendarFragment : Fragment() {
         }
 
         //TODO fix dayOfWeek logic more simple, viewmodel
-        val diffDate: Int = 2 - calendar.get(Calendar.DAY_OF_WEEK)
+        val diffDate: Int =
+            if (calendar.get(Calendar.DAY_OF_WEEK) == 1) -6 else 2 - calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, diffDate)
         //TODO
         for (date in 1..7) {
@@ -175,6 +174,12 @@ class WeeklyCalendarFragment : Fragment() {
         binding.customviewPiechartSunday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartSunday.getPieChartViewDate())
         }
+    }
+
+    override fun initViews() = with(binding) {
+    }
+
+    override fun observeData() {
     }
 
     override fun onResume() {
