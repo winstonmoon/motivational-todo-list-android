@@ -31,11 +31,10 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private lateinit var selectedDate: Date
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initViews() = with(binding) {
         selectedDate = CalendarUtil.getTodayDate()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(
-            this,
+            this@WeeklyFragment,
             callback = { test ->
                 val diffDays = test * 7
                 val y = SimpleDateFormat("y").format(selectedDate).toInt()
@@ -43,14 +42,34 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
                 val d = SimpleDateFormat("d").format(selectedDate).toInt()
                 val gregorianCalendar = GregorianCalendar(y, m - 1, d)
                 gregorianCalendar.add(Calendar.DATE, diffDays)
-                sharedViewModel.setSelectedDate(gregorianCalendar.time) })
-        binding.viewpagerWeeklyCalendar.adapter = slideAdapter
-        binding.viewpagerWeeklyCalendar.setCurrentItem(
+                sharedViewModel.setSelectedDate(gregorianCalendar.time)
+            })
+        viewpagerWeeklyCalendar.adapter = slideAdapter
+        viewpagerWeeklyCalendar.setCurrentItem(
             WeeklyScreenSlidePagerAdapter.START_POSITION,
             false
         )
         setToday()
 
+        buttonSettings.setOnClickListener {
+            it.findNavController().navigate(R.id.action_weekly_to_settings)
+        }
+
+        buttonAdd.setOnClickListener {
+            val bundle = bundleOf(
+                "dmlState" to DmlState.Insert,
+                "taskEntity" to TaskEntity(
+                    taskDate = selectedDate,
+                    taskTime = Date(),
+                    task = "",
+                    isCompleted = false
+                )
+            )
+            it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
+        }
+    }
+
+    override fun observeData() {
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
             selectedDate = it
             sharedViewModel.getAll()
@@ -136,29 +155,6 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             }
         }
 
-        val adapter = TaskAdapter(
-            meatballsMenuCallback = { taskEntity, dmlState ->
-                when (dmlState) {
-                    DmlState.Update -> {
-                        val bundle =
-                            bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                        view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
-                    }
-                    DmlState.Delete -> {
-                        sharedViewModel.delete(taskEntity.uid)
-                        //TODO
-//                        sharedViewModel.getAll()
-                    }
-                    else -> Unit
-                }
-            },
-            radioButtonCallback = {
-                sharedViewModel.insert(it)
-                //TODO
-//                sharedViewModel.getAll()
-            })
-        binding.recyclerviewWeeklyTodo.adapter = adapter
-
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             //TODO fix
             val selectedDayTasksList = mutableListOf<TaskEntity>()
@@ -167,31 +163,26 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
                     selectedDayTasksList.add(taskEntity)
                 }
             }
+            val adapter = TaskAdapter(
+                meatballsMenuCallback = { taskEntity, dmlState ->
+                    when (dmlState) {
+                        DmlState.Update -> {
+                            val bundle =
+                                bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                            view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
+                        }
+                        DmlState.Delete -> {
+                            sharedViewModel.delete(taskEntity.uid)
+                        }
+                        else -> Unit
+                    }
+                },
+                radioButtonCallback = {
+                    sharedViewModel.insert(it)
+                })
+            binding.recyclerviewWeeklyTodo.adapter = adapter
             adapter.submitList(selectedDayTasksList.sortedBy { it.taskTime })
         }
-
-        binding.buttonSettings.setOnClickListener {
-            it.findNavController().navigate(R.id.action_weekly_to_settings)
-        }
-
-        binding.buttonAdd.setOnClickListener {
-            val bundle = bundleOf(
-                "dmlState" to DmlState.Insert,
-                "taskEntity" to TaskEntity(
-                    taskDate = selectedDate,
-                    taskTime = Date(),
-                    task = "",
-                    isCompleted = false
-                )
-            )
-            it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
-        }
-    }
-
-    override fun initViews() = with(binding) {
-    }
-
-    override fun observeData() {
     }
 
     override fun onResume() {

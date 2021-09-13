@@ -17,7 +17,6 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
     override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffMonth = 0
-
     //TODO fix
     private var year = 0
     private var month = 0
@@ -30,16 +29,13 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun initViews() = with(binding) {
         val calendar = Calendar.getInstance()
         calendar.apply {
             add(Calendar.MONTH, diffMonth)
             set(Calendar.DAY_OF_MONTH, 1)
             firstDayOfWeek = Calendar.MONDAY
         }
-
         //TODO fix dayOfWeek logic more simple, viewmodel
         val maxDate = calendar.getActualMaximum(Calendar.DATE)
         val dayOfWeek =
@@ -55,9 +51,11 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
                 SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")
             )
         }
+        textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
+    }
 
+    override fun observeData() {
         sharedViewModel.setMonthlyTitle(month, year)
-
         //TODO fix to use getAll instead of getAllByDates
         sharedViewModel.getAllByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
@@ -65,21 +63,11 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
             binding.recyclerviewMonthlyCalendar.adapter = adapter
             adapter.submitList(monthList)
         }
-        binding.textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
-    }
-
-    override fun initViews() = with(binding) {
-
-    }
-
-    override fun observeData() {
-
     }
 
     override fun onResume() {
         super.onResume()
         sharedViewModel.setMonthlyTitle(month, year)
-
         //TODO fix to use getAll instead of getAllByDates
         sharedViewModel.getAllByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
