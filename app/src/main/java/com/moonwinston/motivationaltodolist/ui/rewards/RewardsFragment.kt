@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.google.android.gms.ads.AdRequest
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
@@ -37,6 +38,9 @@ class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>()
             )
         }
         adapter.submitList(testTaskEntity)
+
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
 
         buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_reward_to_settings)

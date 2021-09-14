@@ -71,7 +71,8 @@ dependencies {
     implementation "org.koin:koin-android-scope:$rootProject.koinVersion"
     implementation "org.koin:koin-android-viewmodel:$rootProject.koinVersion"
     implementation "org.koin:koin-android-ext:$rootProject.koinVersion"
-
+    // admob
+    implementation "com.google.android.gms:play-services-ads:$rootProject.gmsVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
