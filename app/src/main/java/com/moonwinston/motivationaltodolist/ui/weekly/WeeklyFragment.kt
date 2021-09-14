@@ -35,8 +35,8 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         selectedDate = CalendarUtil.getTodayDate()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(
             this@WeeklyFragment,
-            callback = { test ->
-                val diffDays = test * 7
+            callback = { diffNumber ->
+                val diffDays = diffNumber * 7
                 val y = SimpleDateFormat("y").format(selectedDate).toInt()
                 val m = SimpleDateFormat("M").format(selectedDate).toInt()
                 val d = SimpleDateFormat("d").format(selectedDate).toInt()

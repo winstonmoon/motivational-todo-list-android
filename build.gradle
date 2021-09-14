@@ -37,6 +37,7 @@ buildscript {
         viewPagerVersion = '1.0.0'
         workVersion = '2.1.0'
         koinVersion = '2.1.5'
+        gmsVersion = '20.3.0'
     }
 
     repositories {

@@ -2,6 +2,7 @@ package com.moonwinston.motivationaltodolist
 
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.MobileAds
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -9,6 +10,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
     override val viewModel by viewModel<MainViewModel>()
+
+    override fun initState() {
+        MobileAds.initialize(this) {}
+        super.initState()
+    }
 
     override fun initViews() = with(binding) {
         val navController = findNavController(R.id.fragment_nav_host)
