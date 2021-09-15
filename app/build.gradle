@@ -73,6 +73,8 @@ dependencies {
     implementation "org.koin:koin-android-ext:$rootProject.koinVersion"
     // admob
     implementation "com.google.android.gms:play-services-ads:$rootProject.gmsVersion"
+    // in-app update
+    implementation "com.google.android.play:core:$rootProject.playVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
