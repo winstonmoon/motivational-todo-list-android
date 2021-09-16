@@ -48,7 +48,7 @@ class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>()
     }
 
     override fun observeData() {
-        //        var taskDateList = mutableListOf<Date>()
+//        var taskDateList = mutableListOf<Date>()
 //        sharedViewModel.getAll()
 //        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
 //            for (task in it) {
