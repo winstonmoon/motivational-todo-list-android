@@ -1,5 +1,6 @@
 package com.moonwinston.motivationaltodolist
 
+import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
@@ -10,6 +11,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
     override val viewModel by viewModel<MainViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.SplashTheme)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun initState() {
         MobileAds.initialize(this) {}
