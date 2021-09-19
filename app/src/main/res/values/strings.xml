@@ -12,9 +12,14 @@
     <string name="message_dialog_confirm_complete">Did you complete this task?</string>
     <string name="button_ok">Ok</string>
     <string name="button_cancel">Cancel</string>
-    <string name="message_toast_uneditable">Cannot edit complete task</string>
+    <string name="message_toast_uneditable">Cannot edit complete task.</string>
 
-    <!-- Dialog Add-->
+    <!-- Activity Main -->
+    <string name="message_toast_update_cancel">Update has been canceled.</string>
+    <string name="message_snack_download_complete">An update has just been downloaded.</string>
+    <string name="button_snack_restart">Restart</string>
+
+    <!-- Dialog Add -->
     <string name="button_add">Add</string>
     <string name="button_edit">Edit</string>
     <string name="label_goal_task">Set as Achievement Selectable Task</string>
