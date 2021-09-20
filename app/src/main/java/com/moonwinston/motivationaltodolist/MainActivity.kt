@@ -30,7 +30,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
         listener = InstallStateUpdatedListener { state ->
-            if (state.installStatus() == com.google.android.play.core.install.model.InstallStatus.DOWNLOADED) {
+            if (state.installStatus() == InstallStatus.DOWNLOADED) {
                 popupSnackbarForCompleteUpdate()
             }
         }

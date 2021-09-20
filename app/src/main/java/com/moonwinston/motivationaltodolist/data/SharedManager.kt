@@ -1,12 +1,31 @@
-package com.moonwinston.motivationaltodolist.utils
+package com.moonwinston.motivationaltodolist.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.moonwinston.motivationaltodolist.utils.PreferenceHelper.set
-import com.moonwinston.motivationaltodolist.utils.PreferenceHelper.get
+import com.moonwinston.motivationaltodolist.data.PreferenceHelper
+import com.moonwinston.motivationaltodolist.data.PreferenceHelper.set
+import com.moonwinston.motivationaltodolist.data.PreferenceHelper.get
 
-class SharedPreferencesUtil(context: Context) {
+class SharedManager(context: Context) {
     private val prefs: SharedPreferences = PreferenceHelper.defaultPrefs(context)
+
+    fun saveLanguage(language: String) {
+        prefs["language"] = language
+    }
+
+    fun getLanguage(): String = prefs["language"]
+
+    fun saveTheme(theme: String) {
+        prefs["theme"] = theme
+    }
+
+    fun getTheme(): String = prefs["theme"]
+
+    fun saveNotify(time: Int) {
+        prefs["notify"] = time
+    }
+
+    fun getNotify(): Int = prefs["notify"]
 
 //    fun saveCurrentUser(user: User) {
 //        prefs["name"] = user.name
