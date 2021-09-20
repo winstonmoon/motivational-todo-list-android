@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.utils
+package com.moonwinston.motivationaltodolist.data
 
 import android.content.Context
 import android.content.SharedPreferences

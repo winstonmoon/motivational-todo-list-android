@@ -40,7 +40,7 @@
             android:autoSizeTextType="uniform"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="@string/label_goal"
+            android:text="@string/label_achievement_rate"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
