@@ -1,7 +1,11 @@
 package com.moonwinston.motivationaltodolist
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.os.LocaleList
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -16,6 +20,7 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
@@ -94,5 +99,17 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             setAction(R.string.button_snack_restart) { appUpdateManager.completeUpdate() }
             show()
         }
+    }
+
+    override fun attachBaseContext(base: Context) {
+        val locale = Locale.KOREAN
+        val res = resources
+        val config = Configuration(res.configuration)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            config.setLocales(LocaleList(locale))
+        } else {
+            config.setLocale(locale)
+        }
+        super.attachBaseContext(base.createConfigurationContext(config))
     }
 }
