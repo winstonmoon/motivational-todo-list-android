@@ -101,15 +101,15 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         }
     }
 
-    override fun attachBaseContext(base: Context) {
-        val locale = Locale.KOREAN
-        val res = resources
-        val config = Configuration(res.configuration)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            config.setLocales(LocaleList(locale))
-        } else {
-            config.setLocale(locale)
-        }
-        super.attachBaseContext(base.createConfigurationContext(config))
-    }
+//    override fun attachBaseContext(base: Context) {
+//        val locale = Locale.KOREAN
+//        val res = resources
+//        val config = Configuration(res.configuration)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            config.setLocales(LocaleList(locale))
+//        } else {
+//            config.setLocale(locale)
+//        }
+//        super.attachBaseContext(base.createConfigurationContext(config))
+//    }
 }

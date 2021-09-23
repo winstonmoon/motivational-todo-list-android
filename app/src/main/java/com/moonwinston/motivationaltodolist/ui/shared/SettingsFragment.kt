@@ -1,6 +1,7 @@
 package com.moonwinston.motivationaltodolist.ui.shared
 
 import android.content.DialogInterface
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
+import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
@@ -51,8 +53,8 @@ class SettingsFragment : Fragment() {
                 .setSingleChoiceItems(themeItems, -1,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.valueTheme.text = themeItems[which]
-                        //TODO sharedPreferences
-
+                        val test = ThemeUtil()
+                        test.setTheme(resources.getString(which))
                         dialog.dismiss()
                     })
                 .setNegativeButton(
