@@ -6,14 +6,14 @@ class ThemeUtil {
 
     fun setTheme(theme: String) {
         when (theme) {
-            "DARK" -> {
+//            "DARK" -> {
+            "dark" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
-            "LIGHT" -> {
+//            "LIGHT" -> {
+            "light" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
             }
-
         }
     }
 }
