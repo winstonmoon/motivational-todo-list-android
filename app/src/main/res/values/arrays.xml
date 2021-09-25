@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string-array name="notify_array">
         <item>0ff</item>
         <item>5 min</item>
@@ -23,5 +22,4 @@
         <item>日本語</item>
         <item>简体字</item>
     </string-array>
-
 </resources>
