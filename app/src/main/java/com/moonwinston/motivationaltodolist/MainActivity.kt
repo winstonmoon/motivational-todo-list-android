@@ -17,8 +17,10 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.moonwinston.motivationaltodolist.data.SharedManager
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
+import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -65,6 +67,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun initViews() = with(binding) {
         val navController = findNavController(R.id.fragment_nav_host)
         viewNav.setupWithNavController(navController)
+        initSettings()
     }
 
     override fun observeData() {}
@@ -99,6 +102,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             setAction(R.string.button_snack_restart) { appUpdateManager.completeUpdate() }
             show()
         }
+    }
+
+    private fun initSettings() {
+        //TODO
+        val language = SharedManager(this).getLanguage()?:Locale.getDefault()
+        
+        val theme = SharedManager(this).getTheme()?:"following system"
+        ThemeUtil().setTheme(theme)
     }
 
 //    override fun attachBaseContext(base: Context) {

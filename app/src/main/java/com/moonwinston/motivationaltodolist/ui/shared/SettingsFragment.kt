@@ -10,7 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.data.SharedManager
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
+import com.moonwinston.motivationaltodolist.utils.LanguageUtil
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 
 class SettingsFragment : Fragment() {
@@ -28,6 +30,11 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //TODO
+//        binding.valueNotify.text = SharedManager(view.context).getNotify().toString()
+        binding.valueTheme.text = SharedManager(view.context).getTheme()?:"follow system"
+        binding.valueLanguage.text = SharedManager(view.context).getLanguage()?:"follow system"
+
         binding.buttonNotify.setOnClickListener {
             val builder = AlertDialog.Builder(it.context)
             val notifyItems = resources.getStringArray(R.array.notify_array)
@@ -36,7 +43,6 @@ class SettingsFragment : Fragment() {
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.valueNotify.text = notifyItems[which]
                         //TODO sharedPreferences
-
                         dialog.dismiss()
                     })
                 .setNegativeButton(
@@ -53,8 +59,8 @@ class SettingsFragment : Fragment() {
                 .setSingleChoiceItems(themeItems, -1,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.valueTheme.text = themeItems[which]
-                        val test = ThemeUtil()
-                        test.setTheme(resources.getString(which))
+                        SharedManager(view.context).saveTheme(themeItems[which])
+                        ThemeUtil().setTheme(themeItems[which])
                         dialog.dismiss()
                     })
                 .setNegativeButton(
@@ -72,8 +78,8 @@ class SettingsFragment : Fragment() {
                 .setSingleChoiceItems(languageItems, -1,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.valueLanguage.text = languageItems[which]
-                        //TODO sharedPreferences
-
+                        SharedManager(view.context).saveLanguage(languageItems[which])
+                        LanguageUtil().setLanguague(languageItems[which])
                         dialog.dismiss()
                     })
                 .setNegativeButton(
