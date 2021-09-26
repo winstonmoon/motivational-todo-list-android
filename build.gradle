@@ -39,6 +39,7 @@ buildscript {
         koinVersion = '2.1.5'
         gmsVersion = '20.3.0'
         playVersion = '1.10.0'
+        lottieVersion = '4.1.0'
     }
 
     repositories {
