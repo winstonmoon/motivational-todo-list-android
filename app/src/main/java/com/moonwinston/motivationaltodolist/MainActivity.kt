@@ -3,9 +3,11 @@ package com.moonwinston.motivationaltodolist
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.os.LocaleList
+import android.view.View
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -106,15 +108,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private fun initSettings() {
         //TODO
-        val language = SharedManager(this).getLanguage()?:Locale.getDefault()
-        
+        val lang = SharedManager(this).getLanguage()?:Locale.getDefault()
         val theme = SharedManager(this).getTheme()?:"following system"
         ThemeUtil().setTheme(theme)
     }
 
 //    override fun attachBaseContext(base: Context) {
-//        val locale = Locale.KOREAN
-//        val res = resources
+//        val locale = Locale.ENGLISH
+//        val res = base.resources
 //        val config = Configuration(res.configuration)
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 //            config.setLocales(LocaleList(locale))

@@ -18,9 +18,6 @@ class RewardsAdapter : ListAdapter<TaskEntity, RewardsAdapter.ViewHolder>(diffUt
         fun bind(taskEntity: TaskEntity) {
             //TODO fix format
             binding.textAchieveddate.text = taskEntity.taskDate.toString()
-            Glide.with(itemView)
-                .load(R.drawable.trophy)
-                .into(binding.imageReward)
         }
     }
 

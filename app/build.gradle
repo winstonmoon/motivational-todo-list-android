@@ -76,6 +76,8 @@ dependencies {
     implementation "com.google.android.gms:play-services-ads:$rootProject.gmsVersion"
     // in-app update
     implementation "com.google.android.play:core:$rootProject.playVersion"
+    // lottie
+    implementation "com.airbnb.android:lottie:$rootProject.lottieVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
