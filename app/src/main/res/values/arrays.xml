@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="notify_array">
-        <item>0ff</item>
+        <item>off</item>
         <item>5 min</item>
         <item>10 min</item>
         <item>15 min</item>
