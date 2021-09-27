@@ -11,8 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MotivationalTodoList">
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/SplashTheme"
+            android:name=".SplashActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -20,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-2353870408305000~9513759562"/>
