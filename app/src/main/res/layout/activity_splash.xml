@@ -5,16 +5,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_title"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:autoSizeTextType="uniform"
             android:text="Motivational Todo List"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
             app:layout_constraintBottom_toTopOf="@id/image_reward"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,12 +23,13 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/image_reward"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="200dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_title"
             app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:lottie_rawRes="@raw/fire" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
