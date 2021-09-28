@@ -2,16 +2,24 @@ package com.moonwinston.motivationaltodolist
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
+import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
 
-class SplashActivity: AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        setContentView(R.layout.activity_splash)
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+    private lateinit var binding: ActivitySplashBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+//        try {
+//            Thread.sleep(5000)
+//        } catch (e: InterruptedException) {
+//            e.printStackTrace();
+//        }
+//        val intent = Intent(this, MainActivity::class.java)
+//        startActivity(intent)
+//        finish()
     }
 }
