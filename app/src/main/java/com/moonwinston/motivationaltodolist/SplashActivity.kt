@@ -2,6 +2,7 @@ package com.moonwinston.motivationaltodolist
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
 
@@ -13,13 +14,15 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        try {
-//            Thread.sleep(5000)
-//        } catch (e: InterruptedException) {
-//            e.printStackTrace();
-//        }
-//        val intent = Intent(this, MainActivity::class.java)
-//        startActivity(intent)
-//        finish()
+        Handler().postDelayed({
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+            finish()
+        },DURATION)
+
+    }
+    companion object {
+        private const val DURATION : Long = 2000
     }
 }

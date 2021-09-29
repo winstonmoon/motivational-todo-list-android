@@ -5,31 +5,39 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/colorOnSecondary">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_title"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:autoSizeTextType="uniform"
-            android:text="Motivational Todo List"
-            android:textColor="@color/white"
+            android:fontFamily="sans-serif"
+            android:text="Motivational\nTodo List"
+            android:gravity="center_horizontal"
+            android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/image_reward"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/image_reward"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"
             app:lottie_rawRes="@raw/fire" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
