@@ -4,13 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import com.moonwinston.motivationaltodolist.data.SharedManager
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
+import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val theme = SharedManager(this).getTheme()?:"following system"
+        ThemeUtil().setTheme(theme)
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
