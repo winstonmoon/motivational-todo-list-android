@@ -59,7 +59,12 @@ class AddDialogFragment : DialogFragment() {
                         var taskEntity = TaskEntity(
                             uid = taskEntity?.uid,
                             taskDate = date,
-                            taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
+                            taskTime = SimpleDateFormat("HH:mm").parse(
+                                "%02d:%02d".format(
+                                    hour,
+                                    minute
+                                )
+                            ),
                             task = binding.inputTask.text.toString(),
                             isCompleted = false
                         )
@@ -74,6 +79,14 @@ class AddDialogFragment : DialogFragment() {
                     })
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(resources.getColor(R.color.main_text))
+        (dialog as AlertDialog).getButton(AlertDialog.BUTTON_NEGATIVE)
+            .setTextColor(resources.getColor(R.color.main_text))
     }
 
     private fun initCommonView(binding: DialogAddBinding) {
@@ -109,7 +122,11 @@ class AddDialogFragment : DialogFragment() {
         binding.inputTask.setText(taskEntity.task)
     }
 
-    private fun createDialogBuilder(fragmentActivity: FragmentActivity?, binding: DialogAddBinding, positiveButton: Int) {
+    private fun createDialogBuilder(
+        fragmentActivity: FragmentActivity?,
+        binding: DialogAddBinding,
+        positiveButton: Int
+    ) {
 
     }
 }

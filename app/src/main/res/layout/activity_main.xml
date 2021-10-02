@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            android:background="@color/charcoal"
+            android:background="@color/main_container"
             app:itemIconTint="@drawable/menu_selector_color"
             app:itemTextColor="@drawable/menu_selector_color"
             app:layout_constraintBottom_toBottomOf="parent"

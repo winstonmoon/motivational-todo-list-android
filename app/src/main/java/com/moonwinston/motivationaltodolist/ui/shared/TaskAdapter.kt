@@ -44,7 +44,7 @@ class TaskAdapter(
                 binding.timeTasks.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
 
                 binding.radiobuttonTasks.setOnClickListener {
-                    val builder = AlertDialog.Builder(it.context)
+                    val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
                     builder.setMessage(R.string.message_dialog_confirm_complete)
                         .setPositiveButton(R.string.button_ok,
                             DialogInterface.OnClickListener { _, _ ->
@@ -61,6 +61,7 @@ class TaskAdapter(
                             DialogInterface.OnClickListener { _, _ ->
                                 binding.radiobuttonTasks.isChecked = false
                             })
+                    builder.setOnDismissListener { binding.radiobuttonTasks.isChecked = false }
                     builder.show()
                     radioButtonCallback(taskEntity)
                 }
