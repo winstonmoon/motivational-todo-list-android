@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorOnSecondary">
+        android:background="@color/main_background">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_title"
@@ -16,7 +16,7 @@
             android:fontFamily="sans-serif"
             android:text="Motivational\nTodo List"
             android:gravity="center_horizontal"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="@color/main_text"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
             app:layout_constraintEnd_toEndOf="parent"

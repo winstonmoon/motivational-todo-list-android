@@ -14,7 +14,7 @@
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:text="MM"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="@color/main_text"
             app:layout_constraintBottom_toTopOf="@id/linear_monthly_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
