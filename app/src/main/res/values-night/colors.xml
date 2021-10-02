@@ -18,6 +18,7 @@
     <color name="sub_container">#565656</color>
     <color name="main_text">#FFFFFF</color>
     <color name="sub_text">#C4C4C4</color>
+    <color name="splash_icon">#FFFFFF</color>
     <color name="gray_icon">#C4C4C4</color>
     <color name="blue_icon">#44BCFF</color>
 </resources>
