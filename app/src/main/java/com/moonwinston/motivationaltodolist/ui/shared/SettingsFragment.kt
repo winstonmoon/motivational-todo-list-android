@@ -36,7 +36,7 @@ class SettingsFragment : Fragment() {
         binding.valueLanguage.text = SharedManager(view.context).getLanguage()?:"follow system"
 
         binding.buttonNotify.setOnClickListener {
-            val builder = AlertDialog.Builder(it.context)
+            val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val notifyItems = resources.getStringArray(R.array.notify_array)
             builder.setTitle(resources.getString(R.string.label_notify))
                 .setSingleChoiceItems(notifyItems, -1,
@@ -53,7 +53,7 @@ class SettingsFragment : Fragment() {
             builder.show()
         }
         binding.buttonTheme.setOnClickListener {
-            val builder = AlertDialog.Builder(it.context)
+            val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val themeItems = resources.getStringArray(R.array.theme_array)
             builder.setTitle(resources.getString(R.string.label_theme))
                 .setSingleChoiceItems(themeItems, -1,
@@ -72,7 +72,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.buttonLanguage.setOnClickListener {
-            val builder = AlertDialog.Builder(it.context)
+            val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val languageItems = resources.getStringArray(R.array.language_array)
             builder.setTitle(resources.getString(R.string.label_language))
                 .setSingleChoiceItems(languageItems, -1,
