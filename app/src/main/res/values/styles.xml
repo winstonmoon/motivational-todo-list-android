@@ -9,6 +9,8 @@
         <item name="android:background">@color/sub_background</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:colorControlNormal">@color/blue_icon</item>
+        <item name="android:colorControlActivated">@color/blue_icon</item>
     </style>
 
     <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
