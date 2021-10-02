@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.R
@@ -55,8 +56,10 @@ class SettingsFragment : Fragment() {
         binding.buttonTheme.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val themeItems = resources.getStringArray(R.array.theme_array)
+            //TODO
+            val checkedItem = themeItems.indexOf(SharedManager(view.context).getTheme()?:"follow system")?:-1
             builder.setTitle(resources.getString(R.string.label_theme))
-                .setSingleChoiceItems(themeItems, -1,
+                .setSingleChoiceItems(themeItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.valueTheme.text = themeItems[which]
                         SharedManager(view.context).saveTheme(themeItems[which])
@@ -74,8 +77,10 @@ class SettingsFragment : Fragment() {
         binding.buttonLanguage.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val languageItems = resources.getStringArray(R.array.language_array)
+            //TODO
+            val checkedItem = languageItems.indexOf(SharedManager(view.context).getLanguage()?:"follow system")?:-1
             builder.setTitle(resources.getString(R.string.label_language))
-                .setSingleChoiceItems(languageItems, -1,
+                .setSingleChoiceItems(languageItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.valueLanguage.text = languageItems[which]
                         SharedManager(view.context).saveLanguage(languageItems[which])

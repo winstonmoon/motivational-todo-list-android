@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.moonwinston.motivationaltodolist.DmlState
@@ -83,10 +84,11 @@ class AddDialogFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
+        //TODO
         (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
-            .setTextColor(resources.getColor(R.color.main_text))
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.main_text))
         (dialog as AlertDialog).getButton(AlertDialog.BUTTON_NEGATIVE)
-            .setTextColor(resources.getColor(R.color.main_text))
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.main_text))
     }
 
     private fun initCommonView(binding: DialogAddBinding) {
