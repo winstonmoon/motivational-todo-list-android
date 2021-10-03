@@ -8,11 +8,11 @@ class ThemeUtil {
     fun setTheme(theme: String) {
         when (theme) {
 //            "DARK" -> {
-            "dark" -> {
+            "Dark" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
 //            "LIGHT" -> {
-            "light" -> {
+            "Light" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
             else ->

@@ -14,6 +14,7 @@
     <string name="title_monthly">월별</string>
     <string name="title_rewards">보상</string>
     <string name="title_settings">설정</string>
+    <string name="title_splash">Motivational\nTodo List</string>
     <string name="button_snack_restart">재시작</string>
     <string name="button_add">추가</string>
     <string name="button_edit">수정</string>
@@ -22,6 +23,13 @@
     <string name="label_todo">할일</string>
     <string name="label_theme">테마</string>
     <string name="label_language">언어</string>
+    <string name="label_monday">월</string>
+    <string name="label_tuesday">화</string>
+    <string name="label_wednesday">수</string>
+    <string name="label_thursday">목</string>
+    <string name="label_friday">금</string>
+    <string name="label_saturday">토</string>
+    <string name="label_sunday">일</string>
     <string name="message_dialog_confirm_complete">할일을 끝냈습니까?</string>
     <string name="message_toast_uneditable">완료된 할일은 수정 할 수 없습니다.</string>
     <string name="message_toast_update_cancel">업데이트가 취소되었습니다.</string>
