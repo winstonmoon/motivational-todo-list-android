@@ -57,7 +57,7 @@
                     android:layout_height="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center_horizontal"
-                    android:text="M"
+                    android:text="@string/label_monday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
@@ -74,7 +74,7 @@
                     android:layout_height="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center_horizontal"
-                    android:text="T"
+                    android:text="@string/label_tuesday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
@@ -91,7 +91,7 @@
                     android:layout_height="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center_horizontal"
-                    android:text="W"
+                    android:text="@string/label_wednesday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
@@ -108,7 +108,7 @@
                     android:layout_height="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center_horizontal"
-                    android:text="T"
+                    android:text="@string/label_thursday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
@@ -125,7 +125,7 @@
                     android:layout_height="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center_horizontal"
-                    android:text="F"
+                    android:text="@string/label_friday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
@@ -142,7 +142,7 @@
                     android:layout_height="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center_horizontal"
-                    android:text="S"
+                    android:text="@string/label_saturday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
@@ -160,7 +160,7 @@
                     android:layout_height="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center_horizontal"
-                    android:text="S"
+                    android:text="@string/label_sunday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
