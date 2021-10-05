@@ -13,6 +13,7 @@ class SharedManager(context: Context) {
         prefs["language"] = language
     }
 
+    //TODO get locale
     fun getLanguage(): String = prefs["language"]
 
     fun saveTheme(theme: String) {

@@ -1,8 +1,13 @@
 package com.moonwinston.motivationaltodolist.ui.base
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.preference.PreferenceManager
 import androidx.viewbinding.ViewBinding
+import com.moonwinston.motivationaltodolist.data.SharedManager
+import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import kotlinx.coroutines.Job
 
 abstract class BaseActivity<VM: BaseViewModel, VB: ViewBinding>: AppCompatActivity() {
@@ -37,6 +42,14 @@ abstract class BaseActivity<VM: BaseViewModel, VB: ViewBinding>: AppCompatActivi
             fetchJob.cancel()
         }
         super.onDestroy()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        //TODO
+        // get chosen language from shread preference
+        val localeToSwitchTo = SharedManager(newBase).getLanguage()
+        val localeUpdatedContext: ContextWrapper = ContextUtil.updateLocale(newBase, localeToSwitchTo)
+        super.attachBaseContext(localeUpdatedContext)
     }
 
 }
