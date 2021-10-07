@@ -1,7 +1,6 @@
 package com.moonwinston.motivationaltodolist.ui.monthly
 
 import android.os.Bundle
-import android.view.View
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment

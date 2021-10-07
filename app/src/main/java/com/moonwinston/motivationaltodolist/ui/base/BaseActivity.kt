@@ -9,8 +9,9 @@ import androidx.viewbinding.ViewBinding
 import com.moonwinston.motivationaltodolist.data.SharedManager
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import kotlinx.coroutines.Job
+import java.util.*
 
-abstract class BaseActivity<VM: BaseViewModel, VB: ViewBinding>: AppCompatActivity() {
+abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity() {
 
     abstract val viewModel: VM
 
@@ -47,8 +48,13 @@ abstract class BaseActivity<VM: BaseViewModel, VB: ViewBinding>: AppCompatActivi
     override fun attachBaseContext(newBase: Context) {
         //TODO
         // get chosen language from shread preference
-        val localeToSwitchTo = SharedManager(newBase).getLanguage()
-        val localeUpdatedContext: ContextWrapper = ContextUtil.updateLocale(newBase, localeToSwitchTo)
+        val localeToSwitchTo = when (SharedManager(newBase).getLanguage()) {
+            "한국어" -> Locale.KOREAN
+            "English" -> Locale.ENGLISH
+            else -> Locale.ENGLISH
+        }
+        val localeUpdatedContext: ContextWrapper =
+            ContextUtil.updateLocale(newBase, localeToSwitchTo)
         super.attachBaseContext(localeUpdatedContext)
     }
 
