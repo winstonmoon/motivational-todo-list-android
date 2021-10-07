@@ -1,23 +1,14 @@
 package com.moonwinston.motivationaltodolist.ui.monthly
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.R
-import com.moonwinston.motivationaltodolist.data.TaskEntity
-import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
-import com.moonwinston.motivationaltodolist.ui.daily.DailyViewModel
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
-import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.math.roundToInt
 
 class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>() {
     override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)

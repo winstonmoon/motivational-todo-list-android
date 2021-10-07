@@ -1,6 +1,7 @@
 package com.moonwinston.motivationaltodolist.ui.shared
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.moonwinston.motivationaltodolist.MainActivity
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.SharedManager
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
@@ -88,6 +90,8 @@ class SettingsFragment : Fragment() {
                         //TODO use array not text
                         SharedManager(view.context).saveLanguage(languageItems[which])
                         LanguageUtil().setLanguague(languageItems[which])
+                        val intent = Intent(activity, MainActivity::class.java)
+                        startActivity(intent)
                         dialog.dismiss()
                     })
                 .setNegativeButton(
