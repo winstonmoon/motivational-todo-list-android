@@ -32,8 +32,6 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
 //    }
 
     override fun initViews() = with(binding) {
-        customviewPiechartDaily.setBorderStrokeWidth(40F)
-        customviewPiechartDaily.setProgressiveStrokeWidth(20F)
         //TODO fix
         val cal = Calendar.getInstance()
         val date = cal.get(Calendar.DATE)

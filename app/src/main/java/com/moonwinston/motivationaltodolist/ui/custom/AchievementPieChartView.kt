@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import java.util.*
 
@@ -16,10 +17,29 @@ class AchievementPieChartView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
-    private var percentage: Float = 0.0F
-    private var borderStrokeWidth: Float = 40F
-    private var progressiveStrokeWidth: Float = 20F
-    private var pieChartViewDate: Date = CalendarUtil.getNonExistDate()
+    private var percentage = 0.0F
+    private var borderStrokeWidth = 0.0F
+    private var progressiveStrokeWidth = 0.0F
+    private var pieChartColor = 0
+    private var progressivePieChartColor = 0
+    private var pieChartViewDate = CalendarUtil.getNonExistDate()
+
+    init {
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.AchievementPieChart,
+            0, 0).apply {
+
+            try {
+                borderStrokeWidth = getFloat(R.styleable.AchievementPieChart_borderStrokeWidth, 0.0F)
+                progressiveStrokeWidth = getFloat(R.styleable.AchievementPieChart_progressiveStrokeWidth, 0.0F)
+                pieChartColor = getColor(R.styleable.AchievementPieChart_pieChartColor, 0)
+                progressivePieChartColor = getColor(R.styleable.AchievementPieChart_progressivePieChartColor, 0)
+            } finally {
+                recycle()
+            }
+        }
+    }
 
     override fun onDraw(canvas: Canvas?) {
         val centerX = measuredWidth / 2
@@ -34,42 +54,32 @@ class AchievementPieChartView @JvmOverloads constructor(
         val paint = Paint()
         paint.style = Paint.Style.STROKE;
 
-        drawPieChart(canvas, borderStrokeWidth, rectF, paint)
-        drawProgressivePieChart(canvas, progressiveStrokeWidth, rectF, paint)
+        drawPieChart(canvas, rectF, paint)
+        drawProgressivePieChart(canvas, rectF, paint)
     }
 
     private fun drawPieChart(
         canvas: Canvas?,
-        borderStrokeWidth: Float,
         rectF: RectF,
         paint: Paint
     ) {
         paint.apply {
-            strokeWidth = borderStrokeWidth;
-            color = Color.parseColor("#D67EFF")
+            strokeWidth = borderStrokeWidth
+            color = pieChartColor
         }
         canvas?.drawArc(rectF, 270F, 360F, false, paint)
     }
 
     private fun drawProgressivePieChart(
         canvas: Canvas?,
-        progressiveStrokeWidth: Float,
         rectF: RectF,
         paint: Paint
     ) {
         paint.apply {
-            strokeWidth = progressiveStrokeWidth;
-            color = Color.parseColor("#760780")
+            strokeWidth = progressiveStrokeWidth
+            color = progressivePieChartColor
         }
         canvas?.drawArc(rectF, 270F, percentage * 360F, false, paint)
-    }
-
-    fun setBorderStrokeWidth(borderWidth: Float) {
-        borderStrokeWidth = borderWidth
-    }
-
-    fun setProgressiveStrokeWidth(progressiveWidth: Float) {
-        progressiveStrokeWidth = progressiveWidth
     }
 
     fun setPercentage(percent: Float) {
