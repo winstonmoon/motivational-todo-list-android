@@ -24,10 +24,6 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
         private val testtList = testList
 
         fun bind(testDate: Date) {
-            binding.customviewPiechartMonthly.apply {
-                setBorderStrokeWidth(10F)
-                setProgressiveStrokeWidth(5F)
-            }
             var testteList = mutableListOf<TaskEntity>()
             for (date in testtList){
                 if (date.taskDate == testDate) {

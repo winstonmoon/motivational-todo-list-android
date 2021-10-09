@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AchievementPieChart">
+        <attr name="borderStrokeWidth" format="float" />
+        <attr name="progressiveStrokeWidth" format="float" />
+        <attr name="pieChartColor" format="color" />
+        <attr name="progressivePieChartColor" format="color" />
+    </declare-styleable>
+</resources>

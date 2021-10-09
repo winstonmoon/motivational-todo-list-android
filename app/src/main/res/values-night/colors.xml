@@ -21,4 +21,6 @@
     <color name="splash_icon">#FFFFFF</color>
     <color name="gray_icon">#C4C4C4</color>
     <color name="blue_icon">#44BCFF</color>
+    <color name="pie_chart">#F1BB6C</color>
+    <color name="progressive_pie_chart">#FF5900</color>
 </resources>

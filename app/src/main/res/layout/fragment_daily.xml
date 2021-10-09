@@ -61,10 +61,14 @@
             android:id="@+id/customview_piechart_daily"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:borderStrokeWidth="40"
             app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
             app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_goal" />
+            app:layout_constraintTop_toBottomOf="@id/label_goal"
+            app:pieChartColor="@color/pie_chart"
+            app:progressivePieChartColor="@color/progressive_pie_chart"
+            app:progressiveStrokeWidth="20" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_goal_percent"

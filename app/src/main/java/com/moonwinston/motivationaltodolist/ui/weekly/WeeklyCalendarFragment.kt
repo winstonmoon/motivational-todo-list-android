@@ -51,50 +51,36 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
         //TODO fix dayOfWeek logic more simple, viewmodel
 
         customviewPiechartMonday.setPieChartViewDate(weekList[0])
-        customviewPiechartMonday.setBorderStrokeWidth(10F)
-        customviewPiechartMonday.setProgressiveStrokeWidth(5F)
         customviewPiechartMonday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartMonday.getPieChartViewDate())
         }
 
         customviewPiechartTuesday.setPieChartViewDate(weekList[1])
-        customviewPiechartTuesday.setBorderStrokeWidth(10F)
-        customviewPiechartTuesday.setProgressiveStrokeWidth(5F)
         customviewPiechartTuesday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartTuesday.getPieChartViewDate())
         }
 
         customviewPiechartWednesday.setPieChartViewDate(weekList[2])
-        customviewPiechartWednesday.setBorderStrokeWidth(10F)
-        customviewPiechartWednesday.setProgressiveStrokeWidth(5F)
         customviewPiechartWednesday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartWednesday.getPieChartViewDate())
         }
 
         customviewPiechartThursday.setPieChartViewDate(weekList[3])
-        customviewPiechartThursday.setBorderStrokeWidth(10F)
-        customviewPiechartThursday.setProgressiveStrokeWidth(5F)
         customviewPiechartThursday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartThursday.getPieChartViewDate())
         }
 
         customviewPiechartFriday.setPieChartViewDate(weekList[4])
-        customviewPiechartFriday.setBorderStrokeWidth(10F)
-        customviewPiechartFriday.setProgressiveStrokeWidth(5F)
         customviewPiechartFriday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartFriday.getPieChartViewDate())
         }
 
         customviewPiechartSaturday.setPieChartViewDate(weekList[5])
-        customviewPiechartSaturday.setBorderStrokeWidth(10F)
-        customviewPiechartSaturday.setProgressiveStrokeWidth(5F)
         customviewPiechartSaturday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartSaturday.getPieChartViewDate())
         }
 
         customviewPiechartSunday.setPieChartViewDate(weekList[6])
-        customviewPiechartSunday.setBorderStrokeWidth(10F)
-        customviewPiechartSunday.setProgressiveStrokeWidth(5F)
         customviewPiechartSunday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartSunday.getPieChartViewDate())
         }
