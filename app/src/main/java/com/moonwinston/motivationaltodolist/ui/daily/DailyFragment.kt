@@ -25,12 +25,6 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private lateinit var adapter: TaskAdapter
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        //TODO move to fetchData
-//        sharedViewModel.getAll()
-//    }
-
     override fun initViews() = with(binding) {
         //TODO fix
         val cal = Calendar.getInstance()
@@ -91,10 +85,11 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             }
             adapter.submitList(todayTasksList.sortedBy { it.taskTime })
             var rate = sharedViewModel.getRate(todayTasksList)
-            binding.customviewPiechartDaily.setPercentage(rate)
-            if (rate == 0.0F) {
-                binding.customviewPiechartDaily.alpha = 0.2F
+            when(rate){
+                0.0F -> binding.customviewPiechartDaily.alpha = 0.2F
+                else -> binding.customviewPiechartDaily.alpha = 1.0F
             }
+            binding.customviewPiechartDaily.setPercentage(rate)
             binding.textGoalPercent.text = "${(rate * 100).roundToInt()}%"
         }
     }

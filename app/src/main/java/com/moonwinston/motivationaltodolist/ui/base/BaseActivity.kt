@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.preference.PreferenceManager
 import androidx.viewbinding.ViewBinding
-import com.moonwinston.motivationaltodolist.data.SharedManager
+import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import kotlinx.coroutines.Job
+import org.koin.android.ext.android.inject
 import java.util.*
 
 abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity() {
@@ -20,6 +20,8 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     abstract fun getViewBinding(): VB
 
     private lateinit var fetchJob: Job
+
+    private val sharedPref: SharedPref by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,15 +49,14 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
 
     override fun attachBaseContext(newBase: Context) {
         //TODO
-        // get chosen language from shread preference
-        val localeToSwitchTo = when (SharedManager(newBase).getLanguage()) {
-            "한국어" -> Locale.KOREAN
-            "English" -> Locale.ENGLISH
+        // get chosen language from shared preference
+        val localeToSwitchTo = when (sharedPref.getLanguage()) {
+            2 -> Locale.KOREAN
+            1 -> Locale.ENGLISH
             else -> Locale.ENGLISH
         }
         val localeUpdatedContext: ContextWrapper =
             ContextUtil.updateLocale(newBase, localeToSwitchTo)
         super.attachBaseContext(localeUpdatedContext)
     }
-
 }
