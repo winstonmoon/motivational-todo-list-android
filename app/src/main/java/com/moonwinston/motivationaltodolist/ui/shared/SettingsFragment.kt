@@ -2,24 +2,23 @@ package com.moonwinston.motivationaltodolist.ui.shared
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.MainActivity
 import com.moonwinston.motivationaltodolist.R
-import com.moonwinston.motivationaltodolist.data.SharedManager
+import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
-import com.moonwinston.motivationaltodolist.utils.LanguageUtil
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
+import org.koin.android.ext.android.inject
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
+    private val sharedPref: SharedPref by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,10 +33,10 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //TODO use array not text
-        //binding.valueNotify.text = SharedManager(view.context).getNotify().toString()
-        binding.valueTheme.text = SharedManager(view.context).getTheme()?:"Follow system"
-        binding.valueLanguage.text = SharedManager(view.context).getLanguage()?:"Follow system"
-
+        binding.valueTheme.text =
+            resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
+        binding.valueLanguage.text =
+            resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
         binding.buttonNotify.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val notifyItems = resources.getStringArray(R.array.notify_array)
@@ -60,13 +59,13 @@ class SettingsFragment : Fragment() {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val themeItems = resources.getStringArray(R.array.theme_array)
             //TODO
-            val checkedItem = themeItems.indexOf(SharedManager(view.context).getTheme()?:"Follow system")?:-1
+            val checkedItem = themeItems.indexOf(sharedPref.getTheme()) ?: -1
             builder.setTitle(resources.getString(R.string.label_theme))
                 .setSingleChoiceItems(themeItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.valueTheme.text = themeItems[which]
                         //TODO use array not text
-                        SharedManager(view.context).saveTheme(themeItems[which])
+                        sharedPref.saveTheme(which)
                         ThemeUtil().setTheme(themeItems[which])
                         dialog.dismiss()
                     })
@@ -82,14 +81,13 @@ class SettingsFragment : Fragment() {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val languageItems = resources.getStringArray(R.array.language_array)
             //TODO
-            val checkedItem = languageItems.indexOf(SharedManager(view.context).getLanguage()?:"Follow system")?:-1
+            val checkedItem = languageItems.indexOf(sharedPref.getLanguage()) ?: -1
             builder.setTitle(resources.getString(R.string.label_language))
                 .setSingleChoiceItems(languageItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.valueLanguage.text = languageItems[which]
                         //TODO use array not text
-                        SharedManager(view.context).saveLanguage(languageItems[which])
-                        LanguageUtil().setLanguague(languageItems[which])
+                        sharedPref.saveLanguage(which)
                         val intent = Intent(activity, MainActivity::class.java)
                         startActivity(intent)
                         dialog.dismiss()

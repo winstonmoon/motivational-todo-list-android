@@ -7,11 +7,9 @@ class ThemeUtil {
 
     fun setTheme(theme: String) {
         when (theme) {
-//            "DARK" -> {
             "Dark" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
-//            "LIGHT" -> {
             "Light" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }

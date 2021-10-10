@@ -13,12 +13,13 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
-import com.moonwinston.motivationaltodolist.data.SharedManager
+import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
+import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
@@ -27,6 +28,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val MY_REQUEST_CODE = 1
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var listener: InstallStateUpdatedListener
+    private val sharedPref: SharedPref by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         appUpdateManager = AppUpdateManagerFactory.create(this)
@@ -100,20 +102,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private fun initSettings() {
         //TODO
-        val lang = SharedManager(this).getLanguage()?:Locale.getDefault()
-        val theme = SharedManager(this).getTheme()?:"following system"
-        ThemeUtil().setTheme(theme)
+        ThemeUtil().setTheme(resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()])
     }
-
-//    override fun attachBaseContext(base: Context) {
-//        val locale = Locale.ENGLISH
-//        val res = base.resources
-//        val config = Configuration(res.configuration)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            config.setLocales(LocaleList(locale))
-//        } else {
-//            config.setLocale(locale)
-//        }
-//        super.attachBaseContext(base.createConfigurationContext(config))
-//    }
 }
