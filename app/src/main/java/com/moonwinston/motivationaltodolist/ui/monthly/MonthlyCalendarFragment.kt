@@ -50,6 +50,7 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
                 SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")
             )
         }
+        //TODO separate western and eastern
         textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
     }
 
