@@ -201,6 +201,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         val month = gregorianCalendar.get(Calendar.MONTH)
         val date = gregorianCalendar.get(Calendar.DATE)
         val dayOfWeek = gregorianCalendar.get(Calendar.DAY_OF_WEEK)
+        //TODO separate western and eastern
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
         val parsedDayOfWeek = resources.getString(DayOfWeekEnum.values()[dayOfWeek].dayOfWeek)
         return "$parsedDayOfWeek, $parsedMonth $date, $year"
