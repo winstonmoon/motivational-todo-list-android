@@ -112,12 +112,20 @@ class AddDialogFragment : DialogFragment() {
     }
 
     private fun initUpdateView(binding: DialogAddBinding, taskEntity: TaskEntity) {
+        val year = SimpleDateFormat("Y").format(taskEntity.taskTime).toInt()
+        val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
+        val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
+        val hourOfDay = SimpleDateFormat("D").format(taskEntity.taskTime).toInt()
+        val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
+        val cal = Calendar.getInstance()
+        cal.set(year, month, day, hourOfDay, minute)
+
         if (Build.VERSION.SDK_INT <= 23) {
-            binding.inputTime.currentHour = taskEntity.taskTime.hours
-            binding.inputTime.currentMinute = taskEntity.taskTime.minutes
+            binding.inputTime.currentHour = cal.get(Calendar.HOUR_OF_DAY)
+            binding.inputTime.currentMinute = cal.get(Calendar.MINUTE)
         } else {
-            binding.inputTime.hour = taskEntity.taskTime.hours
-            binding.inputTime.minute = taskEntity.taskTime.minutes
+            binding.inputTime.hour = cal.get(Calendar.HOUR_OF_DAY)
+            binding.inputTime.minute = cal.get(Calendar.MINUTE)
         }
         binding.viewCalendar.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
