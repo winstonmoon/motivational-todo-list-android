@@ -14,6 +14,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="message_toast_uneditable">Cannot edit complete task.</string>
     <string name="message_toast_unaddable">Cannot add past task.</string>
+    <string name="message_toast_uncompletable">Cannot complete future task.</string>
     <string name="label_year"></string>
     <string name="label_day"></string>
 
