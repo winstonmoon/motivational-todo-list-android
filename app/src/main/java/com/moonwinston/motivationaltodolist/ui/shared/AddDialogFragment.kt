@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
@@ -51,6 +52,10 @@ class AddDialogFragment : DialogFragment() {
             builder.setView(binding.root)
                 .setPositiveButton(positiveButton,
                     DialogInterface.OnClickListener { _, _ ->
+                        if (date.before(Date())) {
+                            Toast.makeText(it, resources.getString(R.string.message_toast_unaddable), Toast.LENGTH_LONG).show()
+                            dialog?.cancel()
+                        }
                         val hour =
                             if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentHour else binding.inputTime.hour
 

@@ -35,6 +35,7 @@
     <string name="label_sunday">일</string>
     <string name="message_dialog_confirm_complete">할일을 끝냈습니까?</string>
     <string name="message_toast_uneditable">완료된 할일은 수정 할 수 없습니다.</string>
+    <string name="message_toast_unaddable">과거의 할일은 등록 할 수 없습니다.</string>
     <string name="message_toast_update_cancel">업데이트가 취소되었습니다.</string>
     <string name="hint_input_task">새로운 할일을 입력하세요.</string>
     <string name="label_notify">알림</string>
