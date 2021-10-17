@@ -16,6 +16,7 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
     override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffMonth = 0
+
     //TODO fix
     private var year = 0
     private var month = 0
@@ -51,7 +52,7 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
             )
         }
         //TODO separate western and eastern
-        textMonthlyMonth.setText(MonthEnum.values()[month].monthAbbreviation)
+        textMonthlyMonth.text = resources.getString(MonthEnum.values()[month].monthAbbreviation)
     }
 
     override fun observeData() {
