@@ -36,6 +36,7 @@ class TaskAdapter(
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+                binding.timeTasks.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
             } else {
                 binding.radiobuttonTasks.isChecked = false
                 //TODO fix
