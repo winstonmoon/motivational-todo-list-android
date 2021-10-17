@@ -5,8 +5,10 @@ import android.content.ContextWrapper
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
+import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import kotlinx.coroutines.Job
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -28,6 +30,8 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         binding = getViewBinding()
         setContentView(binding.root)
         initState()
+        //TODO
+        ThemeUtil().setTheme(resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()])
     }
 
     open fun initState() {
