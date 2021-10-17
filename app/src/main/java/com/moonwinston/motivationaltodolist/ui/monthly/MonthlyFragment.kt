@@ -3,10 +3,13 @@ package com.moonwinston.motivationaltodolist.ui.monthly
 import android.view.View
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -14,6 +17,8 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
     override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
     override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
+    private val sharedPref: SharedPref by inject()
+    companion object { private const val ENGLISH = 1 }
 
     override fun initViews() = with(binding) {
         viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
@@ -26,7 +31,14 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
 
     override fun observeData() {
         sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
-            binding.textDate.text = it
+            val year = it[0]
+            val wordYear = resources.getString(R.string.label_year)
+            val parsedMonth = resources.getString(MonthEnum.values()[it[1]].monthAbbreviation)
+            binding.textDate.text =
+                when (sharedPref.getLanguage()) {
+                    ENGLISH -> "$parsedMonth, $year"
+                    else -> "$year$wordYear $parsedMonth"
+                }
         }
     }
 

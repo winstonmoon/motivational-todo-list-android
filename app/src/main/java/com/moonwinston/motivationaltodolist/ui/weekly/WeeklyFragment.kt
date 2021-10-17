@@ -1,25 +1,20 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.DayOfWeekEnum
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.data.TaskEntity
-import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
-import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyScreenSlidePagerAdapter
-import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -29,7 +24,9 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     override fun getViewBinding() = FragmentWeeklyBinding.inflate(layoutInflater)
     override val viewModel by viewModel<WeeklyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
+    private val sharedPref: SharedPref by inject()
     private lateinit var selectedDate: Date
+    companion object { private const val ENGLISH = 1 }
 
     override fun initViews() = with(binding) {
         selectedDate = CalendarUtil.getTodayDate()
@@ -37,10 +34,10 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             this@WeeklyFragment,
             callback = { diffNumber ->
                 val diffDays = diffNumber * 7
-                val y = SimpleDateFormat("y").format(selectedDate).toInt()
-                val m = SimpleDateFormat("M").format(selectedDate).toInt()
-                val d = SimpleDateFormat("d").format(selectedDate).toInt()
-                val gregorianCalendar = GregorianCalendar(y, m - 1, d)
+                val year = SimpleDateFormat("y").format(selectedDate).toInt()
+                val month = SimpleDateFormat("M").format(selectedDate).toInt()
+                val day = SimpleDateFormat("d").format(selectedDate).toInt()
+                val gregorianCalendar = GregorianCalendar(year, month - 1, day)
                 gregorianCalendar.add(Calendar.DATE, diffDays)
                 sharedViewModel.setSelectedDate(gregorianCalendar.time)
             })
@@ -49,6 +46,11 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             WeeklyScreenSlidePagerAdapter.START_POSITION,
             false
         )
+        viewpagerWeeklyCalendar.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+            }
+        })
         setToday()
 
         buttonSettings.setOnClickListener {
@@ -201,10 +203,15 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         val month = gregorianCalendar.get(Calendar.MONTH)
         val date = gregorianCalendar.get(Calendar.DATE)
         val dayOfWeek = gregorianCalendar.get(Calendar.DAY_OF_WEEK)
-        //TODO separate western and eastern
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
         val parsedDayOfWeek = resources.getString(DayOfWeekEnum.values()[dayOfWeek].dayOfWeek)
-        return "$parsedDayOfWeek, $parsedMonth $date, $year"
+        val wordYear = resources.getString(R.string.label_year)
+        val wordDay = resources.getString(R.string.label_day)
+        //TODO separate western and eastern
+        return when (sharedPref.getLanguage()) {
+            ENGLISH -> "$parsedDayOfWeek, $parsedMonth $date, $year"
+            else -> "$year$wordYear $parsedMonth $date$wordDay $parsedDayOfWeek"
+        }
     }
 
     //TODO

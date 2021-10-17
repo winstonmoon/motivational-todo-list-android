@@ -59,13 +59,14 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         getAll()
     }
 
-    private var _monthlyTitleLiveData = MutableLiveData<String>()
-    val monthlyTitleLiveData: LiveData<String>
+    private var _monthlyTitleLiveData = MutableLiveData<List<Int>>()
+    val monthlyTitleLiveData: LiveData<List<Int>>
         get() = _monthlyTitleLiveData
 
     fun setMonthlyTitle(month: Int, year: Int) {
         val parsedMonth = MonthEnum.values()[month].name
-        _monthlyTitleLiveData.value = "$parsedMonth $year"
+        val list = listOf(year, month)
+        _monthlyTitleLiveData.value = list
     }
 
     private var _selectedDateLiveData = MutableLiveData<Date>()

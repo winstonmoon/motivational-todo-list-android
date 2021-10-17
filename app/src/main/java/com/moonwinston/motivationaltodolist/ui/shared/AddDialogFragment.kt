@@ -60,12 +60,7 @@ class AddDialogFragment : DialogFragment() {
                         var taskEntity = TaskEntity(
                             uid = taskEntity?.uid,
                             taskDate = date,
-                            taskTime = SimpleDateFormat("HH:mm").parse(
-                                "%02d:%02d".format(
-                                    hour,
-                                    minute
-                                )
-                            ),
+                            taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
                             task = binding.inputTask.text.toString(),
                             isCompleted = false
                         )
@@ -115,17 +110,16 @@ class AddDialogFragment : DialogFragment() {
         val year = SimpleDateFormat("Y").format(taskEntity.taskTime).toInt()
         val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
         val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
-        val hourOfDay = SimpleDateFormat("D").format(taskEntity.taskTime).toInt()
+        val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
         val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
-        val cal = Calendar.getInstance()
-        cal.set(year, month, day, hourOfDay, minute)
+        val taskEntityTaskTime = GregorianCalendar(year,month,day,hourOfDay,minute)
 
         if (Build.VERSION.SDK_INT <= 23) {
-            binding.inputTime.currentHour = cal.get(Calendar.HOUR_OF_DAY)
-            binding.inputTime.currentMinute = cal.get(Calendar.MINUTE)
+            binding.inputTime.currentHour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+            binding.inputTime.currentMinute = taskEntityTaskTime.get(Calendar.MINUTE)
         } else {
-            binding.inputTime.hour = cal.get(Calendar.HOUR_OF_DAY)
-            binding.inputTime.minute = cal.get(Calendar.MINUTE)
+            binding.inputTime.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+            binding.inputTime.minute = taskEntityTaskTime.get(Calendar.MINUTE)
         }
         binding.viewCalendar.date = taskEntity.taskDate.time
         date = taskEntity.taskDate

@@ -1,18 +1,18 @@
 package com.moonwinston.motivationaltodolist.ui.daily
 
-import android.os.Bundle
-import android.view.*
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.util.*
@@ -24,6 +24,8 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     override val viewModel by viewModel<DailyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private lateinit var adapter: TaskAdapter
+    private val sharedPref: SharedPref by inject()
+    companion object { private const val ENGLISH = 1 }
 
     override fun initViews() = with(binding) {
         //TODO fix
@@ -32,7 +34,15 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
         val month = cal.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
         val year = cal.get(Calendar.YEAR)
-        textDate.text = "Today, $parsedMonth $date, $year"
+        val today = resources.getString(R.string.text_today)
+        val wordYear = resources.getString(R.string.label_year)
+        val wordDay = resources.getString(R.string.label_day)
+        //TODO
+        textDate.text =
+        when (sharedPref.getLanguage()) {
+            ENGLISH -> "$today, $parsedMonth $date, $year"
+            else -> "$year$wordYear $parsedMonth $date$wordDay $today"
+        }
 
         //TODO
         adapter = TaskAdapter(

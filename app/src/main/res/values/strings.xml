@@ -13,6 +13,8 @@
     <string name="button_ok">Ok</string>
     <string name="button_cancel">Cancel</string>
     <string name="message_toast_uneditable">Cannot edit complete task.</string>
+    <string name="label_year"></string>
+    <string name="label_day"></string>
 
     <!-- Activity Splash-->
     <string name="title_splash">Motivational\nTodo List</string>
@@ -32,6 +34,7 @@
     <!-- Fragment Daily -->
     <string name="label_achievement_rate">Achievement Rate</string>
     <string name="label_todo">To Do List</string>
+    <string name="text_today">Today</string>
 
     <!-- Fragment Weekly -->
     <string name="label_monday">M</string>
