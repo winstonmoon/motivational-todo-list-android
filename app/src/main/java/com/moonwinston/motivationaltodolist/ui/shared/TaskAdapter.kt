@@ -15,6 +15,7 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemTasksBinding
 import java.text.SimpleDateFormat
+import java.util.*
 
 class TaskAdapter(
     val meatballsMenuCallback: (TaskEntity, DmlState) -> Unit,
@@ -49,6 +50,10 @@ class TaskAdapter(
                     builder.setMessage(R.string.message_dialog_confirm_complete)
                         .setPositiveButton(R.string.button_ok,
                             DialogInterface.OnClickListener { _, _ ->
+                                if (taskEntity.taskDate.after(Date())) {
+                                    Toast.makeText(it.context, R.string.message_toast_uncompletable, Toast.LENGTH_LONG).show()
+                                    return@OnClickListener
+                                }
                                 val taskEntity = TaskEntity(
                                     uid = taskEntity.uid,
                                     taskDate = taskEntity.taskDate,
