@@ -102,6 +102,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private fun initSettings() {
         //TODO
-//        ThemeUtil().setTheme(resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()])
+        ThemeUtil().setTheme(sharedPref.getTheme())
     }
 }

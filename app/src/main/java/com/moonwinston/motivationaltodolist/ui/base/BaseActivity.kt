@@ -30,8 +30,6 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         binding = getViewBinding()
         setContentView(binding.root)
         initState()
-        //TODO
-        ThemeUtil().setTheme(resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()])
     }
 
     open fun initState() {
