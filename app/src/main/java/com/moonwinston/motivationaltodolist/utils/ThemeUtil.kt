@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatDelegate
 
 class ThemeUtil {
 
-    fun setTheme(theme: String) {
+    fun setTheme(theme: Int) {
         when (theme) {
-            "Dark" -> {
+            1 -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
-            "Light" -> {
+            2 -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
             else ->

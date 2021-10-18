@@ -66,7 +66,7 @@ class SettingsFragment : Fragment() {
                         binding.valueTheme.text = themeItems[which]
                         //TODO use array not text
                         sharedPref.saveTheme(which)
-                        ThemeUtil().setTheme(themeItems[which])
+                        ThemeUtil().setTheme(which)
                         dialog.dismiss()
                     })
                 .setNegativeButton(
