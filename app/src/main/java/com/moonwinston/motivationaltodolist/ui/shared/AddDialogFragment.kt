@@ -14,6 +14,7 @@ import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
+import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,9 +53,18 @@ class AddDialogFragment : DialogFragment() {
             builder.setView(binding.root)
                 .setPositiveButton(positiveButton,
                     DialogInterface.OnClickListener { _, _ ->
-                        if (date.before(Date())) {
-                            Toast.makeText(it, resources.getString(R.string.message_toast_unaddable), Toast.LENGTH_LONG).show()
-                            dialog?.cancel()
+                        //TODO
+                        if (date.before(CalendarUtil.getTodayDate())) {
+                            Toast.makeText(
+                                it,
+                                resources.getString(R.string.message_toast_unaddable),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            if (positiveButton == R.string.button_add) {
+                                dialog?.cancel()
+                            } else {
+                                return@OnClickListener
+                            }
                         }
                         val hour =
                             if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentHour else binding.inputTime.hour
@@ -65,7 +75,12 @@ class AddDialogFragment : DialogFragment() {
                         var taskEntity = TaskEntity(
                             uid = taskEntity?.uid,
                             taskDate = date,
-                            taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
+                            taskTime = SimpleDateFormat("HH:mm").parse(
+                                "%02d:%02d".format(
+                                    hour,
+                                    minute
+                                )
+                            ),
                             task = binding.inputTask.text.toString(),
                             isCompleted = false
                         )
@@ -117,7 +132,7 @@ class AddDialogFragment : DialogFragment() {
         val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
         val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
         val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
-        val taskEntityTaskTime = GregorianCalendar(year,month,day,hourOfDay,minute)
+        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
 
         if (Build.VERSION.SDK_INT <= 23) {
             binding.inputTime.currentHour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)

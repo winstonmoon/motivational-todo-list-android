@@ -54,16 +54,13 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
                     }
                     DmlState.Delete -> {
                         sharedViewModel.delete(taskEntity.uid)
-                        //TODO
-//                        sharedViewModel.getAll()
                     }
                     else -> Unit
                 }
             },
             radioButtonCallback = {
                 sharedViewModel.insert(it)
-                //TODO
-//                sharedViewModel.getAll()
+                binding.animationCongratulations.playAnimation()
             })
         recyclerviewDailyTodo.adapter = adapter
         buttonSettings.setOnClickListener {
