@@ -69,7 +69,6 @@ class TaskAdapter(
                             })
                     builder.setOnDismissListener { binding.radiobuttonTasks.isChecked = false }
                     builder.show()
-                    radioButtonCallback(taskEntity)
                 }
 
                 binding.meatballsmenuTasks.setOnClickListener {

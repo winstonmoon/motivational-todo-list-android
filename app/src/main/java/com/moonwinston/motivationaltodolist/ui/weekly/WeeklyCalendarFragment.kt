@@ -109,24 +109,38 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
             }
             if (sharedViewModel.getRate(monList) == 0F) {
                 binding.customviewPiechartMonday.alpha = 0.2F
+            } else {
+                binding.customviewPiechartMonday.alpha = 1F
             }
             if (sharedViewModel.getRate(tueList) == 0F) {
                 binding.customviewPiechartTuesday.alpha = 0.2F
+            } else {
+                binding.customviewPiechartTuesday.alpha = 1F
             }
             if (sharedViewModel.getRate(wedList) == 0F) {
                 binding.customviewPiechartWednesday.alpha = 0.2F
+            } else {
+                binding.customviewPiechartWednesday.alpha = 1F
             }
             if (sharedViewModel.getRate(thuList) == 0F) {
                 binding.customviewPiechartThursday.alpha = 0.2F
+            } else {
+                binding.customviewPiechartThursday.alpha = 1F
             }
             if (sharedViewModel.getRate(friList) == 0F) {
                 binding.customviewPiechartFriday.alpha = 0.2F
+            } else {
+                binding.customviewPiechartFriday.alpha = 1F
             }
             if (sharedViewModel.getRate(satList) == 0F) {
                 binding.customviewPiechartSaturday.alpha = 0.2F
+            } else {
+                binding.customviewPiechartSaturday.alpha = 1F
             }
             if (sharedViewModel.getRate(sunList) == 0F) {
                 binding.customviewPiechartSunday.alpha = 0.2F
+            } else {
+                binding.customviewPiechartSunday.alpha = 1F
             }
             binding.customviewPiechartMonday.setPercentage(sharedViewModel.getRate(monList))
             binding.customviewPiechartTuesday.setPercentage(sharedViewModel.getRate(tueList))

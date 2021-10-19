@@ -181,6 +181,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
                 },
                 radioButtonCallback = {
                     sharedViewModel.insert(it)
+                    binding.animationCongratulations.playAnimation()
                 })
             binding.recyclerviewWeeklyTodo.adapter = adapter
             adapter.submitList(selectedDayTasksList.sortedBy { it.taskTime })
