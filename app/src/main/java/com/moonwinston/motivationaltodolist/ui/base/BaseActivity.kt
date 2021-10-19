@@ -53,8 +53,9 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         //TODO
         // get chosen language from shared preference
         val localeToSwitchTo = when (sharedPref.getLanguage()) {
-            2 -> Locale.KOREAN
             1 -> Locale.ENGLISH
+            2 -> Locale.KOREAN
+            3 -> Locale.JAPANESE
             else -> Locale.ENGLISH
         }
         val localeUpdatedContext: ContextWrapper =
