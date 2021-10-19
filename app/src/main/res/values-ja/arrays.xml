@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="notify_array">
+        <item>オフ</item>
+        <item>5分</item>
+        <item>10分</item>
+        <item>15分</item>
+        <item>30分</item>
+        <item>1時間</item>
+    </string-array>
+
+    <string-array name="theme_array">
+        <item>システム設定に伴う</item>
+        <item>ダーク</item>
+        <item>ライト</item>
+    </string-array>
+
+    <string-array name="language_array">
+        <item>システム設定に伴う</item>
+        <item>English</item>
+        <item>한국어</item>
+        <item>日本語</item>
+        <item>简体字</item>
+    </string-array>
+</resources>

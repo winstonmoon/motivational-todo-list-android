@@ -17,6 +17,7 @@
     <string name="message_toast_uncompletable">Cannot complete future task.</string>
     <string name="label_year"></string>
     <string name="label_day"></string>
+    <string name="button_delete">Delete</string>
 
     <!-- Activity Splash-->
     <string name="title_splash">Motivational\nTodo List</string>
