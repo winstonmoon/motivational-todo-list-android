@@ -56,6 +56,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
             1 -> Locale.ENGLISH
             2 -> Locale.KOREAN
             3 -> Locale.JAPANESE
+            4 -> Locale.SIMPLIFIED_CHINESE
             else -> Locale.ENGLISH
         }
         val localeUpdatedContext: ContextWrapper =
