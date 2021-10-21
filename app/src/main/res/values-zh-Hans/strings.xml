@@ -9,7 +9,7 @@
     <string name="thu_number">5</string>
     <string name="fri_number">6</string>
     <string name="sat_number">7</string>
-    <string name="title_daily">日別</string>
+    <string name="title_daily">每日</string>
     <string name="title_weekly">每周</string>
     <string name="title_monthly">每月</string>
     <string name="title_rewards">奖励</string>
