@@ -2,13 +2,13 @@ package com.moonwinston.motivationaltodolist.ui.base
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
-import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import kotlinx.coroutines.Job
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -52,12 +52,21 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     override fun attachBaseContext(newBase: Context) {
         //TODO
         // get chosen language from shared preference
+        // move localeToSwitchTo to ContextUtil
+        var deviceLanguage =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) Resources.getSystem().configuration.locales[0]
+            else Resources.getSystem().configuration.locale
+        val availableLanguageList = listOf(Locale.US, Locale.KOREA, Locale.JAPAN, Locale.SIMPLIFIED_CHINESE)
+
         val localeToSwitchTo = when (sharedPref.getLanguage()) {
-            1 -> Locale.ENGLISH
-            2 -> Locale.KOREAN
-            3 -> Locale.JAPANESE
+//            1 -> Locale.ENGLISH
+            1 -> Locale.US
+//            2 -> Locale.KOREAN
+            2 -> Locale.KOREA
+//            3 -> Locale.JAPANESE
+            3 -> Locale.JAPAN
             4 -> Locale.SIMPLIFIED_CHINESE
-            else -> Locale.ENGLISH
+            else -> if (availableLanguageList.contains(deviceLanguage)) deviceLanguage else Locale.ENGLISH
         }
         val localeUpdatedContext: ContextWrapper =
             ContextUtil.updateLocale(newBase, localeToSwitchTo)
