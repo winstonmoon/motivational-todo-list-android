@@ -1,26 +1,14 @@
 package com.moonwinston.motivationaltodolist.ui.rewards
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.google.android.gms.ads.AdRequest
+import com.moonwinston.motivationaltodolist.BuildConfig
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
-import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
-import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyScreenSlidePagerAdapter
-import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
-import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
-import com.moonwinston.motivationaltodolist.utils.CalendarUtil
-import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
-import kotlin.math.roundToInt
 
 class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>() {
     override fun getViewBinding() = FragmentRewardsBinding.inflate(layoutInflater)
@@ -40,6 +28,7 @@ class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>()
         adapter.submitList(testTaskEntity)
 
         val adRequest = AdRequest.Builder().build()
+        adView.adUnitId = if (BuildConfig.IS_DEBUG) "ca-app-pub-3940256099942544/6300978111" else "ca-app-pub-2353870408305000~9513759562"
         adView.loadAd(adRequest)
 
         buttonSettings.setOnClickListener {
