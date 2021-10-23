@@ -2,6 +2,8 @@ package com.moonwinston.motivationaltodolist.ui.rewards
 
 import androidx.navigation.findNavController
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.moonwinston.motivationaltodolist.BuildConfig
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
@@ -28,8 +30,7 @@ class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>()
         adapter.submitList(testTaskEntity)
 
         val adRequest = AdRequest.Builder().build()
-        adView.adUnitId = if (BuildConfig.IS_DEBUG) "ca-app-pub-3940256099942544/6300978111" else "ca-app-pub-2353870408305000~9513759562"
-        adView.loadAd(adRequest)
+        binding.adView.loadAd(adRequest)
 
         buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_reward_to_settings)
