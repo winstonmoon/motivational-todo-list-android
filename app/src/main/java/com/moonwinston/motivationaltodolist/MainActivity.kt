@@ -17,7 +17,7 @@ import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import org.koin.android.ext.android.inject
 

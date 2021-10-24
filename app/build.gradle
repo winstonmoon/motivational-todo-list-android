@@ -5,7 +5,7 @@ apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion "30.0.3"
+    buildToolsVersion "31"
 
     lintOptions {
         abortOnError false
@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId "com.moonwinston.motivationaltodolist"
         minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -31,14 +31,12 @@ android {
             minifyEnabled true
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard-rules.pro'
-
             applicationIdSuffix '.prod'
             resValue("string", "ad_unit_id", "ca-app-pub-2353870408305000~9513759562")
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             applicationIdSuffix '.dev'
             resValue("string", "ad_unit_id", "ca-app-pub-3940256099942544/6300978111")
         }
@@ -79,10 +77,14 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
     implementation "joda-time:joda-time:$rootProject.jodaTimeVersion"
     // koin DI
-    implementation "org.koin:koin-android:$rootProject.koinVersion"
-    implementation "org.koin:koin-android-scope:$rootProject.koinVersion"
-    implementation "org.koin:koin-android-viewmodel:$rootProject.koinVersion"
-    implementation "org.koin:koin-android-ext:$rootProject.koinVersion"
+//    implementation "io.insert-koin:koin-android:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-android:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-androidx-scope:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-android-ext:$rootProject.koinVersion"
+//    implementation "io.insert-koin:koin-android-scope:$rootProject.koinVersion"
+//    implementation "io.insert-koin:koin-android-viewmodel:$rootProject.koinVersion"
+//    implementation "io.insert-koin:koin-android-ext:$rootProject.koinVersion"
     // admob
     implementation "com.google.android.gms:play-services-ads:$rootProject.gmsVersion"
     // in-app update
