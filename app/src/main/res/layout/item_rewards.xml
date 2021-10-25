@@ -20,7 +20,7 @@
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/trophy" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/text_achieveddate"
             android:layout_width="0dp"
             android:layout_height="0dp"
