@@ -5,7 +5,7 @@ apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion "30.0.3"
+    buildToolsVersion "31"
 
     lintOptions {
         abortOnError false
@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId "com.moonwinston.motivationaltodolist"
         minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -31,30 +31,27 @@ android {
             minifyEnabled true
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard-rules.pro'
-
             applicationIdSuffix '.prod'
             resValue("string", "ad_unit_id", "ca-app-pub-2353870408305000~9513759562")
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             applicationIdSuffix '.dev'
             resValue("string", "ad_unit_id", "ca-app-pub-3940256099942544/6300978111")
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11
     }
 }
 
 dependencies {
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
-    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
@@ -71,18 +68,16 @@ dependencies {
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     implementation "androidx.viewpager2:viewpager2:$rootProject.viewPagerVersion"
     implementation "androidx.work:work-runtime-ktx:$rootProject.workVersion"
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
-    implementation "joda-time:joda-time:$rootProject.jodaTimeVersion"
     // koin DI
-    implementation "org.koin:koin-android:$rootProject.koinVersion"
-    implementation "org.koin:koin-android-scope:$rootProject.koinVersion"
-    implementation "org.koin:koin-android-viewmodel:$rootProject.koinVersion"
-    implementation "org.koin:koin-android-ext:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-android:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-androidx-scope:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-android-ext:$rootProject.koinVersion"
     // admob
     implementation "com.google.android.gms:play-services-ads:$rootProject.gmsVersion"
     // in-app update

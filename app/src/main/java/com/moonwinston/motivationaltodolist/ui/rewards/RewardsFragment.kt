@@ -9,7 +9,7 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>() {

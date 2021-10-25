@@ -12,6 +12,7 @@
         android:theme="@style/Theme.MotivationalTodoList">
         <activity
             android:name=".SplashActivity"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +21,9 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-2353870408305000~9513759562" />

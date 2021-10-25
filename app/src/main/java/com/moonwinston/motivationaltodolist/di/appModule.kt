@@ -15,7 +15,7 @@ import org.koin.dsl.module
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 
 internal val appModule = module {
     single { Dispatchers.Main }
