@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/text_monthly_month"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:id="@+id/linear_monthly_date"
             android:layout_width="0dp"
             android:layout_height="24dp"
@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_monthly_month">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/text_monthly_mon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/label_monday" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/text_monthly_tue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/label_tuesday" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/text_monthly_wed"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/label_wednesday" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/text_monthly_thu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/label_thursday" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/text_monthly_fri"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/label_friday" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/text_monthly_sat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/label_saturday" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/text_monthly_sun"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/label_sunday" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_monthly_calendar"

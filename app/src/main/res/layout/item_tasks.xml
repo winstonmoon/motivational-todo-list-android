@@ -8,7 +8,7 @@
         android:layout_height="50dp"
         android:layout_margin="5dp">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/radiobutton_tasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/text_tasks"
             android:layout_width="0dp"
             android:layout_height="24dp"
@@ -30,7 +30,7 @@
             app:layout_constraintStart_toEndOf="@id/radiobutton_tasks"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/time_tasks"
             android:layout_width="0dp"
             android:layout_height="24dp"
@@ -42,7 +42,7 @@
             app:layout_constraintStart_toEndOf="@id/radiobutton_tasks"
             app:layout_constraintTop_toBottomOf="@id/text_tasks" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/meatballsmenu_tasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

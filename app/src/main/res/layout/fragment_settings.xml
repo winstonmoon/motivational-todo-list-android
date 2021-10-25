@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:background="@color/main_background">
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/button_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -19,7 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/text_date"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -35,7 +35,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="280dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="5dp"
@@ -53,9 +53,10 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/bg_ripple_rectangle"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/label_notify"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
@@ -65,7 +66,7 @@
                     android:text="@string/label_notify"
                     android:textColor="@color/main_text" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/value_notify"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
@@ -82,12 +83,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/bg_ripple_rectangle"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/label_theme"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
@@ -97,7 +98,7 @@
                     android:text="@string/label_theme"
                     android:textColor="@color/main_text" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/value_theme"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
@@ -119,7 +120,7 @@
                 android:background="@drawable/bg_ripple_rectangle"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/label_language"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
@@ -129,7 +130,7 @@
                     android:text="@string/label_language"
                     android:textColor="@color/main_text" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/value_language"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
