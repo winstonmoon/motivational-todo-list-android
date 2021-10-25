@@ -15,7 +15,7 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 

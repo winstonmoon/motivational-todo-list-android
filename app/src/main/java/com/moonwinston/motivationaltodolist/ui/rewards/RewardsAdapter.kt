@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemRewardsBinding
