@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
@@ -37,7 +38,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationIdSuffix '.dev'
+            //applicationIdSuffix '.dev'
             resValue("string", "ad_unit_id", "ca-app-pub-3940256099942544/6300978111")
         }
     }
@@ -84,6 +85,8 @@ dependencies {
     implementation "com.google.android.play:core:$rootProject.playVersion"
     // lottie
     implementation "com.airbnb.android:lottie:$rootProject.lottieVersion"
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:28.4.2')
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
