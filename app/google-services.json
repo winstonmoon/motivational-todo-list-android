@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "398145246419",
+    "project_id": "motivational-todo-list",
+    "storage_bucket": "motivational-todo-list.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398145246419:android:e36f0c6faacf5c330ff026",
+        "android_client_info": {
+          "package_name": "com.moonwinston.motivationaltodolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "398145246419-pbu7sds5e8ge8na70khkphjbf0vgtti2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmOshTbj9bbF1E6x6MgLtQlRTwDzsjliA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "398145246419-pbu7sds5e8ge8na70khkphjbf0vgtti2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
