@@ -143,8 +143,7 @@
             android:src="@drawable/ic_baseline_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@color/white"
-            android:enabled="false"/>
+            app:tint="@color/white" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_congratulations"
@@ -157,10 +156,25 @@
             app:lottie_rawRes="@raw/congratulations" />
 
         <include
-            android:id="@+id/coach_daily"
+            android:id="@+id/coach_daily_tap_complete"
+            layout="@layout/layout_coach_daily_tap_complete"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            layout="@layout/layout_coach_daily"/>
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/coach_daily_tap_edit_or_delete"
+            layout="@layout/layout_coach_daily_tap_edit_or_delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/coach_daily_tap_add"
+            layout="@layout/layout_coach_daily_tap_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

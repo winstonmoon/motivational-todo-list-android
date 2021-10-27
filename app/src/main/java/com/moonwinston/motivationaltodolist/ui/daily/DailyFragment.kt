@@ -1,5 +1,6 @@
 package com.moonwinston.motivationaltodolist.ui.daily
 
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.DmlState
@@ -63,6 +64,26 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
                 binding.animationCongratulations.playAnimation()
             })
         recyclerviewDailyTodo.adapter = adapter
+
+        //TODO
+        if (sharedPref.isCoachDailyDismissed().not()) {
+            this@DailyFragment.binding.buttonAdd.isEnabled = false
+            coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
+            coachDailyTapAdd.containerCoach.setOnClickListener {
+                coachDailyTapAdd.containerCoach.visibility = View.GONE
+                coachDailyTapEditOrDelete.containerCoach.visibility = View.VISIBLE
+            }
+            coachDailyTapEditOrDelete.containerCoach.setOnClickListener {
+                coachDailyTapEditOrDelete.containerCoach.visibility = View.GONE
+                coachDailyTapComplete.containerCoach.visibility = View.VISIBLE
+            }
+            coachDailyTapComplete.containerCoach.setOnClickListener {
+                coachDailyTapComplete.containerCoach.visibility = View.GONE
+                this@DailyFragment.binding.buttonAdd.isEnabled = true
+                sharedPref.setCoachDailyAsDismissed(true)
+            }
+        }
+
         buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_daily_to_settings)
         }

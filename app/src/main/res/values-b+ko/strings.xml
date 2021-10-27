@@ -77,4 +77,11 @@
     <string name="oct_abbreviation">10월</string>
     <string name="nov_abbreviation">11월</string>
     <string name="dec_abbreviation">12월</string>
+    <string name="text_coach_tap_add">탭해서 할일을 추가</string>
+    <string name="text_coach_task">헬스장 가기</string>
+    <string name="text_coach_tap_edit_delete">탭해서 할일을 수정/삭제</string>
+    <string name="text_coach_tap_complete">탭해서 할일을 완료</string>
+    <string name="text_coach_swipe_change_date">스와이프해서 날짜를 변경</string>
+    <string name="text_coach_tap_select_date">탭해서 날짜를 선택</string>
+    <string name="text_coach_swipe_change_month">스와이프해서 달을 변경</string>
 </resources>

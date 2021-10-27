@@ -24,6 +24,16 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
         viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
         viewpagerCalendar.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
         viewpagerCalendar.setPageTransformer(ZoomOutPageTransformer())
+
+        //TODO
+        if (sharedPref.isCoachMonthlyDismissed().not()) {
+            coachMonthly.containerCoach.visibility = View.VISIBLE
+            coachMonthly.containerCoach.setOnClickListener {
+                coachMonthly.containerCoach.visibility = View.GONE
+                sharedPref.setCoachMonthlyAsDismissed(true)
+            }
+        }
+
         buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_monthly_to_settings)
         }

@@ -19,6 +19,19 @@
     <string name="label_day"></string>
     <string name="button_delete">Delete</string>
 
+    <!-- Layout Coach Daily-->
+    <string name="text_coach_tap_add">Tap to add task</string>
+    <string name="text_coach_task">go to gym</string>
+    <string name="text_coach_tap_edit_delete">Tap to edit or delete task</string>
+    <string name="text_coach_tap_complete">Tap to complete task</string>
+
+    <!-- Layout Coach Weekly-->
+    <string name="text_coach_swipe_change_date">Swipe to change date</string>
+    <string name="text_coach_tap_select_date">Tap to select date</string>
+
+    <!-- Layout Coach Monthly-->
+    <string name="text_coach_swipe_change_month">Swipe to change month</string>
+
     <!-- Activity Splash-->
     <string name="title_splash">Motivational\nTodo List</string>
 
