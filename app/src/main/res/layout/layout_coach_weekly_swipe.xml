@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_coach"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#cc000000"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal_coach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="175dp" />
+
+        <ImageView
+            android:id="@+id/horizontal_swipe_coach_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_horizontal_swipe_arrow"
+            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_coach"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_weekly_swipe_coach"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:text="@string/text_coach_swipe_change_date"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/horizontal_swipe_coach_arrow"
+            app:layout_constraintStart_toStartOf="@id/horizontal_swipe_coach_arrow"
+            app:layout_constraintTop_toBottomOf="@id/horizontal_swipe_coach_arrow" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

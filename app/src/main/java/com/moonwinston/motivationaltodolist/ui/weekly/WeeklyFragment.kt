@@ -1,5 +1,6 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -26,7 +27,10 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val sharedPref: SharedPref by inject()
     private lateinit var selectedDate: Date
-    companion object { private const val ENGLISH = 1 }
+
+    companion object {
+        private const val ENGLISH = 1
+    }
 
     override fun initViews() = with(binding) {
         selectedDate = CalendarUtil.getTodayDate()
@@ -46,12 +50,28 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             WeeklyScreenSlidePagerAdapter.START_POSITION,
             false
         )
-        viewpagerWeeklyCalendar.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        viewpagerWeeklyCalendar.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
             }
         })
         setToday()
+
+        //TODO
+        if (sharedPref.isCoachWeeklyDismissed().not()) {
+            this@WeeklyFragment.binding.buttonAdd.isEnabled = false
+            coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
+            coachWeeklySwipe.containerCoach.setOnClickListener {
+                coachWeeklySwipe.containerCoach.visibility = View.GONE
+                coachWeeklyTap.containerCoach.visibility = View.VISIBLE
+            }
+            coachWeeklyTap.containerCoach.setOnClickListener {
+                coachWeeklyTap.containerCoach.visibility = View.GONE
+                this@WeeklyFragment.binding.buttonAdd.isEnabled = true
+                sharedPref.setCoachWeeklyAsDismissed(true)
+            }
+        }
 
         buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_weekly_to_settings)
@@ -206,7 +226,10 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         val dayOfWeek = gregorianCalendar.get(Calendar.DAY_OF_WEEK)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
         val today = resources.getString(R.string.text_today)
-        val parsedDayOfWeek = if (selectedDate == CalendarUtil.getTodayDate()) today else resources.getString(DayOfWeekEnum.values()[dayOfWeek].dayOfWeek)
+        val parsedDayOfWeek =
+            if (selectedDate == CalendarUtil.getTodayDate()) today else resources.getString(
+                DayOfWeekEnum.values()[dayOfWeek].dayOfWeek
+            )
         val wordYear = resources.getString(R.string.label_year)
         val wordDay = resources.getString(R.string.label_day)
         //TODO separate western and eastern

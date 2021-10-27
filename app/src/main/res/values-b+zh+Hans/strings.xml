@@ -77,4 +77,11 @@
     <string name="oct_abbreviation">10月</string>
     <string name="nov_abbreviation">11月</string>
     <string name="dec_abbreviation">12月</string>
+    <string name="text_coach_tap_add">タップしてやることを追加</string>
+    <string name="text_coach_task">ジムへ行く</string>
+    <string name="text_coach_tap_edit_delete">タップしてやることを更新/削除</string>
+    <string name="text_coach_tap_complete">タップしてやることを完了</string>
+    <string name="text_coach_swipe_change_date">スワイプして日付を変更</string>
+    <string name="text_coach_tap_select_date">タップして日付を選択</string>
+    <string name="text_coach_swipe_change_month">スワイプして月を変更</string>
 </resources>
