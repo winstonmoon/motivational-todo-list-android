@@ -31,6 +31,8 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 }
             }
             val rate = getRate(testteList)
+            //TODO
+//            binding.customviewPiechartMonthly.layoutParams
 
             when {
                 testDate == nonExistDate -> {

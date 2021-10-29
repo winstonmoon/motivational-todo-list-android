@@ -50,6 +50,8 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
         }
         //TODO fix dayOfWeek logic more simple, viewmodel
 
+        //TODO
+//        customviewPiechartMonday.layoutParams
         customviewPiechartMonday.setPieChartViewDate(weekList[0])
         customviewPiechartMonday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartMonday.getPieChartViewDate())
