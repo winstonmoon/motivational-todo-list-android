@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.moonwinston.motivationaltodolist.BuildConfig
 import com.moonwinston.motivationaltodolist.MainActivity
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
+import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 
 class SettingsFragment : Fragment() {
@@ -37,6 +39,9 @@ class SettingsFragment : Fragment() {
             resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
         binding.valueLanguage.text =
             resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
+
+        binding.textVersion.text = BuildConfig.VERSION_NAME
+
         binding.buttonNotify.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val notifyItems = resources.getStringArray(R.array.notify_array)

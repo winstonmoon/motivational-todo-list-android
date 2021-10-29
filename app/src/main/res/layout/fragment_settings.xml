@@ -145,6 +145,18 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/text_version"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:textColor="@color/main_text"
+            android:autoSizeTextType="uniform"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

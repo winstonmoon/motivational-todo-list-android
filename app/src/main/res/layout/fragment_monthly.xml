@@ -15,7 +15,7 @@
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:text="TextView"
+            android:text=""
             android:textColor="@color/main_text"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
