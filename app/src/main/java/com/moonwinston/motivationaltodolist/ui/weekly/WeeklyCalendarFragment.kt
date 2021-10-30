@@ -1,7 +1,9 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
+import android.graphics.Point
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
@@ -50,8 +52,6 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
         }
         //TODO fix dayOfWeek logic more simple, viewmodel
 
-        //TODO
-//        customviewPiechartMonday.layoutParams
         customviewPiechartMonday.setPieChartViewDate(weekList[0])
         customviewPiechartMonday.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.customviewPiechartMonday.getPieChartViewDate())
