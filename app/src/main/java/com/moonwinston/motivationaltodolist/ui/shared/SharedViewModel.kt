@@ -11,6 +11,22 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() {
+    private var _deviceWidth = MutableLiveData<Int>()
+    val deviceWidth: LiveData<Int>
+        get() = _deviceWidth
+
+    fun setDeviceWidth(width: Int) {
+        _deviceWidth.value = width
+    }
+
+    private var _deviceHeight = MutableLiveData<Int>()
+    val deviceHeight: LiveData<Int>
+        get() = _deviceHeight
+
+    fun setDeviceHeight(height: Int) {
+        _deviceHeight.value = height
+    }
+
     private var _tasksListLiveData = MutableLiveData<List<TaskEntity>>()
     val tasksListLiveData: LiveData<List<TaskEntity>>
         get() = _tasksListLiveData
