@@ -13,70 +13,70 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:borderStrokeWidth="10"
+            app:borderStrokeWidth="14"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="5" />
+            app:progressiveStrokeWidth="7" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_tuesday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:borderStrokeWidth="10"
+            app:borderStrokeWidth="14"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="5" />
+            app:progressiveStrokeWidth="7" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_wednesday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:borderStrokeWidth="10"
+            app:borderStrokeWidth="14"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="5" />
+            app:progressiveStrokeWidth="7" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_thursday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:borderStrokeWidth="10"
+            app:borderStrokeWidth="14"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="5" />
+            app:progressiveStrokeWidth="7" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_friday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:borderStrokeWidth="10"
+            app:borderStrokeWidth="14"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="5" />
+            app:progressiveStrokeWidth="7" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_saturday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:borderStrokeWidth="10"
+            app:borderStrokeWidth="14"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="5" />
+            app:progressiveStrokeWidth="7" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_sunday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:borderStrokeWidth="10"
+            app:borderStrokeWidth="14"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="5" />
+            app:progressiveStrokeWidth="7" />
 
     </LinearLayout>
 

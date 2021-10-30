@@ -1,7 +1,6 @@
 package com.moonwinston.motivationaltodolist
 
 import android.content.Intent
-import android.graphics.Point
 import android.os.Bundle
 import android.widget.Toast
 import androidx.navigation.findNavController
@@ -20,9 +19,11 @@ import com.google.firebase.ktx.Firebase
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
+import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.android.ext.android.inject
+import androidx.window.layout.WindowMetricsCalculator
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
@@ -33,6 +34,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private lateinit var listener: InstallStateUpdatedListener
     private val sharedPref: SharedPref by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private val sharedViewModel by viewModel<SharedViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +61,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             }
         }
         super.onCreate(savedInstanceState)
-        val display = windowManager.defaultDisplay
-        val size = Point()
-        display.getRealSize(size)
-        val width = size.x
-        val height = size.y
+
+        val windowMetrics =
+            WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(this)
+        val currentBounds = windowMetrics.bounds
+        val w = currentBounds.width()
+        val h = currentBounds.height()
+        sharedViewModel.setDeviceWidth(w)
+        sharedViewModel.setDeviceHeight(h)
     }
 
     override fun initState() {

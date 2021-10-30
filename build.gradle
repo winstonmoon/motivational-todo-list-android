@@ -39,6 +39,7 @@ buildscript {
         gmsVersion = '20.4.0'
         playVersion = '1.10.2'
         lottieVersion = '4.2.0'
+        windowVersion = '1.0.0-beta03'
     }
 
     repositories {

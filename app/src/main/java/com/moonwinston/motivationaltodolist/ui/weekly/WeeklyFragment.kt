@@ -1,6 +1,8 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -91,7 +93,14 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun observeData() {
+        sharedViewModel.deviceWidth.observe(viewLifecycleOwner) {
+            binding.viewpagerWeeklyCalendar.layoutParams.height = it/7 + 20
+            binding.coachWeeklySwipe.guidelineHorizontalCoach.layoutParams.height = it/7 + 82
+            binding.coachWeeklyTap.guidelineHorizontalCoach.layoutParams.height = it/7 + 82
+        }
+
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
             selectedDate = it
             sharedViewModel.getAll()
@@ -240,6 +249,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     }
 
     //TODO
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun setToday() {
         binding.textDate.text = getWeeklyTitle(CalendarUtil.getTodayDate())
         when (SimpleDateFormat("u").format(CalendarUtil.getTodayDate())) {
