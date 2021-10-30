@@ -87,6 +87,7 @@ dependencies {
     implementation "com.airbnb.android:lottie:$rootProject.lottieVersion"
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"

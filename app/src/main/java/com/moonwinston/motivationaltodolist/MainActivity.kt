@@ -1,6 +1,7 @@
 package com.moonwinston.motivationaltodolist
 
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.widget.Toast
 import androidx.navigation.findNavController
@@ -13,12 +14,14 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
@@ -29,8 +32,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var listener: InstallStateUpdatedListener
     private val sharedPref: SharedPref by inject()
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        firebaseAnalytics = Firebase.analytics
         appUpdateManager = AppUpdateManagerFactory.create(this)
         listener = InstallStateUpdatedListener { state ->
             if (state.installStatus() == InstallStatus.DOWNLOADED) {
@@ -53,6 +59,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             }
         }
         super.onCreate(savedInstanceState)
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getRealSize(size)
+        val width = size.x
+        val height = size.y
     }
 
     override fun initState() {
