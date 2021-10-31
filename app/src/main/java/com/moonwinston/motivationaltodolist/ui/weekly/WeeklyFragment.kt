@@ -1,6 +1,7 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
 import android.os.Build
+import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
@@ -17,6 +18,7 @@ import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,24 +31,13 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val sharedPref: SharedPref by inject()
     private lateinit var selectedDate: Date
-
-    companion object {
-        private const val ENGLISH = 1
-    }
+    private var lastPosition: Int = WeeklyScreenSlidePagerAdapter.START_POSITION
 
     override fun initViews() = with(binding) {
         selectedDate = CalendarUtil.getTodayDate()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(
-            this@WeeklyFragment,
-            callback = { diffNumber ->
-                val diffDays = diffNumber * 7
-                val year = SimpleDateFormat("y").format(selectedDate).toInt()
-                val month = SimpleDateFormat("M").format(selectedDate).toInt()
-                val day = SimpleDateFormat("d").format(selectedDate).toInt()
-                val gregorianCalendar = GregorianCalendar(year, month - 1, day)
-                gregorianCalendar.add(Calendar.DATE, diffDays)
-                sharedViewModel.setSelectedDate(gregorianCalendar.time)
-            })
+            this@WeeklyFragment
+        )
         viewpagerWeeklyCalendar.adapter = slideAdapter
         viewpagerWeeklyCalendar.setCurrentItem(
             WeeklyScreenSlidePagerAdapter.START_POSITION,
@@ -56,6 +47,14 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                val diffDays = -(lastPosition - position) * 7
+                val year = SimpleDateFormat("y").format(selectedDate).toInt()
+                val month = SimpleDateFormat("M").format(selectedDate).toInt()
+                val day = SimpleDateFormat("d").format(selectedDate).toInt()
+                val gregorianCalendar = GregorianCalendar(year, month - 1, day)
+                gregorianCalendar.add(Calendar.DATE, diffDays)
+                sharedViewModel.setSelectedDate(gregorianCalendar.time)
+                lastPosition = position
             }
         })
         setToday()
@@ -96,9 +95,9 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun observeData() {
         sharedViewModel.deviceWidth.observe(viewLifecycleOwner) {
-            binding.viewpagerWeeklyCalendar.layoutParams.height = it/7 + 20
-            binding.coachWeeklySwipe.guidelineHorizontalCoach.layoutParams.height = it/7 + 82
-            binding.coachWeeklyTap.guidelineHorizontalCoach.layoutParams.height = it/7 + 82
+            binding.viewpagerWeeklyCalendar.layoutParams.height = it / 7 + 20
+            binding.coachWeeklySwipe.guidelineHorizontalCoach.layoutParams.height = it / 7 + 82
+            binding.coachWeeklyTap.guidelineHorizontalCoach.layoutParams.height = it / 7 + 82
         }
 
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
@@ -243,7 +242,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         val wordDay = resources.getString(R.string.label_day)
         //TODO separate western and eastern
         return when (sharedPref.getLanguage()) {
-            ENGLISH -> "$parsedDayOfWeek, $parsedMonth $date, $year"
+            ContextUtil.ENGLISH -> "$parsedDayOfWeek, $parsedMonth $date, $year"
             else -> "$year$wordYear $parsedMonth $date$wordDay $parsedDayOfWeek"
         }
     }

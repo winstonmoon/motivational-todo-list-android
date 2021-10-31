@@ -13,6 +13,7 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -26,7 +27,6 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private lateinit var adapter: TaskAdapter
     private val sharedPref: SharedPref by inject()
-    companion object { private const val ENGLISH = 1 }
 
     override fun initViews() = with(binding) {
         //TODO fix
@@ -41,7 +41,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
         //TODO
         textDate.text =
         when (sharedPref.getLanguage()) {
-            ENGLISH -> "$today, $parsedMonth $date, $year"
+            ContextUtil.ENGLISH -> "$today, $parsedMonth $date, $year"
             else -> "$year$wordYear $parsedMonth $date$wordDay $today"
         }
 
