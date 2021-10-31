@@ -9,6 +9,7 @@ import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,7 +19,6 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
     override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val sharedPref: SharedPref by inject()
-    companion object { private const val ENGLISH = 1 }
 
     override fun initViews() = with(binding) {
         viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
@@ -46,7 +46,7 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
             val parsedMonth = resources.getString(MonthEnum.values()[it[1]].monthAbbreviation)
             binding.textDate.text =
                 when (sharedPref.getLanguage()) {
-                    ENGLISH -> "$parsedMonth, $year"
+                    ContextUtil.ENGLISH -> "$parsedMonth, $year"
                     else -> "$year$wordYear $parsedMonth"
                 }
         }

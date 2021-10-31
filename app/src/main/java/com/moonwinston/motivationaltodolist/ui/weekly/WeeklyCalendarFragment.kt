@@ -103,9 +103,6 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
             binding.customviewPiechartSunday.layoutParams.width = it / 7
             binding.customviewPiechartSunday.layoutParams.height = it / 7
         }
-        sharedViewModel.deviceHeight.observe(viewLifecycleOwner) {
-
-        }
         sharedViewModel.getAll()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             val monList = mutableListOf<TaskEntity>()

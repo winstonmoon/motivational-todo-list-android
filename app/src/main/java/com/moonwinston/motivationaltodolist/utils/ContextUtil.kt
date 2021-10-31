@@ -12,6 +12,8 @@ class ContextUtil(base: Context) : ContextWrapper(base) {
 
     companion object {
 
+        const val ENGLISH = 1
+
         fun updateLocale(c: Context, language: Int): ContextWrapper {
             var context = c
             val resources: Resources = context.resources
