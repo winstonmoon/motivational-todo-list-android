@@ -47,7 +47,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                val diffDays = -(lastPosition - position) * 7
+                val diffDays = (position - lastPosition) * 7
                 val year = SimpleDateFormat("y").format(selectedDate).toInt()
                 val month = SimpleDateFormat("M").format(selectedDate).toInt()
                 val day = SimpleDateFormat("d").format(selectedDate).toInt()
@@ -94,12 +94,6 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun observeData() {
-        sharedViewModel.deviceWidth.observe(viewLifecycleOwner) {
-            binding.viewpagerWeeklyCalendar.layoutParams.height = it / 7 + 20
-            binding.coachWeeklySwipe.guidelineHorizontalCoach.layoutParams.height = it / 7 + 82
-            binding.coachWeeklyTap.guidelineHorizontalCoach.layoutParams.height = it / 7 + 82
-        }
-
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
             selectedDate = it
             sharedViewModel.getAll()

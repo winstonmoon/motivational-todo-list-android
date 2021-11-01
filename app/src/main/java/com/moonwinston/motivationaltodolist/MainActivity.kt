@@ -61,14 +61,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             }
         }
         super.onCreate(savedInstanceState)
-
-        val windowMetrics =
-            WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(this)
-        val currentBounds = windowMetrics.bounds
-        val w = currentBounds.width()
-        val h = currentBounds.height()
-        sharedViewModel.setDeviceWidth(w)
-        sharedViewModel.setDeviceHeight(h)
     }
 
     override fun initState() {

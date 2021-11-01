@@ -87,22 +87,6 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
 
     override fun observeData() {
         //TODO
-        sharedViewModel.deviceWidth.observe(viewLifecycleOwner) {
-            binding.customviewPiechartMonday.layoutParams.width = it / 7
-            binding.customviewPiechartMonday.layoutParams.height = it / 7
-            binding.customviewPiechartTuesday.layoutParams.width = it / 7
-            binding.customviewPiechartTuesday.layoutParams.height = it / 7
-            binding.customviewPiechartWednesday.layoutParams.width = it / 7
-            binding.customviewPiechartWednesday.layoutParams.height = it / 7
-            binding.customviewPiechartThursday.layoutParams.width = it / 7
-            binding.customviewPiechartThursday.layoutParams.height = it / 7
-            binding.customviewPiechartFriday.layoutParams.width = it / 7
-            binding.customviewPiechartFriday.layoutParams.height = it / 7
-            binding.customviewPiechartSaturday.layoutParams.width = it / 7
-            binding.customviewPiechartSaturday.layoutParams.height = it / 7
-            binding.customviewPiechartSunday.layoutParams.width = it / 7
-            binding.customviewPiechartSunday.layoutParams.height = it / 7
-        }
         sharedViewModel.getAll()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             val monList = mutableListOf<TaskEntity>()

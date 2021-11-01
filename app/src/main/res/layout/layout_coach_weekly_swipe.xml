@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="175dp" />
+            app:layout_constraintGuide_begin="80dp" />
 
         <ImageView
             android:id="@+id/horizontal_swipe_coach_arrow"
