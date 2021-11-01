@@ -169,7 +169,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_weekly_calendar"
             android:layout_width="0dp"
-            android:layout_height="96dp"
+            android:layout_height="wrap_content"
             android:background="@color/main_container"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_weekly_todo"
             app:layout_constraintEnd_toEndOf="parent"

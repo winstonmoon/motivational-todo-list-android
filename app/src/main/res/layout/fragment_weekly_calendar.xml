@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_monday"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
             app:borderStrokeWidth="14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H, 7:7"
+            app:layout_constraintEnd_toStartOf="@id/customview_piechart_tuesday"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
             app:progressiveStrokeWidth="7" />
@@ -21,9 +24,13 @@
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_tuesday"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
             app:borderStrokeWidth="14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H, 7:7"
+            app:layout_constraintEnd_toStartOf="@id/customview_piechart_wednesday"
+            app:layout_constraintStart_toEndOf="@id/customview_piechart_monday"
+            app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
             app:progressiveStrokeWidth="7" />
@@ -31,9 +38,13 @@
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_wednesday"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
             app:borderStrokeWidth="14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H, 7:7"
+            app:layout_constraintEnd_toStartOf="@id/customview_piechart_thursday"
+            app:layout_constraintStart_toEndOf="@id/customview_piechart_tuesday"
+            app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
             app:progressiveStrokeWidth="7" />
@@ -41,9 +52,13 @@
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_thursday"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
             app:borderStrokeWidth="14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H, 7:7"
+            app:layout_constraintEnd_toStartOf="@id/customview_piechart_friday"
+            app:layout_constraintStart_toEndOf="@id/customview_piechart_wednesday"
+            app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
             app:progressiveStrokeWidth="7" />
@@ -51,9 +66,13 @@
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_friday"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
             app:borderStrokeWidth="14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H, 7:7"
+            app:layout_constraintEnd_toStartOf="@id/customview_piechart_saturday"
+            app:layout_constraintStart_toEndOf="@id/customview_piechart_thursday"
+            app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
             app:progressiveStrokeWidth="7" />
@@ -61,9 +80,13 @@
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_saturday"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
             app:borderStrokeWidth="14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H, 7:7"
+            app:layout_constraintEnd_toStartOf="@id/customview_piechart_sunday"
+            app:layout_constraintStart_toEndOf="@id/customview_piechart_friday"
+            app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
             app:progressiveStrokeWidth="7" />
@@ -71,13 +94,16 @@
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/customview_piechart_sunday"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
             app:borderStrokeWidth="14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H, 7:7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/customview_piechart_saturday"
+            app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
             app:progressiveStrokeWidth="7" />
 
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

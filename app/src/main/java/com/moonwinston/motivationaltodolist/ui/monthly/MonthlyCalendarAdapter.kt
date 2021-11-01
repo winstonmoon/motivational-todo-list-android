@@ -15,17 +15,17 @@ import java.util.*
 
 class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
     ListAdapter<Date, MonthlyCalendarAdapter.ViewHolder>(diffUtil) {
-    private val testList = monthTasksList
+    private val _monTasksList = monthTasksList
 
     inner class ViewHolder(private val binding: ItemMonthlyCalendarBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val nonExistDate = CalendarUtil.getNonExistDate()
         private val today = CalendarUtil.getTodayDate()
-        private val testtList = testList
+        private val monTasksList = _monTasksList
 
         fun bind(testDate: Date) {
             var testteList = mutableListOf<TaskEntity>()
-            for (date in testtList){
+            for (date in monTasksList){
                 if (date.taskDate == testDate) {
                     testteList.add(date)
                 }

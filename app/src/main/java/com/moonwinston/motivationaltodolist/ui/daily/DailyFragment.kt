@@ -102,10 +102,6 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     }
 
     override fun observeData() {
-        sharedViewModel.deviceWidth.observe(viewLifecycleOwner) {
-            binding.customviewPiechartDaily.layoutParams.width = it/2
-            binding.customviewPiechartDaily.layoutParams.height = it/2
-        }
         sharedViewModel.getAll()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             //TODO fix

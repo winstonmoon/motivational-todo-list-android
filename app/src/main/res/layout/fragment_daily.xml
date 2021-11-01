@@ -63,6 +63,7 @@
             android:layout_height="0dp"
             app:borderStrokeWidth="40"
             app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintDimensionRatio="W, 1:1"
             app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_goal"
