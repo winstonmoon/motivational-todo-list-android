@@ -87,7 +87,7 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
 
     override fun observeData() {
         //TODO
-        sharedViewModel.getAll()
+        sharedViewModel.getAllTasks()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
             val monList = mutableListOf<TaskEntity>()
             val tueList = mutableListOf<TaskEntity>()
@@ -142,19 +142,26 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
             } else {
                 binding.customviewPiechartSunday.alpha = 1F
             }
-            binding.customviewPiechartMonday.setPercentage(sharedViewModel.getRate(monList))
-            binding.customviewPiechartTuesday.setPercentage(sharedViewModel.getRate(tueList))
-            binding.customviewPiechartWednesday.setPercentage(sharedViewModel.getRate(wedList))
-            binding.customviewPiechartThursday.setPercentage(sharedViewModel.getRate(thuList))
-            binding.customviewPiechartFriday.setPercentage(sharedViewModel.getRate(friList))
-            binding.customviewPiechartSaturday.setPercentage(sharedViewModel.getRate(satList))
-            binding.customviewPiechartSunday.setPercentage(sharedViewModel.getRate(sunList))
+            val monRate = sharedViewModel.getRate(monList)
+            val tueRate = sharedViewModel.getRate(tueList)
+            val wedRate = sharedViewModel.getRate(wedList)
+            val thuRate = sharedViewModel.getRate(thuList)
+            val friRate = sharedViewModel.getRate(friList)
+            val satRate = sharedViewModel.getRate(satList)
+            val sunRate = sharedViewModel.getRate(sunList)
+            binding.customviewPiechartMonday.setPercentage(monRate)
+            binding.customviewPiechartTuesday.setPercentage(tueRate)
+            binding.customviewPiechartWednesday.setPercentage(wedRate)
+            binding.customviewPiechartThursday.setPercentage(thuRate)
+            binding.customviewPiechartFriday.setPercentage(friRate)
+            binding.customviewPiechartSaturday.setPercentage(satRate)
+            binding.customviewPiechartSunday.setPercentage(sunRate)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        sharedViewModel.getAll()
+        sharedViewModel.getAllTasks()
     }
 
     companion object {

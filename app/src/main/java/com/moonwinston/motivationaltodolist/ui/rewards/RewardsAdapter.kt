@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.moonwinston.motivationaltodolist.R
-import com.moonwinston.motivationaltodolist.data.TaskEntity
+import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemRewardsBinding
+import java.text.SimpleDateFormat
 
-class RewardsAdapter : ListAdapter<TaskEntity, RewardsAdapter.ViewHolder>(diffUtil) {
+class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemRewardsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(taskEntity: TaskEntity) {
+        fun bind(achievementRateEntity: AchievementRateEntity) {
             //TODO fix format
-            binding.textAchieveddate.text = taskEntity.taskDate.toString()
+            binding.textAchievedDate.text = SimpleDateFormat("yyyy-MM-dd").format(achievementRateEntity.date)
         }
     }
 
@@ -35,12 +35,12 @@ class RewardsAdapter : ListAdapter<TaskEntity, RewardsAdapter.ViewHolder>(diffUt
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<TaskEntity>() {
-            override fun areItemsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<AchievementRateEntity>() {
+            override fun areItemsTheSame(oldItem: AchievementRateEntity, newItem: AchievementRateEntity): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
+            override fun areContentsTheSame(oldItem: AchievementRateEntity, newItem: AchievementRateEntity): Boolean {
                 return oldItem == newItem
             }
         }

@@ -23,7 +23,6 @@ import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.android.ext.android.inject
-import androidx.window.layout.WindowMetricsCalculator
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
@@ -34,8 +33,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private lateinit var listener: InstallStateUpdatedListener
     private val sharedPref: SharedPref by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-    private val sharedViewModel by viewModel<SharedViewModel>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         firebaseAnalytics = Firebase.analytics

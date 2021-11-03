@@ -4,18 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.moonwinston.motivationaltodolist.MonthEnum
+import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
+import com.moonwinston.motivationaltodolist.data.AchievementRateRepository
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() {
+class SharedViewModel(
+    private val taskRepository: TaskRepository,
+    private val achievementRateRepository: AchievementRateRepository
+) : ViewModel() {
     private var _tasksListLiveData = MutableLiveData<List<TaskEntity>>()
     val tasksListLiveData: LiveData<List<TaskEntity>>
         get() = _tasksListLiveData
 
-    fun getAll() = viewModelScope.launch {
+    fun getAllTasks() = viewModelScope.launch {
         val list = taskRepository.getAllTasks()
         val sortedList = list.sortedBy { it.taskDate }
         _tasksListLiveData.value = sortedList.map {
@@ -33,7 +37,7 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
     val multipleDaysTasksList: LiveData<List<TaskEntity>>
         get() = _multipleDaysTasksList
 
-    fun getAllByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch {
+    fun getAllTasksByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch {
         val list = taskRepository.getAllTasksByDates(taskDatesList)
         val sortedList = list.sortedBy { it.taskDate }
         _multipleDaysTasksList.value = sortedList.map {
@@ -47,16 +51,35 @@ class SharedViewModel(private val taskRepository: TaskRepository) : ViewModel() 
         }
     }
 
-    fun insert(taskEntity: TaskEntity) = viewModelScope.launch {
-        taskRepository.insertTask(taskEntity)
-        //TODO
-        getAll()
+    private var _rateListLiveData = MutableLiveData<List<AchievementRateEntity>>()
+    val rateListLiveData: LiveData<List<AchievementRateEntity>>
+        get() = _rateListLiveData
+
+    fun getAllComplete() = viewModelScope.launch {
+        val list = achievementRateRepository.getAllCompleteRate()
+        val sortedList = list.sortedBy { it.date }
+        _rateListLiveData.value = sortedList.map {
+            AchievementRateEntity(
+                date = it.date,
+                rate = it.rate
+            )
+        }
     }
 
-    fun delete(uid: Long) = viewModelScope.launch {
+    fun insertTask(taskEntity: TaskEntity) = viewModelScope.launch {
+        taskRepository.insertTask(taskEntity)
+        //TODO
+        getAllTasks()
+    }
+
+    fun deleteTask(uid: Long) = viewModelScope.launch {
         taskRepository.deleteTask(uid)
         //TODO
-        getAll()
+        getAllTasks()
+    }
+
+    fun insertAchievementRate(achievementRateEntity: AchievementRateEntity) = viewModelScope.launch {
+        achievementRateRepository.insertRate(achievementRateEntity)
     }
 
     private var _monthlyTitleLiveData = MutableLiveData<List<Int>>()

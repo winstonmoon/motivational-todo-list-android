@@ -1,7 +1,6 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
 import android.os.Build
-import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
@@ -11,6 +10,7 @@ import com.moonwinston.motivationaltodolist.DayOfWeekEnum
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
@@ -34,6 +34,21 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     private var lastPosition: Int = WeeklyScreenSlidePagerAdapter.START_POSITION
 
     override fun initViews() = with(binding) {
+        //TODO
+        if (sharedPref.isCoachWeeklyDismissed().not()) {
+            this@WeeklyFragment.binding.buttonAdd.isEnabled = false
+            coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
+            coachWeeklySwipe.containerCoach.setOnClickListener {
+                coachWeeklySwipe.containerCoach.visibility = View.GONE
+                coachWeeklyTap.containerCoach.visibility = View.VISIBLE
+            }
+            coachWeeklyTap.containerCoach.setOnClickListener {
+                coachWeeklyTap.containerCoach.visibility = View.GONE
+                this@WeeklyFragment.binding.buttonAdd.isEnabled = true
+                sharedPref.setCoachWeeklyAsDismissed(true)
+            }
+        }
+
         selectedDate = CalendarUtil.getTodayDate()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(
             this@WeeklyFragment
@@ -59,21 +74,6 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         })
         setToday()
 
-        //TODO
-        if (sharedPref.isCoachWeeklyDismissed().not()) {
-            this@WeeklyFragment.binding.buttonAdd.isEnabled = false
-            coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
-            coachWeeklySwipe.containerCoach.setOnClickListener {
-                coachWeeklySwipe.containerCoach.visibility = View.GONE
-                coachWeeklyTap.containerCoach.visibility = View.VISIBLE
-            }
-            coachWeeklyTap.containerCoach.setOnClickListener {
-                coachWeeklyTap.containerCoach.visibility = View.GONE
-                this@WeeklyFragment.binding.buttonAdd.isEnabled = true
-                sharedPref.setCoachWeeklyAsDismissed(true)
-            }
-        }
-
         buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_weekly_to_settings)
         }
@@ -96,7 +96,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     override fun observeData() {
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
             selectedDate = it
-            sharedViewModel.getAll()
+            sharedViewModel.getAllTasks()
             binding.textDate.text = getWeeklyTitle(it)
             //TODO day number of week
             when (SimpleDateFormat("u").format(it)) {
@@ -196,17 +196,25 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
                             view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
                         }
                         DmlState.Delete -> {
-                            sharedViewModel.delete(taskEntity.uid)
+                            sharedViewModel.deleteTask(taskEntity.uid)
                         }
                         else -> Unit
                     }
                 },
                 radioButtonCallback = {
-                    sharedViewModel.insert(it)
+                    sharedViewModel.insertTask(it)
                     binding.animationCongratulations.playAnimation()
                 })
             binding.recyclerviewWeeklyTodo.adapter = adapter
             adapter.submitList(selectedDayTasksList.sortedBy { it.taskTime })
+
+            //TODO
+            if (it.isNullOrEmpty().not()) {
+                val rate = sharedViewModel.getRate(it)
+                val date = it[0].taskDate
+                val achievementRate = AchievementRateEntity(date = date, rate = rate)
+                sharedViewModel.insertAchievementRate(achievementRate)
+            }
         }
     }
 

@@ -15,7 +15,6 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
-import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 
 class SettingsFragment : Fragment() {
