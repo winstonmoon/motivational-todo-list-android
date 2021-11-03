@@ -84,7 +84,7 @@ class AddDialogFragment : DialogFragment() {
                             task = binding.inputTask.text.toString(),
                             isCompleted = false
                         )
-                        sharedViewModel.insert(taskEntity)
+                        sharedViewModel.insertTask(taskEntity)
                         //TODO
 //                        sharedViewModel.getAll()
                     })

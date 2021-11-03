@@ -58,7 +58,7 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
     override fun observeData() {
         sharedViewModel.setMonthlyTitle(month, year)
         //TODO fix to use getAll instead of getAllByDates
-        sharedViewModel.getAllByDates(monthList)
+        sharedViewModel.getAllTasksByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
             val adapter = MonthlyCalendarAdapter(it)
             binding.recyclerviewMonthlyCalendar.adapter = adapter
@@ -70,7 +70,7 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
         super.onResume()
         sharedViewModel.setMonthlyTitle(month, year)
         //TODO fix to use getAll instead of getAllByDates
-        sharedViewModel.getAllByDates(monthList)
+        sharedViewModel.getAllTasksByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
             val adapter = MonthlyCalendarAdapter(it)
             binding.recyclerviewMonthlyCalendar.adapter = adapter

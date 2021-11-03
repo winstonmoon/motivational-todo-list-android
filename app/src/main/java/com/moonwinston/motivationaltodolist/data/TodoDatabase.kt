@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.moonwinston.motivationaltodolist.utils.RoomTypeConverters
 
 @Database(
-    entities = [TaskEntity::class],
+    entities = [TaskEntity::class, AchievementRateEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -16,5 +16,8 @@ abstract class TodoDatabase : RoomDatabase() {
     companion object {
         const val DB_NAME = "ToDoDataBase.db"
     }
+
     abstract fun taskDao(): TaskDao
+
+    abstract fun achievementRateDao(): AchievementRateDao
 }

@@ -21,10 +21,6 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
     private val sharedPref: SharedPref by inject()
 
     override fun initViews() = with(binding) {
-        viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
-        viewpagerCalendar.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
-        viewpagerCalendar.setPageTransformer(ZoomOutPageTransformer())
-
         //TODO
         if (sharedPref.isCoachMonthlyDismissed().not()) {
             coachMonthly.containerCoach.visibility = View.VISIBLE
@@ -33,6 +29,10 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
                 sharedPref.setCoachMonthlyAsDismissed(true)
             }
         }
+
+        viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
+        viewpagerCalendar.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
+        viewpagerCalendar.setPageTransformer(ZoomOutPageTransformer())
 
         buttonSettings.setOnClickListener {
             it.findNavController().navigate(R.id.action_monthly_to_settings)

@@ -9,8 +9,9 @@
         android:background="@color/main_background">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H, 4:1"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_splash_icon"
             app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"

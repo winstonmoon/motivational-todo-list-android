@@ -1,9 +1,7 @@
 package com.moonwinston.motivationaltodolist.di
 
 import com.moonwinston.motivationaltodolist.MainViewModel
-import com.moonwinston.motivationaltodolist.data.DefaultTaskRepository
-import com.moonwinston.motivationaltodolist.data.SharedPref
-import com.moonwinston.motivationaltodolist.data.TaskRepository
+import com.moonwinston.motivationaltodolist.data.*
 import com.moonwinston.motivationaltodolist.ui.daily.DailyViewModel
 import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
 import com.moonwinston.motivationaltodolist.ui.rewards.RewardsViewModel
@@ -19,9 +17,12 @@ internal val appModule = module {
     single { Dispatchers.IO }
 
     single<TaskRepository> { DefaultTaskRepository(get(), get()) }
+    single<AchievementRateRepository> { DefaultAchievementRateRepository(get(), get()) }
 
     single { provideDB(androidApplication()) }
     single { provideTaskDao(get()) }
+    single { provideAchievementRateDao(get())}
+
     single { SharedPref(androidApplication())}
 
     viewModel { MainViewModel() }
@@ -29,7 +30,7 @@ internal val appModule = module {
     viewModel { MonthlyViewModel() }
     viewModel { RewardsViewModel() }
     viewModel { WeeklyViewModel() }
-    viewModel { SharedViewModel(get()) }
+    viewModel { SharedViewModel(get(), get()) }
 }
 
 
