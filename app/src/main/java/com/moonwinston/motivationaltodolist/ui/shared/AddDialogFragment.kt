@@ -60,11 +60,7 @@ class AddDialogFragment : DialogFragment() {
                                 resources.getString(R.string.message_toast_unaddable),
                                 Toast.LENGTH_LONG
                             ).show()
-                            if (positiveButton == R.string.button_add) {
-                                dialog?.cancel()
-                            } else {
-                                return@OnClickListener
-                            }
+                            return@OnClickListener
                         }
                         val hour =
                             if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentHour else binding.inputTime.hour
