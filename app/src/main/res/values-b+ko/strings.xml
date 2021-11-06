@@ -42,7 +42,7 @@
     <string name="hint_input_task">새로운 할일을 입력하세요.</string>
     <string name="label_notify">알림</string>
     <string name="message_snack_download_complete">새버전의 다운로드가 완료되었습니다.</string>
-    <string name="label_achievement_rate">달성율</string>
+    <string name="label_achievement_rate">달성률</string>
     <string name="button_ok">확인</string>
     <string name="button_cancel">취소</string>
     <string name="none_string">없음</string>

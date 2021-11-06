@@ -209,9 +209,9 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             adapter.submitList(selectedDayTasksList.sortedBy { it.taskTime })
 
             //TODO
-            if (it.isNullOrEmpty().not()) {
-                val rate = sharedViewModel.getRate(it)
-                val date = it[0].taskDate
+            if (selectedDayTasksList.isNullOrEmpty().not()) {
+                val rate = sharedViewModel.getRate(selectedDayTasksList)
+                val date = selectedDayTasksList[0].taskDate
                 val achievementRate = AchievementRateEntity(date = date, rate = rate)
                 sharedViewModel.insertAchievementRate(achievementRate)
             }
