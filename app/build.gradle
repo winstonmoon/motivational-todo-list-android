@@ -21,7 +21,7 @@ android {
         applicationId "com.moonwinston.motivationaltodolist"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion 31
-        versionCode 1
+        versionCode 10
         versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
