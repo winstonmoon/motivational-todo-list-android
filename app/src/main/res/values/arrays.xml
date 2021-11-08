@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="notify_array">
+        <item>off</item>
+        <item>5min</item>
+        <item>10min</item>
+        <item>15min</item>
+        <item>30min</item>
+        <item>1hour</item>
+    </string-array>
+
+    <string-array name="theme_array">
+        <item>Follow system</item>
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
+
+    <string-array name="language_array">
+        <item>Follow system</item>
+        <item>English</item>
+        <item>한국어</item>
+        <item>日本語</item>
+        <item>中文(简体)</item>
+    </string-array>
+</resources>

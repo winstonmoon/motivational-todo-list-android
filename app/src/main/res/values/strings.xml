@@ -1,3 +1,73 @@
 <resources>
-    <string name="app_name">Motivatinal Todo List</string>
+    <string name="app_name">Motivational Todo List</string>
+
+    <!-- Menu -->
+    <string name="title_daily">Daily</string>
+    <string name="title_weekly">Weekly</string>
+    <string name="title_monthly">Monthly</string>
+    <string name="title_rewards">Rewards</string>
+    <string name="title_settings">Settings</string>
+
+    <!-- Common -->
+    <string name="message_dialog_confirm_complete">Did you complete this task?</string>
+    <string name="button_ok">Ok</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="message_toast_uneditable">Cannot edit complete task.</string>
+    <string name="message_toast_unaddable">Cannot add past task.</string>
+    <string name="message_toast_uncompletable">Cannot complete future task.</string>
+    <string name="label_year"></string>
+    <string name="label_day"></string>
+    <string name="button_delete">Delete</string>
+
+    <!-- Layout Coach Daily-->
+    <string name="text_coach_tap_add">Tap to add task</string>
+    <string name="text_coach_task">go to gym</string>
+    <string name="text_coach_tap_edit_delete">Tap to edit or delete task</string>
+    <string name="text_coach_tap_complete">Tap to complete task</string>
+
+    <!-- Layout Coach Weekly-->
+    <string name="text_coach_swipe_change_date">Swipe to change date</string>
+    <string name="text_coach_tap_select_date">Tap to select date</string>
+
+    <!-- Layout Coach Monthly-->
+    <string name="text_coach_swipe_change_month">Swipe to change month</string>
+
+    <!-- Activity Splash-->
+    <string name="title_splash">Motivational\nTodo List</string>
+
+    <!-- Activity Main -->
+    <string name="message_toast_update_cancel">Update has been canceled.</string>
+    <string name="message_snack_download_complete">An update has just been downloaded.</string>
+    <string name="button_snack_restart">Restart</string>
+
+    <!-- Dialog Add -->
+    <string name="button_add">Add</string>
+    <string name="button_edit">Edit</string>
+    <string name="label_date">Date</string>
+    <string name="label_time">Time</string>
+    <string name="hint_input_task">Input Your New Task</string>
+
+    <!-- Fragment Daily -->
+    <string name="label_achievement_rate">Achievement Rate</string>
+    <string name="label_todo">To Do List</string>
+    <string name="text_today">Today</string>
+
+    <!-- Fragment Weekly -->
+    <string name="label_monday">M</string>
+    <string name="label_tuesday">T</string>
+    <string name="label_wednesday">W</string>
+    <string name="label_thursday">T</string>
+    <string name="label_friday">F</string>
+    <string name="label_saturday">S</string>
+    <string name="label_sunday">S</string>
+
+    <!-- Fragment Monthly -->
+
+    <!-- Fragment Rewards -->
+
+    <!-- Fragment Settings -->
+    <string name="label_notify">Notify</string>
+    <string name="label_theme">Theme</string>
+    <string name="label_language">Language</string>
+
 </resources>

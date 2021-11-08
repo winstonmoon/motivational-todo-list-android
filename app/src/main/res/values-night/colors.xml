@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="charcoal">#2D2C2C</color>
+    <color name="dark_gray">#565656</color>
+    <color name="gray">#C4C4C4</color>
+    <color name="blue">#44BCFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#F44336</color>
+    <color name="main_background">#FF000000</color>
+    <color name="sub_background">#2D2C2C</color>
+    <color name="main_container">#2D2C2C</color>
+    <color name="sub_container">#565656</color>
+    <color name="main_text">#FFFFFF</color>
+    <color name="sub_text">#C4C4C4</color>
+    <color name="splash_icon">#FFFFFF</color>
+    <color name="gray_icon">#C4C4C4</color>
+    <color name="blue_icon">#44BCFF</color>
+    <color name="pie_chart">#F1BB6C</color>
+    <color name="progressive_pie_chart">#FF5900</color>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_coach"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:alpha="0.7"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal_coach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="80dp" />
+
+        <ImageView
+            android:id="@+id/up_left_handdrwan_arrow_coach"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="75dp"
+            android:src="@drawable/ic_up_left_hand_drawn_arrow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_coach" />
+
+        <TextView
+            android:id="@+id/text_weekly_tap_coach"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:text="@string/text_coach_tap_select_date"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/up_left_handdrwan_arrow_coach"
+            app:layout_constraintTop_toBottomOf="@id/up_left_handdrwan_arrow_coach" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

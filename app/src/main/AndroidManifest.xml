@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.moonwinston.motivatinaltodolist">
+    package="com.moonwinston.motivationaltodolist">
 
     <application
+        android:name=".MotivationalTodoListApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_motivational_todolist"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_motivational_todolist_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MotivatinalTodoList">
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.MotivationalTodoList">
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2353870408305000~9513759562" />
+    </application>
 </manifest>

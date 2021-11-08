@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="jan_number">01</string>
+    <string name="feb_number">02</string>
+    <string name="mar_number">03</string>
+    <string name="apr_number">04</string>
+    <string name="may_number">05</string>
+    <string name="jun_number">06</string>
+    <string name="jul_number">07</string>
+    <string name="aug_number">08</string>
+    <string name="sep_number">09</string>
+    <string name="oct_number">10</string>
+    <string name="nov_number">11</string>
+    <string name="dec_number">12</string>
+
+    <string name="jan_abbreviation">Jan</string>
+    <string name="feb_abbreviation">Feb</string>
+    <string name="mar_abbreviation">Mar</string>
+    <string name="apr_abbreviation">Apr</string>
+    <string name="may_abbreviation">May</string>
+    <string name="jun_abbreviation">Jun</string>
+    <string name="jul_abbreviation">Jul</string>
+    <string name="aug_abbreviation">Aug</string>
+    <string name="sep_abbreviation">Sep</string>
+    <string name="oct_abbreviation">Oct</string>
+    <string name="nov_abbreviation">Nov</string>
+    <string name="dec_abbreviation">Dec</string>
+</resources>

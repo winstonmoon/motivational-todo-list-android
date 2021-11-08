@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="notify_array">
+        <item>关闭</item>
+        <item>5分</item>
+        <item>10分</item>
+        <item>15分</item>
+        <item>30分</item>
+        <item>1小时</item>
+    </string-array>
+
+    <string-array name="theme_array">
+        <item>跟随系统设置</item>
+        <item>深色</item>
+        <item>浅色</item>
+    </string-array>
+
+    <string-array name="language_array">
+        <item>跟随系统设置</item>
+        <item>English</item>
+        <item>한국어</item>
+        <item>日本語</item>
+        <item>中文(简体)</item>
+    </string-array>
+</resources>

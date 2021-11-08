@@ -1,45 +1,106 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion "31"
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
 
     defaultConfig {
-        applicationId "com.moonwinston.motivatinaltodolist"
-        minSdkVersion 16
-        targetSdkVersion 30
+        applicationId "com.moonwinston.motivationaltodolist"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion 31
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFile 'proguard-rules.pro'
+            //applicationIdSuffix '.prod'
+            resValue("string", "ad_unit_id", "ca-app-pub-2353870408305000~9513759562")
+        }
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //applicationIdSuffix '.dev'
+            resValue("string", "ad_unit_id", "ca-app-pub-3940256099942544/6300978111")
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11
     }
 }
 
 dependencies {
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+    implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
+    implementation "androidx.preference:preference-ktx:$rootProject.preferenceVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    implementation "androidx.viewpager2:viewpager2:$rootProject.viewPagerVersion"
+    implementation "androidx.work:work-runtime-ktx:$rootProject.workVersion"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+    // koin DI
+    implementation "io.insert-koin:koin-android:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-androidx-scope:$rootProject.koinVersion"
+    implementation "io.insert-koin:koin-android-ext:$rootProject.koinVersion"
+    // admob
+    implementation "com.google.android.gms:play-services-ads:$rootProject.gmsVersion"
+    // in-app update
+    implementation "com.google.android.play:core:$rootProject.playVersion"
+    // lottie
+    implementation "com.airbnb.android:lottie:$rootProject.lottieVersion"
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:28.4.2')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    // window
+    implementation "androidx.window:window:$rootProject.windowVersion"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    // Testing dependencies
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espressoVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:$rootProject.uiAutomatorVersion"
+    androidTestImplementation "androidx.work:work-testing:$rootProject.workVersion"
+    androidTestImplementation "com.google.truth:truth:$rootProject.truthVersion"
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    // koin DI
+    testImplementation "org.koin:koin-test:$rootProject.koinVersion"
 }

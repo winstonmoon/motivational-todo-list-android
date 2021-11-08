@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_background">
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text=""
+            android:textColor="@color/main_text"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/button_settings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_settings_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_goal"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/label_achievement_rate"
+            android:textColor="@color/main_text"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_date" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_shape_rounded_rectangle_main_container"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_goal" />
+
+        <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
+            android:id="@+id/customview_piechart_daily"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:borderStrokeWidth="40"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintDimensionRatio="W, 1:1"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_goal"
+            app:pieChartColor="@color/pie_chart"
+            app:progressivePieChartColor="@color/progressive_pie_chart"
+            app:progressiveStrokeWidth="20" />
+
+        <TextView
+            android:id="@+id/text_goal_percent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text=""
+            android:textColor="@color/main_text"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+            app:layout_constraintTop_toBottomOf="@id/label_goal" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/label_todo"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:autoSizeTextType="uniform"
+            android:padding="10dp"
+            android:text="@string/label_todo"
+            android:textColor="@color/main_text"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_shape_rounded_rectangle_main_container"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_todo" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_daily_todo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_todo" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/blue_icon"
+            android:src="@drawable/ic_baseline_add_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_congratulations"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_rawRes="@raw/congratulations" />
+
+        <include
+            android:id="@+id/coach_daily_tap_complete"
+            layout="@layout/layout_coach_daily_tap_complete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/coach_daily_tap_edit_or_delete"
+            layout="@layout/layout_coach_daily_tap_edit_or_delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/coach_daily_tap_add"
+            layout="@layout/layout_coach_daily_tap_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

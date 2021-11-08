@@ -6,5 +6,21 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="charcoal">#2D2C2C</color>
+    <color name="dark_gray">#565656</color>
+    <color name="gray">#C4C4C4</color>
+    <color name="blue">#44BCFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#F44336</color>
+    <color name="main_background">#FFFFFF</color>
+    <color name="sub_background">#efefef</color>
+    <color name="main_container">#C4C4C4</color>
+    <color name="sub_container">#C4C4C4</color>
+    <color name="main_text">#FF000000</color>
+    <color name="sub_text">#565656</color>
+    <color name="splash_icon">#FF000000</color>
+    <color name="gray_icon">#565656</color>
+    <color name="blue_icon">#007ac1</color>
+    <color name="pie_chart">#D67EFF</color>
+    <color name="progressive_pie_chart">#760780</color>
 </resources>
