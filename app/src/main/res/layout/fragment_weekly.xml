@@ -29,7 +29,7 @@
             android:background="@null"
             android:padding="10dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_baseline_settings_24"
+            android:src="@drawable/ic_outline_settings_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
