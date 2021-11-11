@@ -1,8 +1,11 @@
 package com.moonwinston.motivationaltodolist
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
@@ -18,23 +21,19 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
-import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
-import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.android.ext.android.inject
 
-class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
-    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
-    override val viewModel by viewModel<MainViewModel>()
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    private val sharedPref: SharedPref by inject()
     private val MY_REQUEST_CODE = 1
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var listener: InstallStateUpdatedListener
-    private val sharedPref: SharedPref by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        firebaseAnalytics = Firebase.analytics
         appUpdateManager = AppUpdateManagerFactory.create(this)
         listener = InstallStateUpdatedListener { state ->
             if (state.installStatus() == InstallStatus.DOWNLOADED) {
@@ -55,21 +54,25 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 )
             }
         }
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun initState() {
+        firebaseAnalytics = Firebase.analytics
         MobileAds.initialize(this) {}
-        super.initState()
-    }
 
-    override fun initViews() = with(binding) {
+        ThemeUtil().setTheme(sharedPref.getTheme())
+
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         val navController = findNavController(R.id.fragment_nav_host)
-        viewNav.setupWithNavController(navController)
-        initSettings()
+        binding.viewNav.setupWithNavController(navController)
     }
 
-    override fun observeData() {}
+    override fun attachBaseContext(newBase: Context) {
+        val language = sharedPref.getLanguage()
+        val localeUpdatedContext: ContextWrapper =
+            ContextUtil.updateLocale(newBase, language)
+        super.attachBaseContext(localeUpdatedContext)
+    }
 
     override fun onResume() {
         super.onResume()
@@ -101,10 +104,5 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             setAction(R.string.button_snack_restart) { appUpdateManager.completeUpdate() }
             show()
         }
-    }
-
-    private fun initSettings() {
-        //TODO
-        ThemeUtil().setTheme(sharedPref.getTheme())
     }
 }
