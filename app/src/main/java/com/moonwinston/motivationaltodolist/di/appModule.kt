@@ -1,6 +1,5 @@
 package com.moonwinston.motivationaltodolist.di
 
-import com.moonwinston.motivationaltodolist.MainViewModel
 import com.moonwinston.motivationaltodolist.data.*
 import com.moonwinston.motivationaltodolist.ui.daily.DailyViewModel
 import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
@@ -25,7 +24,6 @@ internal val appModule = module {
 
     single { SharedPref(androidApplication())}
 
-    viewModel { MainViewModel() }
     viewModel { DailyViewModel() }
     viewModel { MonthlyViewModel() }
     viewModel { RewardsViewModel() }
