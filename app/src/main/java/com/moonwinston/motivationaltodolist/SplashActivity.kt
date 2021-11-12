@@ -11,7 +11,6 @@ import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivitySplashBinding
     private val sharedPref: SharedPref by inject()
 
@@ -26,7 +25,6 @@ class SplashActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         },DURATION)
-
     }
     companion object {
         private const val DURATION : Long = 2000
