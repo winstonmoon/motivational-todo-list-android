@@ -3,9 +3,9 @@ package com.moonwinston.motivationaltodolist.data
 import android.content.Context
 import androidx.preference.PreferenceManager
 
+const val NOTIFY = "notify"
 const val THEME = "theme"
 const val LANGUAGE = "language"
-const val NOTIFY = "notify"
 const val COACH_DAILY = "coachDaily"
 const val COACH_WEEKLY = "coachWeekly"
 const val COACH_MONTHLY = "coachMonthly"
@@ -32,6 +32,12 @@ class SharedPref(context: Context) {
 
     fun isCoachMonthlyDismissed(): Boolean = sharedPref.getBoolean(COACH_MONTHLY, false) ?: false
 
+    fun saveNotify(notify: Int) {
+        sharedPref.edit().putInt(NOTIFY, notify).apply()
+    }
+
+    fun getNotify(): Int = sharedPref.getInt(NOTIFY, 0) ?: 0
+
     fun saveTheme(theme: Int) {
         sharedPref.edit().putInt(THEME, theme).apply()
     }
@@ -43,10 +49,4 @@ class SharedPref(context: Context) {
     }
 
     fun getLanguage(): Int = sharedPref.getInt(LANGUAGE, 0) ?: 0
-
-    fun saveNotify(notify: Int) {
-        sharedPref.edit().putInt(NOTIFY, notify).apply()
-    }
-
-    fun getNotify(): Int = sharedPref.getInt(NOTIFY, 0) ?: 0
 }

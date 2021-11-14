@@ -34,6 +34,8 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //TODO use array not text
+        binding.valueNotify.text =
+            resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
         binding.valueTheme.text =
             resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
         binding.valueLanguage.text =
