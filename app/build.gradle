@@ -33,7 +33,7 @@ android {
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard-rules.pro'
             //applicationIdSuffix '.prod'
-            resValue("string", "ad_unit_id", "ca-app-pub-2353870408305000~9513759562")
+            resValue("string", "ad_unit_id", "ca-app-pub-2353870408305000/6380873301")
         }
         debug {
             minifyEnabled false
