@@ -69,6 +69,10 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
         adapter = TaskAdapter(
             meatballsMenuCallback = { taskEntity, dmlState ->
                 when (dmlState) {
+                    DmlState.Insert("copy") -> {
+                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
+                    }
                     DmlState.Update -> {
                         val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                         view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
@@ -90,7 +94,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
         }
         buttonAdd.setOnClickListener {
             val bundle = bundleOf(
-                "dmlState" to DmlState.Insert,
+                "dmlState" to DmlState.Insert("insert"),
                 "taskEntity" to TaskEntity(
                     taskDate = CalendarUtil.getTodayDate(),
                     taskTime = Date(),

@@ -31,11 +31,21 @@ class TaskAdapter(
                     binding.textTasks.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 binding.textTasks.text = taskEntity.task
                 binding.meatballsmenuTasks.setOnClickListener {
-                    Toast.makeText(
-                        it.context,
-                        R.string.message_toast_uneditable,
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        it.context,
+//                        R.string.message_toast_uneditable,
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    val popupMenu = PopupMenu(it.context, it)
+                    popupMenu.menuInflater.inflate(R.menu.task_copy_menu, popupMenu.menu)
+                    popupMenu.setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.copy ->
+                                meatballsMenuCallback(taskEntity, DmlState.Insert("copy"))
+                        }
+                        false
+                    }
+                    popupMenu.show()
                 }
                 binding.timeTasks.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
             } else {
@@ -76,6 +86,8 @@ class TaskAdapter(
                     popupMenu.menuInflater.inflate(R.menu.task_edit_menu, popupMenu.menu)
                     popupMenu.setOnMenuItemClickListener { item ->
                         when (item.itemId) {
+                            R.id.copy ->
+                                meatballsMenuCallback(taskEntity, DmlState.Insert("copy"))
                             R.id.edit ->
                                 meatballsMenuCallback(taskEntity, DmlState.Update)
                             R.id.delete ->
