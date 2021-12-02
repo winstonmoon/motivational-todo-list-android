@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
@@ -39,8 +40,11 @@ class AddDialogFragment : DialogFragment() {
 
             initCommonView(binding)
             when (dmlState) {
-                DmlState.Insert -> {
+                DmlState.Insert("insert") -> {
                     initInsertView(binding, taskEntity)
+                }
+                DmlState.Insert("copy") -> {
+                    initCopyView(binding, taskEntity)
                 }
                 DmlState.Update -> {
                     initUpdateView(binding, taskEntity)
@@ -68,6 +72,7 @@ class AddDialogFragment : DialogFragment() {
                         val minute =
                             if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentMinute else binding.inputTime.minute
 
+                        //TODO not use uid when copy
                         var taskEntity = TaskEntity(
                             uid = taskEntity?.uid,
                             taskDate = date,
@@ -122,8 +127,28 @@ class AddDialogFragment : DialogFragment() {
         date = taskEntity.taskDate
     }
 
+    private fun initCopyView(binding: DialogAddBinding, taskEntity: TaskEntity) {
+        val year = SimpleDateFormat("y").format(taskEntity.taskTime).toInt()
+        val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
+        val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
+        val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
+        val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
+        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
+
+        if (Build.VERSION.SDK_INT <= 23) {
+            binding.inputTime.currentHour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+            binding.inputTime.currentMinute = taskEntityTaskTime.get(Calendar.MINUTE)
+        } else {
+            binding.inputTime.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+            binding.inputTime.minute = taskEntityTaskTime.get(Calendar.MINUTE)
+        }
+        binding.viewCalendar.date = taskEntity.taskDate.time
+        date = taskEntity.taskDate
+        binding.inputTask.setText(taskEntity.task)
+    }
+
     private fun initUpdateView(binding: DialogAddBinding, taskEntity: TaskEntity) {
-        val year = SimpleDateFormat("Y").format(taskEntity.taskTime).toInt()
+        val year = SimpleDateFormat("y").format(taskEntity.taskTime).toInt()
         val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
         val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
         val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
