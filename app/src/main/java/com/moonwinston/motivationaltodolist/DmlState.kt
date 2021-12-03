@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 sealed class DmlState: Parcelable {
     @Parcelize
-    object Insert: DmlState()
+    data class Insert(val method: String): DmlState()
     @Parcelize
     object Update: DmlState()
     @Parcelize

@@ -80,7 +80,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
 
         buttonAdd.setOnClickListener {
             val bundle = bundleOf(
-                "dmlState" to DmlState.Insert,
+                "dmlState" to DmlState.Insert("insert"),
                 "taskEntity" to TaskEntity(
                     taskDate = selectedDate,
                     taskTime = Date(),
@@ -190,6 +190,10 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             val adapter = TaskAdapter(
                 meatballsMenuCallback = { taskEntity, dmlState ->
                     when (dmlState) {
+                        DmlState.Insert("copy") -> {
+                            val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                            view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
+                        }
                         DmlState.Update -> {
                             val bundle =
                                 bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
