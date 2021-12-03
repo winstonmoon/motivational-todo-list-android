@@ -73,18 +73,32 @@ class AddDialogFragment : DialogFragment() {
                             if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentMinute else binding.inputTime.minute
 
                         //TODO not use uid when copy
-                        var taskEntity = TaskEntity(
-                            uid = taskEntity?.uid,
-                            taskDate = date,
-                            taskTime = SimpleDateFormat("HH:mm").parse(
-                                "%02d:%02d".format(
-                                    hour,
-                                    minute
+                        var taskEntity =
+                            if (dmlState == DmlState.Insert("copy"))
+                                TaskEntity(
+                                    taskDate = date,
+                                    taskTime = SimpleDateFormat("HH:mm").parse(
+                                        "%02d:%02d".format(
+                                            hour,
+                                            minute
+                                        )
+                                    ),
+                                    task = binding.inputTask.text.toString(),
+                                    isCompleted = false
                                 )
-                            ),
-                            task = binding.inputTask.text.toString(),
-                            isCompleted = false
-                        )
+                            else
+                                TaskEntity(
+                                    uid = taskEntity?.uid,
+                                    taskDate = date,
+                                    taskTime = SimpleDateFormat("HH:mm").parse(
+                                        "%02d:%02d".format(
+                                            hour,
+                                            minute
+                                        )
+                                    ),
+                                    task = binding.inputTask.text.toString(),
+                                    isCompleted = false
+                                )
                         sharedViewModel.insertTask(taskEntity)
                         //TODO
 //                        sharedViewModel.getAll()

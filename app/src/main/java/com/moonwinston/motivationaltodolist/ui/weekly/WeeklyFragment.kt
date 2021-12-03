@@ -192,7 +192,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
                     when (dmlState) {
                         DmlState.Insert("copy") -> {
                             val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                            view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
+                            view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
                         }
                         DmlState.Update -> {
                             val bundle =
