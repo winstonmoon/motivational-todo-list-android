@@ -18,7 +18,7 @@ class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>()
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
-        buttonSettings.setOnClickListener {
+        settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_reward_to_settings)
         }
     }
@@ -27,7 +27,7 @@ class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>()
         sharedViewModel.getAllComplete()
         sharedViewModel.rateListLiveData.observe(viewLifecycleOwner) {
             val adapter = RewardsAdapter()
-            binding.recyclerviewRewards.adapter = adapter
+            binding.rewardsRecyclerView.adapter = adapter
             adapter.submitList(it)
         }
     }

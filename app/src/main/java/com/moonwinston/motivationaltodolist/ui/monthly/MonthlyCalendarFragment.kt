@@ -52,7 +52,7 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
             )
         }
         //TODO separate western and eastern
-        textMonthlyMonth.text = resources.getString(MonthEnum.values()[month].monthAbbreviation)
+        monthTextView.text = resources.getString(MonthEnum.values()[month].monthAbbreviation)
     }
 
     override fun observeData() {
@@ -61,7 +61,7 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
         sharedViewModel.getAllTasksByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
             val adapter = MonthlyCalendarAdapter(it)
-            binding.recyclerviewMonthlyCalendar.adapter = adapter
+            binding.calendarRecyclerView.adapter = adapter
             adapter.submitList(monthList)
         }
     }
@@ -73,7 +73,7 @@ class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCa
         sharedViewModel.getAllTasksByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
             val adapter = MonthlyCalendarAdapter(it)
-            binding.recyclerviewMonthlyCalendar.adapter = adapter
+            binding.calendarRecyclerView.adapter = adapter
             adapter.submitList(monthList)
         }
     }

@@ -32,7 +32,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     override fun initViews() = with(binding) {
         //TODO
         if (sharedPref.isCoachDailyDismissed().not()) {
-            this@DailyFragment.binding.buttonAdd.isEnabled = false
+            this@DailyFragment.binding.addButton.isEnabled = false
             coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
             coachDailyTapAdd.containerCoach.setOnClickListener {
                 coachDailyTapAdd.containerCoach.visibility = View.GONE
@@ -44,7 +44,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             }
             coachDailyTapComplete.containerCoach.setOnClickListener {
                 coachDailyTapComplete.containerCoach.visibility = View.GONE
-                this@DailyFragment.binding.buttonAdd.isEnabled = true
+                this@DailyFragment.binding.addButton.isEnabled = true
                 sharedPref.setCoachDailyAsDismissed(true)
             }
         }
@@ -59,7 +59,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
         val wordYear = resources.getString(R.string.label_year)
         val wordDay = resources.getString(R.string.label_day)
         //TODO
-        textDate.text =
+        dailyTitleTextView.text =
         when (sharedPref.getLanguage()) {
             ContextUtil.ENGLISH -> "$today, $parsedMonth $date, $year"
             else -> "$year$wordYear $parsedMonth $date$wordDay $today"
@@ -85,14 +85,14 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             },
             radioButtonCallback = {
                 sharedViewModel.insertTask(it)
-                binding.animationCongratulations.playAnimation()
+                binding.congratulationsAnimationView.playAnimation()
             })
-        recyclerviewDailyTodo.adapter = adapter
+        dailyTodoRecyclerView.adapter = adapter
 
-        buttonSettings.setOnClickListener {
+        settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_daily_to_settings)
         }
-        buttonAdd.setOnClickListener {
+        addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert("insert"),
                 "taskEntity" to TaskEntity(
@@ -119,11 +119,11 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             adapter.submitList(todayTasksList.sortedBy { it.taskTime })
             var rate = sharedViewModel.getRate(todayTasksList)
             when(rate){
-                0.0F -> binding.customviewPiechartDaily.alpha = 0.2F
-                else -> binding.customviewPiechartDaily.alpha = 1.0F
+                0.0F -> binding.dailyCustomPieChart.alpha = 0.2F
+                else -> binding.dailyCustomPieChart.alpha = 1.0F
             }
-            binding.customviewPiechartDaily.setPercentage(rate)
-            binding.textGoalPercent.text = "${(rate * 100).roundToInt()}%"
+            binding.dailyCustomPieChart.setPercentage(rate)
+            binding.achievementRate.text = "${(rate * 100).roundToInt()}%"
 
             //TODO
             val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)

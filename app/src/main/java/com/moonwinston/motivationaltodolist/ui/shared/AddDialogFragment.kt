@@ -67,10 +67,10 @@ class AddDialogFragment : DialogFragment() {
                             return@OnClickListener
                         }
                         val hour =
-                            if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentHour else binding.inputTime.hour
+                            if (Build.VERSION.SDK_INT <= 23) binding.timePicker.currentHour else binding.timePicker.hour
 
                         val minute =
-                            if (Build.VERSION.SDK_INT <= 23) binding.inputTime.currentMinute else binding.inputTime.minute
+                            if (Build.VERSION.SDK_INT <= 23) binding.timePicker.currentMinute else binding.timePicker.minute
 
                         //TODO not use uid when copy
                         var taskEntity =
@@ -83,7 +83,7 @@ class AddDialogFragment : DialogFragment() {
                                             minute
                                         )
                                     ),
-                                    task = binding.inputTask.text.toString(),
+                                    task = binding.taskEditText.text.toString(),
                                     isCompleted = false
                                 )
                             else
@@ -96,7 +96,7 @@ class AddDialogFragment : DialogFragment() {
                                             minute
                                         )
                                     ),
-                                    task = binding.inputTask.text.toString(),
+                                    task = binding.taskEditText.text.toString(),
                                     isCompleted = false
                                 )
                         sharedViewModel.insertTask(taskEntity)
@@ -122,8 +122,8 @@ class AddDialogFragment : DialogFragment() {
     }
 
     private fun initCommonView(binding: DialogAddBinding) {
-        binding.inputTime.setIs24HourView(true)
-        binding.viewCalendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
+        binding.timePicker.setIs24HourView(true)
+        binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
             date = SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$dayOfMonth")
         }
@@ -131,13 +131,13 @@ class AddDialogFragment : DialogFragment() {
 
     private fun initInsertView(binding: DialogAddBinding, taskEntity: TaskEntity) {
         if (Build.VERSION.SDK_INT <= 23) {
-            binding.inputTime.currentHour
-            binding.inputTime.currentMinute
+            binding.timePicker.currentHour
+            binding.timePicker.currentMinute
         } else {
-            binding.inputTime.hour
-            binding.inputTime.minute
+            binding.timePicker.hour
+            binding.timePicker.minute
         }
-        binding.viewCalendar.date = taskEntity.taskDate.time
+        binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
     }
 
@@ -150,15 +150,15 @@ class AddDialogFragment : DialogFragment() {
         val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
 
         if (Build.VERSION.SDK_INT <= 23) {
-            binding.inputTime.currentHour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-            binding.inputTime.currentMinute = taskEntityTaskTime.get(Calendar.MINUTE)
+            binding.timePicker.currentHour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+            binding.timePicker.currentMinute = taskEntityTaskTime.get(Calendar.MINUTE)
         } else {
-            binding.inputTime.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-            binding.inputTime.minute = taskEntityTaskTime.get(Calendar.MINUTE)
+            binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+            binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
         }
-        binding.viewCalendar.date = taskEntity.taskDate.time
+        binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
-        binding.inputTask.setText(taskEntity.task)
+        binding.taskEditText.setText(taskEntity.task)
     }
 
     private fun initUpdateView(binding: DialogAddBinding, taskEntity: TaskEntity) {
@@ -170,15 +170,15 @@ class AddDialogFragment : DialogFragment() {
         val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
 
         if (Build.VERSION.SDK_INT <= 23) {
-            binding.inputTime.currentHour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-            binding.inputTime.currentMinute = taskEntityTaskTime.get(Calendar.MINUTE)
+            binding.timePicker.currentHour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+            binding.timePicker.currentMinute = taskEntityTaskTime.get(Calendar.MINUTE)
         } else {
-            binding.inputTime.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-            binding.inputTime.minute = taskEntityTaskTime.get(Calendar.MINUTE)
+            binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+            binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
         }
-        binding.viewCalendar.date = taskEntity.taskDate.time
+        binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
-        binding.inputTask.setText(taskEntity.task)
+        binding.taskEditText.setText(taskEntity.task)
     }
 
     private fun createDialogBuilder(

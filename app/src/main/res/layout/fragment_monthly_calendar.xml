@@ -8,101 +8,101 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/text_monthly_month"
+            android:id="@+id/monthTextView"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
-            android:text="MM"
+            tools:text="Dec"
             android:textColor="@color/main_text"
-            app:layout_constraintBottom_toTopOf="@id/linear_monthly_date"
+            app:layout_constraintBottom_toTopOf="@id/weeklyDateContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linear_monthly_date"
+            android:id="@+id/weeklyDateContainer"
             android:layout_width="0dp"
             android:layout_height="24dp"
-            app:layout_constraintBottom_toTopOf="@id/recyclerview_monthly_calendar"
+            app:layout_constraintBottom_toTopOf="@id/calendarRecyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_monthly_month">
+            app:layout_constraintTop_toBottomOf="@id/monthTextView">
 
             <TextView
-                android:id="@+id/text_monthly_mon"
+                android:id="@+id/mondayTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/label_monday" />
 
             <TextView
-                android:id="@+id/text_monthly_tue"
+                android:id="@+id/tuesdayTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/label_tuesday" />
 
             <TextView
-                android:id="@+id/text_monthly_wed"
+                android:id="@+id/wednesdayTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/label_wednesday" />
 
             <TextView
-                android:id="@+id/text_monthly_thu"
+                android:id="@+id/thursdayTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/label_thursday" />
 
             <TextView
-                android:id="@+id/text_monthly_fri"
+                android:id="@+id/fridayTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/label_friday" />
 
             <TextView
-                android:id="@+id/text_monthly_sat"
+                android:id="@+id/saturdayTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/label_saturday" />
 
             <TextView
-                android:id="@+id/text_monthly_sun"
+                android:id="@+id/sundayTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="@string/label_sunday" />
 
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_monthly_calendar"
+            android:id="@+id/calendarRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linear_monthly_date"
+            app:layout_constraintTop_toBottomOf="@id/weeklyDateContainer"
             app:spanCount="7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
