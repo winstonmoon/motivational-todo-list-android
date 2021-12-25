@@ -9,13 +9,13 @@
         android:layout_margin="10dp">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_reward"
+            android:id="@+id/rewardsAnimationView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/achievedDateTextView"
             app:layout_constraintDimensionRatio="H, 1:1"
-            app:layout_constraintBottom_toTopOf="@id/text_achieved_date"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             app:lottie_autoPlay="true"
@@ -23,19 +23,19 @@
             app:lottie_rawRes="@raw/trophy" />
 
         <TextView
-            android:id="@+id/text_achieved_date"
+            android:id="@+id/achievedDateTextView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="H, 1.5:1"
             android:autoSizeTextType="uniform"
             android:gravity="center"
             android:maxLines="1"
-            android:text=""
             android:textColor="@color/main_text"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintDimensionRatio="H, 1.5:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/animation_reward" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rewardsAnimationView"
+            tools:text="2021/12/25" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
