@@ -45,7 +45,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/timeSelectContainer"
             android:layout_width="0dp"
-            android:layout_height="72dp"
+            android:layout_height="wrap_content"
+            android:minHeight="72dp"
             android:layout_margin="10dp"
             android:background="@drawable/bg_shape_rounded_rectangle_sub_container"
             app:layout_constraintBottom_toTopOf="@id/taskEditText"
@@ -79,7 +80,8 @@
         <EditText
             android:id="@+id/taskEditText"
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="wrap_content"
+            android:minHeight="36dp"
             android:layout_margin="10dp"
             android:background="@drawable/bg_shape_rounded_rectangle_sub_container"
             android:fontFamily="sans-serif"
