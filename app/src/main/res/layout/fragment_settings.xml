@@ -22,7 +22,8 @@
         <TextView
             android:id="@+id/settingsTitleTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:padding="10dp"
@@ -59,7 +60,8 @@
                 <TextView
                     android:id="@+id/notifyTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="5dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="start"
@@ -69,7 +71,8 @@
                 <TextView
                     android:id="@+id/notify"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginBottom="5dp"
                     android:autoSizeTextType="uniform"
@@ -91,7 +94,8 @@
                 <TextView
                     android:id="@+id/themeTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="5dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="start"
@@ -101,7 +105,8 @@
                 <TextView
                     android:id="@+id/theme"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginBottom="5dp"
                     android:autoSizeTextType="uniform"
@@ -123,7 +128,8 @@
                 <TextView
                     android:id="@+id/languageTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="5dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="start"
@@ -133,7 +139,8 @@
                 <TextView
                     android:id="@+id/language"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginBottom="5dp"
                     android:autoSizeTextType="uniform"
@@ -147,8 +154,10 @@
 
         <TextView
             android:id="@+id/versionTextView"
-            android:layout_width="40dp"
-            android:layout_height="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="40dp"
+            android:minHeight="25dp"
             tools:text="1.0.3"
             android:textColor="@color/main_text"
             android:autoSizeTextType="uniform"

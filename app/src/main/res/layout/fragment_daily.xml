@@ -11,7 +11,8 @@
         <TextView
             android:id="@+id/dailyTitleTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:padding="10dp"
@@ -36,7 +37,8 @@
         <TextView
             android:id="@+id/achievementRateTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_vertical"
             android:padding="10dp"
@@ -103,7 +105,8 @@
         <TextView
             android:id="@+id/todoListTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:padding="10dp"
             android:text="@string/label_todo"

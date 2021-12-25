@@ -11,7 +11,8 @@
         <TextView
             android:id="@+id/weeklyTitleTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:padding="10dp"
@@ -47,14 +48,17 @@
             <LinearLayout
                 android:id="@+id/mondayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/mondayTextView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:text="@string/label_monday"
@@ -64,14 +68,17 @@
             <LinearLayout
                 android:id="@+id/tuesdayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/tuesdayTextView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:text="@string/label_tuesday"
@@ -81,14 +88,17 @@
             <LinearLayout
                 android:id="@+id/wednesdayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/wednesdayTextView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:text="@string/label_wednesday"
@@ -98,14 +108,17 @@
             <LinearLayout
                 android:id="@+id/thursdayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/thursdayTextView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:text="@string/label_thursday"
@@ -115,14 +128,17 @@
             <LinearLayout
                 android:id="@+id/fridayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/fridayTextView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:text="@string/label_friday"
@@ -132,14 +148,17 @@
             <LinearLayout
                 android:id="@+id/saturdayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/saturdayTextView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:text="@string/label_saturday"
@@ -150,14 +169,17 @@
             <LinearLayout
                 android:id="@+id/sundayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/sundayTextView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:text="@string/label_sunday"
