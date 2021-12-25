@@ -16,7 +16,7 @@ class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHold
 
         fun bind(achievementRateEntity: AchievementRateEntity) {
             //TODO fix format
-            binding.textAchievedDate.text = SimpleDateFormat("yyyy-MM-dd").format(achievementRateEntity.date)
+            binding.achievedDateTextView.text = SimpleDateFormat("yyyy-MM-dd").format(achievementRateEntity.date)
         }
     }
 

@@ -36,7 +36,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     override fun initViews() = with(binding) {
         //TODO
         if (sharedPref.isCoachWeeklyDismissed().not()) {
-            this@WeeklyFragment.binding.buttonAdd.isEnabled = false
+            this@WeeklyFragment.binding.addButton.isEnabled = false
             coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
             coachWeeklySwipe.containerCoach.setOnClickListener {
                 coachWeeklySwipe.containerCoach.visibility = View.GONE
@@ -44,7 +44,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
             }
             coachWeeklyTap.containerCoach.setOnClickListener {
                 coachWeeklyTap.containerCoach.visibility = View.GONE
-                this@WeeklyFragment.binding.buttonAdd.isEnabled = true
+                this@WeeklyFragment.binding.addButton.isEnabled = true
                 sharedPref.setCoachWeeklyAsDismissed(true)
             }
         }
@@ -53,12 +53,12 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         val slideAdapter = WeeklyScreenSlidePagerAdapter(
             this@WeeklyFragment
         )
-        viewpagerWeeklyCalendar.adapter = slideAdapter
-        viewpagerWeeklyCalendar.setCurrentItem(
+        weeklyPieChartViewPager.adapter = slideAdapter
+        weeklyPieChartViewPager.setCurrentItem(
             WeeklyScreenSlidePagerAdapter.START_POSITION,
             false
         )
-        viewpagerWeeklyCalendar.registerOnPageChangeCallback(object :
+        weeklyPieChartViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -74,11 +74,11 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         })
         setToday()
 
-        buttonSettings.setOnClickListener {
+        settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_weekly_to_settings)
         }
 
-        buttonAdd.setOnClickListener {
+        addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert("insert"),
                 "taskEntity" to TaskEntity(
@@ -97,83 +97,84 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
             selectedDate = it
             sharedViewModel.getAllTasks()
-            binding.textDate.text = getWeeklyTitle(it)
+            binding.weeklyTitleTextView.text = getWeeklyTitle(it)
             //TODO day number of week
             when (SimpleDateFormat("u").format(it)) {
                 "1" -> {
                     binding.apply {
-                        textWeeklyMon.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        textWeeklyTue.background = null
-                        textWeeklyWed.background = null
-                        textWeeklyThu.background = null
-                        textWeeklyFri.background = null
-                        textWeeklySat.background = null
-                        textWeeklySun.background = null
+                        mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        tuesdayTextView.background = null
+                        wednesdayTextView.background = null
+                        thursdayTextView.background = null
+                        fridayTextView.background = null
+                        saturdayTextView.background = null
+                        sundayTextView.background = null
                     }
                 }
                 "2" -> {
                     binding.apply {
-                        textWeeklyTue.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        textWeeklyMon.background = null
-                        textWeeklyWed.background = null
-                        textWeeklyThu.background = null
-                        textWeeklySat.background = null
-                        textWeeklySun.background = null
+                        tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        mondayTextView.background = null
+                        wednesdayTextView.background = null
+                        thursdayTextView.background = null
+                        fridayTextView.background = null
+                        saturdayTextView.background = null
+                        sundayTextView.background = null
                     }
                 }
                 "3" -> {
                     binding.apply {
-                        textWeeklyWed.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        textWeeklyTue.background = null
-                        textWeeklyMon.background = null
-                        textWeeklyThu.background = null
-                        textWeeklyFri.background = null
-                        textWeeklySat.background = null
-                        textWeeklySun.background = null
+                        wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        tuesdayTextView.background = null
+                        mondayTextView.background = null
+                        thursdayTextView.background = null
+                        fridayTextView.background = null
+                        saturdayTextView.background = null
+                        sundayTextView.background = null
                     }
                 }
                 "4" -> {
                     binding.apply {
-                        textWeeklyThu.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        textWeeklyTue.background = null
-                        textWeeklyWed.background = null
-                        textWeeklyMon.background = null
-                        textWeeklyFri.background = null
-                        textWeeklySat.background = null
-                        textWeeklySun.background = null
+                        thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        tuesdayTextView.background = null
+                        wednesdayTextView.background = null
+                        mondayTextView.background = null
+                        fridayTextView.background = null
+                        saturdayTextView.background = null
+                        sundayTextView.background = null
                     }
                 }
                 "5" -> {
                     binding.apply {
-                        textWeeklyFri.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        textWeeklyTue.background = null
-                        textWeeklyWed.background = null
-                        textWeeklyThu.background = null
-                        textWeeklyMon.background = null
-                        textWeeklySat.background = null
-                        textWeeklySun.background = null
+                        fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        tuesdayTextView.background = null
+                        wednesdayTextView.background = null
+                        thursdayTextView.background = null
+                        mondayTextView.background = null
+                        saturdayTextView.background = null
+                        sundayTextView.background = null
                     }
                 }
                 "6" -> {
                     binding.apply {
-                        textWeeklySat.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        textWeeklyTue.background = null
-                        textWeeklyWed.background = null
-                        textWeeklyThu.background = null
-                        textWeeklyFri.background = null
-                        textWeeklyMon.background = null
-                        textWeeklySun.background = null
+                        saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        tuesdayTextView.background = null
+                        wednesdayTextView.background = null
+                        thursdayTextView.background = null
+                        fridayTextView.background = null
+                        mondayTextView.background = null
+                        sundayTextView.background = null
                     }
                 }
                 "7" -> {
                     binding.apply {
-                        textWeeklySun.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        textWeeklyTue.background = null
-                        textWeeklyWed.background = null
-                        textWeeklyThu.background = null
-                        textWeeklyFri.background = null
-                        textWeeklySat.background = null
-                        textWeeklyMon.background = null
+                        sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        tuesdayTextView.background = null
+                        wednesdayTextView.background = null
+                        thursdayTextView.background = null
+                        fridayTextView.background = null
+                        saturdayTextView.background = null
+                        mondayTextView.background = null
                     }
                 }
             }
@@ -207,9 +208,9 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
                 },
                 radioButtonCallback = {
                     sharedViewModel.insertTask(it)
-                    binding.animationCongratulations.playAnimation()
+                    binding.congratulationsAnimationView.playAnimation()
                 })
-            binding.recyclerviewWeeklyTodo.adapter = adapter
+            binding.weeklyTodoRecyclerView.adapter = adapter
             adapter.submitList(selectedDayTasksList.sortedBy { it.taskTime })
 
             //TODO
@@ -256,82 +257,83 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     //TODO
     @RequiresApi(Build.VERSION_CODES.N)
     private fun setToday() {
-        binding.textDate.text = getWeeklyTitle(CalendarUtil.getTodayDate())
+        binding.weeklyTitleTextView.text = getWeeklyTitle(CalendarUtil.getTodayDate())
         when (SimpleDateFormat("u").format(CalendarUtil.getTodayDate())) {
             "1" -> {
                 binding.apply {
-                    textWeeklyMon.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    textWeeklyTue.background = null
-                    textWeeklyWed.background = null
-                    textWeeklyThu.background = null
-                    textWeeklyFri.background = null
-                    textWeeklySat.background = null
-                    textWeeklySun.background = null
+                    mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    tuesdayTextView.background = null
+                    wednesdayTextView.background = null
+                    thursdayTextView.background = null
+                    fridayTextView.background = null
+                    saturdayTextView.background = null
+                    sundayTextView.background = null
                 }
             }
             "2" -> {
                 binding.apply {
-                    textWeeklyTue.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    textWeeklyMon.background = null
-                    textWeeklyWed.background = null
-                    textWeeklyThu.background = null
-                    textWeeklySat.background = null
-                    textWeeklySun.background = null
+                    tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    mondayTextView.background = null
+                    wednesdayTextView.background = null
+                    thursdayTextView.background = null
+                    fridayTextView.background = null
+                    saturdayTextView.background = null
+                    sundayTextView.background = null
                 }
             }
             "3" -> {
                 binding.apply {
-                    textWeeklyWed.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    textWeeklyTue.background = null
-                    textWeeklyMon.background = null
-                    textWeeklyThu.background = null
-                    textWeeklyFri.background = null
-                    textWeeklySat.background = null
-                    textWeeklySun.background = null
+                    wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    tuesdayTextView.background = null
+                    mondayTextView.background = null
+                    thursdayTextView.background = null
+                    fridayTextView.background = null
+                    saturdayTextView.background = null
+                    sundayTextView.background = null
                 }
             }
             "4" -> {
                 binding.apply {
-                    textWeeklyThu.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    textWeeklyTue.background = null
-                    textWeeklyWed.background = null
-                    textWeeklyMon.background = null
-                    textWeeklyFri.background = null
-                    textWeeklySat.background = null
-                    textWeeklySun.background = null
+                    thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    tuesdayTextView.background = null
+                    wednesdayTextView.background = null
+                    mondayTextView.background = null
+                    fridayTextView.background = null
+                    saturdayTextView.background = null
+                    sundayTextView.background = null
                 }
             }
             "5" -> {
                 binding.apply {
-                    textWeeklyFri.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    textWeeklyTue.background = null
-                    textWeeklyWed.background = null
-                    textWeeklyThu.background = null
-                    textWeeklyMon.background = null
-                    textWeeklySat.background = null
-                    textWeeklySun.background = null
+                    fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    tuesdayTextView.background = null
+                    wednesdayTextView.background = null
+                    thursdayTextView.background = null
+                    mondayTextView.background = null
+                    saturdayTextView.background = null
+                    sundayTextView.background = null
                 }
             }
             "6" -> {
                 binding.apply {
-                    textWeeklySat.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    textWeeklyTue.background = null
-                    textWeeklyWed.background = null
-                    textWeeklyThu.background = null
-                    textWeeklyFri.background = null
-                    textWeeklyMon.background = null
-                    textWeeklySun.background = null
+                    saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    tuesdayTextView.background = null
+                    wednesdayTextView.background = null
+                    thursdayTextView.background = null
+                    fridayTextView.background = null
+                    mondayTextView.background = null
+                    sundayTextView.background = null
                 }
             }
             "7" -> {
                 binding.apply {
-                    textWeeklySun.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    textWeeklyTue.background = null
-                    textWeeklyWed.background = null
-                    textWeeklyThu.background = null
-                    textWeeklyFri.background = null
-                    textWeeklySat.background = null
-                    textWeeklyMon.background = null
+                    sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                    tuesdayTextView.background = null
+                    wednesdayTextView.background = null
+                    thursdayTextView.background = null
+                    fridayTextView.background = null
+                    saturdayTextView.background = null
+                    mondayTextView.background = null
                 }
             }
         }

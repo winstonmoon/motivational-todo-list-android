@@ -26,11 +26,11 @@ class TaskAdapter(
 
         fun bind(taskEntity: TaskEntity) {
             if (taskEntity.isCompleted) {
-                binding.radiobuttonTasks.isChecked = true
-                binding.textTasks.paintFlags =
-                    binding.textTasks.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                binding.textTasks.text = taskEntity.task
-                binding.meatballsmenuTasks.setOnClickListener {
+                binding.taskRadioButton.isChecked = true
+                binding.taskTextView.paintFlags =
+                    binding.taskTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                binding.taskTextView.text = taskEntity.task
+                binding.taskMeatballsMenu.setOnClickListener {
 //                    Toast.makeText(
 //                        it.context,
 //                        R.string.message_toast_uneditable,
@@ -47,15 +47,15 @@ class TaskAdapter(
                     }
                     popupMenu.show()
                 }
-                binding.timeTasks.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
+                binding.timeTextView.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
             } else {
-                binding.radiobuttonTasks.isChecked = false
+                binding.taskRadioButton.isChecked = false
                 //TODO fix
-                binding.textTasks.paintFlags = 0
-                binding.textTasks.text = taskEntity.task
-                binding.timeTasks.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
+                binding.taskTextView.paintFlags = 0
+                binding.taskTextView.text = taskEntity.task
+                binding.timeTextView.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
 
-                binding.radiobuttonTasks.setOnClickListener {
+                binding.taskRadioButton.setOnClickListener {
                     val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
                     builder.setMessage(R.string.message_dialog_confirm_complete)
                         .setPositiveButton(R.string.button_ok,
@@ -75,13 +75,13 @@ class TaskAdapter(
                             })
                         .setNegativeButton(R.string.button_cancel,
                             DialogInterface.OnClickListener { _, _ ->
-                                binding.radiobuttonTasks.isChecked = false
+                                binding.taskRadioButton.isChecked = false
                             })
-                    builder.setOnDismissListener { binding.radiobuttonTasks.isChecked = false }
+                    builder.setOnDismissListener { binding.taskRadioButton.isChecked = false }
                     builder.show()
                 }
 
-                binding.meatballsmenuTasks.setOnClickListener {
+                binding.taskMeatballsMenu.setOnClickListener {
                     val popupMenu = PopupMenu(it.context, it)
                     popupMenu.menuInflater.inflate(R.menu.task_edit_menu, popupMenu.menu)
                     popupMenu.setOnMenuItemClickListener { item ->

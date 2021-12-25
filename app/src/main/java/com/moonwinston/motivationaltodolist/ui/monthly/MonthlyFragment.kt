@@ -30,11 +30,11 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
             }
         }
 
-        viewpagerCalendar.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
-        viewpagerCalendar.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
-        viewpagerCalendar.setPageTransformer(ZoomOutPageTransformer())
+        calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
+        calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
+        calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
 
-        buttonSettings.setOnClickListener {
+        settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_monthly_to_settings)
         }
     }
@@ -44,7 +44,7 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
             val year = it[0]
             val wordYear = resources.getString(R.string.label_year)
             val parsedMonth = resources.getString(MonthEnum.values()[it[1]].monthAbbreviation)
-            binding.textDate.text =
+            binding.monthlyTitleTextView.text =
                 when (sharedPref.getLanguage()) {
                     ContextUtil.ENGLISH -> "$parsedMonth, $year"
                     else -> "$year$wordYear $parsedMonth"

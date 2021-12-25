@@ -9,18 +9,18 @@
         android:background="@color/main_background">
 
         <ImageView
-            android:id="@+id/image_logo"
+            android:id="@+id/logoImageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_splash_icon"
-            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
             app:layout_constraintDimensionRatio="H, 4:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/text_title"
+            android:id="@+id/titleTextView"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -32,23 +32,23 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal" />
+            app:layout_constraintTop_toBottomOf="@id/horizontalGuideline" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_horizontal"
+            android:id="@+id/horizontalGuideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_reward"
+            android:id="@+id/fireAnimationView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+            app:layout_constraintTop_toBottomOf="@id/horizontalGuideline"
             app:lottie_autoPlay="true"
             app:lottie_rawRes="@raw/fire" />
 

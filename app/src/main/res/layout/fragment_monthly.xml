@@ -9,13 +9,13 @@
         android:background="@color/main_background">
 
         <TextView
-            android:id="@+id/text_date"
+            android:id="@+id/monthlyTitleTextView"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:text=""
+            tools:text="Dec, 2021"
             android:textColor="@color/main_text"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/button_settings"
+            android:id="@+id/settingsButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
@@ -34,14 +34,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager_calendar"
+            android:id="@+id/calendarViewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_date" />
+            app:layout_constraintTop_toBottomOf="@id/monthlyTitleTextView" />
 
         <include
             android:id="@+id/coach_monthly"
