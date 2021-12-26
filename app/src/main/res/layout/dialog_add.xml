@@ -21,13 +21,12 @@
                 android:id="@+id/dateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_vertical"
                 android:text="@string/label_date"
                 android:textColor="@color/main_text"
-                app:layout_constraintBottom_toTopOf="@id/calendarView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,17 +37,17 @@
                 android:theme="@style/CustomCalendar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dateTextView" />
+                app:layout_constraintStart_toEndOf="@id/dateTextView"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/timeSelectContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="72dp"
             android:layout_margin="10dp"
             android:background="@drawable/bg_shape_rounded_rectangle_sub_container"
+            android:minHeight="72dp"
             app:layout_constraintBottom_toTopOf="@id/taskEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,12 +57,12 @@
                 android:id="@+id/timeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_vertical"
                 android:text="@string/label_time"
                 android:textColor="@color/main_text"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,6 +73,7 @@
                 android:timePickerMode="spinner"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/timeTextView"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -81,15 +81,17 @@
             android:id="@+id/taskEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="36dp"
             android:layout_margin="10dp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/bg_shape_rounded_rectangle_sub_container"
+            android:ellipsize="end"
             android:fontFamily="sans-serif"
             android:gravity="end|center_vertical"
             android:hint="@string/hint_input_task"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="2"
+            android:minHeight="36dp"
             android:paddingEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

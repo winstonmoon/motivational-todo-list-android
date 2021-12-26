@@ -26,13 +26,15 @@
         <ImageButton
             android:id="@+id/settingsButton"
             android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:background="@null"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_outline_settings_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/rewardsTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/rewardsTitleTextView"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rewardsRecyclerView"

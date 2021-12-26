@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/achievedDateTextView"
-            app:layout_constraintDimensionRatio="H, 1:1"
+            app:layout_constraintDimensionRatio="H, 0.75"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,17 +25,17 @@
         <TextView
             android:id="@+id/achievedDateTextView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="24dp"
             android:autoSizeTextType="uniform"
             android:gravity="center"
-            android:maxLines="1"
+            android:maxLines="2"
             android:textColor="@color/main_text"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="H, 1.5:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rewardsAnimationView"
-            tools:text="2021/12/25" />
+            tools:text="2021\n12/26" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

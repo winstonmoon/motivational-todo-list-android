@@ -16,7 +16,9 @@ class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHold
 
         fun bind(achievementRateEntity: AchievementRateEntity) {
             //TODO fix format
-            binding.achievedDateTextView.text = SimpleDateFormat("yyyy-MM-dd").format(achievementRateEntity.date)
+            val year = SimpleDateFormat("yyyy").format(achievementRateEntity.date)
+            val monthDay = SimpleDateFormat("MM/dd").format(achievementRateEntity.date)
+            binding.achievedDateTextView.text = "$year\n$monthDay"
         }
     }
 
