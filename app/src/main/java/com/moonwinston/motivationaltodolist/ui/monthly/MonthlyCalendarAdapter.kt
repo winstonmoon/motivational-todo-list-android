@@ -34,27 +34,27 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
 
             when {
                 testDate == nonExistDate -> {
-                    binding.textMonthlyDate.visibility = View.GONE
-                    binding.customviewPiechartMonthly.visibility = View.GONE
+                    binding.monthlyDateTextView.visibility = View.GONE
+                    binding.monthlyCustomPieChart.visibility = View.GONE
                 }
                 testDate == today -> {
-                    binding.textMonthlyDate.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
-                    binding.textMonthlyDate.text = SimpleDateFormat("d").format(testDate)
+                    binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
+                    binding.monthlyDateTextView.text = SimpleDateFormat("d").format(testDate)
                     if (rate == 0.0F) {
-                        binding.customviewPiechartMonthly.alpha = 0.2F
+                        binding.monthlyCustomPieChart.alpha = 0.2F
                     }
-                    binding.customviewPiechartMonthly.setPercentage(rate)
+                    binding.monthlyCustomPieChart.setPercentage(rate)
                 }
                 testDate.after(today) -> {
-                    binding.textMonthlyDate.text = SimpleDateFormat("d").format(testDate)
-                    binding.customviewPiechartMonthly.visibility = View.INVISIBLE
+                    binding.monthlyDateTextView.text = SimpleDateFormat("d").format(testDate)
+                    binding.monthlyCustomPieChart.visibility = View.INVISIBLE
                 }
                 else -> {
-                    binding.textMonthlyDate.text = SimpleDateFormat("d").format(testDate)
+                    binding.monthlyDateTextView.text = SimpleDateFormat("d").format(testDate)
                     if (rate == 0.0F) {
-                        binding.customviewPiechartMonthly.alpha = 0.2F
+                        binding.monthlyCustomPieChart.alpha = 0.2F
                     }
-                    binding.customviewPiechartMonthly.setPercentage(rate)
+                    binding.monthlyCustomPieChart.setPercentage(rate)
                 }
             }
         }

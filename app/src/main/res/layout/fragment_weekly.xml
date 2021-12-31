@@ -9,157 +9,182 @@
         android:background="@color/main_background">
 
         <TextView
-            android:id="@+id/text_date"
+            android:id="@+id/weeklyTitleTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:text=""
             android:textColor="@color/main_text"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Today, Dec 23, 2021" />
 
         <ImageButton
-            android:id="@+id/button_settings"
+            android:id="@+id/settingsButton"
             android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:background="@null"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_outline_settings_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/weeklyTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/weeklyTitleTextView"/>
 
         <LinearLayout
-            android:id="@+id/view_weekly_date"
+            android:id="@+id/weeklyDateContainer"
             android:layout_width="0dp"
-            android:layout_height="24dp"
+            android:layout_height="wrap_content"
+            android:minHeight="24dp"
             android:background="@color/main_container"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/viewpager_weekly_calendar"
+            app:layout_constraintBottom_toTopOf="@id/weeklyPieChartViewPager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_date">
+            app:layout_constraintTop_toBottomOf="@id/weeklyTitleTextView">
 
             <LinearLayout
-                android:id="@+id/container_mon"
+                android:id="@+id/mondayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/text_weekly_mon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/mondayTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:text="@string/label_monday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/container_tue"
+                android:id="@+id/tuesdayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/text_weekly_tue"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/tuesdayTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:text="@string/label_tuesday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/container_wed"
+                android:id="@+id/wednesdayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/text_weekly_wed"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/wednesdayTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:text="@string/label_wednesday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/container_thu"
+                android:id="@+id/thursdayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/text_weekly_thu"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/thursdayTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:text="@string/label_thursday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/container_fri"
+                android:id="@+id/fridayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/text_weekly_fri"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/fridayTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:text="@string/label_friday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/container_sat"
+                android:id="@+id/saturdayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/text_weekly_sat"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/saturdayTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:text="@string/label_saturday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
 
             <LinearLayout
-                android:id="@+id/container_sun"
+                android:id="@+id/sundayContainer"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/text_weekly_sun"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/sundayTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:text="@string/label_sunday"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
@@ -167,17 +192,17 @@
         </LinearLayout>
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager_weekly_calendar"
+            android:id="@+id/weeklyPieChartViewPager"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/main_container"
-            app:layout_constraintBottom_toTopOf="@id/recyclerview_weekly_todo"
+            app:layout_constraintBottom_toTopOf="@id/weeklyTodoRecyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_weekly_date" />
+            app:layout_constraintTop_toBottomOf="@id/weeklyDateContainer" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_weekly_todo"
+            android:id="@+id/weeklyTodoRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -185,10 +210,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewpager_weekly_calendar" />
+            app:layout_constraintTop_toBottomOf="@id/weeklyPieChartViewPager" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_add"
+            android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -200,7 +225,7 @@
             app:tint="@color/white" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_congratulations"
+            android:id="@+id/congratulationsAnimationView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

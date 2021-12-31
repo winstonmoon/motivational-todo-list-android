@@ -9,7 +9,7 @@
         android:background="@color/main_background">
 
         <ImageButton
-            android:id="@+id/button_back"
+            android:id="@+id/backButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
@@ -20,9 +20,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_date"
+            android:id="@+id/settingsTitleTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:padding="10dp"
@@ -43,12 +44,13 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_date">
+            app:layout_constraintTop_toBottomOf="@id/settingsTitleTextView">
 
             <LinearLayout
-                android:id="@+id/button_notify"
+                android:id="@+id/notifyButton"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
@@ -57,31 +59,34 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/label_notify"
+                    android:id="@+id/notifyTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="5dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:text="@string/label_notify"
                     android:textColor="@color/main_text" />
 
                 <TextView
-                    android:id="@+id/value_notify"
+                    android:id="@+id/notify"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginBottom="5dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="left"
-                    android:text="test"
+                    android:gravity="start"
+                    tools:text="off"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/button_theme"
+                android:id="@+id/themeButton"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
@@ -89,31 +94,34 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/label_theme"
+                    android:id="@+id/themeTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="5dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:text="@string/label_theme"
                     android:textColor="@color/main_text" />
 
                 <TextView
-                    android:id="@+id/value_theme"
+                    android:id="@+id/theme"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginBottom="5dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="left"
-                    android:text="test"
+                    android:gravity="start"
+                    tools:text="Follow system"
                     android:textColor="@color/sub_text" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/button_language"
+                android:id="@+id/languageButton"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
@@ -121,24 +129,26 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/label_language"
+                    android:id="@+id/languageTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="5dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:text="@string/label_language"
                     android:textColor="@color/main_text" />
 
                 <TextView
-                    android:id="@+id/value_language"
+                    android:id="@+id/language"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="25dp"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginBottom="5dp"
                     android:autoSizeTextType="uniform"
-                    android:gravity="left"
-                    android:text="test"
+                    android:gravity="start"
+                    tools:text="Follow system"
                     android:textColor="@color/sub_text" />
 
             </LinearLayout>
@@ -146,10 +156,12 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/text_version"
-            android:layout_width="40dp"
-            android:layout_height="25dp"
-            android:text=""
+            android:id="@+id/versionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="40dp"
+            android:minHeight="25dp"
+            tools:text="1.0.3"
             android:textColor="@color/main_text"
             android:autoSizeTextType="uniform"
             android:layout_marginEnd="20dp"

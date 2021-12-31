@@ -49,39 +49,39 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
         }
         //TODO fix dayOfWeek logic more simple, viewmodel
 
-        customviewPiechartMonday.setPieChartViewDate(weekList[0])
-        customviewPiechartMonday.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.customviewPiechartMonday.getPieChartViewDate())
+        mondayCustomPieChart.setPieChartViewDate(weekList[0])
+        mondayCustomPieChart.setOnClickListener {
+            sharedViewModel.setSelectedDate(binding.mondayCustomPieChart.getPieChartViewDate())
         }
 
-        customviewPiechartTuesday.setPieChartViewDate(weekList[1])
-        customviewPiechartTuesday.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.customviewPiechartTuesday.getPieChartViewDate())
+        tuesdayCustomPieChart.setPieChartViewDate(weekList[1])
+        tuesdayCustomPieChart.setOnClickListener {
+            sharedViewModel.setSelectedDate(binding.tuesdayCustomPieChart.getPieChartViewDate())
         }
 
-        customviewPiechartWednesday.setPieChartViewDate(weekList[2])
-        customviewPiechartWednesday.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.customviewPiechartWednesday.getPieChartViewDate())
+        wednesdayCustomPieChart.setPieChartViewDate(weekList[2])
+        wednesdayCustomPieChart.setOnClickListener {
+            sharedViewModel.setSelectedDate(binding.wednesdayCustomPieChart.getPieChartViewDate())
         }
 
-        customviewPiechartThursday.setPieChartViewDate(weekList[3])
-        customviewPiechartThursday.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.customviewPiechartThursday.getPieChartViewDate())
+        thursdayCustomPieChart.setPieChartViewDate(weekList[3])
+        thursdayCustomPieChart.setOnClickListener {
+            sharedViewModel.setSelectedDate(binding.thursdayCustomPieChart.getPieChartViewDate())
         }
 
-        customviewPiechartFriday.setPieChartViewDate(weekList[4])
-        customviewPiechartFriday.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.customviewPiechartFriday.getPieChartViewDate())
+        fridayCustomPieChart.setPieChartViewDate(weekList[4])
+        fridayCustomPieChart.setOnClickListener {
+            sharedViewModel.setSelectedDate(binding.fridayCustomPieChart.getPieChartViewDate())
         }
 
-        customviewPiechartSaturday.setPieChartViewDate(weekList[5])
-        customviewPiechartSaturday.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.customviewPiechartSaturday.getPieChartViewDate())
+        saturdayCustomPieChart.setPieChartViewDate(weekList[5])
+        saturdayCustomPieChart.setOnClickListener {
+            sharedViewModel.setSelectedDate(binding.saturdayCustomPieChart.getPieChartViewDate())
         }
 
-        customviewPiechartSunday.setPieChartViewDate(weekList[6])
-        customviewPiechartSunday.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.customviewPiechartSunday.getPieChartViewDate())
+        sundayCustomPieChart.setPieChartViewDate(weekList[6])
+        sundayCustomPieChart.setOnClickListener {
+            sharedViewModel.setSelectedDate(binding.sundayCustomPieChart.getPieChartViewDate())
         }
     }
 
@@ -108,39 +108,39 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
                 }
             }
             if (sharedViewModel.getRate(monList) == 0F) {
-                binding.customviewPiechartMonday.alpha = 0.2F
+                binding.mondayCustomPieChart.alpha = 0.2F
             } else {
-                binding.customviewPiechartMonday.alpha = 1F
+                binding.mondayCustomPieChart.alpha = 1F
             }
             if (sharedViewModel.getRate(tueList) == 0F) {
-                binding.customviewPiechartTuesday.alpha = 0.2F
+                binding.tuesdayCustomPieChart.alpha = 0.2F
             } else {
-                binding.customviewPiechartTuesday.alpha = 1F
+                binding.tuesdayCustomPieChart.alpha = 1F
             }
             if (sharedViewModel.getRate(wedList) == 0F) {
-                binding.customviewPiechartWednesday.alpha = 0.2F
+                binding.wednesdayCustomPieChart.alpha = 0.2F
             } else {
-                binding.customviewPiechartWednesday.alpha = 1F
+                binding.wednesdayCustomPieChart.alpha = 1F
             }
             if (sharedViewModel.getRate(thuList) == 0F) {
-                binding.customviewPiechartThursday.alpha = 0.2F
+                binding.thursdayCustomPieChart.alpha = 0.2F
             } else {
-                binding.customviewPiechartThursday.alpha = 1F
+                binding.thursdayCustomPieChart.alpha = 1F
             }
             if (sharedViewModel.getRate(friList) == 0F) {
-                binding.customviewPiechartFriday.alpha = 0.2F
+                binding.fridayCustomPieChart.alpha = 0.2F
             } else {
-                binding.customviewPiechartFriday.alpha = 1F
+                binding.fridayCustomPieChart.alpha = 1F
             }
             if (sharedViewModel.getRate(satList) == 0F) {
-                binding.customviewPiechartSaturday.alpha = 0.2F
+                binding.saturdayCustomPieChart.alpha = 0.2F
             } else {
-                binding.customviewPiechartSaturday.alpha = 1F
+                binding.saturdayCustomPieChart.alpha = 1F
             }
             if (sharedViewModel.getRate(sunList) == 0F) {
-                binding.customviewPiechartSunday.alpha = 0.2F
+                binding.sundayCustomPieChart.alpha = 0.2F
             } else {
-                binding.customviewPiechartSunday.alpha = 1F
+                binding.sundayCustomPieChart.alpha = 1F
             }
             val monRate = sharedViewModel.getRate(monList)
             val tueRate = sharedViewModel.getRate(tueList)
@@ -149,13 +149,13 @@ class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalen
             val friRate = sharedViewModel.getRate(friList)
             val satRate = sharedViewModel.getRate(satList)
             val sunRate = sharedViewModel.getRate(sunList)
-            binding.customviewPiechartMonday.setPercentage(monRate)
-            binding.customviewPiechartTuesday.setPercentage(tueRate)
-            binding.customviewPiechartWednesday.setPercentage(wedRate)
-            binding.customviewPiechartThursday.setPercentage(thuRate)
-            binding.customviewPiechartFriday.setPercentage(friRate)
-            binding.customviewPiechartSaturday.setPercentage(satRate)
-            binding.customviewPiechartSunday.setPercentage(sunRate)
+            binding.mondayCustomPieChart.setPercentage(monRate)
+            binding.tuesdayCustomPieChart.setPercentage(tueRate)
+            binding.wednesdayCustomPieChart.setPercentage(wedRate)
+            binding.thursdayCustomPieChart.setPercentage(thuRate)
+            binding.fridayCustomPieChart.setPercentage(friRate)
+            binding.saturdayCustomPieChart.setPercentage(satRate)
+            binding.sundayCustomPieChart.setPercentage(sunRate)
         }
     }
 

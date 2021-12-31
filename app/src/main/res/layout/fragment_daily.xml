@@ -9,13 +9,14 @@
         android:background="@color/main_background">
 
         <TextView
-            android:id="@+id/text_date"
+            android:id="@+id/dailyTitleTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:text=""
+            tools:text="Today, Dec 23, 2021"
             android:textColor="@color/main_text"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,20 +24,23 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/button_settings"
+            android:id="@+id/settingsButton"
             android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:background="@null"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_outline_settings_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/dailyTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/dailyTitleTextView"/>
 
         <TextView
-            android:id="@+id/label_goal"
+            android:id="@+id/achievementRateTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_vertical"
             android:padding="10dp"
@@ -45,65 +49,66 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_date" />
+            app:layout_constraintTop_toBottomOf="@id/dailyTitleTextView" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="5dp"
             android:background="@drawable/bg_shape_rounded_rectangle_main_container"
-            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_goal" />
+            app:layout_constraintTop_toBottomOf="@id/achievementRateTextView" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
-            android:id="@+id/customview_piechart_daily"
+            android:id="@+id/dailyCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:borderStrokeWidth="40"
-            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
             app:layout_constraintDimensionRatio="W, 1:1"
-            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+            app:layout_constraintEnd_toStartOf="@id/verticalGuideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_goal"
+            app:layout_constraintTop_toBottomOf="@id/achievementRateTextView"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
             app:progressiveStrokeWidth="20" />
 
         <TextView
-            android:id="@+id/text_goal_percent"
+            android:id="@+id/achievementRate"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:autoSizeTextType="uniform"
             android:gravity="center"
             android:maxLines="1"
             android:padding="10dp"
-            android:text=""
+            tools:text="100%"
             android:textColor="@color/main_text"
-            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-            app:layout_constraintTop_toBottomOf="@id/label_goal" />
+            app:layout_constraintStart_toStartOf="@id/verticalGuideline"
+            app:layout_constraintTop_toBottomOf="@id/achievementRateTextView" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_horizontal"
+            android:id="@+id/horizontalGuideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.35" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_vertical"
+            android:id="@+id/verticalGuideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
 
         <TextView
-            android:id="@+id/label_todo"
+            android:id="@+id/todoListTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:padding="10dp"
             android:text="@string/label_todo"
@@ -111,7 +116,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal" />
+            app:layout_constraintTop_toBottomOf="@id/horizontalGuideline" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -121,10 +126,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_todo" />
+            app:layout_constraintTop_toBottomOf="@id/todoListTextView" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_daily_todo"
+            android:id="@+id/dailyTodoRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -133,10 +138,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_todo" />
+            app:layout_constraintTop_toBottomOf="@id/todoListTextView" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_add"
+            android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -148,7 +153,7 @@
             app:tint="@color/white" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_congratulations"
+            android:id="@+id/congratulationsAnimationView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

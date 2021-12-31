@@ -9,9 +9,10 @@
         android:background="@color/main_background">
 
         <TextView
-            android:id="@+id/text_date"
+            android:id="@+id/rewardsTitleTextView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
             android:padding="10dp"
@@ -23,25 +24,27 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/button_settings"
+            android:id="@+id/settingsButton"
             android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:background="@null"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_outline_settings_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/rewardsTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/rewardsTitleTextView"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_rewards"
+            android:id="@+id/rewardsRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/adView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_date"
+            app:layout_constraintTop_toBottomOf="@id/rewardsTitleTextView"
             app:spanCount="4" />
 
         <com.google.android.gms.ads.AdView
@@ -56,7 +59,7 @@
             ads:layout_constraintBottom_toBottomOf="parent"
             ads:layout_constraintEnd_toEndOf="parent"
             ads:layout_constraintStart_toStartOf="parent"
-            ads:layout_constraintTop_toBottomOf="@id/recyclerview_rewards" />
+            ads:layout_constraintTop_toBottomOf="@id/rewardsRecyclerView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

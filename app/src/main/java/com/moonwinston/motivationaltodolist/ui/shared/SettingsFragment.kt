@@ -34,22 +34,22 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //TODO use array not text
-        binding.valueNotify.text =
+        binding.notify.text =
             resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
-        binding.valueTheme.text =
+        binding.theme.text =
             resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
-        binding.valueLanguage.text =
+        binding.language.text =
             resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
 
-        binding.textVersion.text = BuildConfig.VERSION_NAME
+        binding.versionTextView.text = BuildConfig.VERSION_NAME
 
-        binding.buttonNotify.setOnClickListener {
+        binding.notifyButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val notifyItems = resources.getStringArray(R.array.notify_array)
             builder.setTitle(resources.getString(R.string.label_notify))
                 .setSingleChoiceItems(notifyItems, -1,
                     DialogInterface.OnClickListener { dialog, which ->
-                        binding.valueNotify.text = notifyItems[which]
+                        binding.notify.text = notifyItems[which]
                         //TODO sharedPreferences
                         //TODO use array not text
                         dialog.dismiss()
@@ -61,7 +61,7 @@ class SettingsFragment : Fragment() {
                     })
             builder.show()
         }
-        binding.buttonTheme.setOnClickListener {
+        binding.themeButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val themeItems = resources.getStringArray(R.array.theme_array)
             //TODO
@@ -69,7 +69,7 @@ class SettingsFragment : Fragment() {
             builder.setTitle(resources.getString(R.string.label_theme))
                 .setSingleChoiceItems(themeItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
-                        binding.valueTheme.text = themeItems[which]
+                        binding.theme.text = themeItems[which]
                         //TODO use array not text
                         sharedPref.saveTheme(which)
                         ThemeUtil().setTheme(which)
@@ -83,7 +83,7 @@ class SettingsFragment : Fragment() {
             builder.show()
         }
 
-        binding.buttonLanguage.setOnClickListener {
+        binding.languageButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val languageItems = resources.getStringArray(R.array.language_array)
             //TODO
@@ -91,7 +91,7 @@ class SettingsFragment : Fragment() {
             builder.setTitle(resources.getString(R.string.label_language))
                 .setSingleChoiceItems(languageItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
-                        binding.valueLanguage.text = languageItems[which]
+                        binding.language.text = languageItems[which]
                         //TODO use array not text
                         sharedPref.saveLanguage(which)
                         val intent = Intent(activity, MainActivity::class.java)
@@ -106,7 +106,7 @@ class SettingsFragment : Fragment() {
             builder.show()
         }
 
-        binding.buttonBack.setOnClickListener {
+        binding.backButton.setOnClickListener {
             it.findNavController().popBackStack()
         }
     }

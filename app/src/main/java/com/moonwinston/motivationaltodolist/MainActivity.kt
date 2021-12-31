@@ -63,8 +63,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navController = findNavController(R.id.fragment_nav_host)
-        binding.viewNav.setupWithNavController(navController)
+        val navController = findNavController(R.id.fragment)
+        binding.bottomNavigationView.setupWithNavController(navController)
     }
 
     override fun attachBaseContext(newBase: Context) {

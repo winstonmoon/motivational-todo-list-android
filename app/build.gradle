@@ -21,8 +21,8 @@ android {
         applicationId "com.moonwinston.motivationaltodolist"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion 31
-        versionCode 12
-        versionName "1.0.2"
+        versionCode 14
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -67,6 +67,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
     implementation "androidx.viewpager2:viewpager2:$rootProject.viewPagerVersion"
     implementation "androidx.work:work-runtime-ktx:$rootProject.workVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"

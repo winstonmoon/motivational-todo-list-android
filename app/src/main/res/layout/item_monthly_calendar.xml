@@ -7,31 +7,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_monthly_date"
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            app:layout_constraintBottom_toTopOf="@id/customview_piechart_monthly"
+        <TextView
+            android:id="@+id/monthlyDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="18dp"
+            android:minWidth="18dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/main_text"
+            app:layout_constraintBottom_toTopOf="@id/monthlyCustomPieChart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/text_monthly_date"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:gravity="center_horizontal"
-                android:text="1"
-                android:textColor="@color/main_text"
-                app:layout_constraintBottom_toBottomOf="@id/container_monthly_date"
-                app:layout_constraintEnd_toEndOf="@id/container_monthly_date"
-                app:layout_constraintStart_toStartOf="@id/container_monthly_date"
-                app:layout_constraintTop_toTopOf="@id/container_monthly_date" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
-            android:id="@+id/customview_piechart_monthly"
+            android:id="@+id/monthlyCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:borderStrokeWidth="14"
@@ -39,10 +31,9 @@
             app:layout_constraintDimensionRatio="H, 1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/container_monthly_date"
+            app:layout_constraintTop_toBottomOf="@id/monthlyDateTextView"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
             app:progressiveStrokeWidth="7" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
