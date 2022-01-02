@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="dailyFragment"
+            type="com.moonwinston.motivationaltodolist.ui.daily.DailyFragment" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -66,6 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:borderStrokeWidth="40"
+            bind:alpha="@{dailyFragment.rate}"
             app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
             app:layout_constraintDimensionRatio="W, 1:1"
             app:layout_constraintEnd_toStartOf="@id/verticalGuideline"
@@ -83,6 +91,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:padding="10dp"
+            android:text="@{dailyFragment.rateString + `%`}"
             tools:text="100%"
             android:textColor="@color/main_text"
             app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
