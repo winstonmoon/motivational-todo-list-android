@@ -1,8 +1,11 @@
 package com.moonwinston.motivationaltodolist.extension
 
 import android.view.View
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
+import kotlin.math.roundToInt
 
 @BindingAdapter("bind:background")
 fun setBackgroundColor(view: View, colorId: Int) {
@@ -12,4 +15,18 @@ fun setBackgroundColor(view: View, colorId: Int) {
 @BindingAdapter("bind:adapter")
 fun setAdapter(view: RecyclerView, baseAdapter: RecyclerView.Adapter<*>) {
     view.adapter = baseAdapter
+}
+
+@BindingAdapter("bind:alpha")
+fun setAlphaByRate(view: AchievementPieChartView, rate: Float) {
+    view.alpha = when (rate) {
+        0.0F -> 0.2F
+        else -> 1.0F
+    }
+}
+
+@BindingAdapter("bind:achievementRate")
+fun setAchievementRate(view: TextView, rate: Float) {
+    val achievementRate = (rate * 100).roundToInt().toString()
+    view.text = "$achievementRate%"
 }

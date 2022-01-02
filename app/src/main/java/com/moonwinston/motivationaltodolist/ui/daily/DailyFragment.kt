@@ -28,8 +28,12 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private lateinit var adapter: TaskAdapter
     private val sharedPref: SharedPref by inject()
+    var rate: Float? = null
+    var rateString: String? = null
 
     override fun initViews() = with(binding) {
+        lifecycleOwner = this@DailyFragment
+        dailyFragment = this@DailyFragment
         //TODO
         if (sharedPref.isCoachDailyDismissed().not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
@@ -108,7 +112,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
 
     override fun observeData() {
         sharedViewModel.getAllTasks()
-        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
+        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { it ->
             //TODO fix
             var todayTasksList = mutableListOf<TaskEntity>()
             for (taskEntity in it) {
@@ -117,16 +121,17 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
                 }
             }
             adapter.submitList(todayTasksList.sortedBy { it.taskTime })
-            var rate = sharedViewModel.getRate(todayTasksList)
-            when(rate){
-                0.0F -> binding.dailyCustomPieChart.alpha = 0.2F
-                else -> binding.dailyCustomPieChart.alpha = 1.0F
-            }
-            binding.dailyCustomPieChart.setPercentage(rate)
-            binding.achievementRate.text = "${(rate * 100).roundToInt()}%"
+            rate = sharedViewModel.getRate(todayTasksList)
+//            when(rate){
+//                0.0F -> binding.dailyCustomPieChart.alpha = 0.2F
+//                else -> binding.dailyCustomPieChart.alpha = 1.0F
+//            }
+            binding.dailyCustomPieChart.setPercentage(rate!!)
+            rateString = rate.toString()
+//            binding.achievementRate.text = "${(rate!! * 100).roundToInt()}%"
 
             //TODO
-            val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
+            val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate!!)
             sharedViewModel.insertAchievementRate(achievementRate)
         }
     }
