@@ -19,7 +19,6 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
-import kotlin.math.roundToInt
 
 
 class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
@@ -34,6 +33,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     override fun initViews() = with(binding) {
         lifecycleOwner = this@DailyFragment
         dailyFragment = this@DailyFragment
+        rate = rate
         //TODO
         if (sharedPref.isCoachDailyDismissed().not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
@@ -51,22 +51,6 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
                 this@DailyFragment.binding.addButton.isEnabled = true
                 sharedPref.setCoachDailyAsDismissed(true)
             }
-        }
-
-        //TODO fix
-        val cal = Calendar.getInstance()
-        val date = cal.get(Calendar.DATE)
-        val month = cal.get(Calendar.MONTH)
-        val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
-        val year = cal.get(Calendar.YEAR)
-        val today = resources.getString(R.string.text_today)
-        val wordYear = resources.getString(R.string.label_year)
-        val wordDay = resources.getString(R.string.label_day)
-        //TODO
-        dailyTitleTextView.text =
-        when (sharedPref.getLanguage()) {
-            ContextUtil.ENGLISH -> "$today, $parsedMonth $date, $year"
-            else -> "$year$wordYear $parsedMonth $date$wordDay $today"
         }
 
         //TODO
@@ -93,9 +77,6 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             })
         dailyTodoRecyclerView.adapter = adapter
 
-        settingsButton.setOnClickListener {
-            it.findNavController().navigate(R.id.action_daily_to_settings)
-        }
         addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert("insert"),
@@ -134,5 +115,18 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate!!)
             sharedViewModel.insertAchievementRate(achievementRate)
         }
+    }
+
+    fun addTask(view: View) {
+        val bundle = bundleOf(
+            "dmlState" to DmlState.Insert("insert"),
+            "taskEntity" to TaskEntity(
+                taskDate = CalendarUtil.getTodayDate(),
+                taskTime = Date(),
+                task = "",
+                isCompleted = false
+            )
+        )
+        view.findNavController().navigate(R.id.action_daily_to_add, bundle)
     }
 }

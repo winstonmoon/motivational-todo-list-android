@@ -27,6 +27,8 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.sharedPreferences = sharedPref
         return binding.root
     }
 
@@ -36,12 +38,12 @@ class SettingsFragment : Fragment() {
         //TODO use array not text
         binding.notify.text =
             resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
-        binding.theme.text =
-            resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
+//        binding.theme.text =
+//            resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
         binding.language.text =
             resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
 
-        binding.versionTextView.text = BuildConfig.VERSION_NAME
+//        binding.versionTextView.text = BuildConfig.VERSION_NAME
 
         binding.notifyButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
@@ -104,10 +106,6 @@ class SettingsFragment : Fragment() {
                         dialog?.cancel()
                     })
             builder.show()
-        }
-
-        binding.backButton.setOnClickListener {
-            it.findNavController().popBackStack()
         }
     }
 }

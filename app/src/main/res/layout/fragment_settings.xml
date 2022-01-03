@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="com.moonwinston.motivationaltodolist.R" />
+        <import type="androidx.navigation.Navigation" />
+        <variable
+            name="sharedPreferences"
+            type="com.moonwinston.motivationaltodolist.data.SharedPref" />
+        <import type="com.moonwinston.motivationaltodolist.BuildConfig" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,6 +23,7 @@
             android:layout_height="48dp"
             android:background="@null"
             android:padding="10dp"
+            android:onClick="@{view -> Navigation.findNavController(view).popBackStack()}"
             android:scaleType="fitXY"
             android:src="@drawable/ic_baseline_arrow_back_24"
             app:layout_constraintStart_toStartOf="parent"
@@ -109,6 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="25dp"
+                    android:text="@{@stringArray/theme_array[sharedPreferences.getTheme]}"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginBottom="5dp"
                     android:autoSizeTextType="uniform"
@@ -162,6 +173,7 @@
             android:minWidth="40dp"
             android:minHeight="25dp"
             tools:text="1.0.3"
+            android:text="@{BuildConfig.VERSION_NAME}"
             android:textColor="@color/main_text"
             android:autoSizeTextType="uniform"
             android:layout_marginEnd="20dp"

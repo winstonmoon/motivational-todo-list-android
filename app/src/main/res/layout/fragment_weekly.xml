@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="com.moonwinston.motivationaltodolist.R" />
+
+        <import type="androidx.navigation.Navigation" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,6 +36,7 @@
             android:minHeight="48dp"
             android:background="@null"
             android:padding="10dp"
+            android:onClick="@{view -> Navigation.findNavController(view).navigate(R.id.action_weekly_to_settings)}"
             android:scaleType="fitXY"
             android:src="@drawable/ic_outline_settings_24"
             app:layout_constraintEnd_toEndOf="parent"

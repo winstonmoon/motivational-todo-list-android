@@ -74,10 +74,6 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
         })
         setToday()
 
-        settingsButton.setOnClickListener {
-            it.findNavController().navigate(R.id.action_weekly_to_settings)
-        }
-
         addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert("insert"),

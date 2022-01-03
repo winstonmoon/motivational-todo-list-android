@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="com.moonwinston.motivationaltodolist.R" />
+
+        <import type="androidx.navigation.Navigation" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,29 +19,30 @@
             android:id="@+id/monthlyTitleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
+            android:minHeight="48dp"
             android:padding="10dp"
-            tools:text="Dec, 2021"
             android:textColor="@color/main_text"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Dec, 2021" />
 
         <ImageButton
             android:id="@+id/settingsButton"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
             android:background="@null"
+            android:minHeight="48dp"
+            android:onClick="@{view -> Navigation.findNavController(view).navigate(R.id.action_monthly_to_settings)}"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_outline_settings_24"
+            app:layout_constraintBottom_toBottomOf="@id/monthlyTitleTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/monthlyTitleTextView"
-            app:layout_constraintBottom_toBottomOf="@id/monthlyTitleTextView"/>
+            app:layout_constraintTop_toTopOf="@id/monthlyTitleTextView" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/calendarViewPager"
