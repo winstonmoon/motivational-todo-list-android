@@ -17,10 +17,6 @@ class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>()
     override fun initViews() = with(binding) {
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
-
-        settingsButton.setOnClickListener {
-            it.findNavController().navigate(R.id.action_reward_to_settings)
-        }
     }
 
     override fun observeData() {

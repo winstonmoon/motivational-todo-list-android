@@ -34,7 +34,7 @@
         android:label="@string/title_rewards"
         tools:layout="@layout/fragment_rewards">
         <action
-            android:id="@+id/action_reward_to_settings"
+            android:id="@+id/action_rewards_to_settings"
             app:destination="@id/navigation_settings" />
     </fragment>
 

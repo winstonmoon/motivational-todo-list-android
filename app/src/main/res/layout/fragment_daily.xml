@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.moonwinston.motivationaltodolist.R" />
+
+        <import type="androidx.navigation.Navigation" />
+
+        <variable
+            name="sharedPreferences"
+            type="com.moonwinston.motivationaltodolist.data.SharedPref" />
+
         <variable
             name="dailyFragment"
             type="com.moonwinston.motivationaltodolist.ui.daily.DailyFragment" />
@@ -19,37 +28,39 @@
             android:id="@+id/dailyTitleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
+            android:minHeight="48dp"
             android:padding="10dp"
-            tools:text="Today, Dec 23, 2021"
             android:textColor="@color/main_text"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            bind:dailyTitleTextByLanguage="@{sharedPreferences.language}"
+            tools:text="Today, Dec 23, 2021" />
 
         <ImageButton
             android:id="@+id/settingsButton"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
             android:background="@null"
+            android:minHeight="48dp"
+            android:onClick="@{view -> Navigation.findNavController(view).navigate(R.id.action_daily_to_settings)}"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_outline_settings_24"
+            app:layout_constraintBottom_toBottomOf="@id/dailyTitleTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/dailyTitleTextView"
-            app:layout_constraintBottom_toBottomOf="@id/dailyTitleTextView"/>
+            app:layout_constraintTop_toTopOf="@id/dailyTitleTextView" />
 
         <TextView
             android:id="@+id/achievementRateTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_vertical"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/label_achievement_rate"
             android:textColor="@color/main_text"
@@ -73,7 +84,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:borderStrokeWidth="40"
-            bind:alpha="@{dailyFragment.rate}"
             app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
             app:layout_constraintDimensionRatio="W, 1:1"
             app:layout_constraintEnd_toStartOf="@id/verticalGuideline"
@@ -81,7 +91,8 @@
             app:layout_constraintTop_toBottomOf="@id/achievementRateTextView"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="20" />
+            app:progressiveStrokeWidth="20"
+            bind:alpha="@{dailyFragment.rate}" />
 
         <TextView
             android:id="@+id/achievementRate"
@@ -92,12 +103,12 @@
             android:maxLines="1"
             android:padding="10dp"
             android:text="@{dailyFragment.rateString + `%`}"
-            tools:text="100%"
             android:textColor="@color/main_text"
             app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/verticalGuideline"
-            app:layout_constraintTop_toBottomOf="@id/achievementRateTextView" />
+            app:layout_constraintTop_toBottomOf="@id/achievementRateTextView"
+            tools:text="100%" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontalGuideline"
@@ -117,8 +128,8 @@
             android:id="@+id/todoListTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
             android:autoSizeTextType="uniform"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/label_todo"
             android:textColor="@color/main_text"

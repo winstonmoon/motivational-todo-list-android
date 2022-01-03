@@ -33,10 +33,6 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
         calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
         calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
         calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
-
-        settingsButton.setOnClickListener {
-            it.findNavController().navigate(R.id.action_monthly_to_settings)
-        }
     }
 
     override fun observeData() {
