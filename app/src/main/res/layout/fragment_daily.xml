@@ -11,9 +11,8 @@
         <import type="androidx.navigation.Navigation" />
 
         <variable
-            name="sharedPreferences"
-            type="com.moonwinston.motivationaltodolist.data.SharedPref" />
-
+            name="dailyFragment"
+            type="com.moonwinston.motivationaltodolist.ui.daily.DailyFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +33,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{dailyFragment.setDailyTitleText(sharedPreferences.language)}"
             tools:text="Today, Dec 23, 2021" />
 
         <ImageButton
@@ -165,7 +163,7 @@
             android:backgroundTint="@color/blue_icon"
             android:src="@drawable/ic_baseline_add_24"
             app:borderWidth="0dp"
-            android:onClick="@{view -> Navigation.findNavController(view).navigate(R.id.action_daily_to_add, this.bundleForAddDialog)}"
+            android:onClick="@{view -> Navigation.findNavController(view).navigate(R.id.action_daily_to_add, dailyFragment.bundleForAddDialog)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/white" />
