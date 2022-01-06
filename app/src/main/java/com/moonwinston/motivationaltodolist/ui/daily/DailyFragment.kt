@@ -29,11 +29,19 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     private val sharedPref: SharedPref by inject()
     var rate: Float? = null
     var rateString: String? = null
+    val bundleForAddDialog = bundleOf(
+        "dmlState" to DmlState.Insert("insert"),
+        "taskEntity" to TaskEntity(
+            taskDate = CalendarUtil.getTodayDate(),
+            taskTime = Date(),
+            task = "",
+            isCompleted = false
+        )
+    )
 
     override fun initViews() = with(binding) {
         lifecycleOwner = this@DailyFragment
         dailyFragment = this@DailyFragment
-        rate = rate
         //TODO
         if (sharedPref.isCoachDailyDismissed().not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
@@ -77,18 +85,18 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             })
         dailyTodoRecyclerView.adapter = adapter
 
-        addButton.setOnClickListener {
-            val bundle = bundleOf(
-                "dmlState" to DmlState.Insert("insert"),
-                "taskEntity" to TaskEntity(
-                    taskDate = CalendarUtil.getTodayDate(),
-                    taskTime = Date(),
-                    task = "",
-                    isCompleted = false
-                )
-            )
-            it.findNavController().navigate(R.id.action_daily_to_add, bundle)
-        }
+//        addButton.setOnClickListener {
+//            val bundle = bundleOf(
+//                "dmlState" to DmlState.Insert("insert"),
+//                "taskEntity" to TaskEntity(
+//                    taskDate = CalendarUtil.getTodayDate(),
+//                    taskTime = Date(),
+//                    task = "",
+//                    isCompleted = false
+//                )
+//            )
+//            it.findNavController().navigate(R.id.action_daily_to_add, bundle)
+//        }
     }
 
     override fun observeData() {
@@ -117,16 +125,19 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
         }
     }
 
-    fun addTask(view: View) {
-        val bundle = bundleOf(
-            "dmlState" to DmlState.Insert("insert"),
-            "taskEntity" to TaskEntity(
-                taskDate = CalendarUtil.getTodayDate(),
-                taskTime = Date(),
-                task = "",
-                isCompleted = false
-            )
-        )
-        view.findNavController().navigate(R.id.action_daily_to_add, bundle)
+
+    fun setDailyTitleText(language: Int):String {
+        val cal = Calendar.getInstance()
+        val date = cal.get(Calendar.DATE)
+        val month = cal.get(Calendar.MONTH)
+        val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
+        val year = cal.get(Calendar.YEAR)
+        val today = resources.getString(R.string.text_today)
+        val wordYear = resources.getString(R.string.label_year)
+        val wordDay = resources.getString(R.string.label_day)
+        return when (language) {
+                ContextUtil.ENGLISH -> "$today, $parsedMonth $date, $year"
+                else -> "$year$wordYear $parsedMonth $date$wordDay $today"
+            }
     }
 }
