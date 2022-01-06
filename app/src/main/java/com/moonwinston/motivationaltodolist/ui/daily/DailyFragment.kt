@@ -61,6 +61,8 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             }
         }
 
+        dailyTitleTextView.text = setDailyTitleText(sharedPref.getLanguage())
+
         //TODO
         adapter = TaskAdapter(
             meatballsMenuCallback = { taskEntity, dmlState ->
@@ -85,25 +87,13 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             })
         dailyTodoRecyclerView.adapter = adapter
 
-//        addButton.setOnClickListener {
-//            val bundle = bundleOf(
-//                "dmlState" to DmlState.Insert("insert"),
-//                "taskEntity" to TaskEntity(
-//                    taskDate = CalendarUtil.getTodayDate(),
-//                    taskTime = Date(),
-//                    task = "",
-//                    isCompleted = false
-//                )
-//            )
-//            it.findNavController().navigate(R.id.action_daily_to_add, bundle)
-//        }
     }
 
     override fun observeData() {
         sharedViewModel.getAllTasks()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { it ->
             //TODO fix
-            var todayTasksList = mutableListOf<TaskEntity>()
+            val todayTasksList = mutableListOf<TaskEntity>()
             for (taskEntity in it) {
                 if (taskEntity.taskDate == CalendarUtil.getTodayDate()) {
                     todayTasksList.add(taskEntity)
@@ -124,8 +114,7 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
             sharedViewModel.insertAchievementRate(achievementRate)
         }
     }
-
-
+    
     fun setDailyTitleText(language: Int):String {
         val cal = Calendar.getInstance()
         val date = cal.get(Calendar.DATE)
