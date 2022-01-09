@@ -16,19 +16,38 @@ import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
+import kotlin.math.roundToInt
 
 
 class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
     override val viewModel by viewModel<DailyViewModel>()
-    private val sharedViewModel by sharedViewModel<SharedViewModel>()
-    private lateinit var adapter: TaskAdapter
+    val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val sharedPref: SharedPref by inject()
-    var rate: Float? = null
-    var rateString: String? = null
+    private val adapter by lazy {TaskAdapter(
+        meatballsMenuCallback = { taskEntity, dmlState ->
+            when (dmlState) {
+                DmlState.Insert("copy") -> {
+                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                    view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
+                }
+                DmlState.Update -> {
+                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                    view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
+                }
+                DmlState.Delete -> {
+                    sharedViewModel.deleteTask(taskEntity.uid)
+                }
+                else -> Unit
+            }
+        },
+        radioButtonCallback = {
+            sharedViewModel.insertTask(it)
+            binding.congratulationsAnimationView.playAnimation()
+        })}
     val bundleForAddDialog = bundleOf(
         "dmlState" to DmlState.Insert("insert"),
         "taskEntity" to TaskEntity(
@@ -42,7 +61,8 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     override fun initViews() = with(binding) {
         lifecycleOwner = this@DailyFragment
         dailyFragment = this@DailyFragment
-        //TODO
+
+        //TODO fix
         if (sharedPref.isCoachDailyDismissed().not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
             coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
@@ -63,59 +83,33 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
 
         dailyTitleTextView.text = setDailyTitleText(sharedPref.getLanguage())
 
-        //TODO
-        adapter = TaskAdapter(
-            meatballsMenuCallback = { taskEntity, dmlState ->
-                when (dmlState) {
-                    DmlState.Insert("copy") -> {
-                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                        view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
-                    }
-                    DmlState.Update -> {
-                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                        view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
-                    }
-                    DmlState.Delete -> {
-                        sharedViewModel.deleteTask(taskEntity.uid)
-                    }
-                    else -> Unit
-                }
-            },
-            radioButtonCallback = {
-                sharedViewModel.insertTask(it)
-                binding.congratulationsAnimationView.playAnimation()
-            })
         dailyTodoRecyclerView.adapter = adapter
-
     }
 
     override fun observeData() {
+        binding.sharedViewModel = sharedViewModel
         sharedViewModel.getAllTasks()
-        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { it ->
-            //TODO fix
-            val todayTasksList = mutableListOf<TaskEntity>()
-            for (taskEntity in it) {
-                if (taskEntity.taskDate == CalendarUtil.getTodayDate()) {
-                    todayTasksList.add(taskEntity)
+        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
+            val todayTasksList = mutableListOf<TaskEntity>().apply {
+                for (taskEntity in tasksList) {
+                    if (taskEntity.taskDate == CalendarUtil.getTodayDate()) {
+                        add(taskEntity)
+                    }
                 }
             }
             adapter.submitList(todayTasksList.sortedBy { it.taskTime })
-            rate = sharedViewModel.getRate(todayTasksList)
-//            when(rate){
-//                0.0F -> binding.dailyCustomPieChart.alpha = 0.2F
-//                else -> binding.dailyCustomPieChart.alpha = 1.0F
-//            }
-            binding.dailyCustomPieChart.setPercentage(rate!!)
-            rateString = rate.toString()
-//            binding.achievementRate.text = "${(rate!! * 100).roundToInt()}%"
+            sharedViewModel.setRate(todayTasksList)
+        }
 
-            //TODO
-            val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate!!)
+        sharedViewModel.rateLiveData.observe(viewLifecycleOwner) { rate ->
+            val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
             sharedViewModel.insertAchievementRate(achievementRate)
+
+            binding.achievementRate.text = "${(rate * 100).roundToInt()}%"
         }
     }
     
-    fun setDailyTitleText(language: Int):String {
+    private fun setDailyTitleText(language: Int):String {
         val cal = Calendar.getInstance()
         val date = cal.get(Calendar.DATE)
         val month = cal.get(Calendar.MONTH)

@@ -36,3 +36,10 @@ fun setAchievementRate(view: TextView, rate: Float) {
     view.text = "$achievementRate%"
 }
 
+@BindingAdapter("bind:setPercentage")
+fun setPercentage(view: AchievementPieChartView, rate: Float) {
+    view.percentage = rate
+    view.invalidate()
+    view.requestLayout()
+}
+
