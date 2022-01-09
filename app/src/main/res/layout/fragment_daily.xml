@@ -13,6 +13,10 @@
         <variable
             name="dailyFragment"
             type="com.moonwinston.motivationaltodolist.ui.daily.DailyFragment" />
+
+        <variable
+            name="sharedViewModel"
+            type="com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,11 +87,12 @@
             app:layout_constraintDimensionRatio="W, 1:1"
             app:layout_constraintEnd_toStartOf="@id/verticalGuideline"
             app:layout_constraintStart_toStartOf="parent"
+            bind:setPercentage="@{sharedViewModel.rateLiveData}"
+            android:alpha="@{sharedViewModel.rateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:layout_constraintTop_toBottomOf="@id/achievementRateTextView"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="20"
-            bind:alpha="@{dailyFragment.rate}" />
+            app:progressiveStrokeWidth="20" />
 
         <TextView
             android:id="@+id/achievementRate"
@@ -97,7 +102,6 @@
             android:gravity="center"
             android:maxLines="1"
             android:padding="10dp"
-            android:text="@{dailyFragment.rateString + `%`}"
             android:textColor="@color/main_text"
             app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
             app:layout_constraintEnd_toEndOf="parent"

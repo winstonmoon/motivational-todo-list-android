@@ -98,9 +98,23 @@ class SharedViewModel(
         _selectedDateLiveData.value = selectedDate
     }
 
+    private var _rateLiveData = MutableLiveData<Float>()
+    val rateLiveData: LiveData<Float>
+    get() = _rateLiveData
+
+    fun setRate(tasksList: List<TaskEntity>) {
+        var totalTasks = 0F
+        var doneTasks = 0F
+        for (task in tasksList) {
+            totalTasks += 1F
+            if (task.isCompleted) doneTasks += 1F
+        }
+        _rateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
+    }
+
     fun getRate(tasksList: List<TaskEntity>): Float {
-        var totalTasks: Float = 0F
-        var doneTasks: Float = 0F
+        var totalTasks = 0F
+        var doneTasks = 0F
         for (task in tasksList) {
             totalTasks += 1F
             if (task.isCompleted) doneTasks += 1F

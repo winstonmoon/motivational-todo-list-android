@@ -16,7 +16,7 @@ class AchievementPieChartView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
-    private var percentage = 0.0F
+    var percentage = 0.0F
     private var borderStrokeWidth = 0.0F
     private var progressiveStrokeWidth = 0.0F
     private var pieChartColor = 0
@@ -81,6 +81,7 @@ class AchievementPieChartView @JvmOverloads constructor(
         canvas?.drawArc(rectF, 270F, percentage * 360F, false, paint)
     }
 
+    @JvmName("setPercentage1")
     fun setPercentage(percent: Float) {
         percentage = percent
         invalidate()

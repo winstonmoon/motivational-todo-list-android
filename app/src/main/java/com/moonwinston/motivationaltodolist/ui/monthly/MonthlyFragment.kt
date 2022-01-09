@@ -21,7 +21,7 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
     private val sharedPref: SharedPref by inject()
 
     override fun initViews() = with(binding) {
-        //TODO
+        //TODO fix
         if (sharedPref.isCoachMonthlyDismissed().not()) {
             coachMonthly.containerCoach.visibility = View.VISIBLE
             coachMonthly.containerCoach.setOnClickListener {
@@ -37,14 +37,16 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
 
     override fun observeData() {
         sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
-            val year = it[0]
-            val wordYear = resources.getString(R.string.label_year)
-            val parsedMonth = resources.getString(MonthEnum.values()[it[1]].monthAbbreviation)
-            binding.monthlyTitleTextView.text =
-                when (sharedPref.getLanguage()) {
-                    ContextUtil.ENGLISH -> "$parsedMonth, $year"
-                    else -> "$year$wordYear $parsedMonth"
-                }
+            binding.monthlyTitleTextView.text = setMonthlyTitleText(it[0], it[1], sharedPref.getLanguage())
+        }
+    }
+
+    private fun setMonthlyTitleText(year: Int, month:Int, language: Int): String {
+        val wordYear = resources.getString(R.string.label_year)
+        val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
+        return when (language) {
+            ContextUtil.ENGLISH -> "$parsedMonth, $year"
+            else -> "$year$wordYear $parsedMonth"
         }
     }
 
