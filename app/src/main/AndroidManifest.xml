@@ -23,7 +23,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <receiver android:name=".broadcast.AlarmReceiver"  android:exported="true">
+        <receiver android:name=".receiver.AlarmReceiver"  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
