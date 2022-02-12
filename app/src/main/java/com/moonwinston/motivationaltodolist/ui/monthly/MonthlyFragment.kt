@@ -10,6 +10,7 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
+import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,15 +22,7 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
     private val sharedPref: SharedPref by inject()
 
     override fun initViews() = with(binding) {
-        //TODO fix
-        if (sharedPref.isCoachMonthlyDismissed().not()) {
-            coachMonthly.containerCoach.visibility = View.VISIBLE
-            coachMonthly.containerCoach.setOnClickListener {
-                coachMonthly.containerCoach.visibility = View.GONE
-                sharedPref.setCoachMonthlyAsDismissed(true)
-            }
-        }
-
+        initDisplayCoachMark()
         calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
         calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
         calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
@@ -37,16 +30,27 @@ class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>()
 
     override fun observeData() {
         sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
-            binding.monthlyTitleTextView.text = setMonthlyTitleText(it[0], it[1], sharedPref.getLanguage())
+            binding.monthlyTitleTextView.text =
+                setMonthlyTitleText(it[0], it[1], sharedPref.getLanguage())
         }
     }
 
-    private fun setMonthlyTitleText(year: Int, month:Int, language: Int): String {
+    private fun setMonthlyTitleText(year: Int, month: Int, language: Int): String {
         val wordYear = resources.getString(R.string.label_year)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
         return when (language) {
             ContextUtil.ENGLISH -> "$parsedMonth, $year"
             else -> "$year$wordYear $parsedMonth"
+        }
+    }
+
+    private fun initDisplayCoachMark() = with(binding) {
+        if (sharedPref.isCoachMonthlyDismissed().not()) {
+            coachMonthly.containerCoach.visibility = View.VISIBLE
+            coachMonthly.containerCoach.setOnClickListener {
+                coachMonthly.containerCoach.visibility = View.GONE
+                sharedPref.setCoachMonthlyAsDismissed(true)
+            }
         }
     }
 

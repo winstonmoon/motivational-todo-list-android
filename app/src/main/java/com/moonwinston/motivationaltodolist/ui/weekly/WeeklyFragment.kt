@@ -34,20 +34,7 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
     private var lastPosition: Int = WeeklyScreenSlidePagerAdapter.START_POSITION
 
     override fun initViews() = with(binding) {
-        //TODO
-        if (sharedPref.isCoachWeeklyDismissed().not()) {
-            this@WeeklyFragment.binding.addButton.isEnabled = false
-            coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
-            coachWeeklySwipe.containerCoach.setOnClickListener {
-                coachWeeklySwipe.containerCoach.visibility = View.GONE
-                coachWeeklyTap.containerCoach.visibility = View.VISIBLE
-            }
-            coachWeeklyTap.containerCoach.setOnClickListener {
-                coachWeeklyTap.containerCoach.visibility = View.GONE
-                this@WeeklyFragment.binding.addButton.isEnabled = true
-                sharedPref.setCoachWeeklyAsDismissed(true)
-            }
-        }
+        initDisplayCoachMark()
 
         selectedDate = CalendarUtil.getTodayDate()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(
@@ -188,7 +175,8 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
                 meatballsMenuCallback = { taskEntity, dmlState ->
                     when (dmlState) {
                         DmlState.Insert("copy") -> {
-                            val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                            val bundle =
+                                bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                             view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
                         }
                         DmlState.Update -> {
@@ -331,6 +319,22 @@ class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
                     saturdayTextView.background = null
                     mondayTextView.background = null
                 }
+            }
+        }
+    }
+
+    private fun initDisplayCoachMark() = with(binding) {
+        if (sharedPref.isCoachWeeklyDismissed().not()) {
+            this@WeeklyFragment.binding.addButton.isEnabled = false
+            coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
+            coachWeeklySwipe.containerCoach.setOnClickListener {
+                coachWeeklySwipe.containerCoach.visibility = View.GONE
+                coachWeeklyTap.containerCoach.visibility = View.VISIBLE
+            }
+            coachWeeklyTap.containerCoach.setOnClickListener {
+                coachWeeklyTap.containerCoach.visibility = View.GONE
+                this@WeeklyFragment.binding.addButton.isEnabled = true
+                sharedPref.setCoachWeeklyAsDismissed(true)
             }
         }
     }
