@@ -27,27 +27,29 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     override val viewModel by viewModel<DailyViewModel>()
     val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val sharedPref: SharedPref by inject()
-    private val adapter by lazy {TaskAdapter(
-        meatballsMenuCallback = { taskEntity, dmlState ->
-            when (dmlState) {
-                DmlState.Insert("copy") -> {
-                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                    view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
+    private val adapter by lazy {
+        TaskAdapter(
+            meatballsMenuCallback = { taskEntity, dmlState ->
+                when (dmlState) {
+                    DmlState.Insert("copy") -> {
+                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
+                    }
+                    DmlState.Update -> {
+                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
+                    }
+                    DmlState.Delete -> {
+                        sharedViewModel.deleteTask(taskEntity.uid)
+                    }
+                    else -> Unit
                 }
-                DmlState.Update -> {
-                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                    view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
-                }
-                DmlState.Delete -> {
-                    sharedViewModel.deleteTask(taskEntity.uid)
-                }
-                else -> Unit
-            }
-        },
-        radioButtonCallback = {
-            sharedViewModel.insertTask(it)
-            binding.congratulationsAnimationView.playAnimation()
-        })}
+            },
+            radioButtonCallback = {
+                sharedViewModel.insertTask(it)
+                binding.congratulationsAnimationView.playAnimation()
+            })
+    }
     val bundleForAddDialog = bundleOf(
         "dmlState" to DmlState.Insert("insert"),
         "taskEntity" to TaskEntity(
@@ -61,28 +63,8 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
     override fun initViews() = with(binding) {
         lifecycleOwner = this@DailyFragment
         dailyFragment = this@DailyFragment
-
-        //TODO fix
-        if (sharedPref.isCoachDailyDismissed().not()) {
-            this@DailyFragment.binding.addButton.isEnabled = false
-            coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
-            coachDailyTapAdd.containerCoach.setOnClickListener {
-                coachDailyTapAdd.containerCoach.visibility = View.GONE
-                coachDailyTapEditOrDelete.containerCoach.visibility = View.VISIBLE
-            }
-            coachDailyTapEditOrDelete.containerCoach.setOnClickListener {
-                coachDailyTapEditOrDelete.containerCoach.visibility = View.GONE
-                coachDailyTapComplete.containerCoach.visibility = View.VISIBLE
-            }
-            coachDailyTapComplete.containerCoach.setOnClickListener {
-                coachDailyTapComplete.containerCoach.visibility = View.GONE
-                this@DailyFragment.binding.addButton.isEnabled = true
-                sharedPref.setCoachDailyAsDismissed(true)
-            }
-        }
-
+        initDisplayCoachMark()
         dailyTitleTextView.text = setDailyTitleText(sharedPref.getLanguage())
-
         dailyTodoRecyclerView.adapter = adapter
     }
 
@@ -102,14 +84,15 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
         }
 
         sharedViewModel.rateLiveData.observe(viewLifecycleOwner) { rate ->
-            val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
+            val achievementRate =
+                AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
             sharedViewModel.insertAchievementRate(achievementRate)
 
             binding.achievementRate.text = "${(rate * 100).roundToInt()}%"
         }
     }
-    
-    private fun setDailyTitleText(language: Int):String {
+
+    private fun setDailyTitleText(language: Int): String {
         val cal = Calendar.getInstance()
         val date = cal.get(Calendar.DATE)
         val month = cal.get(Calendar.MONTH)
@@ -119,8 +102,28 @@ class DailyFragment : BaseFragment<DailyViewModel, FragmentDailyBinding>() {
         val wordYear = resources.getString(R.string.label_year)
         val wordDay = resources.getString(R.string.label_day)
         return when (language) {
-                ContextUtil.ENGLISH -> "$today, $parsedMonth $date, $year"
-                else -> "$year$wordYear $parsedMonth $date$wordDay $today"
+            ContextUtil.ENGLISH -> "$today, $parsedMonth $date, $year"
+            else -> "$year$wordYear $parsedMonth $date$wordDay $today"
+        }
+    }
+
+    private fun initDisplayCoachMark() = with(binding) {
+        if (sharedPref.isCoachDailyDismissed().not()) {
+            this@DailyFragment.binding.addButton.isEnabled = false
+            coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
+            coachDailyTapAdd.containerCoach.setOnClickListener {
+                coachDailyTapAdd.containerCoach.visibility = View.GONE
+                coachDailyTapEditOrDelete.containerCoach.visibility = View.VISIBLE
             }
+            coachDailyTapEditOrDelete.containerCoach.setOnClickListener {
+                coachDailyTapEditOrDelete.containerCoach.visibility = View.GONE
+                coachDailyTapComplete.containerCoach.visibility = View.VISIBLE
+            }
+            coachDailyTapComplete.containerCoach.setOnClickListener {
+                coachDailyTapComplete.containerCoach.visibility = View.GONE
+                this@DailyFragment.binding.addButton.isEnabled = true
+                sharedPref.setCoachDailyAsDismissed(true)
+            }
+        }
     }
 }

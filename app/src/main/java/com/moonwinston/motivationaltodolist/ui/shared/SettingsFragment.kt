@@ -25,7 +25,7 @@ import org.koin.android.ext.android.inject
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private val sharedPref: SharedPref by inject()
-    private var alarmMgr: AlarmManager? = null
+    private lateinit var alarmManager: AlarmManager
     private lateinit var alarmIntent: PendingIntent
 
     override fun onCreateView(
@@ -41,7 +41,7 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
             PendingIntent.getBroadcast(context, 0, intent, 0)
         }
