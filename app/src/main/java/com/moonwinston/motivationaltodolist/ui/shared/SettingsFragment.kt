@@ -49,8 +49,8 @@ class SettingsFragment : Fragment() {
         //TODO use array not text
         binding.notify.text =
             resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
-//        binding.theme.text =
-//            resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
+        binding.theme.text =
+            resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
         binding.language.text =
             resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
 
