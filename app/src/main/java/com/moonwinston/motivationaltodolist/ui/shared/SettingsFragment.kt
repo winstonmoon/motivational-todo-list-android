@@ -32,7 +32,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.sharedPreferences = sharedPref
@@ -53,8 +53,6 @@ class SettingsFragment : Fragment() {
             resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
         binding.language.text =
             resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
-
-//        binding.versionTextView.text = BuildConfig.VERSION_NAME
 
         binding.notifyButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)

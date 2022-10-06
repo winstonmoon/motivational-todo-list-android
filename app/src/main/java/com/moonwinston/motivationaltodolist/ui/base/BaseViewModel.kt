@@ -8,9 +8,7 @@ import kotlinx.coroutines.launch
 
 abstract class BaseViewModel: ViewModel() {
 
-    protected var stateBundle: Bundle? = null
-
-    open fun fetchData(): Job = viewModelScope.launch {  }
+    private var stateBundle: Bundle? = null
 
     open fun storeState(stateBundle: Bundle) {
         this.stateBundle = stateBundle
