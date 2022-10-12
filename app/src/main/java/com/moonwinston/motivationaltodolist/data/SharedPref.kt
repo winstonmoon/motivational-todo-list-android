@@ -18,35 +18,35 @@ class SharedPref(context: Context) {
         sharedPref.edit().putBoolean(COACH_DAILY, isDismissed).apply()
     }
 
-    fun isCoachDailyDismissed(): Boolean = sharedPref.getBoolean(COACH_DAILY, false) ?: false
+    fun isCoachDailyDismissed(): Boolean = sharedPref.getBoolean(COACH_DAILY, false)
 
     fun setCoachWeeklyAsDismissed(isDismissed: Boolean) {
         sharedPref.edit().putBoolean(COACH_WEEKLY, isDismissed).apply()
     }
 
-    fun isCoachWeeklyDismissed(): Boolean = sharedPref.getBoolean(COACH_WEEKLY, false) ?: false
+    fun isCoachWeeklyDismissed(): Boolean = sharedPref.getBoolean(COACH_WEEKLY, false)
 
     fun setCoachMonthlyAsDismissed(isDismissed: Boolean) {
         sharedPref.edit().putBoolean(COACH_MONTHLY, isDismissed).apply()
     }
 
-    fun isCoachMonthlyDismissed(): Boolean = sharedPref.getBoolean(COACH_MONTHLY, false) ?: false
+    fun isCoachMonthlyDismissed(): Boolean = sharedPref.getBoolean(COACH_MONTHLY, false)
 
     fun saveNotify(notify: Int) {
         sharedPref.edit().putInt(NOTIFY, notify).apply()
     }
 
-    fun getNotify(): Int = sharedPref.getInt(NOTIFY, 0) ?: 0
+    fun getNotify(): Int = sharedPref.getInt(NOTIFY, 0)
 
     fun saveTheme(theme: Int) {
         sharedPref.edit().putInt(THEME, theme).apply()
     }
 
-    fun getTheme(): Int = sharedPref.getInt(THEME, 0) ?: 0
+    fun getTheme(): Int = sharedPref.getInt(THEME, 0)
 
     fun saveLanguage(language: Int) {
         sharedPref.edit().putInt(LANGUAGE, language).apply()
     }
 
-    fun getLanguage(): Int = sharedPref.getInt(LANGUAGE, 0) ?: 0
+    fun getLanguage(): Int = sharedPref.getInt(LANGUAGE, 0)
 }
