@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
+import kotlinx.coroutines.coroutineScope
 import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
@@ -19,6 +20,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //Todo use coroutine
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)

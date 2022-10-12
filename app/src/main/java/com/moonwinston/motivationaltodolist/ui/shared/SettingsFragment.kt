@@ -76,7 +76,7 @@ class SettingsFragment : Fragment() {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val themeItems = resources.getStringArray(R.array.theme_array)
             //TODO
-            val checkedItem = sharedPref.getTheme() ?: -1
+            val checkedItem = sharedPref.getTheme()
             builder.setTitle(resources.getString(R.string.label_theme))
                 .setSingleChoiceItems(themeItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
@@ -98,7 +98,7 @@ class SettingsFragment : Fragment() {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val languageItems = resources.getStringArray(R.array.language_array)
             //TODO
-            val checkedItem = sharedPref.getLanguage() ?: -1
+            val checkedItem = sharedPref.getLanguage()
             builder.setTitle(resources.getString(R.string.label_language))
                 .setSingleChoiceItems(languageItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
