@@ -2,13 +2,11 @@ package com.moonwinston.motivationaltodolist
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
@@ -20,15 +18,13 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //Todo use coroutine
-        Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        val intent = Intent(this@SplashActivity, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        }
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(2000)
             startActivity(intent)
             finish()
-        },DURATION)
-    }
-    companion object {
-        private const val DURATION : Long = 2000
+        }
     }
 }
