@@ -11,9 +11,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MonthlyCalendarFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyCalendarBinding>() {
+class MonthlyCalendarFragment : BaseFragment<FragmentMonthlyCalendarBinding>() {
     override fun getViewBinding() = FragmentMonthlyCalendarBinding.inflate(layoutInflater)
-    override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffMonth = 0
 

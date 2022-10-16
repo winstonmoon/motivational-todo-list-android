@@ -15,9 +15,8 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MonthlyFragment : BaseFragment<MonthlyViewModel, FragmentMonthlyBinding>() {
+class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
-    override val viewModel by viewModel<MonthlyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val sharedPref: SharedPref by inject()
 

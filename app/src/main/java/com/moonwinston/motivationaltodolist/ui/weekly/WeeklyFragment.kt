@@ -25,9 +25,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WeeklyFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyBinding>() {
+class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     override fun getViewBinding() = FragmentWeeklyBinding.inflate(layoutInflater)
-    override val viewModel by viewModel<WeeklyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val sharedPref: SharedPref by inject()
     private lateinit var selectedDate: Date

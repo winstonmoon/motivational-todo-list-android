@@ -1,11 +1,8 @@
 package com.moonwinston.motivationaltodolist.di
 
 import com.moonwinston.motivationaltodolist.data.*
-import com.moonwinston.motivationaltodolist.ui.daily.DailyViewModel
-import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
-import com.moonwinston.motivationaltodolist.ui.rewards.RewardsViewModel
+import com.moonwinston.motivationaltodolist.ui.settings.SettingsViewModel
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
-import com.moonwinston.motivationaltodolist.ui.weekly.WeeklyViewModel
 import org.koin.dsl.module
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
@@ -24,10 +21,7 @@ internal val appModule = module {
 
     single { SharedPref(androidApplication())}
 
-    viewModel { DailyViewModel() }
-    viewModel { MonthlyViewModel() }
-    viewModel { RewardsViewModel() }
-    viewModel { WeeklyViewModel() }
+    viewModel { SettingsViewModel(get(), get()) }
     viewModel { SharedViewModel(get(), get()) }
 }
 

@@ -11,9 +11,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WeeklyCalendarFragment : BaseFragment<WeeklyViewModel, FragmentWeeklyCalendarBinding>() {
+class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
     override fun getViewBinding() = FragmentWeeklyCalendarBinding.inflate(layoutInflater)
-    override val viewModel by viewModel<WeeklyViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private var diffWeek = 0
     private val weekList = mutableListOf<Date>()
