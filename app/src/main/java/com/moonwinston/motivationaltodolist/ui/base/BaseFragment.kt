@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.Job
 
-abstract class BaseFragment<VM: BaseViewModel, VB: ViewBinding>: Fragment() {
-
-    abstract val viewModel: VM
+abstract class BaseFragment<VB: ViewBinding>: Fragment() {
 
     protected lateinit var binding: VB
 
@@ -27,9 +25,6 @@ abstract class BaseFragment<VM: BaseViewModel, VB: ViewBinding>: Fragment() {
     }
 
     open fun initState() {
-        arguments?.let {
-            viewModel.storeState(it)
-        }
         initViews()
         observeData()
     }

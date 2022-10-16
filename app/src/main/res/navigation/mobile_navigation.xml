@@ -53,7 +53,7 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.moonwinston.motivationaltodolist.ui.shared.SettingsFragment"
+        android:name="com.moonwinston.motivationaltodolist.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 

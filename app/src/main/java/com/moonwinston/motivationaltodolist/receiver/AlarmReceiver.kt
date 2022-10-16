@@ -12,6 +12,11 @@ import com.moonwinston.motivationaltodolist.MainActivity
 
 class AlarmReceiver : BroadcastReceiver() {
 
+    companion object {
+        const val NOTIFICATION_ID = 0
+        const val PRIMARY_CHANNEL_ID = "primary_notification_channel"
+    }
+
     private lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -30,7 +35,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 NotificationManager.IMPORTANCE_HIGH
             )
             notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
+//            notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
             notificationChannel.description = "AlarmManager Tests"
             notificationManager.createNotificationChannel(
@@ -48,7 +53,7 @@ class AlarmReceiver : BroadcastReceiver() {
         )
         val builder =
             NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_alarm)
+//                .setSmallIcon(R.drawable.ic_alarm)
                 .setContentTitle("Alert")
                 .setContentText("This is repeating alarm")
                 .setContentIntent(contentPendingIntent)

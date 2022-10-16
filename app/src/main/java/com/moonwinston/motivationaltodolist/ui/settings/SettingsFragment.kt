@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.ui.shared
+package com.moonwinston.motivationaltodolist.ui.settings
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -10,20 +10,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import com.moonwinston.motivationaltodolist.BuildConfig
 import com.moonwinston.motivationaltodolist.MainActivity
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
+import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SettingsFragment : Fragment() {
-    private lateinit var binding: FragmentSettingsBinding
+class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
+    override fun getViewBinding() = FragmentSettingsBinding.inflate(layoutInflater)
+    private val viewModel by viewModel<SettingsViewModel>()
     private val sharedPref: SharedPref by inject()
     private lateinit var alarmManager: AlarmManager
     private lateinit var alarmIntent: PendingIntent
@@ -116,5 +115,13 @@ class SettingsFragment : Fragment() {
                     })
             builder.show()
         }
+    }
+
+    override fun initViews() = with(binding) {
+
+    }
+
+    override fun observeData() {
+
     }
 }

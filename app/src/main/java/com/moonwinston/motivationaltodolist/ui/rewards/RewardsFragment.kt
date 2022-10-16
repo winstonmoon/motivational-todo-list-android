@@ -9,9 +9,8 @@ import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RewardsFragment : BaseFragment<RewardsViewModel, FragmentRewardsBinding>() {
+class RewardsFragment : BaseFragment<FragmentRewardsBinding>() {
     override fun getViewBinding() = FragmentRewardsBinding.inflate(layoutInflater)
-    override val viewModel by viewModel<RewardsViewModel>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     override fun initViews() = with(binding) {
