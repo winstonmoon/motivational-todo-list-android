@@ -27,39 +27,31 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
     private lateinit var alarmManager: AlarmManager
     private lateinit var alarmIntent: PendingIntent
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.sharedPreferences = sharedPref
-        return binding.root
-    }
+    override fun initViews() = with(binding) {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        lifecycleOwner = this@SettingsFragment
+        sharedPreferences = sharedPref
+
         alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
             PendingIntent.getBroadcast(context, 0, intent, 0)
         }
 
         //TODO use array not text
-        binding.notify.text =
+        notify.text =
             resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
-        binding.theme.text =
+        theme.text =
             resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
-        binding.language.text =
+        language.text =
             resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
 
-        binding.notifyButton.setOnClickListener {
+        notifyButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val notifyItems = resources.getStringArray(R.array.notify_array)
             builder.setTitle(resources.getString(R.string.label_notify))
                 .setSingleChoiceItems(notifyItems, -1,
                     DialogInterface.OnClickListener { dialog, which ->
-                        binding.notify.text = notifyItems[which]
+                        notify.text = notifyItems[which]
                         //TODO sharedPreferences
                         //TODO use array not text
                         dialog.dismiss()
@@ -71,7 +63,7 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
                     })
             builder.show()
         }
-        binding.themeButton.setOnClickListener {
+        themeButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val themeItems = resources.getStringArray(R.array.theme_array)
             //TODO
@@ -79,7 +71,7 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
             builder.setTitle(resources.getString(R.string.label_theme))
                 .setSingleChoiceItems(themeItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
-                        binding.theme.text = themeItems[which]
+                        theme.text = themeItems[which]
                         //TODO use array not text
                         sharedPref.saveTheme(which)
                         ThemeUtil().setTheme(which)
@@ -93,7 +85,7 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
             builder.show()
         }
 
-        binding.languageButton.setOnClickListener {
+        languageButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val languageItems = resources.getStringArray(R.array.language_array)
             //TODO
@@ -101,7 +93,7 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
             builder.setTitle(resources.getString(R.string.label_language))
                 .setSingleChoiceItems(languageItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
-                        binding.language.text = languageItems[which]
+                        language.text = languageItems[which]
                         //TODO use array not text
                         sharedPref.saveLanguage(which)
                         val intent = Intent(activity, MainActivity::class.java)
@@ -115,10 +107,6 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
                     })
             builder.show()
         }
-    }
-
-    override fun initViews() = with(binding) {
-
     }
 
     override fun observeData() {
