@@ -22,9 +22,10 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         notificationManager = context.getSystemService(
             Context.NOTIFICATION_SERVICE) as NotificationManager
-
+        //Todo
+        val contextText = intent.extras?.getString("")?:""
         createNotificationChannel()
-        deliverNotification(context)
+        deliverNotification(context, contextText)
     }
 
     private fun createNotificationChannel() {
@@ -43,7 +44,7 @@ class AlarmReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun deliverNotification(context: Context) {
+    private fun deliverNotification(context: Context, contextText: String) {
         val contentIntent = Intent(context, MainActivity::class.java)
         val contentPendingIntent = PendingIntent.getActivity(
             context,
@@ -54,8 +55,8 @@ class AlarmReceiver : BroadcastReceiver() {
         val builder =
             NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
 //                .setSmallIcon(R.drawable.ic_alarm)
-                .setContentTitle("Alert")
-                .setContentText("This is repeating alarm")
+                .setContentTitle("Motivational Todo List")
+                .setContentText(contextText)
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
