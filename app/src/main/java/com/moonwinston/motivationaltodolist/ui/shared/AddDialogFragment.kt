@@ -186,7 +186,6 @@ class AddDialogFragment : DialogFragment() {
         binding: DialogAddBinding,
         positiveButton: Int
     ) {
-
     }
 }
 
