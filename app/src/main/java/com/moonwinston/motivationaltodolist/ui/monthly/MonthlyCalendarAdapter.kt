@@ -26,9 +26,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
         fun bind(testDate: Date) {
             val tempTaskList = mutableListOf<TaskEntity>()
             for (date in monTasksList){
-                if (date.taskDate == testDate) {
-                    tempTaskList.add(date)
-                }
+                if (date.taskDate == testDate) tempTaskList.add(date)
             }
             val rate = getRate(tempTaskList)
 
@@ -51,9 +49,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 }
                 else -> {
                     binding.monthlyDateTextView.text = SimpleDateFormat("d").format(testDate)
-                    if (rate == 0.0F) {
-                        binding.monthlyCustomPieChart.alpha = 0.2F
-                    }
+                    if (rate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.setPercentage(rate)
                 }
             }

@@ -73,9 +73,7 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
             val todayTasksList = mutableListOf<TaskEntity>().apply {
                 for (taskEntity in tasksList) {
-                    if (taskEntity.taskDate == CalendarUtil.getTodayDate()) {
-                        add(taskEntity)
-                    }
+                    if (taskEntity.taskDate == CalendarUtil.getTodayDate()) add(taskEntity)
                 }
             }
             adapter.submitList(todayTasksList.sortedBy { it.taskTime })
