@@ -2,6 +2,8 @@ package com.moonwinston.motivationaltodolist.ui.settings
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -34,10 +36,9 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
 
         alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-            PendingIntent.getBroadcast(context, 0, intent, 0)
+            PendingIntent.getBroadcast(context, 0, intent, FLAG_IMMUTABLE,)
         }
 
-        //TODO use array not text
         notify.text =
             resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
         theme.text =
@@ -48,12 +49,15 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
         notifyButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val notifyItems = resources.getStringArray(R.array.notify_array)
+            val checkedItem = sharedPref.getNotify()
             builder.setTitle(resources.getString(R.string.label_notify))
-                .setSingleChoiceItems(notifyItems, -1,
+                .setSingleChoiceItems(notifyItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         notify.text = notifyItems[which]
+                        sharedPref.saveNotify(which)
+                        //TODO
+                        //setAlarm()
                         //TODO sharedPreferences
-                        //TODO use array not text
                         dialog.dismiss()
                     })
                 .setNegativeButton(
@@ -66,13 +70,11 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
         themeButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val themeItems = resources.getStringArray(R.array.theme_array)
-            //TODO
             val checkedItem = sharedPref.getTheme()
             builder.setTitle(resources.getString(R.string.label_theme))
                 .setSingleChoiceItems(themeItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         theme.text = themeItems[which]
-                        //TODO use array not text
                         sharedPref.saveTheme(which)
                         ThemeUtil().setTheme(which)
                         dialog.dismiss()
@@ -88,13 +90,11 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
         languageButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val languageItems = resources.getStringArray(R.array.language_array)
-            //TODO
             val checkedItem = sharedPref.getLanguage()
             builder.setTitle(resources.getString(R.string.label_language))
                 .setSingleChoiceItems(languageItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         language.text = languageItems[which]
-                        //TODO use array not text
                         sharedPref.saveLanguage(which)
                         val intent = Intent(activity, MainActivity::class.java)
                         startActivity(intent)
@@ -110,6 +110,10 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
     }
 
     override fun observeData() {
+
+    }
+
+    private fun setAlarm (notifyTime: Int) {
 
     }
 }
