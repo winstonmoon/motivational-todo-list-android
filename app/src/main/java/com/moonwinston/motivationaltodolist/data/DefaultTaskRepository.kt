@@ -13,6 +13,11 @@ class DefaultTaskRepository(
         taskDao.getAll()
     }
 
+    //TODO temporary implement
+    override suspend fun getAllFutureTasks(currentTime: Date): List<TaskEntity> = withContext(ioDispatcher) {
+        taskDao.getAllFutureTasks(currentTime)
+    }
+
     override suspend fun getAllTasksByDates(taskDatesList: MutableList<Date>): List<TaskEntity> =
         withContext(ioDispatcher) {
             taskDao.getAllByDates(taskDatesList)
