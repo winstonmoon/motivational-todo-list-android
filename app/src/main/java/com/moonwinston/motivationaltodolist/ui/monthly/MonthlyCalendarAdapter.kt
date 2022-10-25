@@ -38,9 +38,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 testDate == today -> {
                     binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.monthlyDateTextView.text = SimpleDateFormat("d").format(testDate)
-                    if (rate == 0.0F) {
-                        binding.monthlyCustomPieChart.alpha = 0.2F
-                    }
+                    if (rate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.setPercentage(rate)
                 }
                 testDate.after(today) -> {
@@ -83,7 +81,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Date>() {
             override fun areItemsTheSame(oldItem: Date, newItem: Date): Boolean {
-                return oldItem == newItem
+                return oldItem.time == newItem.time
             }
 
             override fun areContentsTheSame(oldItem: Date, newItem: Date): Boolean {

@@ -86,12 +86,9 @@ class TaskAdapter(
                     popupMenu.menuInflater.inflate(R.menu.task_edit_menu, popupMenu.menu)
                     popupMenu.setOnMenuItemClickListener { item ->
                         when (item.itemId) {
-                            R.id.copy ->
-                                meatballsMenuCallback(taskEntity, DmlState.Insert("copy"))
-                            R.id.edit ->
-                                meatballsMenuCallback(taskEntity, DmlState.Update)
-                            R.id.delete ->
-                                meatballsMenuCallback(taskEntity, DmlState.Delete)
+                            R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert("copy"))
+                            R.id.edit -> meatballsMenuCallback(taskEntity, DmlState.Update)
+                            R.id.delete -> meatballsMenuCallback(taskEntity, DmlState.Delete)
                         }
                         false
                     }

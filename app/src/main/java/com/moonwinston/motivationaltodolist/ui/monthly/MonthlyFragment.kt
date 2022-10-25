@@ -29,8 +29,7 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
 
     override fun observeData() {
         sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
-            binding.monthlyTitleTextView.text =
-                setMonthlyTitleText(it[0], it[1], sharedPref.getLanguage())
+            binding.monthlyTitleTextView.text = setMonthlyTitleText(it[0], it[1], sharedPref.getLanguage())
         }
     }
 

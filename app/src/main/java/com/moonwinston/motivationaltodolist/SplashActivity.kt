@@ -3,6 +3,7 @@ package com.moonwinston.motivationaltodolist
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
@@ -21,7 +22,7 @@ class SplashActivity : AppCompatActivity() {
         val intent = Intent(this@SplashActivity, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         }
-        GlobalScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main) {
             delay(2000)
             startActivity(intent)
             finish()
