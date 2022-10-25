@@ -74,7 +74,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun observeData() {
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
             selectedDate = it

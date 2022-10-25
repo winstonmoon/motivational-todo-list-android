@@ -39,12 +39,9 @@ class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
             PendingIntent.getBroadcast(context, 0, intent, FLAG_IMMUTABLE,)
         }
 
-        notify.text =
-            resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
-        theme.text =
-            resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
-        language.text =
-            resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
+        notify.text = resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
+        theme.text = resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
+        language.text = resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
 
         notifyButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)

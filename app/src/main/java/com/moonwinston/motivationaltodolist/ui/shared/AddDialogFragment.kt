@@ -19,12 +19,14 @@ import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.properties.Delegates
 
 class AddDialogFragment : DialogFragment() {
     private lateinit var binding: DialogAddBinding
     private lateinit var date: Date
     private lateinit var dmlState: DmlState
     private lateinit var taskEntity: TaskEntity
+    private var positiveButton by Delegates.notNull<Int>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,20 +38,11 @@ class AddDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             binding = DialogAddBinding.inflate(layoutInflater)
-            var positiveButton: Int = R.string.button_add
-
             initCommonView(binding)
             when (dmlState) {
-                DmlState.Insert("insert") -> {
-                    initInsertView(binding, taskEntity)
-                }
-                DmlState.Insert("copy") -> {
-                    initCopyView(binding, taskEntity)
-                }
-                DmlState.Update -> {
-                    initUpdateView(binding, taskEntity)
-                    positiveButton = R.string.button_edit
-                }
+                DmlState.Insert("insert") -> initInsertView(binding, taskEntity)
+                DmlState.Insert("copy") -> initCopyView(binding, taskEntity)
+                DmlState.Update -> initUpdateView(binding, taskEntity)
                 else -> Unit
             }
 
@@ -59,49 +52,31 @@ class AddDialogFragment : DialogFragment() {
                     DialogInterface.OnClickListener { _, _ ->
                         //TODO
                         if (date.before(CalendarUtil.getTodayDate())) {
-                            Toast.makeText(
-                                it,
-                                resources.getString(R.string.message_toast_unaddable),
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Toast.makeText(it, resources.getString(R.string.message_toast_unaddable), Toast.LENGTH_LONG).show()
                             return@OnClickListener
                         }
-                        val hour =
-                            if (Build.VERSION.SDK_INT <= 23) binding.timePicker.currentHour else binding.timePicker.hour
+                        val hour = binding.timePicker.hour
+                        val minute = binding.timePicker.minute
 
-                        val minute =
-                            if (Build.VERSION.SDK_INT <= 23) binding.timePicker.currentMinute else binding.timePicker.minute
-
-                        //TODO not use uid when copy
-                        var taskEntity =
-                            if (dmlState == DmlState.Insert("copy"))
-                                TaskEntity(
-                                    taskDate = date,
-                                    taskTime = SimpleDateFormat("HH:mm").parse(
-                                        "%02d:%02d".format(
-                                            hour,
-                                            minute
-                                        )
-                                    ),
-                                    task = binding.taskEditText.text.toString(),
-                                    isCompleted = false
-                                )
-                            else
-                                TaskEntity(
-                                    uid = taskEntity?.uid,
-                                    taskDate = date,
-                                    taskTime = SimpleDateFormat("HH:mm").parse(
-                                        "%02d:%02d".format(
-                                            hour,
-                                            minute
-                                        )
-                                    ),
-                                    task = binding.taskEditText.text.toString(),
-                                    isCompleted = false
-                                )
+                        val taskEntity =
+                            when (dmlState) {
+                                DmlState.Insert("copy") ->
+                                    TaskEntity(
+                                        taskDate = date,
+                                        taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
+                                        task = binding.taskEditText.text.toString(),
+                                        isCompleted = false
+                                    )
+                                else ->
+                                    TaskEntity(
+                                        uid = taskEntity.uid,
+                                        taskDate = date,
+                                        taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
+                                        task = binding.taskEditText.text.toString(),
+                                        isCompleted = false
+                                    )
+                            }
                         sharedViewModel.insertTask(taskEntity)
-                        //TODO
-//                        sharedViewModel.getAll()
                     })
                 .setNegativeButton(
                     R.string.button_cancel,
@@ -130,15 +105,11 @@ class AddDialogFragment : DialogFragment() {
     }
 
     private fun initInsertView(binding: DialogAddBinding, taskEntity: TaskEntity) {
-        if (Build.VERSION.SDK_INT <= 23) {
-            binding.timePicker.currentHour
-            binding.timePicker.currentMinute
-        } else {
-            binding.timePicker.hour
-            binding.timePicker.minute
-        }
+        binding.timePicker.hour
+        binding.timePicker.minute
         binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
+        positiveButton = R.string.button_add
     }
 
     private fun initCopyView(binding: DialogAddBinding, taskEntity: TaskEntity) {
@@ -149,16 +120,12 @@ class AddDialogFragment : DialogFragment() {
         val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
         val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
 
-        if (Build.VERSION.SDK_INT <= 23) {
-            binding.timePicker.currentHour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-            binding.timePicker.currentMinute = taskEntityTaskTime.get(Calendar.MINUTE)
-        } else {
-            binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-            binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
-        }
+        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
         binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
         binding.taskEditText.setText(taskEntity.task)
+        positiveButton = R.string.button_add
     }
 
     private fun initUpdateView(binding: DialogAddBinding, taskEntity: TaskEntity) {
@@ -169,16 +136,12 @@ class AddDialogFragment : DialogFragment() {
         val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
         val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
 
-        if (Build.VERSION.SDK_INT <= 23) {
-            binding.timePicker.currentHour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-            binding.timePicker.currentMinute = taskEntityTaskTime.get(Calendar.MINUTE)
-        } else {
-            binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-            binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
-        }
+        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
         binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
         binding.taskEditText.setText(taskEntity.task)
+        positiveButton = R.string.button_edit
     }
 
     private fun createDialogBuilder(

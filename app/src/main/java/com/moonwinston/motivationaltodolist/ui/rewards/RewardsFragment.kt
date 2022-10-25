@@ -15,7 +15,7 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding>() {
 
     override fun initViews() = with(binding) {
         val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
+        adView.loadAd(adRequest)
     }
 
     override fun observeData() {
