@@ -15,6 +15,7 @@ class SharedViewModel(
     private val taskRepository: TaskRepository,
     private val achievementRateRepository: AchievementRateRepository
 ) : ViewModel() {
+
     private var _tasksListLiveData = MutableLiveData<List<TaskEntity>>()
     val tasksListLiveData: LiveData<List<TaskEntity>>
         get() = _tasksListLiveData

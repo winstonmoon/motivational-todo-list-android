@@ -13,9 +13,11 @@ import androidx.fragment.app.FragmentActivity
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,6 +30,7 @@ class AddDialogFragment : DialogFragment() {
     private lateinit var taskEntity: TaskEntity
     private var positiveButton by Delegates.notNull<Int>()
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
+    private val sharedPref: SharedPref by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +80,13 @@ class AddDialogFragment : DialogFragment() {
                                     )
                             }
                         sharedViewModel.insertTask(taskEntity)
+
+                        //TODO
+//                        val isNotifySet = sharedPref.getNotify() != 0
+//                        if (isNotifySet) {
+//                            alarmmanager
+//                            pendingintent
+//                        }
                     })
                 .setNegativeButton(
                     R.string.button_cancel,

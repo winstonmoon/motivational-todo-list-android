@@ -21,7 +21,7 @@ internal val appModule = module {
 
     single { SharedPref(androidApplication())}
 
-    viewModel { SettingsViewModel(get(), get()) }
+    viewModel { SettingsViewModel(get()) }
     viewModel { SharedViewModel(get(), get()) }
 }
 
