@@ -25,26 +25,20 @@ class ContextUtil(base: Context) : ContextWrapper(base) {
                 3 -> Locale.JAPANESE
                 4 -> Locale.SIMPLIFIED_CHINESE
                 else -> {
-                    val deviceLocale =
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) Resources.getSystem().configuration.locales[0]
-                        else Resources.getSystem().configuration.locale
+                    val deviceLocale = Resources.getSystem().configuration.locales[0]
                     var deviceLanguage = deviceLocale.language
                     val deviceScript = deviceLocale.script
                     deviceLanguage += if (deviceScript.isNotEmpty()) "-$deviceScript" else ""
                     val languageTag = Locale.forLanguageTag(deviceLanguage)
-                    val availableLanguageList =
-                        listOf("en", "ko", "ja", "zh-Hans")
+                    val availableLanguageList = listOf("en", "ko", "ja", "zh-Hans")
                     if (availableLanguageList.contains(deviceLanguage)) languageTag else Locale.ENGLISH
                 }
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val localeList = LocaleList(localeToSwitchTo)
-                LocaleList.setDefault(localeList)
-                configuration.setLocales(localeList)
-            } else {
-                configuration.locale = localeToSwitchTo
-            }
+            val localeList = LocaleList(localeToSwitchTo)
+            LocaleList.setDefault(localeList)
+            configuration.setLocales(localeList)
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                 context = context.createConfigurationContext(configuration)
             } else {

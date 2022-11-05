@@ -58,15 +58,23 @@ class AddDialogFragment : DialogFragment() {
                             Toast.makeText(it, resources.getString(R.string.message_toast_unaddable), Toast.LENGTH_LONG).show()
                             return@OnClickListener
                         }
-                        val hour = binding.timePicker.hour
-                        val minute = binding.timePicker.minute
+
+                        //TODO
+//                        val hour = binding.timePicker.hour
+//                        val minute = binding.timePicker.minute
+
+                        val time = Calendar.getInstance()
+                        time.set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
+                        time.set(Calendar.MINUTE, binding.timePicker.minute)
 
                         val taskEntity =
                             when (dmlState) {
                                 DmlState.Insert("copy") ->
                                     TaskEntity(
                                         taskDate = date,
-                                        taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
+                                        //TODO
+//                                        taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
+                                        taskTime = time.time,
                                         task = binding.taskEditText.text.toString(),
                                         isCompleted = false
                                     )
@@ -74,7 +82,9 @@ class AddDialogFragment : DialogFragment() {
                                     TaskEntity(
                                         uid = taskEntity.uid,
                                         taskDate = date,
-                                        taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
+                                        //TODO
+//                                        taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
+                                        taskTime = time.time,
                                         task = binding.taskEditText.text.toString(),
                                         isCompleted = false
                                     )
@@ -109,8 +119,14 @@ class AddDialogFragment : DialogFragment() {
     private fun initCommonView(binding: DialogAddBinding) {
         binding.timePicker.setIs24HourView(true)
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-            date = SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$dayOfMonth")
+            //TODO
+//            val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
+//            date = SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$dayOfMonth")
+            val cal = Calendar.getInstance()
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, month)
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            date  = cal.time
         }
     }
 
@@ -123,15 +139,19 @@ class AddDialogFragment : DialogFragment() {
     }
 
     private fun initCopyView(binding: DialogAddBinding, taskEntity: TaskEntity) {
-        val year = SimpleDateFormat("y").format(taskEntity.taskTime).toInt()
-        val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
-        val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
-        val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
-        val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
-        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
-
-        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
+        //TODO
+//        val year = SimpleDateFormat("y").format(taskEntity.taskTime).toInt()
+//        val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
+//        val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
+//        val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
+//        val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
+//        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
+//        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+//        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
+        val cal = Calendar.getInstance()
+        cal.time = taskEntity.taskTime
+        binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
+        binding.timePicker.minute = cal.get(Calendar.MINUTE)
         binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
         binding.taskEditText.setText(taskEntity.task)
@@ -139,15 +159,19 @@ class AddDialogFragment : DialogFragment() {
     }
 
     private fun initUpdateView(binding: DialogAddBinding, taskEntity: TaskEntity) {
-        val year = SimpleDateFormat("y").format(taskEntity.taskTime).toInt()
-        val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
-        val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
-        val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
-        val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
-        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
-
-        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
+        //TODO
+//        val year = SimpleDateFormat("y").format(taskEntity.taskTime).toInt()
+//        val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
+//        val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
+//        val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
+//        val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
+//        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
+//        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
+//        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
+        val cal = Calendar.getInstance()
+        cal.time = taskEntity.taskTime
+        binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
+        binding.timePicker.minute = cal.get(Calendar.MINUTE)
         binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
         binding.taskEditText.setText(taskEntity.task)
