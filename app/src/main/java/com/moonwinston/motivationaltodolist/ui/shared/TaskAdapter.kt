@@ -25,6 +25,11 @@ class TaskAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
+
+            val cal = Calendar.getInstance()
+            cal.time = taskEntity.taskTime
+            val taskTime = "${cal.get(Calendar.HOUR_OF_DAY)}:${cal.get(Calendar.MINUTE)}"
+
             if (taskEntity.isCompleted) {
                 binding.taskRadioButton.isChecked = true
                 binding.taskTextView.paintFlags =
@@ -47,13 +52,16 @@ class TaskAdapter(
                     }
                     popupMenu.show()
                 }
-                binding.timeTextView.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
+
+//                binding.timeTextView.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
+                binding.timeTextView.text = taskTime
             } else {
                 binding.taskRadioButton.isChecked = false
                 //TODO fix
                 binding.taskTextView.paintFlags = 0
                 binding.taskTextView.text = taskEntity.task
-                binding.timeTextView.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
+//                binding.timeTextView.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
+                binding.timeTextView.text = taskTime
 
                 binding.taskRadioButton.setOnClickListener {
                     val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)

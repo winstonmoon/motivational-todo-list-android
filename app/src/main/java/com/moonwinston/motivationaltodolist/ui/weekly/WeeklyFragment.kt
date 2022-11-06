@@ -237,7 +237,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     }
 
     //TODO
-    @RequiresApi(Build.VERSION_CODES.N)
     private fun setToday() {
         binding.weeklyTitleTextView.text = getWeeklyTitle(CalendarUtil.getTodayDate())
         when (SimpleDateFormat("u").format(CalendarUtil.getTodayDate())) {

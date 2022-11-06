@@ -124,7 +124,7 @@ class AddDialogFragment : DialogFragment() {
 //            date = SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$dayOfMonth")
             val cal = Calendar.getInstance()
             cal.set(Calendar.YEAR, year)
-            cal.set(Calendar.MONTH, month)
+            cal.set(Calendar.MONTH, month + 1)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             date  = cal.time
         }
