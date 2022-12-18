@@ -79,9 +79,14 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             selectedDate = it
             sharedViewModel.getAllTasks()
             binding.weeklyTitleTextView.text = getWeeklyTitle(it)
+
+            val cal = Calendar.getInstance()
+            cal.time = it
             //TODO day number of week
-            when (SimpleDateFormat("u").format(it)) {
-                "1" -> {
+//            when (SimpleDateFormat("u").format(it)) {
+//                "1" -> {
+            when (cal.get(Calendar.DAY_OF_WEEK)) {
+                Calendar.MONDAY -> {
                     binding.apply {
                         mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                         tuesdayTextView.background = null
@@ -92,7 +97,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                         sundayTextView.background = null
                     }
                 }
-                "2" -> {
+                Calendar.TUESDAY -> {
                     binding.apply {
                         tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                         mondayTextView.background = null
@@ -103,7 +108,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                         sundayTextView.background = null
                     }
                 }
-                "3" -> {
+                Calendar.WEDNESDAY -> {
                     binding.apply {
                         wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                         tuesdayTextView.background = null
@@ -114,7 +119,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                         sundayTextView.background = null
                     }
                 }
-                "4" -> {
+                Calendar.THURSDAY -> {
                     binding.apply {
                         thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                         tuesdayTextView.background = null
@@ -125,7 +130,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                         sundayTextView.background = null
                     }
                 }
-                "5" -> {
+                Calendar.FRIDAY -> {
                     binding.apply {
                         fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                         tuesdayTextView.background = null
@@ -136,7 +141,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                         sundayTextView.background = null
                     }
                 }
-                "6" -> {
+                Calendar.SATURDAY -> {
                     binding.apply {
                         saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                         tuesdayTextView.background = null
@@ -147,7 +152,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                         sundayTextView.background = null
                     }
                 }
-                "7" -> {
+                Calendar.SUNDAY -> {
                     binding.apply {
                         sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                         tuesdayTextView.background = null
@@ -196,7 +201,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             adapter.submitList(selectedDayTasksList.sortedBy { it.taskTime })
 
             //TODO
-            if (selectedDayTasksList.isNullOrEmpty().not()) {
+            if (selectedDayTasksList.isEmpty().not()) {
                 val rate = sharedViewModel.getRate(selectedDayTasksList)
                 val date = selectedDayTasksList[0].taskDate
                 val achievementRate = AchievementRateEntity(date = date, rate = rate)
@@ -213,20 +218,27 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     }
 
     private fun getWeeklyTitle(selectedDate: Date): String {
-        val y = SimpleDateFormat("y").format(selectedDate).toInt()
-        val m = SimpleDateFormat("M").format(selectedDate).toInt()
-        val d = SimpleDateFormat("d").format(selectedDate).toInt()
-        val gregorianCalendar = GregorianCalendar(y, m - 1, d)
-        val year = gregorianCalendar.get(Calendar.YEAR)
-        val month = gregorianCalendar.get(Calendar.MONTH)
-        val date = gregorianCalendar.get(Calendar.DATE)
-        val dayOfWeek = gregorianCalendar.get(Calendar.DAY_OF_WEEK)
+//        val y = SimpleDateFormat("y").format(selectedDate).toInt()
+//        val m = SimpleDateFormat("M").format(selectedDate).toInt()
+//        val d = SimpleDateFormat("d").format(selectedDate).toInt()
+//        val gregorianCalendar = GregorianCalendar(y, m - 1, d)
+//        val year = gregorianCalendar.get(Calendar.YEAR)
+//        val month = gregorianCalendar.get(Calendar.MONTH)
+//        val date = gregorianCalendar.get(Calendar.DATE)
+//        val dayOfWeek = gregorianCalendar.get(Calendar.DAY_OF_WEEK)
+        val cal = Calendar.getInstance()
+        cal.time = selectedDate
+
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.get(Calendar.MONTH)
+        val date = cal.get(Calendar.DATE)
+        val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
+
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
         val today = resources.getString(R.string.text_today)
         val parsedDayOfWeek =
-            if (selectedDate == CalendarUtil.getTodayDate()) today else resources.getString(
-                DayOfWeekEnum.values()[dayOfWeek].dayOfWeek
-            )
+            if (selectedDate == CalendarUtil.getTodayDate()) today
+            else resources.getString(DayOfWeekEnum.values()[dayOfWeek].dayOfWeek)
         val wordYear = resources.getString(R.string.label_year)
         val wordDay = resources.getString(R.string.label_day)
         //TODO separate western and eastern
@@ -239,8 +251,12 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     //TODO
     private fun setToday() {
         binding.weeklyTitleTextView.text = getWeeklyTitle(CalendarUtil.getTodayDate())
-        when (SimpleDateFormat("u").format(CalendarUtil.getTodayDate())) {
-            "1" -> {
+        val cal = Calendar.getInstance()
+        cal.time = CalendarUtil.getTodayDate()
+//        when (SimpleDateFormat("u").format(CalendarUtil.getTodayDate())) {
+//            "1" -> {
+        when (cal.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.MONDAY -> {
                 binding.apply {
                     mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                     tuesdayTextView.background = null
@@ -251,7 +267,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                     sundayTextView.background = null
                 }
             }
-            "2" -> {
+            Calendar.TUESDAY -> {
                 binding.apply {
                     tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                     mondayTextView.background = null
@@ -262,7 +278,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                     sundayTextView.background = null
                 }
             }
-            "3" -> {
+            Calendar.WEDNESDAY -> {
                 binding.apply {
                     wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                     tuesdayTextView.background = null
@@ -273,7 +289,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                     sundayTextView.background = null
                 }
             }
-            "4" -> {
+            Calendar.THURSDAY -> {
                 binding.apply {
                     thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                     tuesdayTextView.background = null
@@ -284,7 +300,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                     sundayTextView.background = null
                 }
             }
-            "5" -> {
+            Calendar.FRIDAY -> {
                 binding.apply {
                     fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                     tuesdayTextView.background = null
@@ -295,7 +311,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                     sundayTextView.background = null
                 }
             }
-            "6" -> {
+            Calendar.SATURDAY -> {
                 binding.apply {
                     saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                     tuesdayTextView.background = null
@@ -306,7 +322,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
                     sundayTextView.background = null
                 }
             }
-            "7" -> {
+            Calendar.SUNDAY -> {
                 binding.apply {
                     sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
                     tuesdayTextView.background = null
