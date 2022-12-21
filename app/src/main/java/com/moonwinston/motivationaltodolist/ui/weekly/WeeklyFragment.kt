@@ -80,89 +80,25 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             sharedViewModel.getAllTasks()
             binding.weeklyTitleTextView.text = getWeeklyTitle(it)
 
+            binding.mondayTextView.background = null
+            binding.tuesdayTextView.background = null
+            binding.wednesdayTextView.background = null
+            binding.thursdayTextView.background = null
+            binding.fridayTextView.background = null
+            binding.saturdayTextView.background = null
+            binding.sundayTextView.background = null
+
             val cal = Calendar.getInstance()
             cal.time = it
-            //TODO day number of week
-//            when (SimpleDateFormat("u").format(it)) {
-//                "1" -> {
+
             when (cal.get(Calendar.DAY_OF_WEEK)) {
-                Calendar.MONDAY -> {
-                    binding.apply {
-                        mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        tuesdayTextView.background = null
-                        wednesdayTextView.background = null
-                        thursdayTextView.background = null
-                        fridayTextView.background = null
-                        saturdayTextView.background = null
-                        sundayTextView.background = null
-                    }
-                }
-                Calendar.TUESDAY -> {
-                    binding.apply {
-                        tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        mondayTextView.background = null
-                        wednesdayTextView.background = null
-                        thursdayTextView.background = null
-                        fridayTextView.background = null
-                        saturdayTextView.background = null
-                        sundayTextView.background = null
-                    }
-                }
-                Calendar.WEDNESDAY -> {
-                    binding.apply {
-                        wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        tuesdayTextView.background = null
-                        mondayTextView.background = null
-                        thursdayTextView.background = null
-                        fridayTextView.background = null
-                        saturdayTextView.background = null
-                        sundayTextView.background = null
-                    }
-                }
-                Calendar.THURSDAY -> {
-                    binding.apply {
-                        thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        tuesdayTextView.background = null
-                        wednesdayTextView.background = null
-                        mondayTextView.background = null
-                        fridayTextView.background = null
-                        saturdayTextView.background = null
-                        sundayTextView.background = null
-                    }
-                }
-                Calendar.FRIDAY -> {
-                    binding.apply {
-                        fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        tuesdayTextView.background = null
-                        wednesdayTextView.background = null
-                        thursdayTextView.background = null
-                        mondayTextView.background = null
-                        saturdayTextView.background = null
-                        sundayTextView.background = null
-                    }
-                }
-                Calendar.SATURDAY -> {
-                    binding.apply {
-                        saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        tuesdayTextView.background = null
-                        wednesdayTextView.background = null
-                        thursdayTextView.background = null
-                        fridayTextView.background = null
-                        mondayTextView.background = null
-                        sundayTextView.background = null
-                    }
-                }
-                Calendar.SUNDAY -> {
-                    binding.apply {
-                        sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        tuesdayTextView.background = null
-                        wednesdayTextView.background = null
-                        thursdayTextView.background = null
-                        fridayTextView.background = null
-                        saturdayTextView.background = null
-                        mondayTextView.background = null
-                    }
-                }
+                Calendar.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                Calendar.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                Calendar.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                Calendar.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                Calendar.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                Calendar.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                Calendar.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
             }
         }
 
@@ -251,88 +187,26 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     //TODO
     private fun setToday() {
         binding.weeklyTitleTextView.text = getWeeklyTitle(CalendarUtil.getTodayDate())
+
+        binding.mondayTextView.background = null
+        binding.tuesdayTextView.background = null
+        binding.wednesdayTextView.background = null
+        binding.thursdayTextView.background = null
+        binding.fridayTextView.background = null
+        binding.saturdayTextView.background = null
+        binding.sundayTextView.background = null
+
         val cal = Calendar.getInstance()
         cal.time = CalendarUtil.getTodayDate()
-//        when (SimpleDateFormat("u").format(CalendarUtil.getTodayDate())) {
-//            "1" -> {
+
         when (cal.get(Calendar.DAY_OF_WEEK)) {
-            Calendar.MONDAY -> {
-                binding.apply {
-                    mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    tuesdayTextView.background = null
-                    wednesdayTextView.background = null
-                    thursdayTextView.background = null
-                    fridayTextView.background = null
-                    saturdayTextView.background = null
-                    sundayTextView.background = null
-                }
-            }
-            Calendar.TUESDAY -> {
-                binding.apply {
-                    tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    mondayTextView.background = null
-                    wednesdayTextView.background = null
-                    thursdayTextView.background = null
-                    fridayTextView.background = null
-                    saturdayTextView.background = null
-                    sundayTextView.background = null
-                }
-            }
-            Calendar.WEDNESDAY -> {
-                binding.apply {
-                    wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    tuesdayTextView.background = null
-                    mondayTextView.background = null
-                    thursdayTextView.background = null
-                    fridayTextView.background = null
-                    saturdayTextView.background = null
-                    sundayTextView.background = null
-                }
-            }
-            Calendar.THURSDAY -> {
-                binding.apply {
-                    thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    tuesdayTextView.background = null
-                    wednesdayTextView.background = null
-                    mondayTextView.background = null
-                    fridayTextView.background = null
-                    saturdayTextView.background = null
-                    sundayTextView.background = null
-                }
-            }
-            Calendar.FRIDAY -> {
-                binding.apply {
-                    fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    tuesdayTextView.background = null
-                    wednesdayTextView.background = null
-                    thursdayTextView.background = null
-                    mondayTextView.background = null
-                    saturdayTextView.background = null
-                    sundayTextView.background = null
-                }
-            }
-            Calendar.SATURDAY -> {
-                binding.apply {
-                    saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    tuesdayTextView.background = null
-                    wednesdayTextView.background = null
-                    thursdayTextView.background = null
-                    fridayTextView.background = null
-                    mondayTextView.background = null
-                    sundayTextView.background = null
-                }
-            }
-            Calendar.SUNDAY -> {
-                binding.apply {
-                    sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                    tuesdayTextView.background = null
-                    wednesdayTextView.background = null
-                    thursdayTextView.background = null
-                    fridayTextView.background = null
-                    saturdayTextView.background = null
-                    mondayTextView.background = null
-                }
-            }
+            Calendar.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            Calendar.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            Calendar.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            Calendar.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            Calendar.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            Calendar.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            Calendar.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
         }
     }
 
