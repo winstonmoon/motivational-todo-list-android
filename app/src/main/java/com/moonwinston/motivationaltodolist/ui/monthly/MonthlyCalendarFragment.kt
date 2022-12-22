@@ -45,10 +45,8 @@ class MonthlyCalendarFragment : BaseFragment<FragmentMonthlyCalendarBinding>() {
         monthList = MutableList(
             dayOfWeek,
             init = { CalendarUtil.getNonExistDate() })
-        for (date in 1..maxDate) {
-            monthList.add(
-                SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")
-            )
+        (1..maxDate).forEach { date ->
+            monthList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
         }
         //TODO separate western and eastern
         monthTextView.text = resources.getString(MonthEnum.values()[month].monthAbbreviation)

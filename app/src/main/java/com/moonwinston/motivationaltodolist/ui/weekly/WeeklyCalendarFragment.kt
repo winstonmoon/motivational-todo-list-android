@@ -27,12 +27,11 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
     override fun initViews() = with(binding) {
         //TODO fix dayOfWeek logic more simple, viewmodel
         val diffDays = diffWeek * 7
-        val calendar = Calendar.getInstance()
-        calendar.apply {
+        val calendar = Calendar.getInstance().apply {
             add(Calendar.DATE, diffDays)
             firstDayOfWeek = Calendar.MONDAY
         }
-        val diffDateFromMonday: Int =
+        val diffDateFromMonday =
             if (calendar.get(Calendar.DAY_OF_WEEK) == 1) -6 else 2 - calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, diffDateFromMonday)
         for (date in 1..7) {
@@ -41,11 +40,18 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
             val date = calendar.get(Calendar.DATE)
 
-            weekList.add(
-                SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")
-            )
+            weekList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
             calendar.add(Calendar.DATE, 1)
         }
+//        (1..7).forEach { date ->
+//            val year = calendar.get(Calendar.YEAR)
+//            val month = calendar.get(Calendar.MONTH)
+//            val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
+//            val date = calendar.get(Calendar.DATE)
+//
+//            weekList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
+//            calendar.add(Calendar.DATE, 1)
+//        }
         //TODO fix dayOfWeek logic more simple, viewmodel
 
         mondayCustomPieChart.setPieChartViewDate(weekList[0])
@@ -87,7 +93,7 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
     override fun observeData() {
         //TODO
         sharedViewModel.getAllTasks()
-        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
+        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { taskEntities ->
             val monList = mutableListOf<TaskEntity>()
             val tueList = mutableListOf<TaskEntity>()
             val wedList = mutableListOf<TaskEntity>()
@@ -95,7 +101,7 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
             val friList = mutableListOf<TaskEntity>()
             val satList = mutableListOf<TaskEntity>()
             val sunList = mutableListOf<TaskEntity>()
-            for (taskEntity in it) {
+            taskEntities.forEach { taskEntity ->
                 when (taskEntity.taskDate) {
                     weekList[0] -> monList.add(taskEntity)
                     weekList[1] -> tueList.add(taskEntity)
@@ -106,41 +112,7 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
                     weekList[6] -> sunList.add(taskEntity)
                 }
             }
-            if (sharedViewModel.getRate(monList) == 0F) {
-                binding.mondayCustomPieChart.alpha = 0.2F
-            } else {
-                binding.mondayCustomPieChart.alpha = 1F
-            }
-            if (sharedViewModel.getRate(tueList) == 0F) {
-                binding.tuesdayCustomPieChart.alpha = 0.2F
-            } else {
-                binding.tuesdayCustomPieChart.alpha = 1F
-            }
-            if (sharedViewModel.getRate(wedList) == 0F) {
-                binding.wednesdayCustomPieChart.alpha = 0.2F
-            } else {
-                binding.wednesdayCustomPieChart.alpha = 1F
-            }
-            if (sharedViewModel.getRate(thuList) == 0F) {
-                binding.thursdayCustomPieChart.alpha = 0.2F
-            } else {
-                binding.thursdayCustomPieChart.alpha = 1F
-            }
-            if (sharedViewModel.getRate(friList) == 0F) {
-                binding.fridayCustomPieChart.alpha = 0.2F
-            } else {
-                binding.fridayCustomPieChart.alpha = 1F
-            }
-            if (sharedViewModel.getRate(satList) == 0F) {
-                binding.saturdayCustomPieChart.alpha = 0.2F
-            } else {
-                binding.saturdayCustomPieChart.alpha = 1F
-            }
-            if (sharedViewModel.getRate(sunList) == 0F) {
-                binding.sundayCustomPieChart.alpha = 0.2F
-            } else {
-                binding.sundayCustomPieChart.alpha = 1F
-            }
+
             val monRate = sharedViewModel.getRate(monList)
             val tueRate = sharedViewModel.getRate(tueList)
             val wedRate = sharedViewModel.getRate(wedList)
@@ -155,6 +127,14 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
             binding.fridayCustomPieChart.setPercentage(friRate)
             binding.saturdayCustomPieChart.setPercentage(satRate)
             binding.sundayCustomPieChart.setPercentage(sunRate)
+
+            binding.mondayCustomPieChart.alpha = if (monRate == 0F) 0.2F else 1F
+            binding.tuesdayCustomPieChart.alpha = if (tueRate == 0F) 0.2F else 1F
+            binding.wednesdayCustomPieChart.alpha = if (wedRate == 0F) 0.2F else 1F
+            binding.thursdayCustomPieChart.alpha = if (thuRate == 0F) 0.2F else 1F
+            binding.fridayCustomPieChart.alpha = if (friRate == 0F) 0.2F else 1F
+            binding.saturdayCustomPieChart.alpha = if (satRate == 0F) 0.2F else 1F
+            binding.sundayCustomPieChart.alpha = if (sunRate == 0F) 0.2F else 1F
         }
     }
 

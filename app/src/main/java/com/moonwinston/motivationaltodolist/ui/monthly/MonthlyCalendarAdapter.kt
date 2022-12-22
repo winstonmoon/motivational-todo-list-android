@@ -25,14 +25,15 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
 
         fun bind(testDate: Date) {
             val tempTaskList = mutableListOf<TaskEntity>()
-            for (date in monTasksList){
-                if (date.taskDate == testDate) tempTaskList.add(date)
+            monTasksList.forEach { taskEntity ->
+                if (taskEntity.taskDate == testDate) tempTaskList.add(taskEntity)
             }
             val rate = getRate(tempTaskList)
 
             //TODO
-            val cal = Calendar.getInstance()
-            cal.time = testDate
+            val cal = Calendar.getInstance().apply {
+                this.time = testDate
+            }
 
             when {
                 testDate == nonExistDate -> {
@@ -63,9 +64,9 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
         private fun getRate(tasksList: List<TaskEntity>): Float {
             var totalTasks = 0F
             var doneTasks = 0F
-            for (task in tasksList) {
+            tasksList.forEach {  taskEntity ->
                 totalTasks += 1F
-                if (task.isCompleted) doneTasks += 1F
+                if (taskEntity.isCompleted) doneTasks += 1F
             }
             return if (doneTasks == 0F) 0F else doneTasks / totalTasks
         }

@@ -26,8 +26,9 @@ class TaskAdapter(
 
         fun bind(taskEntity: TaskEntity) {
 
-            val cal = Calendar.getInstance()
-            cal.time = taskEntity.taskTime
+            val cal = Calendar.getInstance().apply {
+                this.time = taskEntity.taskTime
+            }
             val taskTime = "${cal.get(Calendar.HOUR_OF_DAY)}:${cal.get(Calendar.MINUTE)}"
 
             if (taskEntity.isCompleted) {
@@ -45,8 +46,7 @@ class TaskAdapter(
                     popupMenu.menuInflater.inflate(R.menu.task_copy_menu, popupMenu.menu)
                     popupMenu.setOnMenuItemClickListener { item ->
                         when (item.itemId) {
-                            R.id.copy ->
-                                meatballsMenuCallback(taskEntity, DmlState.Insert("copy"))
+                            R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert("copy"))
                         }
                         false
                     }

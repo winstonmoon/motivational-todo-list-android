@@ -148,8 +148,9 @@ class AddDialogFragment : DialogFragment() {
 //        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
 //        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
 //        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
-        val cal = Calendar.getInstance()
-        cal.time = taskEntity.taskTime
+        val cal = Calendar.getInstance().apply {
+            this.time = taskEntity.taskTime
+        }
         binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
         binding.timePicker.minute = cal.get(Calendar.MINUTE)
         binding.calendarView.date = taskEntity.taskDate.time
@@ -168,8 +169,9 @@ class AddDialogFragment : DialogFragment() {
 //        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
 //        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
 //        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
-        val cal = Calendar.getInstance()
-        cal.time = taskEntity.taskTime
+        val cal = Calendar.getInstance().apply {
+            this.time = taskEntity.taskTime
+        }
         binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
         binding.timePicker.minute = cal.get(Calendar.MINUTE)
         binding.calendarView.date = taskEntity.taskDate.time
