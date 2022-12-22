@@ -17,13 +17,12 @@ class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHold
 
         fun bind(achievementRateEntity: AchievementRateEntity) {
             //TODO fix month
-            val cal = Calendar.getInstance()
-            cal.time = achievementRateEntity.date
-
+            val cal = Calendar.getInstance().apply {
+                this.time = achievementRateEntity.date
+            }
             val formatter = Formatter()
 
             val year = cal.get(Calendar.YEAR)
-//            val month = cal.get(Calendar.MONTH)
             val month = formatter.format("%tm", cal)
             val day = cal.get(Calendar.DAY_OF_MONTH)
             binding.achievedDateTextView.text = "$year\n$month/$day"

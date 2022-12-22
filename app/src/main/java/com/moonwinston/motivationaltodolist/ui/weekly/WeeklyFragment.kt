@@ -88,8 +88,9 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             binding.saturdayTextView.background = null
             binding.sundayTextView.background = null
 
-            val cal = Calendar.getInstance()
-            cal.time = it
+            val cal = Calendar.getInstance().apply {
+                this.time = it
+            }
 
             when (cal.get(Calendar.DAY_OF_WEEK)) {
                 Calendar.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
@@ -102,25 +103,28 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             }
         }
 
-        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) {
+        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { taskEntities ->
             //TODO fix
             val selectedDayTasksList = mutableListOf<TaskEntity>()
-            for (taskEntity in it) {
-                if (taskEntity.taskDate == selectedDate) {
-                    selectedDayTasksList.add(taskEntity)
-                }
+
+            taskEntities.forEach { taskEntity ->
+                if(taskEntity.taskDate == selectedDate) selectedDayTasksList.add(taskEntity)
             }
+
+//            for (taskEntity in it) {
+//                if (taskEntity.taskDate == selectedDate) {
+//                    selectedDayTasksList.add(taskEntity)
+//                }
+//            }
             val adapter = TaskAdapter(
                 meatballsMenuCallback = { taskEntity, dmlState ->
                     when (dmlState) {
                         DmlState.Insert("copy") -> {
-                            val bundle =
-                                bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                            val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                             view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
                         }
                         DmlState.Update -> {
-                            val bundle =
-                                bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                            val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                             view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
                         }
                         DmlState.Delete -> {
@@ -162,8 +166,9 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
 //        val month = gregorianCalendar.get(Calendar.MONTH)
 //        val date = gregorianCalendar.get(Calendar.DATE)
 //        val dayOfWeek = gregorianCalendar.get(Calendar.DAY_OF_WEEK)
-        val cal = Calendar.getInstance()
-        cal.time = selectedDate
+        val cal = Calendar.getInstance().apply {
+            this.time = selectedDate
+        }
 
         val year = cal.get(Calendar.YEAR)
         val month = cal.get(Calendar.MONTH)
@@ -196,8 +201,9 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
         binding.saturdayTextView.background = null
         binding.sundayTextView.background = null
 
-        val cal = Calendar.getInstance()
-        cal.time = CalendarUtil.getTodayDate()
+        val cal = Calendar.getInstance().apply {
+            this.time = CalendarUtil.getTodayDate()
+        }
 
         when (cal.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)

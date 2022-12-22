@@ -72,7 +72,7 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
         sharedViewModel.getAllTasks()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
             val todayTasksList = mutableListOf<TaskEntity>().apply {
-                for (taskEntity in tasksList) {
+                tasksList.forEach { taskEntity ->
                     if (taskEntity.taskDate == CalendarUtil.getTodayDate()) add(taskEntity)
                 }
             }
@@ -81,11 +81,10 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
         }
 
         sharedViewModel.rateLiveData.observe(viewLifecycleOwner) { rate ->
-            val achievementRate =
-                AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
+            val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
             sharedViewModel.insertAchievementRate(achievementRate)
-
-            binding.achievementRate.text = "${(rate * 100).roundToInt()}%"
+            val roundedAchievementRate = (rate * 100).roundToInt()
+            binding.achievementRate.text = "$roundedAchievementRate%"
         }
     }
 
