@@ -123,7 +123,7 @@ class TaskAdapter(
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<TaskEntity>() {
             override fun areItemsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
-                return oldItem == newItem
+                return oldItem.task == newItem.task
             }
 
             override fun areContentsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {

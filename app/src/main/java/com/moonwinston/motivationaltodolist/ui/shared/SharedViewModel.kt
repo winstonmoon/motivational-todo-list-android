@@ -83,12 +83,12 @@ class SharedViewModel(
         achievementRateRepository.insertRate(achievementRateEntity)
     }
 
-    private var _monthlyTitleLiveData = MutableLiveData<List<Int>>()
-    val monthlyTitleLiveData: LiveData<List<Int>>
+    private var _monthlyTitleLiveData = MutableLiveData<Pair<Int, Int>>()
+    val monthlyTitleLiveData: LiveData<Pair<Int, Int>>
         get() = _monthlyTitleLiveData
 
     fun setMonthlyTitle(month: Int, year: Int) {
-        _monthlyTitleLiveData.value = listOf(year, month)
+        _monthlyTitleLiveData.value = Pair(month, year)
     }
 
     private var _selectedDateLiveData = MutableLiveData<Date>()
@@ -99,19 +99,19 @@ class SharedViewModel(
         _selectedDateLiveData.value = selectedDate
     }
 
-    private var _rateLiveData = MutableLiveData<Float>()
-    val rateLiveData: LiveData<Float>
-    get() = _rateLiveData
-
-    fun setRate(tasksList: List<TaskEntity>) {
-        var totalTasks = 0F
-        var doneTasks = 0F
-        for (task in tasksList) {
-            totalTasks += 1F
-            if (task.isCompleted) doneTasks += 1F
-        }
-        _rateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
-    }
+//    private var _rateLiveData = MutableLiveData<Float>()
+//    val rateLiveData: LiveData<Float>
+//    get() = _rateLiveData
+//
+//    fun setRate(tasksList: List<TaskEntity>) {
+//        var totalTasks = 0F
+//        var doneTasks = 0F
+//        for (task in tasksList) {
+//            totalTasks += 1F
+//            if (task.isCompleted) doneTasks += 1F
+//        }
+//        _rateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
+//    }
 
     fun getRate(tasksList: List<TaskEntity>): Float {
         var totalTasks = 0F

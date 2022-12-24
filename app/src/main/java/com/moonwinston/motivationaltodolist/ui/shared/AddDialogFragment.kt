@@ -140,14 +140,6 @@ class AddDialogFragment : DialogFragment() {
 
     private fun initCopyView(binding: DialogAddBinding, taskEntity: TaskEntity) {
         //TODO
-//        val year = SimpleDateFormat("y").format(taskEntity.taskTime).toInt()
-//        val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
-//        val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
-//        val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
-//        val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
-//        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
-//        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-//        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
         val cal = Calendar.getInstance().apply {
             this.time = taskEntity.taskTime
         }
@@ -161,14 +153,6 @@ class AddDialogFragment : DialogFragment() {
 
     private fun initUpdateView(binding: DialogAddBinding, taskEntity: TaskEntity) {
         //TODO
-//        val year = SimpleDateFormat("y").format(taskEntity.taskTime).toInt()
-//        val month = SimpleDateFormat("M").format(taskEntity.taskTime).toInt()
-//        val day = SimpleDateFormat("d").format(taskEntity.taskTime).toInt()
-//        val hourOfDay = SimpleDateFormat("H").format(taskEntity.taskTime).toInt()
-//        val minute = SimpleDateFormat("m").format(taskEntity.taskTime).toInt()
-//        val taskEntityTaskTime = GregorianCalendar(year, month, day, hourOfDay, minute)
-//        binding.timePicker.hour = taskEntityTaskTime.get(Calendar.HOUR_OF_DAY)
-//        binding.timePicker.minute = taskEntityTaskTime.get(Calendar.MINUTE)
         val cal = Calendar.getInstance().apply {
             this.time = taskEntity.taskTime
         }
