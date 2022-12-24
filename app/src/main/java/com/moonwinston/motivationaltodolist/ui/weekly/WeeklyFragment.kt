@@ -1,8 +1,6 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
-import android.os.Build
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -21,7 +19,6 @@ import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,9 +33,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
         initDisplayCoachMark()
 
         selectedDate = CalendarUtil.getTodayDate()
-        val slideAdapter = WeeklyScreenSlidePagerAdapter(
-            this@WeeklyFragment
-        )
+        val slideAdapter = WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
         weeklyPieChartViewPager.adapter = slideAdapter
         weeklyPieChartViewPager.setCurrentItem(
             WeeklyScreenSlidePagerAdapter.START_POSITION,
@@ -106,16 +101,9 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { taskEntities ->
             //TODO fix
             val selectedDayTasksList = mutableListOf<TaskEntity>()
-
             taskEntities.forEach { taskEntity ->
                 if(taskEntity.taskDate == selectedDate) selectedDayTasksList.add(taskEntity)
             }
-
-//            for (taskEntity in it) {
-//                if (taskEntity.taskDate == selectedDate) {
-//                    selectedDayTasksList.add(taskEntity)
-//                }
-//            }
             val adapter = TaskAdapter(
                 meatballsMenuCallback = { taskEntity, dmlState ->
                     when (dmlState) {
@@ -158,14 +146,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     }
 
     private fun getWeeklyTitle(selectedDate: Date): String {
-//        val y = SimpleDateFormat("y").format(selectedDate).toInt()
-//        val m = SimpleDateFormat("M").format(selectedDate).toInt()
-//        val d = SimpleDateFormat("d").format(selectedDate).toInt()
-//        val gregorianCalendar = GregorianCalendar(y, m - 1, d)
-//        val year = gregorianCalendar.get(Calendar.YEAR)
-//        val month = gregorianCalendar.get(Calendar.MONTH)
-//        val date = gregorianCalendar.get(Calendar.DATE)
-//        val dayOfWeek = gregorianCalendar.get(Calendar.DAY_OF_WEEK)
         val cal = Calendar.getInstance().apply {
             this.time = selectedDate
         }

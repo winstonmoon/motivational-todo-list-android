@@ -46,7 +46,7 @@ class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHold
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<AchievementRateEntity>() {
             override fun areItemsTheSame(oldItem: AchievementRateEntity, newItem: AchievementRateEntity): Boolean {
-                return oldItem.date == newItem.date
+                return oldItem.rate == newItem.rate
             }
 
             override fun areContentsTheSame(oldItem: AchievementRateEntity, newItem: AchievementRateEntity): Boolean {

@@ -15,6 +15,10 @@
             type="com.moonwinston.motivationaltodolist.ui.daily.DailyFragment" />
 
         <variable
+            name="dailyViewModel"
+            type="com.moonwinston.motivationaltodolist.ui.daily.DailyViewModel" />
+
+        <variable
             name="sharedViewModel"
             type="com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel" />
     </data>
@@ -87,8 +91,8 @@
             app:layout_constraintDimensionRatio="W, 1:1"
             app:layout_constraintEnd_toStartOf="@id/verticalGuideline"
             app:layout_constraintStart_toStartOf="parent"
-            bind:setPercentage="@{sharedViewModel.rateLiveData}"
-            android:alpha="@{sharedViewModel.rateLiveData == 0.0F ? 0.2F : 1.0F}"
+            bind:setPercentage="@{dailyViewModel.rateLiveData}"
+            android:alpha="@{dailyViewModel.rateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:layout_constraintTop_toBottomOf="@id/achievementRateTextView"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"

@@ -17,7 +17,7 @@ import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -25,6 +25,7 @@ import kotlin.math.roundToInt
 class DailyFragment : BaseFragment<FragmentDailyBinding>() {
     override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
     val sharedViewModel by sharedViewModel<SharedViewModel>()
+    val dailyViewModel: DailyViewModel by viewModel()
     private val sharedPref: SharedPref by inject()
     private val adapter by lazy {
         TaskAdapter(
@@ -77,10 +78,10 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
                 }
             }
             adapter.submitList(todayTasksList.sortedBy { it.taskTime })
-            sharedViewModel.setRate(todayTasksList)
+            dailyViewModel.setRate(todayTasksList)
         }
 
-        sharedViewModel.rateLiveData.observe(viewLifecycleOwner) { rate ->
+        dailyViewModel.rateLiveData.observe(viewLifecycleOwner) { rate ->
             val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
             sharedViewModel.insertAchievementRate(achievementRate)
             val roundedAchievementRate = (rate * 100).roundToInt()
