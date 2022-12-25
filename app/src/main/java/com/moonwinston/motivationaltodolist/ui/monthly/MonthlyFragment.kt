@@ -1,7 +1,6 @@
 package com.moonwinston.motivationaltodolist.ui.monthly
 
 import android.view.View
-import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
@@ -10,16 +9,12 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
-import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 
 class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
-    val monthlyViewModel: MonthlyViewModel by viewModel()
     private val sharedPref: SharedPref by inject()
 
     override fun initViews() = with(binding) {

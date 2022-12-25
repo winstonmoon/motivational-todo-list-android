@@ -1,8 +1,6 @@
 package com.moonwinston.motivationaltodolist.ui.rewards
 
-import androidx.navigation.findNavController
 import com.google.android.gms.ads.AdRequest
-import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
@@ -12,6 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class RewardsFragment : BaseFragment<FragmentRewardsBinding>() {
     override fun getViewBinding() = FragmentRewardsBinding.inflate(layoutInflater)
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
+    private val rewardsViewModel: RewardsViewModel by viewModel()
 
     override fun initViews() = with(binding) {
         val adRequest = AdRequest.Builder().build()
@@ -19,8 +18,8 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding>() {
     }
 
     override fun observeData() {
-        sharedViewModel.getAllComplete()
-        sharedViewModel.rateListLiveData.observe(viewLifecycleOwner) {
+        rewardsViewModel.getAllComplete()
+        rewardsViewModel.rateListLiveData.observe(viewLifecycleOwner) {
             val adapter = RewardsAdapter()
             binding.rewardsRecyclerView.adapter = adapter
             adapter.submitList(it)

@@ -25,7 +25,7 @@ import kotlin.math.roundToInt
 class DailyFragment : BaseFragment<FragmentDailyBinding>() {
     override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
     val sharedViewModel by sharedViewModel<SharedViewModel>()
-    val dailyViewModel: DailyViewModel by viewModel()
+    private val dailyViewModel: DailyViewModel by viewModel()
     private val sharedPref: SharedPref by inject()
     private val adapter by lazy {
         TaskAdapter(

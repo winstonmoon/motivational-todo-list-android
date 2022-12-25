@@ -74,7 +74,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             selectedDate = it
             sharedViewModel.getAllTasks()
             binding.weeklyTitleTextView.text = getWeeklyTitle(it)
-
             binding.mondayTextView.background = null
             binding.tuesdayTextView.background = null
             binding.wednesdayTextView.background = null
@@ -82,7 +81,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             binding.fridayTextView.background = null
             binding.saturdayTextView.background = null
             binding.sundayTextView.background = null
-
             val cal = Calendar.getInstance().apply {
                 this.time = it
             }
@@ -172,7 +170,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     //TODO
     private fun setToday() {
         binding.weeklyTitleTextView.text = getWeeklyTitle(CalendarUtil.getTodayDate())
-
         binding.mondayTextView.background = null
         binding.tuesdayTextView.background = null
         binding.wednesdayTextView.background = null
@@ -184,7 +181,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
         val cal = Calendar.getInstance().apply {
             this.time = CalendarUtil.getTodayDate()
         }
-
         when (cal.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
             Calendar.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)

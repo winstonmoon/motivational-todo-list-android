@@ -53,7 +53,7 @@ class MonthlyCalendarFragment : BaseFragment<FragmentMonthlyCalendarBinding>() {
     }
 
     override fun observeData() {
-        sharedViewModel.setMonthlyTitle(month, year)
+        sharedViewModel.setMonthlyTitle(year, month)
         //TODO fix to use getAll instead of getAllByDates
         sharedViewModel.getAllTasksByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
@@ -65,7 +65,7 @@ class MonthlyCalendarFragment : BaseFragment<FragmentMonthlyCalendarBinding>() {
 
     override fun onResume() {
         super.onResume()
-        sharedViewModel.setMonthlyTitle(month, year)
+        sharedViewModel.setMonthlyTitle(year, month)
         //TODO fix to use getAll instead of getAllByDates
         sharedViewModel.getAllTasksByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {

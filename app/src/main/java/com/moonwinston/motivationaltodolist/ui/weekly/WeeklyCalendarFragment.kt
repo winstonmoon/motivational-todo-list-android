@@ -34,7 +34,7 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
         val diffDateFromMonday =
             if (calendar.get(Calendar.DAY_OF_WEEK) == 1) -6 else 2 - calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, diffDateFromMonday)
-        for (date in 1..7) {
+        (1..7).forEach { _ ->
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
@@ -43,15 +43,6 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
             weekList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
             calendar.add(Calendar.DATE, 1)
         }
-//        (1..7).forEach { date ->
-//            val year = calendar.get(Calendar.YEAR)
-//            val month = calendar.get(Calendar.MONTH)
-//            val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-//            val date = calendar.get(Calendar.DATE)
-//
-//            weekList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
-//            calendar.add(Calendar.DATE, 1)
-//        }
         //TODO fix dayOfWeek logic more simple, viewmodel
 
         mondayCustomPieChart.setPieChartViewDate(weekList[0])
