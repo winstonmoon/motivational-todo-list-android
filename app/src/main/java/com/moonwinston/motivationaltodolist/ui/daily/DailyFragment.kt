@@ -60,12 +60,12 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
         )
     )
 
-    override fun initViews() = with(binding) {
-        lifecycleOwner = this@DailyFragment
-        dailyFragment = this@DailyFragment
+    override fun initViews() {
+        binding.lifecycleOwner = this@DailyFragment
+        binding.dailyFragment = this@DailyFragment
         initDisplayCoachMark()
-        dailyTitleTextView.text = setDailyTitleText(sharedPref.getLanguage())
-        dailyTodoRecyclerView.adapter = adapter
+        binding.dailyTitleTextView.text = setDailyTitleText(sharedPref.getLanguage())
+        binding.dailyTodoRecyclerView.adapter = adapter
     }
 
     override fun observeData() {
@@ -104,20 +104,20 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
         }
     }
 
-    private fun initDisplayCoachMark() = with(binding) {
+    private fun initDisplayCoachMark() {
         if (sharedPref.isCoachDailyDismissed().not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
-            coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
-            coachDailyTapAdd.containerCoach.setOnClickListener {
-                coachDailyTapAdd.containerCoach.visibility = View.GONE
-                coachDailyTapEditOrDelete.containerCoach.visibility = View.VISIBLE
+            binding.coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
+            binding.coachDailyTapAdd.containerCoach.setOnClickListener {
+                binding.coachDailyTapAdd.containerCoach.visibility = View.GONE
+                binding.coachDailyTapEditOrDelete.containerCoach.visibility = View.VISIBLE
             }
-            coachDailyTapEditOrDelete.containerCoach.setOnClickListener {
-                coachDailyTapEditOrDelete.containerCoach.visibility = View.GONE
-                coachDailyTapComplete.containerCoach.visibility = View.VISIBLE
+            binding.coachDailyTapEditOrDelete.containerCoach.setOnClickListener {
+                binding.coachDailyTapEditOrDelete.containerCoach.visibility = View.GONE
+                binding.coachDailyTapComplete.containerCoach.visibility = View.VISIBLE
             }
-            coachDailyTapComplete.containerCoach.setOnClickListener {
-                coachDailyTapComplete.containerCoach.visibility = View.GONE
+            binding.coachDailyTapComplete.containerCoach.setOnClickListener {
+                binding.coachDailyTapComplete.containerCoach.visibility = View.GONE
                 this@DailyFragment.binding.addButton.isEnabled = true
                 sharedPref.setCoachDailyAsDismissed(true)
             }

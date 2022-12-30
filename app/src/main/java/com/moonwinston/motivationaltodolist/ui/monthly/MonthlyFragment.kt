@@ -17,11 +17,11 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val sharedPref: SharedPref by inject()
 
-    override fun initViews() = with(binding) {
+    override fun initViews() {
         initDisplayCoachMark()
-        calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
-        calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
-        calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
+        binding.calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
+        binding.calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
+        binding.calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
     }
 
     override fun observeData() {
@@ -39,14 +39,12 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
         }
     }
 
-    private fun initDisplayCoachMark() = with(binding) {
-        if (sharedPref.isCoachMonthlyDismissed().not()) {
-            coachMonthly.containerCoach.visibility = View.VISIBLE
-            coachMonthly.containerCoach.setOnClickListener {
-                coachMonthly.containerCoach.visibility = View.GONE
-                sharedPref.setCoachMonthlyAsDismissed(true)
-            }
+    private fun initDisplayCoachMark() {
+        binding.coachMonthly.containerCoach.setOnClickListener {
+            sharedPref.setCoachMonthlyAsDismissed(true)
         }
+        if (sharedPref.isCoachMonthlyDismissed()) binding.coachMonthly.containerCoach.visibility = View.GONE
+        else binding.coachMonthly.containerCoach.visibility = View.VISIBLE
     }
 
     //TODO fix
