@@ -28,7 +28,7 @@ class MonthlyCalendarFragment : BaseFragment<FragmentMonthlyCalendarBinding>() {
         }
     }
 
-    override fun initViews() = with(binding) {
+    override fun initViews() {
         val calendar = Calendar.getInstance()
         calendar.apply {
             add(Calendar.MONTH, diffMonth)
@@ -49,11 +49,11 @@ class MonthlyCalendarFragment : BaseFragment<FragmentMonthlyCalendarBinding>() {
             monthList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
         }
         //TODO separate western and eastern
-        monthTextView.text = resources.getString(MonthEnum.values()[month].monthAbbreviation)
+        binding.monthTextView.text = resources.getString(MonthEnum.values()[month].monthAbbreviation)
     }
 
     override fun observeData() {
-        sharedViewModel.setMonthlyTitle(month, year)
+        sharedViewModel.setMonthlyTitle(year, month)
         //TODO fix to use getAll instead of getAllByDates
         sharedViewModel.getAllTasksByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {
@@ -65,7 +65,7 @@ class MonthlyCalendarFragment : BaseFragment<FragmentMonthlyCalendarBinding>() {
 
     override fun onResume() {
         super.onResume()
-        sharedViewModel.setMonthlyTitle(month, year)
+        sharedViewModel.setMonthlyTitle(year, month)
         //TODO fix to use getAll instead of getAllByDates
         sharedViewModel.getAllTasksByDates(monthList)
         sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) {

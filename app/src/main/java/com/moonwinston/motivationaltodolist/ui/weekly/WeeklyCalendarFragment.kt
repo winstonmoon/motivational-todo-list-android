@@ -24,7 +24,7 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
         }
     }
 
-    override fun initViews() = with(binding) {
+    override fun initViews() {
         //TODO fix dayOfWeek logic more simple, viewmodel
         val diffDays = diffWeek * 7
         val calendar = Calendar.getInstance().apply {
@@ -34,7 +34,7 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
         val diffDateFromMonday =
             if (calendar.get(Calendar.DAY_OF_WEEK) == 1) -6 else 2 - calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, diffDateFromMonday)
-        for (date in 1..7) {
+        (1..7).forEach { _ ->
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
@@ -43,49 +43,40 @@ class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
             weekList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
             calendar.add(Calendar.DATE, 1)
         }
-//        (1..7).forEach { date ->
-//            val year = calendar.get(Calendar.YEAR)
-//            val month = calendar.get(Calendar.MONTH)
-//            val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
-//            val date = calendar.get(Calendar.DATE)
-//
-//            weekList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
-//            calendar.add(Calendar.DATE, 1)
-//        }
         //TODO fix dayOfWeek logic more simple, viewmodel
 
-        mondayCustomPieChart.setPieChartViewDate(weekList[0])
-        mondayCustomPieChart.setOnClickListener {
+        binding.mondayCustomPieChart.setPieChartViewDate(weekList[0])
+        binding.mondayCustomPieChart.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.mondayCustomPieChart.getPieChartViewDate())
         }
 
-        tuesdayCustomPieChart.setPieChartViewDate(weekList[1])
-        tuesdayCustomPieChart.setOnClickListener {
+        binding.tuesdayCustomPieChart.setPieChartViewDate(weekList[1])
+        binding.tuesdayCustomPieChart.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.tuesdayCustomPieChart.getPieChartViewDate())
         }
 
-        wednesdayCustomPieChart.setPieChartViewDate(weekList[2])
-        wednesdayCustomPieChart.setOnClickListener {
+        binding.wednesdayCustomPieChart.setPieChartViewDate(weekList[2])
+        binding.wednesdayCustomPieChart.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.wednesdayCustomPieChart.getPieChartViewDate())
         }
 
-        thursdayCustomPieChart.setPieChartViewDate(weekList[3])
-        thursdayCustomPieChart.setOnClickListener {
+        binding.thursdayCustomPieChart.setPieChartViewDate(weekList[3])
+        binding.thursdayCustomPieChart.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.thursdayCustomPieChart.getPieChartViewDate())
         }
 
-        fridayCustomPieChart.setPieChartViewDate(weekList[4])
-        fridayCustomPieChart.setOnClickListener {
+        binding.fridayCustomPieChart.setPieChartViewDate(weekList[4])
+        binding.fridayCustomPieChart.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.fridayCustomPieChart.getPieChartViewDate())
         }
 
-        saturdayCustomPieChart.setPieChartViewDate(weekList[5])
-        saturdayCustomPieChart.setOnClickListener {
+        binding.saturdayCustomPieChart.setPieChartViewDate(weekList[5])
+        binding.saturdayCustomPieChart.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.saturdayCustomPieChart.getPieChartViewDate())
         }
 
-        sundayCustomPieChart.setPieChartViewDate(weekList[6])
-        sundayCustomPieChart.setOnClickListener {
+        binding.sundayCustomPieChart.setPieChartViewDate(weekList[6])
+        binding.sundayCustomPieChart.setOnClickListener {
             sharedViewModel.setSelectedDate(binding.sundayCustomPieChart.getPieChartViewDate())
         }
     }

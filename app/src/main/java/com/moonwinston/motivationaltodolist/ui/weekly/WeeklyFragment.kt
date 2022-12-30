@@ -29,17 +29,17 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     private lateinit var selectedDate: Date
     private var lastPosition: Int = WeeklyScreenSlidePagerAdapter.START_POSITION
 
-    override fun initViews() = with(binding) {
+    override fun initViews() {
         initDisplayCoachMark()
 
         selectedDate = CalendarUtil.getTodayDate()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
-        weeklyPieChartViewPager.adapter = slideAdapter
-        weeklyPieChartViewPager.setCurrentItem(
+        binding.weeklyPieChartViewPager.adapter = slideAdapter
+        binding.weeklyPieChartViewPager.setCurrentItem(
             WeeklyScreenSlidePagerAdapter.START_POSITION,
             false
         )
-        weeklyPieChartViewPager.registerOnPageChangeCallback(object :
+        binding.weeklyPieChartViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -55,7 +55,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
         })
         setToday()
 
-        addButton.setOnClickListener {
+        binding.addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert("insert"),
                 "taskEntity" to TaskEntity(
@@ -74,7 +74,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             selectedDate = it
             sharedViewModel.getAllTasks()
             binding.weeklyTitleTextView.text = getWeeklyTitle(it)
-
             binding.mondayTextView.background = null
             binding.tuesdayTextView.background = null
             binding.wednesdayTextView.background = null
@@ -82,7 +81,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             binding.fridayTextView.background = null
             binding.saturdayTextView.background = null
             binding.sundayTextView.background = null
-
             val cal = Calendar.getInstance().apply {
                 this.time = it
             }
@@ -172,7 +170,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     //TODO
     private fun setToday() {
         binding.weeklyTitleTextView.text = getWeeklyTitle(CalendarUtil.getTodayDate())
-
         binding.mondayTextView.background = null
         binding.tuesdayTextView.background = null
         binding.wednesdayTextView.background = null
@@ -184,7 +181,6 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
         val cal = Calendar.getInstance().apply {
             this.time = CalendarUtil.getTodayDate()
         }
-
         when (cal.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
             Calendar.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
@@ -196,16 +192,16 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
         }
     }
 
-    private fun initDisplayCoachMark() = with(binding) {
+    private fun initDisplayCoachMark() {
         if (sharedPref.isCoachWeeklyDismissed().not()) {
             this@WeeklyFragment.binding.addButton.isEnabled = false
-            coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
-            coachWeeklySwipe.containerCoach.setOnClickListener {
-                coachWeeklySwipe.containerCoach.visibility = View.GONE
-                coachWeeklyTap.containerCoach.visibility = View.VISIBLE
+            binding.coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
+            binding.coachWeeklySwipe.containerCoach.setOnClickListener {
+                binding.coachWeeklySwipe.containerCoach.visibility = View.GONE
+                binding.coachWeeklyTap.containerCoach.visibility = View.VISIBLE
             }
-            coachWeeklyTap.containerCoach.setOnClickListener {
-                coachWeeklyTap.containerCoach.visibility = View.GONE
+            binding.coachWeeklyTap.containerCoach.setOnClickListener {
+                binding.coachWeeklyTap.containerCoach.visibility = View.GONE
                 this@WeeklyFragment.binding.addButton.isEnabled = true
                 sharedPref.setCoachWeeklyAsDismissed(true)
             }

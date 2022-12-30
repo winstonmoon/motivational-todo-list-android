@@ -42,18 +42,15 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 }
                 testDate == today -> {
                     binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
-//                    binding.monthlyDateTextView.text = SimpleDateFormat("d").format(testDate)
                     binding.monthlyDateTextView.text = "${cal.get(Calendar.DAY_OF_MONTH)}"
                     if (rate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.setPercentage(rate)
                 }
                 testDate.after(today) -> {
-//                    binding.monthlyDateTextView.text = SimpleDateFormat("d").format(testDate)
                     binding.monthlyDateTextView.text = "${cal.get(Calendar.DAY_OF_MONTH)}"
                     binding.monthlyCustomPieChart.visibility = View.INVISIBLE
                 }
                 else -> {
-//                    binding.monthlyDateTextView.text = SimpleDateFormat("d").format(testDate)
                     binding.monthlyDateTextView.text = "${cal.get(Calendar.DAY_OF_MONTH)}"
                     if (rate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.setPercentage(rate)
