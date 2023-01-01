@@ -1,8 +1,11 @@
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-parcelize'
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'com.google.dagger.hilt.android'
+}
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -77,6 +80,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
     // koin DI
     implementation "io.insert-koin:koin-android:$rootProject.koinVersion"
     implementation "io.insert-koin:koin-androidx-viewmodel:$rootProject.koinVersion"
@@ -106,4 +111,8 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
     // koin DI
     testImplementation "org.koin:koin-test:$rootProject.koinVersion"
+}
+
+kapt {
+    correctErrorTypes true
 }
