@@ -54,6 +54,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.google.dagger.hilt.android' version '2.41' apply false
+}
+
 allprojects {
     repositories {
         google()

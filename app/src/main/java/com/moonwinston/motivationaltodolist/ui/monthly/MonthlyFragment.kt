@@ -40,11 +40,13 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     }
 
     private fun initDisplayCoachMark() {
-        binding.coachMonthly.containerCoach.setOnClickListener {
-            sharedPref.setCoachMonthlyAsDismissed(true)
+        if (sharedPref.isCoachMonthlyDismissed().not()) {
+            binding.coachMonthly.containerCoach.visibility = View.VISIBLE
+            binding.coachMonthly.containerCoach.setOnClickListener {
+                binding.coachMonthly.containerCoach.visibility = View.GONE
+                sharedPref.setCoachMonthlyAsDismissed(true)
+            }
         }
-        if (sharedPref.isCoachMonthlyDismissed()) binding.coachMonthly.containerCoach.visibility = View.GONE
-        else binding.coachMonthly.containerCoach.visibility = View.VISIBLE
     }
 
     //TODO fix
