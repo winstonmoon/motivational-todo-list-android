@@ -23,8 +23,10 @@ import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val sharedPref: SharedPref by inject()
