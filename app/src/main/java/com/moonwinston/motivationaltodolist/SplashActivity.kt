@@ -7,16 +7,18 @@ import androidx.lifecycle.lifecycleScope
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
-    private val sharedPref: SharedPref by inject()
+//    private val sharedPref: SharedPref by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        ThemeUtil().setTheme(sharedPref.getTheme())
+//        ThemeUtil().setTheme(sharedPref.getTheme())
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
