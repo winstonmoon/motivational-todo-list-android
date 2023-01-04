@@ -1,11 +1,13 @@
 package com.moonwinston.motivationaltodolist.data
 
+import com.moonwinston.motivationaltodolist.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DefaultAchievementRateRepository(
+class AchievementRateRepositoryImpl @Inject constructor(
     private val achievementRateDao: AchievementRateDao,
-    private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : AchievementRateRepository {
 
     override suspend fun getAllRate(): List<AchievementRateEntity> = withContext(ioDispatcher) {
