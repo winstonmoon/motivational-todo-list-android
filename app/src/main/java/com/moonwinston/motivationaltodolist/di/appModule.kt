@@ -14,8 +14,8 @@ internal val appModule = module {
     single { Dispatchers.Main }
     single { Dispatchers.IO }
 
-    single<TaskRepository> { DefaultTaskRepository(get(), get()) }
-    single<AchievementRateRepository> { DefaultAchievementRateRepository(get(), get()) }
+    single<TaskRepository> { TaskRepositoryImpl(get(), get()) }
+    single<AchievementRateRepository> { AchievementRateRepositoryImpl(get(), get()) }
 
     single { provideDB(androidApplication()) }
     single { provideTaskDao(get()) }

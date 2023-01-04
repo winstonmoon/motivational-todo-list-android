@@ -1,12 +1,14 @@
 package com.moonwinston.motivationaltodolist.data
 
+import com.moonwinston.motivationaltodolist.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.util.*
+import javax.inject.Inject
 
-class DefaultTaskRepository(
+class TaskRepositoryImpl @Inject constructor(
     private val taskDao: TaskDao,
-    private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : TaskRepository {
 
     override suspend fun getAllTasks(): List<TaskEntity> = withContext(ioDispatcher) {
