@@ -1,10 +1,16 @@
 package com.moonwinston.motivationaltodolist.data
 
-interface AchievementRateRepository {
+import javax.inject.Inject
+import javax.inject.Singleton
 
-    suspend fun getAllRate(): List<AchievementRateEntity>
+@Singleton
+class AchievementRateRepository @Inject constructor(
+    private val achievementRateDao: AchievementRateDao
+) {
 
-    suspend fun getAllCompleteRate(): List<AchievementRateEntity>
+    fun getAllRate() = achievementRateDao.getAll()
 
-    suspend fun insertRate(achievementRateEntity: AchievementRateEntity)
+    fun getAllCompleteRate() = achievementRateDao.getAllComplete()
+
+    fun insertRate(achievementRateEntity: AchievementRateEntity) = achievementRateDao.insert(achievementRateEntity)
 }

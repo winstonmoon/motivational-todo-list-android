@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.moonwinston.motivationaltodolist.data.TaskEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@HiltViewModel
 class DailyViewModel : ViewModel() {
     private var _rateLiveData = MutableLiveData<Float>()
     val rateLiveData: LiveData<Float>

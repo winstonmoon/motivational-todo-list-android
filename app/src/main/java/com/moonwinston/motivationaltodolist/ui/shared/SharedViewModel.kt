@@ -8,10 +8,13 @@ import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.data.AchievementRateRepository
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
-class SharedViewModel(
+@HiltViewModel
+class SharedViewModel @Inject internal constructor(
     private val taskRepository: TaskRepository,
     private val achievementRateRepository: AchievementRateRepository
 ) : ViewModel() {

@@ -1,18 +1,24 @@
 package com.moonwinston.motivationaltodolist.data
 
+import com.moonwinston.motivationaltodolist.di.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface TaskRepository {
-
-    suspend fun getAllTasks(): List<TaskEntity>
+@Singleton
+class TaskRepository @Inject constructor(
+    private val taskDao: TaskDao
+){
+    fun getAllTasks() = taskDao.getAll()
 
     //TODO temporary implement
-    suspend fun getAllFutureTasks(currentTime: Date): List<TaskEntity>
+    fun getAllFutureTasks(currentTime: Date) = taskDao.getAllFutureTasks(currentTime)
 
-    suspend fun getAllTasksByDates(taskDatesList: MutableList<Date>): List<TaskEntity>
+    fun getAllTasksByDates(taskDatesList: MutableList<Date>) = taskDao.getAllByDates(taskDatesList)
 
-    suspend fun insertTask(taskEntity: TaskEntity)
+    fun insertTask(taskEntity: TaskEntity) = taskDao.insert(taskEntity)
 
-    suspend fun deleteTask(uid: Long)
-
+    fun deleteTask(uid: Long) = taskDao.delete(uid)
 }

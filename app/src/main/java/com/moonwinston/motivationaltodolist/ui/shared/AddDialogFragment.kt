@@ -17,12 +17,14 @@ import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
+@AndroidEntryPoint
 class AddDialogFragment : DialogFragment() {
     private lateinit var binding: DialogAddBinding
     private lateinit var date: Date

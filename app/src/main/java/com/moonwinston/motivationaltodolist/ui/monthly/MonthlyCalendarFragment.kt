@@ -6,11 +6,13 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarB
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class MonthlyCalendarFragment : BaseFragment<FragmentMonthlyCalendarBinding>() {
     override fun getViewBinding() = FragmentMonthlyCalendarBinding.inflate(layoutInflater)
     private val sharedViewModel by sharedViewModel<SharedViewModel>()

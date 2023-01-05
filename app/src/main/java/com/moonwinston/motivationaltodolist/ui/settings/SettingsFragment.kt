@@ -19,10 +19,12 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SettingsFragment  : BaseFragment<FragmentSettingsBinding>() {
+@AndroidEntryPoint
+class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun getViewBinding() = FragmentSettingsBinding.inflate(layoutInflater)
     private val viewModel by viewModel<SettingsViewModel>()
     private val sharedPref: SharedPref by inject()

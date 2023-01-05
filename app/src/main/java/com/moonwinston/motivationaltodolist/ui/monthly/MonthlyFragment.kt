@@ -9,9 +9,11 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
+@AndroidEntryPoint
 class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
