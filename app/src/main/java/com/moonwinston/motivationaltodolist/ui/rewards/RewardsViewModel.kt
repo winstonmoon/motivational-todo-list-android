@@ -6,9 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.data.AchievementRateRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RewardsViewModel(private val achievementRateRepository: AchievementRateRepository) : ViewModel() {
+@HiltViewModel
+class RewardsViewModel @Inject internal constructor(
+    private val achievementRateRepository: AchievementRateRepository
+) : ViewModel() {
     private var _rateListLiveData = MutableLiveData<List<AchievementRateEntity>>()
     val rateListLiveData: LiveData<List<AchievementRateEntity>>
         get() = _rateListLiveData

@@ -15,13 +15,14 @@ import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.roundToInt
 
-
+@AndroidEntryPoint
 class DailyFragment : BaseFragment<FragmentDailyBinding>() {
     override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
     val sharedViewModel by sharedViewModel<SharedViewModel>()

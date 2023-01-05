@@ -9,11 +9,11 @@ import androidx.room.Query
 interface AchievementRateDao {
 
     @Query("SELECT * FROM achievementRate")
-    suspend fun getAll(): List<AchievementRateEntity>
+    fun getAll(): List<AchievementRateEntity>
 
     @Query("SELECT * FROM achievementRate WHERE rate = 1")
-    suspend fun getAllComplete(): List<AchievementRateEntity>
+    fun getAllComplete(): List<AchievementRateEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(achievementRateEntity: AchievementRateEntity)
+    fun insert(achievementRateEntity: AchievementRateEntity)
 }
