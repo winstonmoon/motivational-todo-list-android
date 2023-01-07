@@ -3,15 +3,13 @@ package com.moonwinston.motivationaltodolist.ui.shared
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import com.moonwinston.motivationaltodolist.DmlState
-import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.data.TaskEntity
@@ -19,8 +17,6 @@ import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -31,7 +27,7 @@ class AddDialogFragment : DialogFragment() {
     private lateinit var dmlState: DmlState
     private lateinit var taskEntity: TaskEntity
     private var positiveButton by Delegates.notNull<Int>()
-    private val sharedViewModel by sharedViewModel<SharedViewModel>()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val sharedPref: SharedPref by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {

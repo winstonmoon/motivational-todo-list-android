@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.data.AchievementRateRepository
-import com.moonwinston.motivationaltodolist.data.TaskEntity
-import com.moonwinston.motivationaltodolist.data.TaskRepository
+import com.moonwinston.motivationaltodolist.data.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.*
@@ -16,7 +13,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SharedViewModel @Inject internal constructor(
     private val taskRepository: TaskRepository,
-    private val achievementRateRepository: AchievementRateRepository
+    private val achievementRateRepository: AchievementRateRepository,
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private var _tasksListLiveData = MutableLiveData<List<TaskEntity>>()

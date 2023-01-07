@@ -2,6 +2,7 @@ package com.moonwinston.motivationaltodolist.ui.weekly
 
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.DayOfWeekEnum
@@ -18,13 +19,12 @@ import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     override fun getViewBinding() = FragmentWeeklyBinding.inflate(layoutInflater)
-    private val sharedViewModel by sharedViewModel<SharedViewModel>()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val sharedPref: SharedPref by inject()
     private lateinit var selectedDate: Date
     private var lastPosition: Int = WeeklyScreenSlidePagerAdapter.START_POSITION

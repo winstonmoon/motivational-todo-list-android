@@ -2,6 +2,8 @@ package com.moonwinston.motivationaltodolist.ui.daily
 
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.MonthEnum
@@ -17,16 +19,14 @@ import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class DailyFragment : BaseFragment<FragmentDailyBinding>() {
     override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
-    val sharedViewModel by sharedViewModel<SharedViewModel>()
-    private val dailyViewModel: DailyViewModel by viewModel()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val dailyViewModel: DailyViewModel by viewModels()
     private val sharedPref: SharedPref by inject()
     private val adapter by lazy {
         TaskAdapter(

@@ -3,15 +3,11 @@ package com.moonwinston.motivationaltodolist.ui.settings
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import com.moonwinston.motivationaltodolist.MainActivity
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.SharedPref
@@ -21,12 +17,11 @@ import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun getViewBinding() = FragmentSettingsBinding.inflate(layoutInflater)
-    private val viewModel by viewModel<SettingsViewModel>()
+    private val settingsViewModel: SettingsViewModel by viewModels()
     private val sharedPref: SharedPref by inject()
     private lateinit var alarmManager: AlarmManager
     private lateinit var alarmIntent: PendingIntent

@@ -1,15 +1,15 @@
 package com.moonwinston.motivationaltodolist.ui.rewards
 
+import androidx.fragment.app.viewModels
 import com.google.android.gms.ads.AdRequest
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @AndroidEntryPoint
 class RewardsFragment : BaseFragment<FragmentRewardsBinding>() {
     override fun getViewBinding() = FragmentRewardsBinding.inflate(layoutInflater)
-    private val rewardsViewModel: RewardsViewModel by viewModel()
+    private val rewardsViewModel: RewardsViewModel by viewModels()
 
     override fun initViews() {
         val adRequest = AdRequest.Builder().build()

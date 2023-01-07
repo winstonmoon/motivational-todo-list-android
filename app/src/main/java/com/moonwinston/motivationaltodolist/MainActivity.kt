@@ -21,10 +21,12 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
+import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var listener: InstallStateUpdatedListener
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+
+    private val sharedViewModel: SharedViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         appUpdateManager = AppUpdateManagerFactory.create(this)

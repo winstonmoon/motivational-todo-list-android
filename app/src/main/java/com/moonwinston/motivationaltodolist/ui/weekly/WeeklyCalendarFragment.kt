@@ -1,19 +1,18 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
 import android.os.Bundle
+import androidx.fragment.app.activityViewModels
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyCalendarFragment : BaseFragment<FragmentWeeklyCalendarBinding>() {
     override fun getViewBinding() = FragmentWeeklyCalendarBinding.inflate(layoutInflater)
-    private val sharedViewModel by sharedViewModel<SharedViewModel>()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var diffWeek = 0
     private val weekList = mutableListOf<Date>()
 
