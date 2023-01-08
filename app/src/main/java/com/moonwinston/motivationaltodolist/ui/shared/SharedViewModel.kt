@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -93,5 +96,24 @@ class SharedViewModel @Inject internal constructor(
             if (task.isCompleted) doneTasks += 1F
         }
         return if (doneTasks == 0F) 0F else doneTasks / totalTasks
+    }
+
+
+    private val _isCoachWeeklyDismissed = MutableStateFlow(false)
+    val isCoachWeeklyDismissed = _isCoachWeeklyDismissed.asStateFlow()
+
+    fun getCoachWeeklyDismissed() {
+        viewModelScope.launch {
+            userPreferencesRepository.fetchDailyCoachMarkDismissedStatusFlow.collect {
+                _isCoachWeeklyDismissed.value = it
+            }
+        }
+    }
+
+
+    fun setCoachWeeklyAsDismissed(dismissWeeklyCoachMark: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.updateDailyCoachMarkDismissedStatusFlow(dismissWeeklyCoachMark)
+        }
     }
 }
