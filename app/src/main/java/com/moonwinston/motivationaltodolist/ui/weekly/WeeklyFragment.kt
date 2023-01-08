@@ -18,6 +18,10 @@ import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -193,6 +197,12 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     }
 
     private fun initDisplayCoachMark() {
+        sharedViewModel.getCoachWeeklyDismissed()
+//        sharedViewModel.isCoachWeeklyDismissed.collect {
+//
+//        }
+
+//        if (sharedViewModel.isCoachWeeklyDismissed) {
         if (sharedPref.isCoachWeeklyDismissed().not()) {
             this@WeeklyFragment.binding.addButton.isEnabled = false
             binding.coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
@@ -203,7 +213,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             binding.coachWeeklyTap.containerCoach.setOnClickListener {
                 binding.coachWeeklyTap.containerCoach.visibility = View.GONE
                 this@WeeklyFragment.binding.addButton.isEnabled = true
-                sharedPref.setCoachWeeklyAsDismissed(true)
+                sharedViewModel.setCoachWeeklyAsDismissed(true) }
             }
         }
     }
