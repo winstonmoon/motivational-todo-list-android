@@ -98,7 +98,6 @@ class SharedViewModel @Inject internal constructor(
         return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }
 
-
     private val _isCoachWeeklyDismissed = MutableStateFlow(false)
     val isCoachWeeklyDismissed = _isCoachWeeklyDismissed.asStateFlow()
 
@@ -109,7 +108,6 @@ class SharedViewModel @Inject internal constructor(
             }
         }
     }
-
 
     fun setCoachWeeklyAsDismissed(dismissWeeklyCoachMark: Boolean) {
         viewModelScope.launch {
