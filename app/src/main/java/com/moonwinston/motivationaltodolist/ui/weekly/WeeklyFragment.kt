@@ -21,6 +21,7 @@ import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
@@ -104,22 +105,27 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             //TODO fix
             val selectedDayTasksList = mutableListOf<TaskEntity>()
             taskEntities.forEach { taskEntity ->
-                if(taskEntity.taskDate == selectedDate) selectedDayTasksList.add(taskEntity)
+                if (taskEntity.taskDate == selectedDate) selectedDayTasksList.add(taskEntity)
             }
             val adapter = TaskAdapter(
                 meatballsMenuCallback = { taskEntity, dmlState ->
                     when (dmlState) {
                         DmlState.Insert("copy") -> {
-                            val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                            val bundle =
+                                bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                             view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
                         }
+
                         DmlState.Update -> {
-                            val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                            val bundle =
+                                bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                             view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
                         }
+
                         DmlState.Delete -> {
                             sharedViewModel.deleteTask(taskEntity.uid)
                         }
+
                         else -> Unit
                     }
                 },
@@ -198,12 +204,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
 
     private fun initDisplayCoachMark() {
         sharedViewModel.getCoachWeeklyDismissed()
-//        sharedViewModel.isCoachWeeklyDismissed.collect {
-//
-//        }
-
-//        if (sharedViewModel.isCoachWeeklyDismissed) {
-        if (sharedPref.isCoachWeeklyDismissed().not()) {
+        if (sharedViewModel.isCoachWeeklyDismissed.value.not()) {
             this@WeeklyFragment.binding.addButton.isEnabled = false
             binding.coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
             binding.coachWeeklySwipe.containerCoach.setOnClickListener {
@@ -213,7 +214,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             binding.coachWeeklyTap.containerCoach.setOnClickListener {
                 binding.coachWeeklyTap.containerCoach.visibility = View.GONE
                 this@WeeklyFragment.binding.addButton.isEnabled = true
-                sharedViewModel.setCoachWeeklyAsDismissed(true) }
+                sharedViewModel.setCoachWeeklyAsDismissed(true)
             }
         }
     }
