@@ -98,20 +98,54 @@ class SharedViewModel @Inject internal constructor(
         return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }
 
-    private val _isCoachWeeklyDismissed = MutableStateFlow(false)
-    val isCoachWeeklyDismissed = _isCoachWeeklyDismissed.asStateFlow()
+    private val _languageIndex = MutableStateFlow(0)
+    val languageIndex = _languageIndex.asStateFlow()
 
-    fun getCoachWeeklyDismissed() {
+    fun getLanguage() {
         viewModelScope.launch {
-            userPreferencesRepository.fetchDailyCoachMarkDismissedStatusFlow.collect {
-                _isCoachWeeklyDismissed.value = it
+            userPreferencesRepository.fetchLanguageSettingFlow.collect {
+                _languageIndex.value = it
             }
         }
     }
 
-    fun setCoachWeeklyAsDismissed(dismissWeeklyCoachMark: Boolean) {
+    fun setLanguage(languageIndex: Int) {
         viewModelScope.launch {
-            userPreferencesRepository.updateDailyCoachMarkDismissedStatusFlow(dismissWeeklyCoachMark)
+            userPreferencesRepository.updateLanguageSettingFlow(languageIndex)
+        }
+    }
+
+    private val _themeIndex = MutableStateFlow(0)
+    val themeIndex = _themeIndex.asStateFlow()
+
+    fun getTheme() {
+        viewModelScope.launch {
+            userPreferencesRepository.fetchThemeSettingFlow.collect {
+                _themeIndex.value = it
+            }
+        }
+    }
+
+    fun setTheme(themeIndex: Int) {
+        viewModelScope.launch {
+            userPreferencesRepository.updateThemeSettingFlow(themeIndex)
+        }
+    }
+
+    private val _notifyIndex = MutableStateFlow(0)
+    val notifyIndex = _notifyIndex.asStateFlow()
+
+    fun getNotify() {
+        viewModelScope.launch {
+            userPreferencesRepository.fetchNotifySettingFlow.collect {
+                _notifyIndex.value = it
+            }
+        }
+    }
+
+    fun setNotify(notifyIndex: Int) {
+        viewModelScope.launch {
+            userPreferencesRepository.updateNotifySettingFlow(notifyIndex)
         }
     }
 }

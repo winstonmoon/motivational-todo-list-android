@@ -6,9 +6,6 @@
     <data>
         <import type="com.moonwinston.motivationaltodolist.R" />
         <import type="androidx.navigation.Navigation" />
-        <variable
-            name="sharedPreferences"
-            type="com.moonwinston.motivationaltodolist.data.SharedPref" />
         <import type="com.moonwinston.motivationaltodolist.BuildConfig" />
     </data>
 
@@ -118,7 +115,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="25dp"
-                    android:text="@{@stringArray/theme_array[sharedPreferences.getTheme]}"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginBottom="5dp"
                     android:autoSizeTextType="uniform"

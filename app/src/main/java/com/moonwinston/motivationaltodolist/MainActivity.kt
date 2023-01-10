@@ -19,19 +19,16 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val sharedPref: SharedPref by inject()
     private val MY_REQUEST_CODE = 1
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var listener: InstallStateUpdatedListener
@@ -63,7 +60,8 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics = Firebase.analytics
         MobileAds.initialize(this) {}
 
-        ThemeUtil().setTheme(sharedPref.getTheme())
+        sharedViewModel.getTheme()
+        ThemeUtil().setTheme(sharedViewModel.themeIndex.value)
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -74,7 +72,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val language = sharedPref.getLanguage()
+        sharedViewModel.getLanguage()
+        val language = sharedViewModel.languageIndex.value
         val localeUpdatedContext: ContextWrapper =
             ContextUtil.updateLocale(newBase, language)
         super.attachBaseContext(localeUpdatedContext)

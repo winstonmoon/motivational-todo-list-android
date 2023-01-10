@@ -9,7 +9,6 @@ import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
@@ -18,7 +17,6 @@ import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.android.ext.android.inject
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -27,7 +25,6 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
     override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val dailyViewModel: DailyViewModel by viewModels()
-    private val sharedPref: SharedPref by inject()
     private val adapter by lazy {
         TaskAdapter(
             meatballsMenuCallback = { taskEntity, dmlState ->
@@ -65,7 +62,8 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
         binding.lifecycleOwner = this@DailyFragment
         binding.dailyFragment = this@DailyFragment
         initDisplayCoachMark()
-        binding.dailyTitleTextView.text = setDailyTitleText(sharedPref.getLanguage())
+        sharedViewModel.getLanguage()
+        binding.dailyTitleTextView.text = setDailyTitleText(sharedViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
     }
 
@@ -106,7 +104,8 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
     }
 
     private fun initDisplayCoachMark() {
-        if (sharedPref.isCoachDailyDismissed().not()) {
+        dailyViewModel.getCoachDailyDismissed()
+        if (dailyViewModel.isCoachDailyDismissed.value.not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
             binding.coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
             binding.coachDailyTapAdd.containerCoach.setOnClickListener {
@@ -120,7 +119,7 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
             binding.coachDailyTapComplete.containerCoach.setOnClickListener {
                 binding.coachDailyTapComplete.containerCoach.visibility = View.GONE
                 this@DailyFragment.binding.addButton.isEnabled = true
-                sharedPref.setCoachDailyAsDismissed(true)
+                dailyViewModel.setCoachDailyAsDismissed(true)
             }
         }
     }

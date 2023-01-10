@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.moonwinston.motivationaltodolist.MainActivity
 import com.moonwinston.motivationaltodolist.R
@@ -14,6 +15,7 @@ import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
+import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
@@ -22,6 +24,7 @@ import org.koin.android.ext.android.inject
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun getViewBinding() = FragmentSettingsBinding.inflate(layoutInflater)
     private val settingsViewModel: SettingsViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val sharedPref: SharedPref by inject()
     private lateinit var alarmManager: AlarmManager
     private lateinit var alarmIntent: PendingIntent
@@ -29,26 +32,34 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun initViews() {
 
         binding.lifecycleOwner = this@SettingsFragment
-        binding.sharedPreferences = sharedPref
+//        binding.sharedPreferences = sharedPref
 
         alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
             PendingIntent.getBroadcast(context, 0, intent, FLAG_IMMUTABLE,)
         }
 
-        binding.notify.text = resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
-        binding.theme.text = resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
-        binding.language.text = resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
+//        binding.notify.text = resources.getStringArray(R.array.notify_array)[sharedPref.getNotify()]
+//        binding.theme.text = resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
+//        binding.language.text = resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
+
+        sharedViewModel.getNotify()
+        sharedViewModel.getTheme()
+        sharedViewModel.getLanguage()
+        binding.notify.text = resources.getStringArray(R.array.notify_array)[sharedViewModel.notifyIndex.value]
+        binding.theme.text = resources.getStringArray(R.array.theme_array)[sharedViewModel.themeIndex.value]
+        binding.language.text = resources.getStringArray(R.array.language_array)[sharedViewModel.languageIndex.value]
 
         binding.notifyButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val notifyItems = resources.getStringArray(R.array.notify_array)
-            val checkedItem = sharedPref.getNotify()
+            sharedViewModel.getNotify()
+            val checkedItem = sharedViewModel.notifyIndex.value
             builder.setTitle(resources.getString(R.string.label_notify))
                 .setSingleChoiceItems(notifyItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.notify.text = notifyItems[which]
-                        sharedPref.saveNotify(which)
+                        sharedViewModel.setNotify(which)
                         //TODO
                         //setAlarm()
                         //TODO sharedPreferences
@@ -64,12 +75,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.themeButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val themeItems = resources.getStringArray(R.array.theme_array)
-            val checkedItem = sharedPref.getTheme()
+            sharedViewModel.getTheme()
+            val checkedItem = sharedViewModel.themeIndex.value
             builder.setTitle(resources.getString(R.string.label_theme))
                 .setSingleChoiceItems(themeItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.theme.text = themeItems[which]
-                        sharedPref.saveTheme(which)
+                        sharedViewModel.setTheme(which)
                         ThemeUtil().setTheme(which)
                         dialog.dismiss()
                     })
@@ -84,12 +96,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.languageButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val languageItems = resources.getStringArray(R.array.language_array)
-            val checkedItem = sharedPref.getLanguage()
+            sharedViewModel.getLanguage()
+            val checkedItem = sharedViewModel.languageIndex.value
             builder.setTitle(resources.getString(R.string.label_language))
                 .setSingleChoiceItems(languageItems, checkedItem,
                     DialogInterface.OnClickListener { dialog, which ->
                         binding.language.text = languageItems[which]
-                        sharedPref.saveLanguage(which)
+                        sharedViewModel.setLanguage(which)
                         val intent = Intent(activity, MainActivity::class.java)
                         startActivity(intent)
                         dialog.dismiss()

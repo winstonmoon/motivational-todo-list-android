@@ -3,8 +3,13 @@ package com.moonwinston.motivationaltodolist.ui.daily
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DailyViewModel @Inject constructor (
@@ -22,5 +27,22 @@ class DailyViewModel @Inject constructor (
             if (task.isCompleted) doneTasks += 1F
         }
         _rateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
+    }
+
+    private val _isCoachDailyDismissed = MutableStateFlow(false)
+    val isCoachDailyDismissed = _isCoachDailyDismissed.asStateFlow()
+
+    fun getCoachDailyDismissed() {
+        viewModelScope.launch {
+            userPreferencesRepository.fetchDailyCoachMarkDismissedStatusFlow.collect {
+                _isCoachDailyDismissed.value = it
+            }
+        }
+    }
+
+    fun setCoachDailyAsDismissed(dismissDailyCoachMark: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.updateDailyCoachMarkDismissedStatusFlow(dismissDailyCoachMark)
+        }
     }
 }

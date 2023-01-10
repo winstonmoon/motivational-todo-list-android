@@ -11,12 +11,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
-import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.android.ext.android.inject
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -28,7 +26,6 @@ class AddDialogFragment : DialogFragment() {
     private lateinit var taskEntity: TaskEntity
     private var positiveButton by Delegates.notNull<Int>()
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val sharedPref: SharedPref by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
