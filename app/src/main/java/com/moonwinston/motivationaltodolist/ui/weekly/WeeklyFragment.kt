@@ -3,6 +3,7 @@ package com.moonwinston.motivationaltodolist.ui.weekly
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.DayOfWeekEnum
@@ -10,7 +11,6 @@ import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.data.SharedPref
 import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.data.TaskEntity
@@ -18,19 +18,13 @@ import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.withContext
-import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     override fun getViewBinding() = FragmentWeeklyBinding.inflate(layoutInflater)
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val sharedPref: SharedPref by inject()
+    private val weeklyViewModel: WeeklyViewModel by viewModels()
     private lateinit var selectedDate: Date
     private var lastPosition: Int = WeeklyScreenSlidePagerAdapter.START_POSITION
 
@@ -171,7 +165,8 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
         val wordYear = resources.getString(R.string.label_year)
         val wordDay = resources.getString(R.string.label_day)
         //TODO separate western and eastern
-        return when (sharedPref.getLanguage()) {
+        sharedViewModel.getLanguage()
+        return when (sharedViewModel.languageIndex.value) {
             ContextUtil.ENGLISH -> "$parsedDayOfWeek, $parsedMonth $date, $year"
             else -> "$year$wordYear $parsedMonth $date$wordDay $parsedDayOfWeek"
         }
@@ -203,8 +198,8 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
     }
 
     private fun initDisplayCoachMark() {
-        sharedViewModel.getCoachWeeklyDismissed()
-        if (sharedViewModel.isCoachWeeklyDismissed.value.not()) {
+        weeklyViewModel.getCoachWeeklyDismissed()
+        if (weeklyViewModel.isCoachWeeklyDismissed.value.not()) {
             this@WeeklyFragment.binding.addButton.isEnabled = false
             binding.coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
             binding.coachWeeklySwipe.containerCoach.setOnClickListener {
@@ -214,7 +209,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>() {
             binding.coachWeeklyTap.containerCoach.setOnClickListener {
                 binding.coachWeeklyTap.containerCoach.visibility = View.GONE
                 this@WeeklyFragment.binding.addButton.isEnabled = true
-                sharedViewModel.setCoachWeeklyAsDismissed(true)
+                weeklyViewModel.setCoachWeeklyAsDismissed(true)
             }
         }
     }
