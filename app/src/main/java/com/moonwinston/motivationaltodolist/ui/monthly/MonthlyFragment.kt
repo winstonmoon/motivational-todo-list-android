@@ -1,11 +1,16 @@
 package com.moonwinston.motivationaltodolist.ui.monthly
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
@@ -13,23 +18,47 @@ import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
-    override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
+class MonthlyFragment : Fragment() {
+
+    private lateinit var binding: FragmentMonthlyBinding
+
+//    override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val monthlyViewModel: MonthlyViewModel by viewModels()
 
-    override fun initViews() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentMonthlyBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initDisplayCoachMark()
         binding.calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
         binding.calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
         binding.calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
-    }
 
-    override fun observeData() {
         sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
             binding.monthlyTitleTextView.text = setMonthlyTitleText(it.first, it.second)
         }
     }
+
+//    override fun initViews() {
+//        initDisplayCoachMark()
+//        binding.calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
+//        binding.calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
+//        binding.calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
+//    }
+//
+//    override fun observeData() {
+//        sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
+//            binding.monthlyTitleTextView.text = setMonthlyTitleText(it.first, it.second)
+//        }
+//    }
 
     private fun setMonthlyTitleText(year: Int, month: Int): String {
         val wordYear = resources.getString(R.string.label_year)

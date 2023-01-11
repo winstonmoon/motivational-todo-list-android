@@ -1,7 +1,11 @@
 package com.moonwinston.motivationaltodolist.ui.daily
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -21,8 +25,11 @@ import java.util.*
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class DailyFragment : BaseFragment<FragmentDailyBinding>() {
-    override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
+class DailyFragment : Fragment() {
+
+    private lateinit var binding: FragmentDailyBinding
+
+//    override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val dailyViewModel: DailyViewModel by viewModels()
     private val adapter by lazy {
@@ -58,16 +65,24 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
         )
     )
 
-    override fun initViews() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentDailyBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this@DailyFragment
         binding.dailyFragment = this@DailyFragment
         initDisplayCoachMark()
         sharedViewModel.getLanguage()
         binding.dailyTitleTextView.text = setDailyTitleText(sharedViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
-    }
 
-    override fun observeData() {
         binding.sharedViewModel = sharedViewModel
         sharedViewModel.getAllTasks()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
@@ -87,6 +102,36 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
             binding.achievementRate.text = "$roundedAchievementRate%"
         }
     }
+
+//    override fun initViews() {
+//        binding.lifecycleOwner = this@DailyFragment
+//        binding.dailyFragment = this@DailyFragment
+//        initDisplayCoachMark()
+//        sharedViewModel.getLanguage()
+//        binding.dailyTitleTextView.text = setDailyTitleText(sharedViewModel.languageIndex.value)
+//        binding.dailyTodoRecyclerView.adapter = adapter
+//    }
+
+//    override fun observeData() {
+//        binding.sharedViewModel = sharedViewModel
+//        sharedViewModel.getAllTasks()
+//        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
+//            val todayTasksList = mutableListOf<TaskEntity>().apply {
+//                tasksList.forEach { taskEntity ->
+//                    if (taskEntity.taskDate == CalendarUtil.getTodayDate()) add(taskEntity)
+//                }
+//            }
+//            adapter.submitList(todayTasksList.sortedBy { it.taskTime })
+//            dailyViewModel.setRate(todayTasksList)
+//        }
+//
+//        dailyViewModel.rateLiveData.observe(viewLifecycleOwner) { rate ->
+//            val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
+//            sharedViewModel.insertAchievementRate(achievementRate)
+//            val roundedAchievementRate = (rate * 100).roundToInt()
+//            binding.achievementRate.text = "$roundedAchievementRate%"
+//        }
+//    }
 
     private fun setDailyTitleText(language: Int): String {
         val cal = Calendar.getInstance()

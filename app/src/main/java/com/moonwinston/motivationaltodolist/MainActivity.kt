@@ -5,6 +5,7 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -24,7 +25,6 @@ import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.android.viewmodel.ext.android.viewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,9 +34,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var listener: InstallStateUpdatedListener
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
-    private val sharedViewModel: SharedViewModel by viewModel()
+    private val sharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         appUpdateManager = AppUpdateManagerFactory.create(this)
         listener = InstallStateUpdatedListener { state ->
             if (state.installStatus() == InstallStatus.DOWNLOADED) {
@@ -63,7 +64,6 @@ class MainActivity : AppCompatActivity() {
         sharedViewModel.getTheme()
         ThemeUtil().setTheme(sharedViewModel.themeIndex.value)
 
-        super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -72,10 +72,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        sharedViewModel.getLanguage()
-        val language = sharedViewModel.languageIndex.value
+//        sharedViewModel.getLanguage()
+//        val language = sharedViewModel.languageIndex.value
+//        val localeUpdatedContext: ContextWrapper =
+//            ContextUtil.updateLocale(newBase, language)
         val localeUpdatedContext: ContextWrapper =
-            ContextUtil.updateLocale(newBase, language)
+            ContextUtil.updateLocale(newBase, 1)
         super.attachBaseContext(localeUpdatedContext)
     }
 
