@@ -6,15 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedViewModel @Inject internal constructor(
+class SharedViewModel @Inject constructor(
     private val taskRepository: TaskRepository,
     private val achievementRateRepository: AchievementRateRepository,
     private val userPreferencesRepository: UserPreferencesRepository
@@ -24,17 +26,19 @@ class SharedViewModel @Inject internal constructor(
     val tasksListLiveData: LiveData<List<TaskEntity>>
         get() = _tasksListLiveData
 
-    fun getAllTasks() = viewModelScope.launch {
+    fun getAllTasks() = viewModelScope.launch (Dispatchers.IO) {
         val list = taskRepository.getAllTasks()
         val sortedList = list.sortedBy { it.taskDate }
-        _tasksListLiveData.value = sortedList.map {
-            TaskEntity(
-                uid = it.uid,
-                taskDate = it.taskDate,
-                taskTime = it.taskTime,
-                task = it.task,
-                isCompleted = it.isCompleted
-            )
+        withContext(Dispatchers.Main) {
+            _tasksListLiveData.value = sortedList.map {
+                TaskEntity(
+                    uid = it.uid,
+                    taskDate = it.taskDate,
+                    taskTime = it.taskTime,
+                    task = it.task,
+                    isCompleted = it.isCompleted
+                )
+            }
         }
     }
 
@@ -42,33 +46,35 @@ class SharedViewModel @Inject internal constructor(
     val multipleDaysTasksList: LiveData<List<TaskEntity>>
         get() = _multipleDaysTasksList
 
-    fun getAllTasksByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch {
+    fun getAllTasksByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch (Dispatchers.IO) {
         val list = taskRepository.getAllTasksByDates(taskDatesList)
         val sortedList = list.sortedBy { it.taskDate }
-        _multipleDaysTasksList.value = sortedList.map {
-            TaskEntity(
-                uid = it.uid,
-                taskDate = it.taskDate,
-                taskTime = it.taskTime,
-                task = it.task,
-                isCompleted = it.isCompleted
-            )
+        withContext(Dispatchers.Main) {
+            _multipleDaysTasksList.value = sortedList.map {
+                TaskEntity(
+                    uid = it.uid,
+                    taskDate = it.taskDate,
+                    taskTime = it.taskTime,
+                    task = it.task,
+                    isCompleted = it.isCompleted
+                )
+            }
         }
     }
 
-    fun insertTask(taskEntity: TaskEntity) = viewModelScope.launch {
+    fun insertTask(taskEntity: TaskEntity) = viewModelScope.launch (Dispatchers.IO) {
         taskRepository.insertTask(taskEntity)
         //TODO
         getAllTasks()
     }
 
-    fun deleteTask(uid: Long) = viewModelScope.launch {
+    fun deleteTask(uid: Long) = viewModelScope.launch (Dispatchers.IO) {
         taskRepository.deleteTask(uid)
         //TODO
         getAllTasks()
     }
 
-    fun insertAchievementRate(achievementRateEntity: AchievementRateEntity) = viewModelScope.launch {
+    fun insertAchievementRate(achievementRateEntity: AchievementRateEntity) = viewModelScope.launch (Dispatchers.IO) {
         achievementRateRepository.insertRate(achievementRateEntity)
     }
 

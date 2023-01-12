@@ -8,9 +8,9 @@ class AchievementRateRepository @Inject constructor(
     private val achievementRateDao: AchievementRateDao
 ) {
 
-    fun getAllRate() = achievementRateDao.getAll()
+    suspend fun getAllRate() = achievementRateDao.getAll()
 
-    fun getAllCompleteRate() = achievementRateDao.getAllComplete()
+    suspend fun getAllCompleteRate() = achievementRateDao.getAllComplete()
 
-    fun insertRate(achievementRateEntity: AchievementRateEntity) = achievementRateDao.insert(achievementRateEntity)
+    suspend fun insertRate(achievementRateEntity: AchievementRateEntity) = achievementRateDao.insert(achievementRateEntity)
 }
