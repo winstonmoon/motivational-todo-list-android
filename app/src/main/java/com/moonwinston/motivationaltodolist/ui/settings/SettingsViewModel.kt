@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject internal constructor(
+class SettingsViewModel @Inject constructor(
     private val taskRepository: TaskRepository
     ) : ViewModel() {
 

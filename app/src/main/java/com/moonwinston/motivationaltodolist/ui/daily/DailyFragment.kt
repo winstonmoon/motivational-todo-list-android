@@ -16,7 +16,6 @@ import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
-import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
@@ -29,7 +28,6 @@ class DailyFragment : Fragment() {
 
     private lateinit var binding: FragmentDailyBinding
 
-//    override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val dailyViewModel: DailyViewModel by viewModels()
     private val adapter by lazy {
@@ -102,36 +100,6 @@ class DailyFragment : Fragment() {
             binding.achievementRate.text = "$roundedAchievementRate%"
         }
     }
-
-//    override fun initViews() {
-//        binding.lifecycleOwner = this@DailyFragment
-//        binding.dailyFragment = this@DailyFragment
-//        initDisplayCoachMark()
-//        sharedViewModel.getLanguage()
-//        binding.dailyTitleTextView.text = setDailyTitleText(sharedViewModel.languageIndex.value)
-//        binding.dailyTodoRecyclerView.adapter = adapter
-//    }
-
-//    override fun observeData() {
-//        binding.sharedViewModel = sharedViewModel
-//        sharedViewModel.getAllTasks()
-//        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
-//            val todayTasksList = mutableListOf<TaskEntity>().apply {
-//                tasksList.forEach { taskEntity ->
-//                    if (taskEntity.taskDate == CalendarUtil.getTodayDate()) add(taskEntity)
-//                }
-//            }
-//            adapter.submitList(todayTasksList.sortedBy { it.taskTime })
-//            dailyViewModel.setRate(todayTasksList)
-//        }
-//
-//        dailyViewModel.rateLiveData.observe(viewLifecycleOwner) { rate ->
-//            val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
-//            sharedViewModel.insertAchievementRate(achievementRate)
-//            val roundedAchievementRate = (rate * 100).roundToInt()
-//            binding.achievementRate.text = "$roundedAchievementRate%"
-//        }
-//    }
 
     private fun setDailyTitleText(language: Int): String {
         val cal = Calendar.getInstance()

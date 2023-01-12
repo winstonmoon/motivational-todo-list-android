@@ -8,14 +8,14 @@ import javax.inject.Singleton
 class TaskRepository @Inject constructor(
     private val taskDao: TaskDao
 ){
-    fun getAllTasks() = taskDao.getAll()
+    suspend fun getAllTasks() = taskDao.getAll()
 
     //TODO temporary implement
-    fun getAllFutureTasks(currentTime: Date) = taskDao.getAllFutureTasks(currentTime)
+    suspend fun getAllFutureTasks(currentTime: Date) = taskDao.getAllFutureTasks(currentTime)
 
-    fun getAllTasksByDates(taskDatesList: MutableList<Date>) = taskDao.getAllByDates(taskDatesList)
+    suspend fun getAllTasksByDates(taskDatesList: MutableList<Date>) = taskDao.getAllByDates(taskDatesList)
 
-    fun insertTask(taskEntity: TaskEntity) = taskDao.insert(taskEntity)
+    suspend fun insertTask(taskEntity: TaskEntity) = taskDao.insert(taskEntity)
 
-    fun deleteTask(uid: Long) = taskDao.delete(uid)
+    suspend fun deleteTask(uid: Long) = taskDao.delete(uid)
 }
