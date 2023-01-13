@@ -180,7 +180,7 @@ class WeeklyFragment : Fragment() {
         val wordYear = resources.getString(R.string.label_year)
         val wordDay = resources.getString(R.string.label_day)
         //TODO separate western and eastern
-        sharedViewModel.getLanguage()
+//        sharedViewModel.getLanguage()
         return when (sharedViewModel.languageIndex.value) {
             ContextUtil.ENGLISH -> "$parsedDayOfWeek, $parsedMonth $date, $year"
             else -> "$year$wordYear $parsedMonth $date$wordDay $parsedDayOfWeek"
@@ -213,7 +213,7 @@ class WeeklyFragment : Fragment() {
     }
 
     private fun initDisplayCoachMark() {
-        weeklyViewModel.getCoachWeeklyDismissed()
+//        weeklyViewModel.getCoachWeeklyDismissed()
         if (weeklyViewModel.isCoachWeeklyDismissed.value.not()) {
             this@WeeklyFragment.binding.addButton.isEnabled = false
             binding.coachWeeklySwipe.containerCoach.visibility = View.VISIBLE

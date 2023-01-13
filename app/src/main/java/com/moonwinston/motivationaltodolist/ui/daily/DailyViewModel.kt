@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,16 +29,22 @@ class DailyViewModel @Inject constructor (
         _rateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }
 
-    private val _isCoachDailyDismissed = MutableStateFlow(false)
-    val isCoachDailyDismissed = _isCoachDailyDismissed.asStateFlow()
+//    private val _isCoachDailyDismissed = MutableStateFlow(false)
+//    val isCoachDailyDismissed = _isCoachDailyDismissed.asStateFlow()
 
-    fun getCoachDailyDismissed() {
-        viewModelScope.launch {
-            userPreferencesRepository.fetchDailyCoachMarkDismissedStatusFlow.collect {
-                _isCoachDailyDismissed.value = it
-            }
-        }
-    }
+//    fun getCoachDailyDismissed() {
+//        viewModelScope.launch {
+//            userPreferencesRepository.fetchDailyCoachMarkDismissedStatusFlow.collect {
+//                _isCoachDailyDismissed.value = it
+//            }
+//        }
+//    }
+
+    val isCoachDailyDismissed = userPreferencesRepository.fetchDailyCoachMarkDismissedStatusFlow.stateIn(
+                initialValue = false,
+                started = SharingStarted.Eagerly,
+                scope = viewModelScope
+            )
 
     fun setCoachDailyAsDismissed(dismissDailyCoachMark: Boolean) {
         viewModelScope.launch {

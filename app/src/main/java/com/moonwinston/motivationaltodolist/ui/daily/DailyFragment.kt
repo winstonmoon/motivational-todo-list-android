@@ -76,8 +76,9 @@ class DailyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this@DailyFragment
         binding.dailyFragment = this@DailyFragment
+        binding.dailyViewModel = dailyViewModel
         initDisplayCoachMark()
-        sharedViewModel.getLanguage()
+//        sharedViewModel.getLanguage()
         binding.dailyTitleTextView.text = setDailyTitleText(sharedViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
 
@@ -117,7 +118,7 @@ class DailyFragment : Fragment() {
     }
 
     private fun initDisplayCoachMark() {
-        dailyViewModel.getCoachDailyDismissed()
+//        dailyViewModel.getCoachDailyDismissed()
         if (dailyViewModel.isCoachDailyDismissed.value.not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
             binding.coachDailyTapAdd.containerCoach.visibility = View.VISIBLE

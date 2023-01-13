@@ -55,9 +55,9 @@ class SettingsFragment : Fragment() {
 //        binding.theme.text = resources.getStringArray(R.array.theme_array)[sharedPref.getTheme()]
 //        binding.language.text = resources.getStringArray(R.array.language_array)[sharedPref.getLanguage()]
 
-        sharedViewModel.getNotify()
-        sharedViewModel.getTheme()
-        sharedViewModel.getLanguage()
+//        sharedViewModel.getNotify()
+//        sharedViewModel.getTheme()
+//        sharedViewModel.getLanguage()
         binding.notify.text = resources.getStringArray(R.array.notify_array)[sharedViewModel.notifyIndex.value]
         binding.theme.text = resources.getStringArray(R.array.theme_array)[sharedViewModel.themeIndex.value]
         binding.language.text = resources.getStringArray(R.array.language_array)[sharedViewModel.languageIndex.value]
@@ -65,7 +65,7 @@ class SettingsFragment : Fragment() {
         binding.notifyButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val notifyItems = resources.getStringArray(R.array.notify_array)
-            sharedViewModel.getNotify()
+//            sharedViewModel.getNotify()
             val checkedItem = sharedViewModel.notifyIndex.value
             builder.setTitle(resources.getString(R.string.label_notify))
                 .setSingleChoiceItems(notifyItems, checkedItem,
@@ -87,7 +87,7 @@ class SettingsFragment : Fragment() {
         binding.themeButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val themeItems = resources.getStringArray(R.array.theme_array)
-            sharedViewModel.getTheme()
+//            sharedViewModel.getTheme()
             val checkedItem = sharedViewModel.themeIndex.value
             builder.setTitle(resources.getString(R.string.label_theme))
                 .setSingleChoiceItems(themeItems, checkedItem,
@@ -108,7 +108,7 @@ class SettingsFragment : Fragment() {
         binding.languageButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
             val languageItems = resources.getStringArray(R.array.language_array)
-            sharedViewModel.getLanguage()
+//            sharedViewModel.getLanguage()
             val checkedItem = sharedViewModel.languageIndex.value
             builder.setTitle(resources.getString(R.string.label_language))
                 .setSingleChoiceItems(languageItems, checkedItem,

@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,16 +13,22 @@ class WeeklyViewModel @Inject constructor (
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val _isCoachWeeklyDismissed = MutableStateFlow(false)
-    val isCoachWeeklyDismissed = _isCoachWeeklyDismissed.asStateFlow()
+//    private val _isCoachWeeklyDismissed = MutableStateFlow(false)
+//    val isCoachWeeklyDismissed = _isCoachWeeklyDismissed.asStateFlow()
+//
+//    fun getCoachWeeklyDismissed() {
+//        viewModelScope.launch {
+//            userPreferencesRepository.fetchWeeklyCoachMarkDismissedStatusFlow.collect {
+//                _isCoachWeeklyDismissed.value = it
+//            }
+//        }
+//    }
 
-    fun getCoachWeeklyDismissed() {
-        viewModelScope.launch {
-            userPreferencesRepository.fetchWeeklyCoachMarkDismissedStatusFlow.collect {
-                _isCoachWeeklyDismissed.value = it
-            }
-        }
-    }
+    val isCoachWeeklyDismissed = userPreferencesRepository.fetchWeeklyCoachMarkDismissedStatusFlow.stateIn(
+        initialValue = false,
+        started = SharingStarted.Eagerly,
+        scope = viewModelScope
+    )
 
     fun setCoachWeeklyAsDismissed(dismissWeeklyCoachMark: Boolean) {
         viewModelScope.launch {

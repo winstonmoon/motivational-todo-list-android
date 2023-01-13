@@ -47,7 +47,7 @@ class MonthlyFragment : Fragment() {
     private fun setMonthlyTitleText(year: Int, month: Int): String {
         val wordYear = resources.getString(R.string.label_year)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
-        sharedViewModel.getLanguage()
+//        sharedViewModel.getLanguage()
         return when (sharedViewModel.languageIndex.value) {
             ContextUtil.ENGLISH -> "$parsedMonth, $year"
             else -> "$year$wordYear $parsedMonth"
@@ -55,7 +55,7 @@ class MonthlyFragment : Fragment() {
     }
 
     private fun initDisplayCoachMark() {
-        monthlyViewModel.getCoachMonthlyDismissed()
+//        monthlyViewModel.getCoachMonthlyDismissed()
         if (monthlyViewModel.isCoachMonthlyDismissed.value.not()) {
             binding.coachMonthly.containerCoach.visibility = View.VISIBLE
             binding.coachMonthly.containerCoach.setOnClickListener {
