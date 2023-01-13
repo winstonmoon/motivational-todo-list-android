@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedViewModel.getTheme()
+//        sharedViewModel.getTheme()
         ThemeUtil().setTheme(sharedViewModel.themeIndex.value)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -56,7 +56,8 @@ class WeeklyCalendarFragment : Fragment() {
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
             val date = calendar.get(Calendar.DATE)
 
-            weekList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
+            SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")
+                ?.let { weekList.add(it) }
             calendar.add(Calendar.DATE, 1)
         }
         //TODO fix dayOfWeek logic more simple, viewmodel

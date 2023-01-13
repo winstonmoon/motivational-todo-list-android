@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -104,16 +102,22 @@ class SharedViewModel @Inject constructor(
         return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }
 
-    private val _languageIndex = MutableStateFlow(0)
-    val languageIndex = _languageIndex.asStateFlow()
+//    private val _languageIndex = MutableStateFlow(0)
+//    val languageIndex = _languageIndex.asStateFlow()
+//
+//    fun getLanguage() {
+//        viewModelScope.launch {
+//            userPreferencesRepository.fetchLanguageSettingFlow.collect {
+//                _languageIndex.value = it
+//            }
+//        }
+//    }
 
-    fun getLanguage() {
-        viewModelScope.launch {
-            userPreferencesRepository.fetchLanguageSettingFlow.collect {
-                _languageIndex.value = it
-            }
-        }
-    }
+    val languageIndex = userPreferencesRepository.fetchLanguageSettingFlow.stateIn(
+        initialValue = 0,
+        started = SharingStarted.Eagerly,
+        scope = viewModelScope
+    )
 
     fun setLanguage(languageIndex: Int) {
         viewModelScope.launch {
@@ -121,16 +125,22 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    private val _themeIndex = MutableStateFlow(0)
-    val themeIndex = _themeIndex.asStateFlow()
+//    private val _themeIndex = MutableStateFlow(0)
+//    val themeIndex = _themeIndex.asStateFlow()
+//
+//    fun getTheme() {
+//        viewModelScope.launch {
+//            userPreferencesRepository.fetchThemeSettingFlow.collect {
+//                _themeIndex.value = it
+//            }
+//        }
+//    }
 
-    fun getTheme() {
-        viewModelScope.launch {
-            userPreferencesRepository.fetchThemeSettingFlow.collect {
-                _themeIndex.value = it
-            }
-        }
-    }
+    val themeIndex = userPreferencesRepository.fetchThemeSettingFlow.stateIn(
+        initialValue = 0,
+        started = SharingStarted.Eagerly,
+        scope = viewModelScope
+    )
 
     fun setTheme(themeIndex: Int) {
         viewModelScope.launch {
@@ -138,16 +148,22 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    private val _notifyIndex = MutableStateFlow(0)
-    val notifyIndex = _notifyIndex.asStateFlow()
+//    private val _notifyIndex = MutableStateFlow(0)
+//    val notifyIndex = _notifyIndex.asStateFlow()
+//
+//    fun getNotify() {
+//        viewModelScope.launch {
+//            userPreferencesRepository.fetchNotifySettingFlow.collect {
+//                _notifyIndex.value = it
+//            }
+//        }
+//    }
 
-    fun getNotify() {
-        viewModelScope.launch {
-            userPreferencesRepository.fetchNotifySettingFlow.collect {
-                _notifyIndex.value = it
-            }
-        }
-    }
+    val notifyIndex = userPreferencesRepository.fetchNotifySettingFlow.stateIn(
+        initialValue = 0,
+        started = SharingStarted.Eagerly,
+        scope = viewModelScope
+    )
 
     fun setNotify(notifyIndex: Int) {
         viewModelScope.launch {

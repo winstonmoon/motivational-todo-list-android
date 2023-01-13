@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics = Firebase.analytics
         MobileAds.initialize(this) {}
 
-        sharedViewModel.getTheme()
+//        sharedViewModel.getTheme()
         ThemeUtil().setTheme(sharedViewModel.themeIndex.value)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
