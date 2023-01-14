@@ -38,8 +38,8 @@ class AddDialogFragment : DialogFragment() {
             binding = DialogAddBinding.inflate(layoutInflater)
             initCommonView(binding)
             when (dmlState) {
-                DmlState.Insert("insert") -> initInsertView(binding, taskEntity)
-                DmlState.Insert("copy") -> initCopyView(binding, taskEntity)
+                DmlState.Insert(method = "insert") -> initInsertView(binding, taskEntity)
+                DmlState.Insert(method = "copy") -> initCopyView(binding, taskEntity)
                 DmlState.Update -> initUpdateView(binding, taskEntity)
                 else -> Unit
             }
@@ -64,7 +64,7 @@ class AddDialogFragment : DialogFragment() {
 
                         val taskEntity =
                             when (dmlState) {
-                                DmlState.Insert("copy") ->
+                                DmlState.Insert(method = "copy") ->
                                     TaskEntity(
                                         taskDate = date,
                                         //TODO

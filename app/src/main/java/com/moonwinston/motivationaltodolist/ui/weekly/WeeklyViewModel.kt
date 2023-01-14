@@ -13,17 +13,6 @@ class WeeklyViewModel @Inject constructor (
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-//    private val _isCoachWeeklyDismissed = MutableStateFlow(false)
-//    val isCoachWeeklyDismissed = _isCoachWeeklyDismissed.asStateFlow()
-//
-//    fun getCoachWeeklyDismissed() {
-//        viewModelScope.launch {
-//            userPreferencesRepository.fetchWeeklyCoachMarkDismissedStatusFlow.collect {
-//                _isCoachWeeklyDismissed.value = it
-//            }
-//        }
-//    }
-
     val isCoachWeeklyDismissed = userPreferencesRepository.fetchWeeklyCoachMarkDismissedStatusFlow.stateIn(
         initialValue = false,
         started = SharingStarted.Eagerly,

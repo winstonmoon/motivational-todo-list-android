@@ -29,17 +29,6 @@ class DailyViewModel @Inject constructor (
         _rateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }
 
-//    private val _isCoachDailyDismissed = MutableStateFlow(false)
-//    val isCoachDailyDismissed = _isCoachDailyDismissed.asStateFlow()
-
-//    fun getCoachDailyDismissed() {
-//        viewModelScope.launch {
-//            userPreferencesRepository.fetchDailyCoachMarkDismissedStatusFlow.collect {
-//                _isCoachDailyDismissed.value = it
-//            }
-//        }
-//    }
-
     val isCoachDailyDismissed = userPreferencesRepository.fetchDailyCoachMarkDismissedStatusFlow.stateIn(
                 initialValue = false,
                 started = SharingStarted.Eagerly,

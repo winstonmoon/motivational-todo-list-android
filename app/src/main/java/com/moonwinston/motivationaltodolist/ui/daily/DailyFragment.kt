@@ -25,16 +25,23 @@ import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class DailyFragment : Fragment() {
-
-    private lateinit var binding: FragmentDailyBinding
-
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val dailyViewModel: DailyViewModel by viewModels()
+    private lateinit var binding: FragmentDailyBinding
+    val bundleForAddDialog = bundleOf(
+        "dmlState" to DmlState.Insert(method = "insert"),
+        "taskEntity" to TaskEntity(
+            taskDate = CalendarUtil.getTodayDate(),
+            taskTime = Date(),
+            task = "",
+            isCompleted = false
+        )
+    )
     private val adapter by lazy {
         TaskAdapter(
             meatballsMenuCallback = { taskEntity, dmlState ->
                 when (dmlState) {
-                    DmlState.Insert("copy") -> {
+                    DmlState.Insert(method = "copy") -> {
                         val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                         view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
                     }
@@ -53,15 +60,6 @@ class DailyFragment : Fragment() {
                 binding.congratulationsAnimationView.playAnimation()
             })
     }
-    val bundleForAddDialog = bundleOf(
-        "dmlState" to DmlState.Insert("insert"),
-        "taskEntity" to TaskEntity(
-            taskDate = CalendarUtil.getTodayDate(),
-            taskTime = Date(),
-            task = "",
-            isCompleted = false
-        )
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,12 +75,11 @@ class DailyFragment : Fragment() {
         binding.lifecycleOwner = this@DailyFragment
         binding.dailyFragment = this@DailyFragment
         binding.dailyViewModel = dailyViewModel
+        binding.sharedViewModel = sharedViewModel
         initDisplayCoachMark()
-//        sharedViewModel.getLanguage()
         binding.dailyTitleTextView.text = setDailyTitleText(sharedViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
 
-        binding.sharedViewModel = sharedViewModel
         sharedViewModel.getAllTasks()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
             val todayTasksList = mutableListOf<TaskEntity>().apply {
@@ -118,7 +115,6 @@ class DailyFragment : Fragment() {
     }
 
     private fun initDisplayCoachMark() {
-//        dailyViewModel.getCoachDailyDismissed()
         if (dailyViewModel.isCoachDailyDismissed.value.not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
             binding.coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
