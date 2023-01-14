@@ -13,17 +13,6 @@ class MonthlyViewModel @Inject constructor (
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-//    private val _isCoachMonthlyDismissed = MutableStateFlow(false)
-//    val isCoachMonthlyDismissed = _isCoachMonthlyDismissed.asStateFlow()
-//
-//    fun getCoachMonthlyDismissed() {
-//        viewModelScope.launch {
-//            userPreferencesRepository.fetchMonthlyCoachMarkDismissedStatusFlow.collect {
-//                _isCoachMonthlyDismissed.value = it
-//            }
-//        }
-//    }
-
     val isCoachMonthlyDismissed = userPreferencesRepository.fetchMonthlyCoachMarkDismissedStatusFlow.stateIn(
         initialValue = false,
         started = SharingStarted.Eagerly,
