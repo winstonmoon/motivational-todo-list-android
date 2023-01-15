@@ -49,9 +49,7 @@ class DailyFragment : Fragment() {
                         val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                         view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
                     }
-                    DmlState.Delete -> {
-                        sharedViewModel.deleteTask(taskEntity.uid)
-                    }
+                    DmlState.Delete -> sharedViewModel.deleteTask(taskEntity.uid)
                     else -> Unit
                 }
             },
