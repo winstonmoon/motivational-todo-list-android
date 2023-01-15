@@ -37,21 +37,14 @@ class WeeklyFragment : Fragment() {
             meatballsMenuCallback = { taskEntity, dmlState ->
                 when (dmlState) {
                     DmlState.Insert(method = "copy") -> {
-                        val bundle =
-                            bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                         view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
                     }
-
                     DmlState.Update -> {
-                        val bundle =
-                            bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                         view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
                     }
-
-                    DmlState.Delete -> {
-                        sharedViewModel.deleteTask(taskEntity.uid)
-                    }
-
+                    DmlState.Delete -> sharedViewModel.deleteTask(taskEntity.uid)
                     else -> Unit
                 }
             },
@@ -144,32 +137,6 @@ class WeeklyFragment : Fragment() {
             taskEntities.forEach { taskEntity ->
                 if (taskEntity.taskDate == selectedDate) selectedDayTasksList.add(taskEntity)
             }
-//            val adapter = TaskAdapter(
-//                meatballsMenuCallback = { taskEntity, dmlState ->
-//                    when (dmlState) {
-//                        DmlState.Insert(method = "copy") -> {
-//                            val bundle =
-//                                bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-//                            view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
-//                        }
-//
-//                        DmlState.Update -> {
-//                            val bundle =
-//                                bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-//                            view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
-//                        }
-//
-//                        DmlState.Delete -> {
-//                            sharedViewModel.deleteTask(taskEntity.uid)
-//                        }
-//
-//                        else -> Unit
-//                    }
-//                },
-//                radioButtonCallback = {
-//                    sharedViewModel.insertTask(it)
-//                    binding.congratulationsAnimationView.playAnimation()
-//                })
             binding.weeklyTodoRecyclerView.adapter = adapter
             adapter.submitList(selectedDayTasksList.sortedBy { it.taskTime })
 
