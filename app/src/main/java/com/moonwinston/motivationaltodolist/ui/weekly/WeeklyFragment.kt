@@ -117,7 +117,7 @@ class WeeklyFragment : Fragment() {
             binding.saturdayTextView.background = null
             binding.sundayTextView.background = null
             val cal = Calendar.getInstance().apply {
-                this.time = it
+                time = it
             }
 
             when (cal.get(Calendar.DAY_OF_WEEK)) {
@@ -159,7 +159,7 @@ class WeeklyFragment : Fragment() {
 
     private fun getWeeklyTitle(selectedDate: Date): String {
         val cal = Calendar.getInstance().apply {
-            this.time = selectedDate
+            time = selectedDate
         }
 
         val year = cal.get(Calendar.YEAR)
@@ -193,7 +193,7 @@ class WeeklyFragment : Fragment() {
         binding.sundayTextView.background = null
 
         val cal = Calendar.getInstance().apply {
-            this.time = CalendarUtil.getTodayDate()
+            time = CalendarUtil.getTodayDate()
         }
         when (cal.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)

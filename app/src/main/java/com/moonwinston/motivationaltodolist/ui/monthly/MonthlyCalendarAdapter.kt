@@ -23,30 +23,30 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
         private val today = CalendarUtil.getTodayDate()
         private val monTasksList = _monTasksList
 
-        fun bind(testDate: Date) {
+        fun bind(date: Date) {
             val tempTaskList = mutableListOf<TaskEntity>()
             monTasksList.forEach { taskEntity ->
-                if (taskEntity.taskDate == testDate) tempTaskList.add(taskEntity)
+                if (taskEntity.taskDate == date) tempTaskList.add(taskEntity)
             }
             val rate = getRate(tempTaskList)
 
             //TODO
             val cal = Calendar.getInstance().apply {
-                this.time = testDate
+                time = date
             }
 
             when {
-                testDate == nonExistDate -> {
+                date == nonExistDate -> {
                     binding.monthlyDateTextView.visibility = View.GONE
                     binding.monthlyCustomPieChart.visibility = View.GONE
                 }
-                testDate == today -> {
+                date == today -> {
                     binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.monthlyDateTextView.text = "${cal.get(Calendar.DAY_OF_MONTH)}"
                     if (rate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.setPercentage(rate)
                 }
-                testDate.after(today) -> {
+                date.after(today) -> {
                     binding.monthlyDateTextView.text = "${cal.get(Calendar.DAY_OF_MONTH)}"
                     binding.monthlyCustomPieChart.visibility = View.INVISIBLE
                 }
