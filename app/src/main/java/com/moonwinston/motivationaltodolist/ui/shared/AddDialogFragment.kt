@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.telecom.Call
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -54,9 +55,16 @@ class AddDialogFragment : DialogFragment() {
                             return@OnClickListener
                         }
 
-                        //TODO
-//                        val hour = binding.timePicker.hour
-//                        val minute = binding.timePicker.minute
+                        val cal = Calendar.getInstance()
+                        cal.time = date
+
+                        val taskDate = Calendar.getInstance().apply {
+                            set(Calendar.YEAR, cal.get(Calendar.YEAR))
+                            set(Calendar.MONTH, cal.get(Calendar.MONTH))
+                            set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH))
+                            set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
+                            set(Calendar.MINUTE, binding.timePicker.minute)
+                        }
 
                         val time = Calendar.getInstance()
                         time.set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
@@ -67,8 +75,6 @@ class AddDialogFragment : DialogFragment() {
                                 DmlState.Insert(method = "copy") ->
                                     TaskEntity(
                                         taskDate = date,
-                                        //TODO
-//                                        taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
                                         taskTime = time.time,
                                         task = binding.taskEditText.text.toString(),
                                         isCompleted = false
@@ -77,8 +83,6 @@ class AddDialogFragment : DialogFragment() {
                                     TaskEntity(
                                         uid = taskEntity.uid,
                                         taskDate = date,
-                                        //TODO
-//                                        taskTime = SimpleDateFormat("HH:mm").parse("%02d:%02d".format(hour, minute)),
                                         taskTime = time.time,
                                         task = binding.taskEditText.text.toString(),
                                         isCompleted = false
@@ -102,15 +106,6 @@ class AddDialogFragment : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    override fun onStart() {
-        super.onStart()
-        //TODO
-        (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.main_text))
-        (dialog as AlertDialog).getButton(AlertDialog.BUTTON_NEGATIVE)
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.main_text))
-    }
-
     private fun initCommonView(binding: DialogAddBinding) {
         binding.timePicker.setIs24HourView(true)
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
@@ -121,7 +116,7 @@ class AddDialogFragment : DialogFragment() {
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month + 1)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            date  = cal.time
+            date = cal.time
         }
     }
 
@@ -136,7 +131,7 @@ class AddDialogFragment : DialogFragment() {
     private fun initCopyView(binding: DialogAddBinding, taskEntity: TaskEntity) {
         //TODO
         val cal = Calendar.getInstance().apply {
-            this.time = taskEntity.taskTime
+            time = taskEntity.taskTime
         }
         binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
         binding.timePicker.minute = cal.get(Calendar.MINUTE)
@@ -149,7 +144,7 @@ class AddDialogFragment : DialogFragment() {
     private fun initUpdateView(binding: DialogAddBinding, taskEntity: TaskEntity) {
         //TODO
         val cal = Calendar.getInstance().apply {
-            this.time = taskEntity.taskTime
+            time = taskEntity.taskTime
         }
         binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
         binding.timePicker.minute = cal.get(Calendar.MINUTE)
@@ -157,6 +152,15 @@ class AddDialogFragment : DialogFragment() {
         date = taskEntity.taskDate
         binding.taskEditText.setText(taskEntity.task)
         positiveButton = R.string.button_edit
+    }
+
+    override fun onStart() {
+        super.onStart()
+        //TODO
+        (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.main_text))
+        (dialog as AlertDialog).getButton(AlertDialog.BUTTON_NEGATIVE)
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.main_text))
     }
 
     private fun createDialogBuilder(

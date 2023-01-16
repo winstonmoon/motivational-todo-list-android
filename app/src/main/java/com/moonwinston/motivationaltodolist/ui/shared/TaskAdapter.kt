@@ -27,7 +27,7 @@ class TaskAdapter(
         fun bind(taskEntity: TaskEntity) {
 
             val cal = Calendar.getInstance().apply {
-                this.time = taskEntity.taskTime
+                time = taskEntity.taskTime
             }
             val taskTime = "${cal.get(Calendar.HOUR_OF_DAY)}:${cal.get(Calendar.MINUTE)}"
 
@@ -37,11 +37,6 @@ class TaskAdapter(
                     binding.taskTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 binding.taskTextView.text = taskEntity.task
                 binding.taskMeatballsMenu.setOnClickListener {
-//                    Toast.makeText(
-//                        it.context,
-//                        R.string.message_toast_uneditable,
-//                        Toast.LENGTH_SHORT
-//                    ).show()
                     val popupMenu = PopupMenu(it.context, it)
                     popupMenu.menuInflater.inflate(R.menu.task_copy_menu, popupMenu.menu)
                     popupMenu.setOnMenuItemClickListener { item ->
@@ -53,14 +48,12 @@ class TaskAdapter(
                     popupMenu.show()
                 }
 
-//                binding.timeTextView.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
                 binding.timeTextView.text = taskTime
             } else {
                 binding.taskRadioButton.isChecked = false
                 //TODO fix
                 binding.taskTextView.paintFlags = 0
                 binding.taskTextView.text = taskEntity.task
-//                binding.timeTextView.text = SimpleDateFormat("HH:mm").format(taskEntity.taskTime)
                 binding.timeTextView.text = taskTime
 
                 binding.taskRadioButton.setOnClickListener {

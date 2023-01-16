@@ -18,7 +18,7 @@ class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHold
         fun bind(achievementRateEntity: AchievementRateEntity) {
             //TODO fix month
             val cal = Calendar.getInstance().apply {
-                this.time = achievementRateEntity.date
+                time = achievementRateEntity.date
             }
             val formatter = Formatter()
 
