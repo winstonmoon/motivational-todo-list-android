@@ -25,7 +25,6 @@ class TaskAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
-
             val cal = Calendar.getInstance().apply {
                 time = taskEntity.taskTime
             }
@@ -74,10 +73,9 @@ class TaskAdapter(
                                 )
                                 radioButtonCallback(taskEntity)
                             })
-                        .setNegativeButton(R.string.button_cancel,
-                            DialogInterface.OnClickListener { _, _ ->
-                                binding.taskRadioButton.isChecked = false
-                            })
+                        .setNegativeButton(R.string.button_cancel) { _, _ ->
+                            binding.taskRadioButton.isChecked = false
+                        }
                     builder.setOnDismissListener { binding.taskRadioButton.isChecked = false }
                     builder.show()
                 }
@@ -97,6 +95,10 @@ class TaskAdapter(
                 }
             }
         }
+    }
+
+    fun showPopupMenu() {
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
