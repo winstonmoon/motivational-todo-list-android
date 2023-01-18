@@ -59,20 +59,17 @@ class SettingsFragment : Fragment() {
             val notifyItems = resources.getStringArray(R.array.notify_array)
             val checkedItem = sharedViewModel.notifyIndex.value
             builder.setTitle(resources.getString(R.string.label_notify))
-                .setSingleChoiceItems(notifyItems, checkedItem,
-                    DialogInterface.OnClickListener { dialog, which ->
-                        binding.notify.text = notifyItems[which]
-                        sharedViewModel.setNotify(which)
-                        //TODO
-                        //setAlarm()
-                        //TODO sharedPreferences
-                        dialog.dismiss()
-                    })
-                .setNegativeButton(
-                    R.string.button_cancel,
-                    DialogInterface.OnClickListener { dialog, _ ->
-                        dialog?.cancel()
-                    })
+                .setSingleChoiceItems(notifyItems, checkedItem) { dialog, which ->
+                    binding.notify.text = notifyItems[which]
+                    sharedViewModel.setNotify(which)
+                    //TODO
+                    //setAlarm()
+                    //TODO sharedPreferences
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.button_cancel) { dialog, _ ->
+                    dialog?.cancel()
+                }
             builder.show()
         }
         binding.themeButton.setOnClickListener {
@@ -80,18 +77,15 @@ class SettingsFragment : Fragment() {
             val themeItems = resources.getStringArray(R.array.theme_array)
             val checkedItem = sharedViewModel.themeIndex.value
             builder.setTitle(resources.getString(R.string.label_theme))
-                .setSingleChoiceItems(themeItems, checkedItem,
-                    DialogInterface.OnClickListener { dialog, which ->
-                        binding.theme.text = themeItems[which]
-                        sharedViewModel.setTheme(which)
-                        ThemeUtil().setTheme(which)
-                        dialog.dismiss()
-                    })
-                .setNegativeButton(
-                    R.string.button_cancel,
-                    DialogInterface.OnClickListener { dialog, _ ->
-                        dialog?.cancel()
-                    })
+                .setSingleChoiceItems(themeItems, checkedItem) { dialog, which ->
+                    binding.theme.text = themeItems[which]
+                    sharedViewModel.setTheme(which)
+                    ThemeUtil().setTheme(which)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.button_cancel) { dialog, _ ->
+                    dialog?.cancel()
+                }
             builder.show()
         }
 
@@ -100,19 +94,16 @@ class SettingsFragment : Fragment() {
             val languageItems = resources.getStringArray(R.array.language_array)
             val checkedItem = sharedViewModel.languageIndex.value
             builder.setTitle(resources.getString(R.string.label_language))
-                .setSingleChoiceItems(languageItems, checkedItem,
-                    DialogInterface.OnClickListener { dialog, which ->
-                        binding.language.text = languageItems[which]
-                        sharedViewModel.setLanguage(which)
-                        val intent = Intent(activity, MainActivity::class.java)
-                        startActivity(intent)
-                        dialog.dismiss()
-                    })
-                .setNegativeButton(
-                    R.string.button_cancel,
-                    DialogInterface.OnClickListener { dialog, _ ->
-                        dialog?.cancel()
-                    })
+                .setSingleChoiceItems(languageItems, checkedItem) { dialog, which ->
+                    binding.language.text = languageItems[which]
+                    sharedViewModel.setLanguage(which)
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.button_cancel) { dialog, _ ->
+                    dialog?.cancel()
+                }
             builder.show()
         }
     }
