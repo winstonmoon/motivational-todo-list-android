@@ -23,12 +23,10 @@ object DatabaseModule {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, `name` TEXT, " +
                     "PRIMARY KEY(`id`))")
-        }
-    }
-
-    private val MIGRATION_2_3 = object : Migration(2, 3) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("ALTER TABLE Book ADD COLUMN pub_year INTEGER")
+            database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, `name` TEXT, " +
+                    "PRIMARY KEY(`id`))")
+            database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, `name` TEXT, " +
+                    "PRIMARY KEY(`id`))")
         }
     }
 
@@ -38,7 +36,7 @@ object DatabaseModule {
         @ApplicationContext context: Context
     ): TodoDatabase = Room
         .databaseBuilder(context, TodoDatabase::class.java, TodoDatabase.DB_NAME)
-        .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+        .addMigrations(MIGRATION_1_2)
         .build()
 
     @Singleton

@@ -3,6 +3,7 @@ package com.moonwinston.motivationaltodolist.ui.shared
 import android.content.DialogInterface
 import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -35,16 +36,8 @@ class TaskAdapter(
                 binding.taskTextView.paintFlags =
                     binding.taskTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 binding.taskTextView.text = taskEntity.task
-                binding.taskMeatballsMenu.setOnClickListener {
-                    val popupMenu = PopupMenu(it.context, it)
-                    popupMenu.menuInflater.inflate(R.menu.task_copy_menu, popupMenu.menu)
-                    popupMenu.setOnMenuItemClickListener { item ->
-                        when (item.itemId) {
-                            R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "copy"))
-                        }
-                        false
-                    }
-                    popupMenu.show()
+                binding.taskMeatballsMenu.setOnClickListener { view ->
+                    showCopyPopupMenu(view, taskEntity)
                 }
 
                 binding.timeTextView.text = taskTime
@@ -80,25 +73,37 @@ class TaskAdapter(
                     builder.show()
                 }
 
-                binding.taskMeatballsMenu.setOnClickListener {
-                    val popupMenu = PopupMenu(it.context, it)
-                    popupMenu.menuInflater.inflate(R.menu.task_edit_menu, popupMenu.menu)
-                    popupMenu.setOnMenuItemClickListener { item ->
-                        when (item.itemId) {
-                            R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "copy"))
-                            R.id.edit -> meatballsMenuCallback(taskEntity, DmlState.Update)
-                            R.id.delete -> meatballsMenuCallback(taskEntity, DmlState.Delete)
-                        }
-                        false
-                    }
-                    popupMenu.show()
+                binding.taskMeatballsMenu.setOnClickListener { view ->
+                    showEditPopupMenu(view, taskEntity)
                 }
             }
         }
     }
 
-    fun showPopupMenu() {
+    fun showCopyPopupMenu(view: View, taskEntity: TaskEntity) {
+        val popupMenu = PopupMenu(view.context, view)
+        popupMenu.menuInflater.inflate(R.menu.task_copy_menu, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "copy"))
+            }
+            false
+        }
+        popupMenu.show()
+    }
 
+    fun showEditPopupMenu(view: View, taskEntity: TaskEntity) {
+        val popupMenu = PopupMenu(view.context, view)
+        popupMenu.menuInflater.inflate(R.menu.task_edit_menu, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "copy"))
+                R.id.edit -> meatballsMenuCallback(taskEntity, DmlState.Update)
+                R.id.delete -> meatballsMenuCallback(taskEntity, DmlState.Delete)
+            }
+            false
+        }
+        popupMenu.show()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
