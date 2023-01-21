@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemRewardsBinding
+import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
 import java.text.SimpleDateFormat
+import java.time.ZoneId
 import java.util.*
 
 class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHolder>(diffUtil) {
@@ -16,16 +18,9 @@ class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHold
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(achievementRateEntity: AchievementRateEntity) {
-            //TODO fix month
-            val cal = Calendar.getInstance().apply {
-                time = achievementRateEntity.date
-            }
-            val formatter = Formatter()
-
-            val year = cal.get(Calendar.YEAR)
-            val month = formatter.format("%tm", cal)
-            val day = cal.get(Calendar.DAY_OF_MONTH)
-            binding.achievedDateTextView.text = "$year\n$month/$day"
+            val achievedDate = achievementRateEntity.date.dateToLocalDate()
+            val achievedDateText = "${achievedDate.year}\n${achievedDate.month}/${achievedDate.dayOfMonth}"
+            binding.achievedDateTextView.text = achievedDateText
         }
     }
 

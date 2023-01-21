@@ -26,15 +26,16 @@ class SharedViewModel @Inject constructor(
 
     fun getAllTasks() = viewModelScope.launch (Dispatchers.IO) {
         val list = taskRepository.getAllTasks()
-        val sortedList = list.sortedBy { it.taskDate }
+        val sortedList = list.sortedBy { taskEntity ->
+            taskEntity.taskDate }
         withContext(Dispatchers.Main) {
-            _tasksListLiveData.value = sortedList.map {
+            _tasksListLiveData.value = sortedList.map { taskEntity ->
                 TaskEntity(
-                    uid = it.uid,
-                    taskDate = it.taskDate,
-                    taskTime = it.taskTime,
-                    task = it.task,
-                    isCompleted = it.isCompleted
+                    uid = taskEntity.uid,
+                    taskDate = taskEntity.taskDate,
+                    taskTime = taskEntity.taskTime,
+                    task = taskEntity.task,
+                    isCompleted = taskEntity.isCompleted
                 )
             }
         }
@@ -46,15 +47,16 @@ class SharedViewModel @Inject constructor(
 
     fun getAllTasksByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch (Dispatchers.IO) {
         val list = taskRepository.getAllTasksByDates(taskDatesList)
-        val sortedList = list.sortedBy { it.taskDate }
+        val sortedList = list.sortedBy { taskEntity ->
+            taskEntity.taskDate }
         withContext(Dispatchers.Main) {
-            _multipleDaysTasksList.value = sortedList.map {
+            _multipleDaysTasksList.value = sortedList.map { taskEntity ->
                 TaskEntity(
-                    uid = it.uid,
-                    taskDate = it.taskDate,
-                    taskTime = it.taskTime,
-                    task = it.task,
-                    isCompleted = it.isCompleted
+                    uid = taskEntity.uid,
+                    taskDate = taskEntity.taskDate,
+                    taskTime = taskEntity.taskTime,
+                    task = taskEntity.task,
+                    isCompleted = taskEntity.isCompleted
                 )
             }
         }
@@ -95,9 +97,9 @@ class SharedViewModel @Inject constructor(
     fun getRate(tasksList: List<TaskEntity>): Float {
         var totalTasks = 0F
         var doneTasks = 0F
-        for (task in tasksList) {
+        tasksList.forEach { taskEntity ->
             totalTasks += 1F
-            if (task.isCompleted) doneTasks += 1F
+            if (taskEntity.isCompleted) doneTasks += 1F
         }
         return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }

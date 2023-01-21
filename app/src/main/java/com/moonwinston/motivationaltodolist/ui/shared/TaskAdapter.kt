@@ -15,6 +15,7 @@ import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemTasksBinding
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,29 +49,30 @@ class TaskAdapter(
                 binding.taskTextView.text = taskEntity.task
                 binding.timeTextView.text = taskTime
 
-                binding.taskRadioButton.setOnClickListener {
-                    val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)
-                    builder.setMessage(R.string.message_dialog_confirm_complete)
-                        .setPositiveButton(R.string.button_ok,
-                            DialogInterface.OnClickListener { _, _ ->
-                                if (taskEntity.taskDate.after(Date())) {
-                                    Toast.makeText(it.context, R.string.message_toast_uncompletable, Toast.LENGTH_LONG).show()
-                                    return@OnClickListener
-                                }
-                                val taskEntity = TaskEntity(
-                                    uid = taskEntity.uid,
-                                    taskDate = taskEntity.taskDate,
-                                    taskTime = taskEntity.taskTime,
-                                    task = taskEntity.task,
-                                    isCompleted = true
-                                )
-                                radioButtonCallback(taskEntity)
-                            })
-                        .setNegativeButton(R.string.button_cancel) { _, _ ->
-                            binding.taskRadioButton.isChecked = false
-                        }
-                    builder.setOnDismissListener { binding.taskRadioButton.isChecked = false }
-                    builder.show()
+                binding.taskRadioButton.setOnClickListener { view ->
+//                    val builder = AlertDialog.Builder(view.context, R.style.CustomAlertDialog)
+//                    builder.setMessage(R.string.message_dialog_confirm_complete)
+//                        .setPositiveButton(R.string.button_ok,
+//                            DialogInterface.OnClickListener { _, _ ->
+//                                if (taskEntity.taskDate.after(dateOfToday())) {
+//                                    Toast.makeText(view.context, R.string.message_toast_uncompletable, Toast.LENGTH_LONG).show()
+//                                    return@OnClickListener
+//                                }
+//                                val taskEntity = TaskEntity(
+//                                    uid = taskEntity.uid,
+//                                    taskDate = taskEntity.taskDate,
+//                                    taskTime = taskEntity.taskTime,
+//                                    task = taskEntity.task,
+//                                    isCompleted = true
+//                                )
+//                                radioButtonCallback(taskEntity)
+//                            })
+//                        .setNegativeButton(R.string.button_cancel) { _, _ ->
+//                            binding.taskRadioButton.isChecked = false
+//                        }
+//                    builder.setOnDismissListener { binding.taskRadioButton.isChecked = false }
+//                    builder.show()
+                    showAlertDialog(view = view, binding = binding, taskEntity = taskEntity)
                 }
 
                 binding.taskMeatballsMenu.setOnClickListener { view ->
@@ -78,6 +80,31 @@ class TaskAdapter(
                 }
             }
         }
+    }
+
+    private fun showAlertDialog(view: View, binding: ItemTasksBinding, taskEntity: TaskEntity) {
+        val builder = AlertDialog.Builder(view.context, R.style.CustomAlertDialog)
+        builder.setMessage(R.string.message_dialog_confirm_complete)
+            .setPositiveButton(R.string.button_ok,
+                DialogInterface.OnClickListener { _, _ ->
+                    if (taskEntity.taskDate.after(dateOfToday())) {
+                        Toast.makeText(view.context, R.string.message_toast_uncompletable, Toast.LENGTH_LONG).show()
+                        return@OnClickListener
+                    }
+                    val taskEntity = TaskEntity(
+                        uid = taskEntity.uid,
+                        taskDate = taskEntity.taskDate,
+                        taskTime = taskEntity.taskTime,
+                        task = taskEntity.task,
+                        isCompleted = true
+                    )
+                    radioButtonCallback(taskEntity)
+                })
+            .setNegativeButton(R.string.button_cancel) { _, _ ->
+                binding.taskRadioButton.isChecked = false
+            }
+        builder.setOnDismissListener { binding.taskRadioButton.isChecked = false }
+        builder.show()
     }
 
     fun showCopyPopupMenu(view: View, taskEntity: TaskEntity) {

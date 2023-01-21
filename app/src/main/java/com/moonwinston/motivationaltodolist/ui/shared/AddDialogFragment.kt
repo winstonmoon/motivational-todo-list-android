@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.telecom.Call
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -14,8 +13,11 @@ import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
-import com.moonwinston.motivationaltodolist.utils.CalendarUtil
+import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -51,11 +53,7 @@ class AddDialogFragment : DialogFragment() {
     private fun initCommonView() {
         binding.timePicker.setIs24HourView(true)
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val cal = Calendar.getInstance()
-            cal.set(Calendar.YEAR, year)
-            cal.set(Calendar.MONTH, month + 1)
-            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            date = cal.time
+            date = LocalDate.of(year, month, dayOfMonth).localDateToDate()
         }
     }
 
@@ -69,28 +67,36 @@ class AddDialogFragment : DialogFragment() {
 
     private fun initCopyView(taskEntity: TaskEntity) {
         val cal = Calendar.getInstance().apply {
-            //TODO
-//            time = taskEntity.taskDate
             time = taskEntity.taskTime
         }
         binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
         binding.timePicker.minute = cal.get(Calendar.MINUTE)
         binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
+
+        //TODO
+//        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
+//        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
+//        binding.calendarView.date = taskEntity.taskDate.time
+//        date = taskEntity.taskDate
         binding.taskEditText.setText(taskEntity.task)
         positiveButton = R.string.button_add
     }
 
     private fun initUpdateView(taskEntity: TaskEntity) {
         val cal = Calendar.getInstance().apply {
-            //TODO
-//            time = taskEntity.taskDate
             time = taskEntity.taskTime
         }
         binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
         binding.timePicker.minute = cal.get(Calendar.MINUTE)
         binding.calendarView.date = taskEntity.taskDate.time
         date = taskEntity.taskDate
+
+        //TODO
+//        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
+//        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
+//        binding.calendarView.date = taskEntity.taskDate.time
+//        date = taskEntity.taskDate
         binding.taskEditText.setText(taskEntity.task)
         positiveButton = R.string.button_edit
     }
@@ -104,7 +110,7 @@ class AddDialogFragment : DialogFragment() {
             .setPositiveButton(positiveButton,
                 DialogInterface.OnClickListener { _, _ ->
                     //TODO
-                    if (date.before(CalendarUtil.getTodayDate())) {
+                    if (date.before(dateOfToday())) {
                         Toast.makeText(fragmentActivity, resources.getString(R.string.message_toast_unaddable), Toast.LENGTH_LONG).show()
                         return@OnClickListener
                     }
@@ -125,15 +131,14 @@ class AddDialogFragment : DialogFragment() {
     }
 
     private fun setTaskEntity(): TaskEntity {
-        val taskDate = Calendar.getInstance().apply {
-            time = date
-            set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
-            set(Calendar.MINUTE, binding.timePicker.minute)
-        }
-
         val time = Calendar.getInstance()
         time.set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
         time.set(Calendar.MINUTE, binding.timePicker.minute)
+
+        //TODO
+//        val hour = binding.timePicker.hour
+//        val minute = binding.timePicker.minute
+//        val taskDate = LocalDateTime.of(date.dateToLocalDate(), LocalTime.of(hour, minute))
 
         return when (dmlState) {
             DmlState.Insert(method = "copy") ->

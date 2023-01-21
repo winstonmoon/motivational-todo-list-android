@@ -22,12 +22,13 @@ class RewardsViewModel @Inject constructor(
 
     fun getAllComplete() = viewModelScope.launch (Dispatchers.IO) {
         val list = achievementRateRepository.getAllCompleteRate()
-        val sortedList = list.sortedBy { it.date }
+        val sortedList = list.sortedBy { achievementRateEntity ->
+            achievementRateEntity.date }
         withContext(Dispatchers.Main) {
-            _rateListLiveData.value = sortedList.map {
+            _rateListLiveData.value = sortedList.map { achievementRateEntity ->
                 AchievementRateEntity(
-                    date = it.date,
-                    rate = it.rate
+                    date = achievementRateEntity.date,
+                    rate = achievementRateEntity.rate
                 )
             }
         }
