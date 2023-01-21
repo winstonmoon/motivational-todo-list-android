@@ -52,7 +52,6 @@ class MonthlyCalendarFragment : Fragment() {
             firstDayOfWeek = Calendar.MONDAY
         }
         //TODO fix dayOfWeek logic more simple, viewmodel
-        val maxDate = calendar.getActualMaximum(Calendar.DATE)
         val dayOfWeek =
             if (calendar.get(Calendar.DAY_OF_WEEK) == 1) 6 else calendar.get(Calendar.DAY_OF_WEEK) - 2
         year = calendar.get(Calendar.YEAR)
@@ -61,6 +60,7 @@ class MonthlyCalendarFragment : Fragment() {
         monthList = MutableList(
             dayOfWeek,
             init = { CalendarUtil.getNonExistDate() })
+        val maxDate = calendar.getActualMaximum(Calendar.DATE)
         (1..maxDate).forEach { date ->
             monthList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
         }

@@ -3,32 +3,25 @@ package com.moonwinston.motivationaltodolist.utils
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
+import java.time.ZoneId
 import java.util.*
 
-fun Date.getYearMonthDateTriple(): Triple<Int, Int, Int> {
-    val cal = Calendar.getInstance().apply {
-        time = this@getYearMonthDateTriple
-    }
-    val year = cal.get(Calendar.YEAR)
-    val month = cal.get(Calendar.MONTH)
-    val date = cal.get(Calendar.DAY_OF_MONTH)
-    return Triple(year, month, date)
+fun dateOfToday(): Date {
+    val today = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0))
+    val instant = today.atZone(ZoneId.systemDefault()).toInstant()
+    return Date.from(instant)
 }
 
-fun Date.getHourMinutePair(): Pair<Int, Int> {
-    val cal = Calendar.getInstance().apply {
-        time = this@getHourMinutePair
-    }
-    val hour = cal.get(Calendar.HOUR_OF_DAY)
-    val minute = cal.get(Calendar.MINUTE)
-    return Pair(hour, minute)
+fun nonExistDate(): Date {
+    val nonExistDate = LocalDateTime.of(1970, 1, 1, 0, 0, 0)
+    val instant = nonExistDate.atZone(ZoneId.systemDefault()).toInstant()
+    return Date.from(instant)
 }
 
+fun Date.dateToLocalDateTime(): LocalDateTime = this@dateToLocalDateTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
 
-fun test() {
-    val date: LocalDate
-    val time: LocalTime
-    val dateTime: LocalDateTime
+fun Date.dateToLocalDate(): LocalDate = this@dateToLocalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 
-}
+fun LocalDateTime.localDateTimeToDate(): Date = Date.from(this@localDateTimeToDate.atZone(ZoneId.systemDefault()).toInstant())
+
+fun LocalDate.localDateToDate(): Date = Date.from(this@localDateToDate.atStartOfDay(ZoneId.systemDefault()).toInstant())

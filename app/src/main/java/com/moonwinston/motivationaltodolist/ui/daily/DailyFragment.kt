@@ -16,9 +16,9 @@ import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
-import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import kotlin.math.roundToInt
@@ -31,7 +31,7 @@ class DailyFragment : Fragment() {
     val bundleForAddDialog = bundleOf(
         "dmlState" to DmlState.Insert(method = "insert"),
         "taskEntity" to TaskEntity(
-            taskDate = CalendarUtil.getTodayDate(),
+            taskDate = dateOfToday(),
             taskTime = Date(),
             task = "",
             isCompleted = false
@@ -82,7 +82,7 @@ class DailyFragment : Fragment() {
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
             val todayTasksList = mutableListOf<TaskEntity>().apply {
                 tasksList.forEach { taskEntity ->
-                    if (taskEntity.taskDate == CalendarUtil.getTodayDate()) add(taskEntity)
+                    if (taskEntity.taskDate == dateOfToday()) add(taskEntity)
                 }
             }
             adapter.submitList(todayTasksList.sortedBy { it.taskTime })
@@ -90,7 +90,7 @@ class DailyFragment : Fragment() {
         }
 
         dailyViewModel.rateLiveData.observe(viewLifecycleOwner) { rate ->
-            val achievementRate = AchievementRateEntity(date = CalendarUtil.getTodayDate(), rate = rate)
+            val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = rate)
             sharedViewModel.insertAchievementRate(achievementRate)
             val roundedAchievementRate = (rate * 100).roundToInt()
             binding.achievementRate.text = "$roundedAchievementRate%"
