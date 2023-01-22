@@ -10,6 +10,7 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
+import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
 import java.util.*
 
@@ -27,12 +28,6 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 if (taskEntity.taskDate == date) tempTaskList.add(taskEntity)
             }
             val rate = getRate(tempTaskList)
-
-            //TODO
-            val cal = Calendar.getInstance().apply {
-                time = date
-            }
-
             when {
                 date == nonExistDate() -> {
                     binding.monthlyDateTextView.visibility = View.GONE
@@ -40,16 +35,18 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 }
                 date == dateOfToday() -> {
                     binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
-                    binding.monthlyDateTextView.text = "${cal.get(Calendar.DAY_OF_MONTH)}"
+                    binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
+                    //TODO databinding?
                     if (rate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.setPercentage(rate)
                 }
                 date.after(dateOfToday()) -> {
-                    binding.monthlyDateTextView.text = "${cal.get(Calendar.DAY_OF_MONTH)}"
+                    binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
                     binding.monthlyCustomPieChart.visibility = View.INVISIBLE
                 }
                 else -> {
-                    binding.monthlyDateTextView.text = "${cal.get(Calendar.DAY_OF_MONTH)}"
+                    binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
+                    //TODO databinding?
                     if (rate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.setPercentage(rate)
                 }

@@ -86,17 +86,17 @@
             android:id="@+id/dailyCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:alpha="@{dailyViewModel.rateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:borderStrokeWidth="40"
             app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
             app:layout_constraintDimensionRatio="W, 1:1"
             app:layout_constraintEnd_toStartOf="@id/verticalGuideline"
             app:layout_constraintStart_toStartOf="parent"
-            bind:setPercentage="@{dailyViewModel.rateLiveData}"
-            android:alpha="@{dailyViewModel.rateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:layout_constraintTop_toBottomOf="@id/achievementRateTextView"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="20" />
+            app:progressiveStrokeWidth="20"
+            bind:setPercentage="@{dailyViewModel.rateLiveData}" />
 
         <TextView
             android:id="@+id/achievementRate"
@@ -169,9 +169,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:backgroundTint="@color/blue_icon"
+            android:onClick="@{view -> Navigation.findNavController(view).navigate(R.id.action_daily_to_add, dailyFragment.bundleForAddDialog)}"
             android:src="@drawable/ic_baseline_add_24"
             app:borderWidth="0dp"
-            android:onClick="@{view -> Navigation.findNavController(view).navigate(R.id.action_daily_to_add, dailyFragment.bundleForAddDialog)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/white" />

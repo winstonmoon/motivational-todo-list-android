@@ -6,20 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
 import java.util.*
 
 @AndroidEntryPoint
 class WeeklyCalendarFragment : Fragment() {
-
-    private lateinit var binding: FragmentWeeklyCalendarBinding
-
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val weeklyViewModel: WeeklyViewModel by viewModels()
+    private lateinit var binding: FragmentWeeklyCalendarBinding
     private var diffWeek = 0
     private val weekList = mutableListOf<Date>()
 
@@ -41,6 +42,7 @@ class WeeklyCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.weeklyViewModel = weeklyViewModel
         //TODO fix dayOfWeek logic more simple, viewmodel
         val diffDays = diffWeek * 7
         val calendar = Calendar.getInstance().apply {
@@ -100,47 +102,45 @@ class WeeklyCalendarFragment : Fragment() {
         //TODO
         sharedViewModel.getAllTasks()
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { taskEntities ->
-            val monList = mutableListOf<TaskEntity>()
-            val tueList = mutableListOf<TaskEntity>()
-            val wedList = mutableListOf<TaskEntity>()
-            val thuList = mutableListOf<TaskEntity>()
-            val friList = mutableListOf<TaskEntity>()
-            val satList = mutableListOf<TaskEntity>()
-            val sunList = mutableListOf<TaskEntity>()
+            val monList: MutableList<TaskEntity>? = null
+            val tueList: MutableList<TaskEntity>? = null
+            val wedList: MutableList<TaskEntity>? = null
+            val thuList: MutableList<TaskEntity>? = null
+            val friList: MutableList<TaskEntity>? = null
+            val satList: MutableList<TaskEntity>? = null
+            val sunList: MutableList<TaskEntity>? = null
             taskEntities.forEach { taskEntity ->
                 when (taskEntity.taskDate) {
-                    weekList[0] -> monList.add(taskEntity)
-                    weekList[1] -> tueList.add(taskEntity)
-                    weekList[2] -> wedList.add(taskEntity)
-                    weekList[3] -> thuList.add(taskEntity)
-                    weekList[4] -> friList.add(taskEntity)
-                    weekList[5] -> satList.add(taskEntity)
-                    weekList[6] -> sunList.add(taskEntity)
+                    weekList[0] -> monList?.add(taskEntity)
+                    weekList[1] -> tueList?.add(taskEntity)
+                    weekList[2] -> wedList?.add(taskEntity)
+                    weekList[3] -> thuList?.add(taskEntity)
+                    weekList[4] -> friList?.add(taskEntity)
+                    weekList[5] -> satList?.add(taskEntity)
+                    weekList[6] -> sunList?.add(taskEntity)
                 }
             }
-
-            val monRate = sharedViewModel.getRate(monList)
-            val tueRate = sharedViewModel.getRate(tueList)
-            val wedRate = sharedViewModel.getRate(wedList)
-            val thuRate = sharedViewModel.getRate(thuList)
-            val friRate = sharedViewModel.getRate(friList)
-            val satRate = sharedViewModel.getRate(satList)
-            val sunRate = sharedViewModel.getRate(sunList)
-            binding.mondayCustomPieChart.setPercentage(monRate)
-            binding.tuesdayCustomPieChart.setPercentage(tueRate)
-            binding.wednesdayCustomPieChart.setPercentage(wedRate)
-            binding.thursdayCustomPieChart.setPercentage(thuRate)
-            binding.fridayCustomPieChart.setPercentage(friRate)
-            binding.saturdayCustomPieChart.setPercentage(satRate)
-            binding.sundayCustomPieChart.setPercentage(sunRate)
-
-            binding.mondayCustomPieChart.alpha = if (monRate == 0F) 0.2F else 1F
-            binding.tuesdayCustomPieChart.alpha = if (tueRate == 0F) 0.2F else 1F
-            binding.wednesdayCustomPieChart.alpha = if (wedRate == 0F) 0.2F else 1F
-            binding.thursdayCustomPieChart.alpha = if (thuRate == 0F) 0.2F else 1F
-            binding.fridayCustomPieChart.alpha = if (friRate == 0F) 0.2F else 1F
-            binding.saturdayCustomPieChart.alpha = if (satRate == 0F) 0.2F else 1F
-            binding.sundayCustomPieChart.alpha = if (sunRate == 0F) 0.2F else 1F
+            monList?.let { tasksList ->
+                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.MONDAY, tasksList = tasksList)
+            }
+            tueList?.let { tasksList ->
+                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.TUESDAY, tasksList = tasksList)
+            }
+            wedList?.let { tasksList ->
+                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.WEDNESDAY, tasksList = tasksList)
+            }
+            thuList?.let { tasksList ->
+                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.THURSDAY, tasksList = tasksList)
+            }
+            friList?.let { tasksList ->
+                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.FRIDAY, tasksList = tasksList)
+            }
+            satList?.let { tasksList ->
+                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.SATURDAY, tasksList = tasksList)
+            }
+            sunList?.let { tasksList ->
+                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.SUNDAY, tasksList = tasksList)
+            }
         }
     }
 

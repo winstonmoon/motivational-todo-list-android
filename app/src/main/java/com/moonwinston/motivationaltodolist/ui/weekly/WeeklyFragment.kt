@@ -21,8 +21,11 @@ import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
+import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
 import java.util.*
 
 @AndroidEntryPoint
@@ -69,7 +72,7 @@ class WeeklyFragment : Fragment() {
         binding.weeklyFragment = this@WeeklyFragment
         initDisplayCoachMark()
 
-        selectedDate = CalendarUtil.getTodayDate()
+        selectedDate = dateOfToday()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
         binding.weeklyPieChartViewPager.adapter = slideAdapter
         binding.weeklyPieChartViewPager.setCurrentItem(
@@ -105,10 +108,10 @@ class WeeklyFragment : Fragment() {
             it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
         }
 
-        sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) {
-            selectedDate = it
+        sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) { selectedDate ->
+            this.selectedDate = selectedDate
             sharedViewModel.getAllTasks()
-            binding.weeklyTitleTextView.text = getWeeklyTitle(it)
+            binding.weeklyTitleTextView.text = getWeeklyTitle(selectedDate)
             binding.mondayTextView.background = null
             binding.tuesdayTextView.background = null
             binding.wednesdayTextView.background = null
@@ -116,18 +119,16 @@ class WeeklyFragment : Fragment() {
             binding.fridayTextView.background = null
             binding.saturdayTextView.background = null
             binding.sundayTextView.background = null
-            val cal = Calendar.getInstance().apply {
-                time = it
-            }
 
-            when (cal.get(Calendar.DAY_OF_WEEK)) {
-                Calendar.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                Calendar.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                Calendar.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                Calendar.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                Calendar.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                Calendar.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                Calendar.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            when (selectedDate.dateToLocalDate().dayOfWeek) {
+                DayOfWeek.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                DayOfWeek.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                DayOfWeek.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                DayOfWeek.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                DayOfWeek.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                DayOfWeek.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                DayOfWeek.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                else -> Unit
             }
         }
 
@@ -138,7 +139,8 @@ class WeeklyFragment : Fragment() {
                 if (taskEntity.taskDate == selectedDate) selectedDayTasksList.add(taskEntity)
             }
             binding.weeklyTodoRecyclerView.adapter = adapter
-            adapter.submitList(selectedDayTasksList.sortedBy { it.taskTime })
+            adapter.submitList(selectedDayTasksList.sortedBy { taskEntity ->
+                taskEntity.taskTime })
 
             //TODO
             if (selectedDayTasksList.isEmpty().not()) {
@@ -153,27 +155,31 @@ class WeeklyFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         //TODO
-        sharedViewModel.setSelectedDate(CalendarUtil.getTodayDate())
+        sharedViewModel.setSelectedDate(dateOfToday())
         setToday()
     }
 
     private fun getWeeklyTitle(selectedDate: Date): String {
+        val wordYear = resources.getString(R.string.label_year)
+        val wordDay = resources.getString(R.string.label_day)
+        val today = resources.getString(R.string.text_today)
+
         val cal = Calendar.getInstance().apply {
             time = selectedDate
         }
-
-        val year = cal.get(Calendar.YEAR)
         val month = cal.get(Calendar.MONTH)
-        val date = cal.get(Calendar.DATE)
         val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
 
+        val year = selectedDate.dateToLocalDate().year
+        val monthTest = selectedDate.dateToLocalDate().month.value
+        val date = selectedDate.dateToLocalDate().dayOfMonth
+        val dayOfWeekTest = selectedDate.dateToLocalDate().dayOfWeek
+
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
-        val today = resources.getString(R.string.text_today)
         val parsedDayOfWeek =
-            if (selectedDate == CalendarUtil.getTodayDate()) today
+            if (selectedDate == dateOfToday()) today
             else resources.getString(DayOfWeekEnum.values()[dayOfWeek].dayOfWeek)
-        val wordYear = resources.getString(R.string.label_year)
-        val wordDay = resources.getString(R.string.label_day)
+
         //TODO separate western and eastern
         return when (sharedViewModel.languageIndex.value) {
             ContextUtil.ENGLISH -> "$parsedDayOfWeek, $parsedMonth $date, $year"
@@ -181,9 +187,9 @@ class WeeklyFragment : Fragment() {
         }
     }
 
-    //TODO
+    //TODO databinding
     private fun setToday() {
-        binding.weeklyTitleTextView.text = getWeeklyTitle(CalendarUtil.getTodayDate())
+        binding.weeklyTitleTextView.text = getWeeklyTitle(dateOfToday())
         binding.mondayTextView.background = null
         binding.tuesdayTextView.background = null
         binding.wednesdayTextView.background = null
@@ -192,17 +198,15 @@ class WeeklyFragment : Fragment() {
         binding.saturdayTextView.background = null
         binding.sundayTextView.background = null
 
-        val cal = Calendar.getInstance().apply {
-            time = CalendarUtil.getTodayDate()
-        }
-        when (cal.get(Calendar.DAY_OF_WEEK)) {
-            Calendar.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            Calendar.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            Calendar.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            Calendar.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            Calendar.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            Calendar.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-            Calendar.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+        when (dateOfToday().dateToLocalDate().dayOfWeek) {
+            DayOfWeek.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            DayOfWeek.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            DayOfWeek.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            DayOfWeek.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            DayOfWeek.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            DayOfWeek.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            DayOfWeek.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+            else -> Unit
         }
     }
 
