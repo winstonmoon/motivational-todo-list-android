@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="weeklyViewModel"
+            type="com.moonwinston.motivationaltodolist.ui.weekly.WeeklyViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,6 +19,7 @@
             android:id="@+id/mondayCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:alpha="@{weeklyViewModel.mondayRateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:borderStrokeWidth="14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H, 7:7"
@@ -19,12 +28,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="7" />
+            app:progressiveStrokeWidth="7"
+            bind:setPercentage="@{weeklyViewModel.mondayRateLiveData}" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/tuesdayCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:alpha="@{weeklyViewModel.tuesdayRateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:borderStrokeWidth="14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H, 7:7"
@@ -33,12 +44,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="7" />
+            app:progressiveStrokeWidth="7"
+            bind:setPercentage="@{weeklyViewModel.tuesdayRateLiveData}" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/wednesdayCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:alpha="@{weeklyViewModel.wednesdayRateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:borderStrokeWidth="14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H, 7:7"
@@ -47,12 +60,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="7" />
+            app:progressiveStrokeWidth="7"
+            bind:setPercentage="@{weeklyViewModel.wednesdayRateLiveData}" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/thursdayCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:alpha="@{weeklyViewModel.thursdayRateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:borderStrokeWidth="14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H, 7:7"
@@ -61,12 +76,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="7" />
+            app:progressiveStrokeWidth="7"
+            bind:setPercentage="@{weeklyViewModel.thursdayRateLiveData}" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/fridayCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:alpha="@{weeklyViewModel.fridayRateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:borderStrokeWidth="14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H, 7:7"
@@ -75,12 +92,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="7" />
+            app:progressiveStrokeWidth="7"
+            bind:setPercentage="@{weeklyViewModel.fridayRateLiveData}" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/saturdayCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:alpha="@{weeklyViewModel.saturdayRateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:borderStrokeWidth="14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H, 7:7"
@@ -89,12 +108,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="7" />
+            app:progressiveStrokeWidth="7"
+            bind:setPercentage="@{weeklyViewModel.saturdayRateLiveData}" />
 
         <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
             android:id="@+id/sundayCustomPieChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:alpha="@{weeklyViewModel.sundayRateLiveData == 0.0F ? 0.2F : 1.0F}"
             app:borderStrokeWidth="14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H, 7:7"
@@ -103,7 +124,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:pieChartColor="@color/pie_chart"
             app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="7" />
+            app:progressiveStrokeWidth="7"
+            bind:setPercentage="@{weeklyViewModel.sundayRateLiveData}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
