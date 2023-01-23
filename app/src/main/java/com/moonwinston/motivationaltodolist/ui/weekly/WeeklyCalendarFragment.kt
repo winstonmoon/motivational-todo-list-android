@@ -50,16 +50,16 @@ class WeeklyCalendarFragment : Fragment() {
             firstDayOfWeek = Calendar.MONDAY
         }
         val diffDateFromMonday =
-            if (calendar.get(Calendar.DAY_OF_WEEK) == 1) -6 else 2 - calendar.get(Calendar.DAY_OF_WEEK)
+            if (calendar.get(Calendar.DAY_OF_WEEK) == 1) -6
+            else 2 - calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, diffDateFromMonday)
         (1..7).forEach { _ ->
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
             val date = calendar.get(Calendar.DATE)
-
-            SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")
-                ?.let { weekList.add(it) }
+            SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")?.let {
+                weekList.add(it) }
             calendar.add(Calendar.DATE, 1)
         }
         //TODO fix dayOfWeek logic more simple, viewmodel

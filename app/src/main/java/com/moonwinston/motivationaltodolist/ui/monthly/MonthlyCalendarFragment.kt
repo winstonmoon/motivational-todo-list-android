@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
-import com.moonwinston.motivationaltodolist.utils.CalendarUtil
 import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.utils.nonExistDate
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,7 +59,7 @@ class MonthlyCalendarFragment : Fragment() {
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
         monthList = MutableList(
             dayOfWeek,
-            init = { CalendarUtil.getNonExistDate() })
+            init = { nonExistDate() })
         val maxDate = calendar.getActualMaximum(Calendar.DATE)
         (1..maxDate).forEach { date ->
             monthList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
