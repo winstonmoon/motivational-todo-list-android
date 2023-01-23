@@ -28,13 +28,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private val sharedViewModel: SharedViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private val MY_REQUEST_CODE = 1
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var listener: InstallStateUpdatedListener
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-
-    private val sharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

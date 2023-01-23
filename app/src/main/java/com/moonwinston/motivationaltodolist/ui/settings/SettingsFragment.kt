@@ -24,11 +24,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
-
-    private lateinit var binding: FragmentSettingsBinding
-
     private val settingsViewModel: SettingsViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var binding: FragmentSettingsBinding
     private lateinit var alarmManager: AlarmManager
     private lateinit var alarmIntent: PendingIntent
 

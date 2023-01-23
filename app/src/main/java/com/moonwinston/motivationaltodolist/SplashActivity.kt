@@ -13,9 +13,9 @@ import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySplashBinding
     private val sharedViewModel: SharedViewModel by viewModels()
-
+    private lateinit var binding: ActivitySplashBinding
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ThemeUtil().setTheme(sharedViewModel.themeIndex.value)

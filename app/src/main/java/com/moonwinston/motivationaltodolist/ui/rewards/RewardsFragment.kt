@@ -12,10 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RewardsFragment : Fragment() {
-
-    private lateinit var binding: FragmentRewardsBinding
-
     private val rewardsViewModel: RewardsViewModel by viewModels()
+    private lateinit var binding: FragmentRewardsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,10 +30,10 @@ class RewardsFragment : Fragment() {
         binding.adView.loadAd(adRequest)
 
         rewardsViewModel.getAllComplete()
-        rewardsViewModel.rateListLiveData.observe(viewLifecycleOwner) {
+        rewardsViewModel.rateListLiveData.observe(viewLifecycleOwner) { achievementRateEntities ->
             val adapter = RewardsAdapter()
             binding.rewardsRecyclerView.adapter = adapter
-            adapter.submitList(it)
+            adapter.submitList(achievementRateEntities)
         }
     }
 }

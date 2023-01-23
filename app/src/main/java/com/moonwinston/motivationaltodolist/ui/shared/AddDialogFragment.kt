@@ -23,12 +23,12 @@ import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class AddDialogFragment : DialogFragment() {
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var binding: DialogAddBinding
     private lateinit var dmlState: DmlState
     private lateinit var taskEntity: TaskEntity
     lateinit var date: Date
     private var positiveButton by Delegates.notNull<Int>()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class AddDialogFragment : DialogFragment() {
                 DmlState.Update -> initUpdateView(taskEntity)
                 else -> Unit
             }
-            createDialogBuilder(fragmentActivity = it,positiveButton = positiveButton)
+            createDialogBuilder(fragmentActivity = it, positiveButton = positiveButton)
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 

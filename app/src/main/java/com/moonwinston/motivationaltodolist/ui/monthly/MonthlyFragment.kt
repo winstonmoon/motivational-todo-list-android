@@ -19,11 +19,9 @@ import java.util.*
 
 @AndroidEntryPoint
 class MonthlyFragment : Fragment() {
-
-    private lateinit var binding: FragmentMonthlyBinding
-
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val monthlyViewModel: MonthlyViewModel by viewModels()
+    private lateinit var binding: FragmentMonthlyBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
