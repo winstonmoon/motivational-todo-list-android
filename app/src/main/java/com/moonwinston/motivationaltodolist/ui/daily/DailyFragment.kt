@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.DmlState
-import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
@@ -20,6 +19,8 @@ import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.format.TextStyle
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -98,17 +99,15 @@ class DailyFragment : Fragment() {
     }
 
     private fun setDailyTitleText(language: Int): String {
-        val cal = Calendar.getInstance()
-        val date = cal.get(Calendar.DATE)
-        val month = cal.get(Calendar.MONTH)
-        val parsedMonth = resources.getString(MonthEnum.values()[month].monthAbbreviation)
-        val year = cal.get(Calendar.YEAR)
         val today = resources.getString(R.string.text_today)
         val wordYear = resources.getString(R.string.label_year)
         val wordDay = resources.getString(R.string.label_day)
+        val year = LocalDate.now().year
+        val month = LocalDate.now().month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        val date = LocalDate.now().dayOfMonth
         return when (language) {
-            ContextUtil.ENGLISH -> "$today, $parsedMonth $date, $year"
-            else -> "$year$wordYear $parsedMonth $date$wordDay $today"
+            ContextUtil.ENGLISH -> "$today, $month $date, $year"
+            else -> "$year$wordYear $month $date$wordDay $today"
         }
     }
 

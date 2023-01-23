@@ -7,7 +7,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import com.moonwinston.motivationaltodolist.R
-import com.moonwinston.motivationaltodolist.utils.CalendarUtil
+import com.moonwinston.motivationaltodolist.utils.nonExistDate
 import java.util.*
 
 class AchievementPieChartView @JvmOverloads constructor(
@@ -21,7 +21,7 @@ class AchievementPieChartView @JvmOverloads constructor(
     private var progressiveStrokeWidth = 0.0F
     private var pieChartColor = 0
     private var progressivePieChartColor = 0
-    private var pieChartViewDate = CalendarUtil.getNonExistDate()
+    private var pieChartViewDate = nonExistDate()
 
     init {
         context.theme.obtainStyledAttributes(
