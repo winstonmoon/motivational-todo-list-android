@@ -69,7 +69,6 @@ class WeeklyFragment : Fragment() {
         binding.lifecycleOwner = this@WeeklyFragment
         binding.weeklyFragment = this@WeeklyFragment
         initDisplayCoachMark()
-
 //        selectedDate = dateOfToday()
         setToday()
 

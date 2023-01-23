@@ -12,16 +12,15 @@ import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import java.time.Month
+import java.time.format.TextStyle
 import java.util.*
 
 @AndroidEntryPoint
 class MonthlyCalendarFragment : Fragment() {
-
-    private lateinit var binding: FragmentMonthlyCalendarBinding
-
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var binding: FragmentMonthlyCalendarBinding
     private var diffMonth = 0
-
     //TODO fix
     private var year = 0
     private var month = 0
@@ -53,19 +52,21 @@ class MonthlyCalendarFragment : Fragment() {
         }
         //TODO fix dayOfWeek logic more simple, viewmodel
         val dayOfWeek =
-            if (calendar.get(Calendar.DAY_OF_WEEK) == 1) 6 else calendar.get(Calendar.DAY_OF_WEEK) - 2
+            if (calendar.get(Calendar.DAY_OF_WEEK) == 1) 6
+            else calendar.get(Calendar.DAY_OF_WEEK) - 2
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
         monthList = MutableList(
             dayOfWeek,
             init = { nonExistDate() })
-        val maxDate = calendar.getActualMaximum(Calendar.DATE)
-        (1..maxDate).forEach { date ->
+        val endOfMonth = calendar.getActualMaximum(Calendar.DATE)
+        (1..endOfMonth).forEach { date ->
             monthList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
         }
         //TODO separate western and eastern
-        binding.monthTextView.text = resources.getString(MonthEnum.values()[month].monthAbbreviation)
+//        binding.monthTextView.text = resources.getString(MonthEnum.values()[month].monthAbbreviation)
+        binding.monthTextView.text = Month.of(month).getDisplayName(TextStyle.SHORT, Locale.getDefault())
 
         sharedViewModel.setMonthlyTitle(year, month)
         //TODO fix to use getAll instead of getAllByDates
