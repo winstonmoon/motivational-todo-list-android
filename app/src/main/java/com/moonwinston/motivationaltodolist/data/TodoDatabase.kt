@@ -1,14 +1,19 @@
 package com.moonwinston.motivationaltodolist.data
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import androidx.room.*
+import androidx.room.migration.AutoMigrationSpec
 import com.moonwinston.motivationaltodolist.utils.RoomTypeConverters
 
 @Database(
+    version = 2,
     entities = [TaskEntity::class, AchievementRateEntity::class],
-    version = 1,
-    exportSchema = false
+    autoMigrations = [
+        AutoMigration (
+            from = 1,
+            to = 2,
+            spec = TodoDatabase.TodoMyAutoMigration::class
+        )
+    ]
 )
 @TypeConverters(RoomTypeConverters::class)
 abstract class TodoDatabase : RoomDatabase() {
@@ -20,4 +25,7 @@ abstract class TodoDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
 
     abstract fun achievementRateDao(): AchievementRateDao
+
+    @DeleteColumn(tableName = "task", columnName = "taskTime")
+    class TodoMyAutoMigration : AutoMigrationSpec
 }

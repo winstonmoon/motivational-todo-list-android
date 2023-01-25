@@ -18,26 +18,11 @@ import javax.inject.Singleton
 @Module
 object DatabaseModule {
 
-    //TODO
-    private val MIGRATION_1_2 = object : Migration(1, 2) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, `name` TEXT, " +
-                    "PRIMARY KEY(`id`))")
-            database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, `name` TEXT, " +
-                    "PRIMARY KEY(`id`))")
-            database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, `name` TEXT, " +
-                    "PRIMARY KEY(`id`))")
-        }
-    }
-
     @Singleton
     @Provides
     fun provideTodoDatabase(
         @ApplicationContext context: Context
-    ): TodoDatabase = Room
-        .databaseBuilder(context, TodoDatabase::class.java, TodoDatabase.DB_NAME)
-        .addMigrations(MIGRATION_1_2)
-        .build()
+    ): TodoDatabase = Room.databaseBuilder(context, TodoDatabase::class.java, TodoDatabase.DB_NAME).build()
 
     @Singleton
     @Provides

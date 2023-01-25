@@ -52,6 +52,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
+    sourceSets {
+        // Adds exported schema location as test app assets.
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
 }
 
 dependencies {
@@ -111,6 +115,7 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
     // koin DI
     testImplementation "org.koin:koin-test:$rootProject.koinVersion"
+    androidTestImplementation "androidx.room:room-testing:2.4.3"
 }
 
 kapt {
