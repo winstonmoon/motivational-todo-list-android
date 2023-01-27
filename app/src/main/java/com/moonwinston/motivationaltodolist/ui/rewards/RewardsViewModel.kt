@@ -20,7 +20,7 @@ class RewardsViewModel @Inject constructor(
     val rateListLiveData: LiveData<List<AchievementRateEntity>>
         get() = _rateListLiveData
 
-    fun getAllComplete() = viewModelScope.launch (Dispatchers.IO) {
+    fun getAllComplete() = viewModelScope.launch {
         val list = achievementRateRepository.getAllCompleteRate()
         val sortedList = list.sortedBy { achievementRateEntity ->
             achievementRateEntity.date }

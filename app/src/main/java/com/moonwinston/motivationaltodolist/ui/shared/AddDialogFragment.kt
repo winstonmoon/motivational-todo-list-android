@@ -66,37 +66,39 @@ class AddDialogFragment : DialogFragment() {
     }
 
     private fun initCopyView(taskEntity: TaskEntity) {
-        val cal = Calendar.getInstance().apply {
-            time = taskEntity.taskTime
-        }
-        binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
-        binding.timePicker.minute = cal.get(Calendar.MINUTE)
-        binding.calendarView.date = taskEntity.taskDate.time
-        date = taskEntity.taskDate
-
-        //TODO
-//        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
-//        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
+//        val cal = Calendar.getInstance().apply {
+////            time = taskEntity.taskTime
+//            time = taskEntity.taskDate
+//        }
+//        binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
+//        binding.timePicker.minute = cal.get(Calendar.MINUTE)
 //        binding.calendarView.date = taskEntity.taskDate.time
 //        date = taskEntity.taskDate
+
+        //TODO
+        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
+        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
+        binding.calendarView.date = taskEntity.taskDate.time
+        date = taskEntity.taskDate
         binding.taskEditText.setText(taskEntity.task)
         positiveButton = R.string.button_add
     }
 
     private fun initUpdateView(taskEntity: TaskEntity) {
-        val cal = Calendar.getInstance().apply {
-            time = taskEntity.taskTime
-        }
-        binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
-        binding.timePicker.minute = cal.get(Calendar.MINUTE)
-        binding.calendarView.date = taskEntity.taskDate.time
-        date = taskEntity.taskDate
-
-        //TODO
-//        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
-//        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
+//        val cal = Calendar.getInstance().apply {
+////            time = taskEntity.taskTime
+//            time = taskEntity.taskDate
+//        }
+//        binding.timePicker.hour = cal.get(Calendar.HOUR_OF_DAY)
+//        binding.timePicker.minute = cal.get(Calendar.MINUTE)
 //        binding.calendarView.date = taskEntity.taskDate.time
 //        date = taskEntity.taskDate
+
+        //TODO
+        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
+        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
+        binding.calendarView.date = taskEntity.taskDate.time
+        date = taskEntity.taskDate
         binding.taskEditText.setText(taskEntity.task)
         positiveButton = R.string.button_edit
     }
@@ -136,23 +138,23 @@ class AddDialogFragment : DialogFragment() {
         time.set(Calendar.MINUTE, binding.timePicker.minute)
 
         //TODO
-//        val hour = binding.timePicker.hour
-//        val minute = binding.timePicker.minute
-//        val taskDate = LocalDateTime.of(date.dateToLocalDate(), LocalTime.of(hour, minute))
+        val hour = binding.timePicker.hour
+        val minute = binding.timePicker.minute
+        val taskDate = LocalDateTime.of(date.dateToLocalDate(), LocalTime.of(hour, minute)).localDateTimeToDate()
 
         return when (dmlState) {
             DmlState.Insert(method = "copy") ->
                 TaskEntity(
-                    taskDate = date,
-                    taskTime = time.time,
+//                    taskDate = date,
+                    taskDate = taskDate,
                     task = binding.taskEditText.text.toString(),
                     isCompleted = false
                 )
             else ->
                 TaskEntity(
                     uid = taskEntity.uid,
-                    taskDate = date,
-                    taskTime = time.time,
+//                    taskDate = date,
+                    taskDate = taskDate,
                     task = binding.taskEditText.text.toString(),
                     isCompleted = false
                 )

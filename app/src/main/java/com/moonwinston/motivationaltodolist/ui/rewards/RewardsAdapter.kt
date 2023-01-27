@@ -10,6 +10,7 @@ import com.moonwinston.motivationaltodolist.databinding.ItemRewardsBinding
 import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
 import java.text.SimpleDateFormat
 import java.time.ZoneId
+import java.time.format.TextStyle
 import java.util.*
 
 class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHolder>(diffUtil) {
@@ -19,7 +20,7 @@ class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHold
 
         fun bind(achievementRateEntity: AchievementRateEntity) {
             val achievedDate = achievementRateEntity.date.dateToLocalDate()
-            val achievedDateText = "${achievedDate.year}\n${achievedDate.month}/${achievedDate.dayOfMonth}"
+            val achievedDateText = "${achievedDate.year}\n${achievedDate.monthValue}/${achievedDate.dayOfMonth}"
             binding.achievedDateTextView.text = achievedDateText
         }
     }

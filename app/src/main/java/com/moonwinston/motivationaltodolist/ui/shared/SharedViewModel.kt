@@ -24,7 +24,7 @@ class SharedViewModel @Inject constructor(
     val tasksListLiveData: LiveData<List<TaskEntity>>
         get() = _tasksListLiveData
 
-    fun getAllTasks() = viewModelScope.launch (Dispatchers.IO) {
+    fun getAllTasks() = viewModelScope.launch {
         val list = taskRepository.getAllTasks()
         val sortedList = list.sortedBy { taskEntity ->
             taskEntity.taskDate }
@@ -33,7 +33,7 @@ class SharedViewModel @Inject constructor(
                 TaskEntity(
                     uid = taskEntity.uid,
                     taskDate = taskEntity.taskDate,
-                    taskTime = taskEntity.taskTime,
+//                    taskTime = taskEntity.taskTime,
                     task = taskEntity.task,
                     isCompleted = taskEntity.isCompleted
                 )
@@ -45,7 +45,7 @@ class SharedViewModel @Inject constructor(
     val multipleDaysTasksList: LiveData<List<TaskEntity>>
         get() = _multipleDaysTasksList
 
-    fun getAllTasksByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch (Dispatchers.IO) {
+    fun getAllTasksByDates(taskDatesList: MutableList<Date>) = viewModelScope.launch {
         val list = taskRepository.getAllTasksByDates(taskDatesList)
         val sortedList = list.sortedBy { taskEntity ->
             taskEntity.taskDate }
@@ -54,7 +54,7 @@ class SharedViewModel @Inject constructor(
                 TaskEntity(
                     uid = taskEntity.uid,
                     taskDate = taskEntity.taskDate,
-                    taskTime = taskEntity.taskTime,
+//                    taskTime = taskEntity.taskTime,
                     task = taskEntity.task,
                     isCompleted = taskEntity.isCompleted
                 )
@@ -62,19 +62,19 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun insertTask(taskEntity: TaskEntity) = viewModelScope.launch (Dispatchers.IO) {
+    fun insertTask(taskEntity: TaskEntity) = viewModelScope.launch {
         taskRepository.insertTask(taskEntity)
         //TODO
         getAllTasks()
     }
 
-    fun deleteTask(uid: Long) = viewModelScope.launch (Dispatchers.IO) {
+    fun deleteTask(uid: Long) = viewModelScope.launch {
         taskRepository.deleteTask(uid)
         //TODO
         getAllTasks()
     }
 
-    fun insertAchievementRate(achievementRateEntity: AchievementRateEntity) = viewModelScope.launch (Dispatchers.IO) {
+    fun insertAchievementRate(achievementRateEntity: AchievementRateEntity) = viewModelScope.launch {
         achievementRateRepository.insertRate(achievementRateEntity)
     }
 

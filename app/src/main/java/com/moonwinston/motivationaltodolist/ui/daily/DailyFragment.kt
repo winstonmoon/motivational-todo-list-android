@@ -33,7 +33,7 @@ class DailyFragment : Fragment() {
         "dmlState" to DmlState.Insert(method = "insert"),
         "taskEntity" to TaskEntity(
             taskDate = dateOfToday(),
-            taskTime = Date(),
+//            taskTime = Date(),
             task = "",
             isCompleted = false
         )
@@ -86,7 +86,8 @@ class DailyFragment : Fragment() {
                     if (taskEntity.taskDate == dateOfToday()) add(taskEntity)
                 }
             }
-            adapter.submitList(todayTasksList.sortedBy { it.taskTime })
+//            adapter.submitList(todayTasksList.sortedBy { it.taskTime })
+            adapter.submitList(todayTasksList.sortedBy { it.taskDate })
             dailyViewModel.setRate(todayTasksList)
         }
 

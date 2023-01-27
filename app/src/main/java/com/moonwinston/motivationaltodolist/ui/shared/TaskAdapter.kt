@@ -28,7 +28,8 @@ class TaskAdapter(
 
         fun bind(taskEntity: TaskEntity) {
             val cal = Calendar.getInstance().apply {
-                time = taskEntity.taskTime
+//                time = taskEntity.taskTime
+                time = taskEntity.taskDate
             }
             val taskTime = "${cal.get(Calendar.HOUR_OF_DAY)}:${cal.get(Calendar.MINUTE)}"
 
@@ -94,7 +95,7 @@ class TaskAdapter(
                     val taskEntity = TaskEntity(
                         uid = taskEntity.uid,
                         taskDate = taskEntity.taskDate,
-                        taskTime = taskEntity.taskTime,
+//                        taskTime = taskEntity.taskTime,
                         task = taskEntity.task,
                         isCompleted = true
                     )

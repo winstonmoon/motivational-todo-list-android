@@ -55,7 +55,7 @@ class MonthlyCalendarFragment : Fragment() {
             if (calendar.get(Calendar.DAY_OF_WEEK) == 1) 6
             else calendar.get(Calendar.DAY_OF_WEEK) - 2
         year = calendar.get(Calendar.YEAR)
-        month = calendar.get(Calendar.MONTH)
+        month = calendar.get(Calendar.MONTH) + 1
         val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
         monthList = MutableList(
             dayOfWeek,
@@ -64,8 +64,6 @@ class MonthlyCalendarFragment : Fragment() {
         (1..endOfMonth).forEach { date ->
             monthList.add(SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date"))
         }
-        //TODO separate western and eastern
-//        binding.monthTextView.text = resources.getString(MonthEnum.values()[month].monthAbbreviation)
         binding.monthTextView.text = Month.of(month).getDisplayName(TextStyle.SHORT, Locale.getDefault())
 
         sharedViewModel.setMonthlyTitle(year, month)
