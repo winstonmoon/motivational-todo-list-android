@@ -11,7 +11,7 @@ import com.moonwinston.motivationaltodolist.utils.RoomTypeConverters
         AutoMigration (
             from = 1,
             to = 2,
-            spec = TodoDatabase.TodoMyAutoMigration::class
+            spec = TodoDatabase.TodoAutoMigration::class
         )
     ]
 )
@@ -27,5 +27,5 @@ abstract class TodoDatabase : RoomDatabase() {
     abstract fun achievementRateDao(): AchievementRateDao
 
     @DeleteColumn(tableName = "task", columnName = "taskTime")
-    class TodoMyAutoMigration : AutoMigrationSpec
+    class TodoAutoMigration : AutoMigrationSpec
 }

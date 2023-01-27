@@ -10,7 +10,7 @@ interface TaskDao {
     fun getAll(): List<TaskEntity>
 
     //TODO temporary implement
-    @Query("SELECT * FROM task WHERE taskDate < :currentTime AND taskTime < :currentTime")
+    @Query("SELECT * FROM task WHERE taskDate < :currentTime")
     fun getAllFutureTasks(currentTime: Date): List<TaskEntity>
 
     @Query("SELECT * FROM task WHERE taskDate IN(:taskDatesList)")

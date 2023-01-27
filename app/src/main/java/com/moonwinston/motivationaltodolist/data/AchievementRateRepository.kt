@@ -1,5 +1,8 @@
 package com.moonwinston.motivationaltodolist.data
 
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -8,9 +11,9 @@ class AchievementRateRepository @Inject constructor(
     private val achievementRateDao: AchievementRateDao
 ) {
 
-    suspend fun getAllRate() = achievementRateDao.getAll()
+    suspend fun getAllRate() = withContext(Dispatchers.IO) { achievementRateDao.getAll() }
 
-    suspend fun getAllCompleteRate() = achievementRateDao.getAllComplete()
+    suspend fun getAllCompleteRate() = withContext(Dispatchers.IO) { achievementRateDao.getAllComplete() }
 
-    suspend fun insertRate(achievementRateEntity: AchievementRateEntity) = achievementRateDao.insert(achievementRateEntity)
+    suspend fun insertRate(achievementRateEntity: AchievementRateEntity) = withContext(Dispatchers.IO) { achievementRateDao.insert(achievementRateEntity) }
 }

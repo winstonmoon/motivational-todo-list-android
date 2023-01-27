@@ -115,7 +115,7 @@ class WeeklyFragment : Fragment() {
                 "taskEntity" to sharedViewModel.selectedDateLiveData.value?.let { it1 ->
                     TaskEntity(
                         taskDate = it1,
-                        taskTime = Date(),
+//                        taskTime = Date(),
                         task = "",
                         isCompleted = false
                     )
@@ -156,9 +156,10 @@ class WeeklyFragment : Fragment() {
                 if (taskEntity.taskDate == sharedViewModel.selectedDateLiveData.value) selectedDayTasksList.add(taskEntity)
             }
             binding.weeklyTodoRecyclerView.adapter = adapter
+//            adapter.submitList(selectedDayTasksList.sortedBy { taskEntity ->
+//                taskEntity.taskTime })
             adapter.submitList(selectedDayTasksList.sortedBy { taskEntity ->
-                taskEntity.taskTime })
-
+                taskEntity.taskDate })
             //TODO
             if (selectedDayTasksList.isEmpty().not()) {
                 val rate = sharedViewModel.getRate(selectedDayTasksList)

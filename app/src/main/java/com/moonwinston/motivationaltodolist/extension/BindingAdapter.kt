@@ -2,13 +2,9 @@ package com.moonwinston.motivationaltodolist.extension
 
 import android.view.View
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.moonwinston.motivationaltodolist.MonthEnum
-import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
-import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import java.util.*
 import kotlin.math.roundToInt
 
