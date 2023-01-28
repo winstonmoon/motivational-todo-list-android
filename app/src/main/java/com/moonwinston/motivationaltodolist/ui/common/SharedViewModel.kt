@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.ui.shared
+package com.moonwinston.motivationaltodolist.ui.common
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,7 +33,6 @@ class SharedViewModel @Inject constructor(
                 TaskEntity(
                     uid = taskEntity.uid,
                     taskDate = taskEntity.taskDate,
-//                    taskTime = taskEntity.taskTime,
                     task = taskEntity.task,
                     isCompleted = taskEntity.isCompleted
                 )
@@ -54,7 +53,6 @@ class SharedViewModel @Inject constructor(
                 TaskEntity(
                     uid = taskEntity.uid,
                     taskDate = taskEntity.taskDate,
-//                    taskTime = taskEntity.taskTime,
                     task = taskEntity.task,
                     isCompleted = taskEntity.isCompleted
                 )
@@ -76,14 +74,6 @@ class SharedViewModel @Inject constructor(
 
     fun insertAchievementRate(achievementRateEntity: AchievementRateEntity) = viewModelScope.launch {
         achievementRateRepository.insertRate(achievementRateEntity)
-    }
-
-    private var _monthlyTitleLiveData = MutableLiveData<Pair<Int, Int>>()
-    val monthlyTitleLiveData: LiveData<Pair<Int, Int>>
-        get() = _monthlyTitleLiveData
-
-    fun setMonthlyTitle(year: Int, month: Int) {
-        _monthlyTitleLiveData.value = Pair(year, month)
     }
 
     private var _selectedDateLiveData = MutableLiveData<Date>()

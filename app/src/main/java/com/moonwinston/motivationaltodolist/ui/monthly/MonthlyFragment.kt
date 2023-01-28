@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
-import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Month
@@ -20,7 +19,7 @@ import java.util.*
 @AndroidEntryPoint
 class MonthlyFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val monthlyViewModel: MonthlyViewModel by viewModels()
+    private val monthlySharedViewModel: MonthlyViewModel by activityViewModels()
     private lateinit var binding: FragmentMonthlyBinding
 
     override fun onCreateView(
@@ -39,7 +38,7 @@ class MonthlyFragment : Fragment() {
         binding.calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
         binding.calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
 
-        sharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
+        monthlySharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
             binding.monthlyTitleTextView.text = setMonthlyTitleText(it.first, it.second)
         }
     }
@@ -54,11 +53,11 @@ class MonthlyFragment : Fragment() {
     }
 
     private fun initDisplayCoachMark() {
-        if (monthlyViewModel.isCoachMonthlyDismissed.value.not()) {
+        if (monthlySharedViewModel.isCoachMonthlyDismissed.value.not()) {
             binding.coachMonthly.containerCoach.visibility = View.VISIBLE
             binding.coachMonthly.containerCoach.setOnClickListener {
                 binding.coachMonthly.containerCoach.visibility = View.GONE
-                monthlyViewModel.setCoachMonthlyAsDismissed(true)
+                monthlySharedViewModel.setCoachMonthlyAsDismissed(true)
             }
         }
     }

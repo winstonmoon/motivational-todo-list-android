@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.ui.shared
+package com.moonwinston.motivationaltodolist.ui.common
 
 import android.content.DialogInterface
 import android.graphics.Paint
@@ -16,7 +16,7 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemTasksBinding
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import java.text.SimpleDateFormat
+import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import java.util.*
 
 class TaskAdapter(
@@ -88,7 +88,7 @@ class TaskAdapter(
         builder.setMessage(R.string.message_dialog_confirm_complete)
             .setPositiveButton(R.string.button_ok,
                 DialogInterface.OnClickListener { _, _ ->
-                    if (taskEntity.taskDate.after(dateOfToday())) {
+                    if (taskEntity.taskDate.getDateExceptTime().after(dateOfToday())) {
                         Toast.makeText(view.context, R.string.message_toast_uncompletable, Toast.LENGTH_LONG).show()
                         return@OnClickListener
                     }
