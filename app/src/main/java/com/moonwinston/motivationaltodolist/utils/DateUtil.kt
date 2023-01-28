@@ -18,6 +18,13 @@ fun nonExistDate(): Date {
     return Date.from(instant)
 }
 
+fun Date.getDateExceptTime(): Date {
+    val year = this@getDateExceptTime.dateToLocalDate().year
+    val month = this@getDateExceptTime.dateToLocalDate().monthValue
+    val day = this@getDateExceptTime.dateToLocalDate().dayOfMonth
+    return LocalDateTime.of(year, month, day, 0, 0).localDateTimeToDate()
+}
+
 fun Date.dateToLocalDateTime(): LocalDateTime = this@dateToLocalDateTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
 
 fun Date.dateToLocalDate(): LocalDate = this@dateToLocalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()

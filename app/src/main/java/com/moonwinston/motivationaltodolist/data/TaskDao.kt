@@ -13,7 +13,7 @@ interface TaskDao {
     @Query("SELECT * FROM task WHERE taskDate < :currentTime")
     fun getAllFutureTasks(currentTime: Date): List<TaskEntity>
 
-    @Query("SELECT * FROM task WHERE taskDate IN(:taskDatesList)")
+    @Query("SELECT * FROM task WHERE date(taskDate) IN(:taskDatesList)")
     fun getAllByDates(taskDatesList: MutableList<Date>): List<TaskEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

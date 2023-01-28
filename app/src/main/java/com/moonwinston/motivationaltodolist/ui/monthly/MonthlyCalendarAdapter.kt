@@ -11,7 +11,9 @@ import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
+import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
+import java.time.LocalDateTime
 import java.util.*
 
 class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
@@ -25,7 +27,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
         fun bind(date: Date) {
             val tempTaskList = mutableListOf<TaskEntity>()
             monTasksList.forEach { taskEntity ->
-                if (taskEntity.taskDate == date) tempTaskList.add(taskEntity)
+                if (taskEntity.taskDate.getDateExceptTime() == date) tempTaskList.add(taskEntity)
             }
             val rate = getRate(tempTaskList)
             when {

@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
-import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*

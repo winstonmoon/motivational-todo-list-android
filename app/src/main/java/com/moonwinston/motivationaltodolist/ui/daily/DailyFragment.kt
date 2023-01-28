@@ -12,12 +12,13 @@ import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
+import com.moonwinston.motivationaltodolist.ui.common.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
-import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
+import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -32,8 +33,7 @@ class DailyFragment : Fragment() {
     val bundleForAddDialog = bundleOf(
         "dmlState" to DmlState.Insert(method = "insert"),
         "taskEntity" to TaskEntity(
-            taskDate = dateOfToday(),
-//            taskTime = Date(),
+            taskDate = Date(),
             task = "",
             isCompleted = false
         )
@@ -83,10 +83,9 @@ class DailyFragment : Fragment() {
         sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
             val todayTasksList = mutableListOf<TaskEntity>().apply {
                 tasksList.forEach { taskEntity ->
-                    if (taskEntity.taskDate == dateOfToday()) add(taskEntity)
+                    if (taskEntity.taskDate.getDateExceptTime() == dateOfToday()) add(taskEntity)
                 }
             }
-//            adapter.submitList(todayTasksList.sortedBy { it.taskTime })
             adapter.submitList(todayTasksList.sortedBy { it.taskDate })
             dailyViewModel.setRate(todayTasksList)
         }

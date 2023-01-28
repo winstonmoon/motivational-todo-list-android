@@ -13,13 +13,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.ui.shared.TaskAdapter
+import com.moonwinston.motivationaltodolist.ui.common.TaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.data.TaskEntity
-import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
+import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -69,7 +70,6 @@ class WeeklyFragment : Fragment() {
         binding.lifecycleOwner = this@WeeklyFragment
         binding.weeklyFragment = this@WeeklyFragment
         initDisplayCoachMark()
-//        selectedDate = dateOfToday()
         setToday()
 
         val slideAdapter = WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
@@ -83,9 +83,6 @@ class WeeklyFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val diffDays = (position - lastPosition) * 7
-//                val year = SimpleDateFormat("y").format(selectedDate).toInt()
-//                val month = SimpleDateFormat("M").format(selectedDate).toInt()
-//                val day = SimpleDateFormat("d").format(selectedDate).toInt()
                 val year = sharedViewModel.selectedDateLiveData.value?.let {
                     SimpleDateFormat("y").format(it).toInt()
                 }
@@ -106,16 +103,9 @@ class WeeklyFragment : Fragment() {
         binding.addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert(method = "insert"),
-//                "taskEntity" to TaskEntity(
-//                    taskDate = selectedDate,
-//                    taskTime = Date(),
-//                    task = "",
-//                    isCompleted = false
-//                )
-                "taskEntity" to sharedViewModel.selectedDateLiveData.value?.let { it1 ->
+                "taskEntity" to sharedViewModel.selectedDateLiveData.value?.let { taskDate ->
                     TaskEntity(
-                        taskDate = it1,
-//                        taskTime = Date(),
+                        taskDate = taskDate,
                         task = "",
                         isCompleted = false
                     )
@@ -125,7 +115,6 @@ class WeeklyFragment : Fragment() {
         }
 
         sharedViewModel.selectedDateLiveData.observe(viewLifecycleOwner) { selectedDate ->
-//            this.selectedDate = selectedDate
             sharedViewModel.getAllTasks()
             binding.weeklyTitleTextView.text = getWeeklyTitle(selectedDate)
             binding.mondayTextView.background = null
@@ -152,12 +141,9 @@ class WeeklyFragment : Fragment() {
             //TODO fix
             val selectedDayTasksList = mutableListOf<TaskEntity>()
             taskEntities.forEach { taskEntity ->
-//                if (taskEntity.taskDate == selectedDate) selectedDayTasksList.add(taskEntity)
-                if (taskEntity.taskDate == sharedViewModel.selectedDateLiveData.value) selectedDayTasksList.add(taskEntity)
+                if (taskEntity.taskDate.getDateExceptTime() == sharedViewModel.selectedDateLiveData.value) selectedDayTasksList.add(taskEntity)
             }
             binding.weeklyTodoRecyclerView.adapter = adapter
-//            adapter.submitList(selectedDayTasksList.sortedBy { taskEntity ->
-//                taskEntity.taskTime })
             adapter.submitList(selectedDayTasksList.sortedBy { taskEntity ->
                 taskEntity.taskDate })
             //TODO
@@ -172,8 +158,6 @@ class WeeklyFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //TODO
-//        sharedViewModel.setSelectedDate(dateOfToday())
         setToday()
     }
 

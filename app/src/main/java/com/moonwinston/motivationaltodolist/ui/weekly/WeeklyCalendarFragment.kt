@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.moonwinston.motivationaltodolist.MonthEnum
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
-import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
+import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
+import com.moonwinston.motivationaltodolist.utils.localDateToDate
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.util.*
 
 @AndroidEntryPoint
@@ -56,9 +57,8 @@ class WeeklyCalendarFragment : Fragment() {
         (1..7).forEach { _ ->
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
-            val parsedMonth = resources.getString(MonthEnum.values()[month].monthNumber)
             val date = calendar.get(Calendar.DATE)
-            SimpleDateFormat("yyyy-MM-dd").parse("$year-$parsedMonth-$date")?.let { weekList.add(it) }
+            weekList.add(LocalDate.of(year, month + 1, date).localDateToDate())
             calendar.add(Calendar.DATE, 1)
         }
         //TODO fix dayOfWeek logic more simple, viewmodel
@@ -109,7 +109,7 @@ class WeeklyCalendarFragment : Fragment() {
             val satList: MutableList<TaskEntity>? = null
             val sunList: MutableList<TaskEntity>? = null
             taskEntities.forEach { taskEntity ->
-                when (taskEntity.taskDate) {
+                when (taskEntity.taskDate.getDateExceptTime()) {
                     weekList[0] -> monList?.add(taskEntity)
                     weekList[1] -> tueList?.add(taskEntity)
                     weekList[2] -> wedList?.add(taskEntity)

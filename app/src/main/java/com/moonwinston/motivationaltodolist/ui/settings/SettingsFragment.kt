@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +17,7 @@ import com.moonwinston.motivationaltodolist.MainActivity
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
-import com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
 

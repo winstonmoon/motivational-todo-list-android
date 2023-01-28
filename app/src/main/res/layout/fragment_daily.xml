@@ -20,7 +20,7 @@
 
         <variable
             name="sharedViewModel"
-            type="com.moonwinston.motivationaltodolist.ui.shared.SharedViewModel" />
+            type="com.moonwinston.motivationaltodolist.ui.common.SharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
