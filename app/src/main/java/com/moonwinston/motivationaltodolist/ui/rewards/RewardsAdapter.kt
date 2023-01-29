@@ -8,10 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemRewardsBinding
 import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
-import java.text.SimpleDateFormat
-import java.time.ZoneId
-import java.time.format.TextStyle
-import java.util.*
 
 class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHolder>(diffUtil) {
 

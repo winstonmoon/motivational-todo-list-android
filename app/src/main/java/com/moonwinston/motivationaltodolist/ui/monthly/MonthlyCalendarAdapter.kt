@@ -13,7 +13,6 @@ import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
-import java.time.LocalDateTime
 import java.util.*
 
 class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
@@ -29,7 +28,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
             monTasksList.forEach { taskEntity ->
                 if (taskEntity.taskDate.getDateExceptTime() == date) tempTaskList.add(taskEntity)
             }
-            val rate = getRate(tempTaskList)
+            val calculatedRate = calculateRate(tempTaskList)
             when {
                 date == nonExistDate() -> {
                     binding.monthlyDateTextView.visibility = View.GONE
@@ -38,8 +37,8 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 date == dateOfToday() -> {
                     binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
-                    if (rate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
-                    binding.monthlyCustomPieChart.setPercentage(rate)
+                    if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
+                    binding.monthlyCustomPieChart.setPercentage(calculatedRate)
                 }
                 date.after(dateOfToday()) -> {
                     binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
@@ -47,13 +46,13 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 }
                 else -> {
                     binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
-                    if (rate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
-                    binding.monthlyCustomPieChart.setPercentage(rate)
+                    if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
+                    binding.monthlyCustomPieChart.setPercentage(calculatedRate)
                 }
             }
         }
 
-        private fun getRate(tasksList: List<TaskEntity>): Float {
+        private fun calculateRate(tasksList: List<TaskEntity>): Float {
             var totalTasks = 0F
             var doneTasks = 0F
             tasksList.forEach {  taskEntity ->

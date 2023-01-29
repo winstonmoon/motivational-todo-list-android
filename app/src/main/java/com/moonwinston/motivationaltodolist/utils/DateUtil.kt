@@ -8,14 +8,12 @@ import java.util.*
 
 fun dateOfToday(): Date {
     val today = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0))
-    val instant = today.atZone(ZoneId.systemDefault()).toInstant()
-    return Date.from(instant)
+    return today.localDateTimeToDate()
 }
 
 fun nonExistDate(): Date {
     val nonExistDate = LocalDateTime.of(1970, 1, 1, 0, 0, 0)
-    val instant = nonExistDate.atZone(ZoneId.systemDefault()).toInstant()
-    return Date.from(instant)
+    return nonExistDate.localDateTimeToDate()
 }
 
 fun Date.getDateExceptTime(): Date {
