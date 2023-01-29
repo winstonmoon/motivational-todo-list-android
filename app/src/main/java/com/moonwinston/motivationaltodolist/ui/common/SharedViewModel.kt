@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
+import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -39,6 +41,28 @@ class SharedViewModel @Inject constructor(
             }
         }
     }
+
+//    val todayTaskLists = taskRepository.getAllTasks().map { taskEntities ->
+//            val today = mutableListOf<TaskEntity>()
+//            taskEntities.forEach { taskEntity ->
+//                if (taskEntity.taskDate.getDateExceptTime() == dateOfToday()) today.add(taskEntity)
+//            }
+//        }.stateIn(
+//        initialValue = emptyList(),
+//        started = SharingStarted.Eagerly,
+//        scope = viewModelScope
+//    )
+//
+//
+//    val allTaskLists = taskRepository.getAllTasks().map { taskEntities ->
+//            taskEntities.sortedBy { taskEntity ->
+//                taskEntity.taskDate
+//            }
+//        }.stateIn(
+//        initialValue = emptyList(),
+//        started = SharingStarted.Eagerly,
+//        scope = viewModelScope
+//    )
 
     private var _multipleDaysTasksList = MutableLiveData<List<TaskEntity>>()
     val multipleDaysTasksList: LiveData<List<TaskEntity>>

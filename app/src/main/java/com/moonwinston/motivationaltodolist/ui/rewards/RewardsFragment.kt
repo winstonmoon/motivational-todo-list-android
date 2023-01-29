@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.ads.AdRequest
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RewardsFragment : Fragment() {
@@ -29,11 +31,14 @@ class RewardsFragment : Fragment() {
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
-        rewardsViewModel.getAllComplete()
-        rewardsViewModel.rateListLiveData.observe(viewLifecycleOwner) { achievementRateEntities ->
-            val adapter = RewardsAdapter()
-            binding.rewardsRecyclerView.adapter = adapter
-            adapter.submitList(achievementRateEntities)
+        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                rewardsViewModel.completedTask.collect { achievementRateEntities ->
+                    val adapter = RewardsAdapter()
+                    binding.rewardsRecyclerView.adapter = adapter
+                    adapter.submitList(achievementRateEntities)
+                }
+//            }
         }
     }
 }

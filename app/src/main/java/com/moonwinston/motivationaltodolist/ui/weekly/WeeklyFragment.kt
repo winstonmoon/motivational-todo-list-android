@@ -17,13 +17,11 @@ import com.moonwinston.motivationaltodolist.ui.common.TaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
-import com.moonwinston.motivationaltodolist.utils.ContextUtil
-import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
-import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
+import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
 
@@ -32,7 +30,6 @@ class WeeklyFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val weeklyViewModel: WeeklyViewModel by viewModels()
     private lateinit var binding: FragmentWeeklyBinding
-//    private lateinit var selectedDate: Date
     private var lastPosition: Int = WeeklyScreenSlidePagerAdapter.START_POSITION
     private val adapter by lazy {
         TaskAdapter(
@@ -83,19 +80,8 @@ class WeeklyFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val diffDays = (position - lastPosition) * 7
-                val year = sharedViewModel.selectedDateLiveData.value?.let {
-                    SimpleDateFormat("y").format(it).toInt()
-                }
-                val month = sharedViewModel.selectedDateLiveData.value?.let {
-                    SimpleDateFormat("M").format(it).toInt()
-                }
-                val day = sharedViewModel.selectedDateLiveData.value?.let {
-                    SimpleDateFormat("d").format(it).toInt()
-                }
-//                val gregorianCalendar = GregorianCalendar(year, month - 1, day)
-                val gregorianCalendar = GregorianCalendar(year!!, month!! - 1, day!!)
-                gregorianCalendar.add(Calendar.DATE, diffDays)
-                sharedViewModel.setSelectedDate(gregorianCalendar.time)
+                val selectedDate = sharedViewModel.selectedDateLiveData.value?.dateToLocalDate()?.plusDays(diffDays.toLong())?.localDateToDate()
+                sharedViewModel.setSelectedDate(selectedDate!!)
                 lastPosition = position
             }
         })

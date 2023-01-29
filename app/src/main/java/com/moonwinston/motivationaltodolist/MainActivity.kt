@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-//        sharedViewModel.getLanguage()
 //        val language = sharedViewModel.languageIndex.value
 //        val localeUpdatedContext: ContextWrapper =
 //            ContextUtil.updateLocale(newBase, language)

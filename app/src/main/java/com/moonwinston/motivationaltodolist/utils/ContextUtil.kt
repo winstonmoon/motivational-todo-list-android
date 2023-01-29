@@ -37,12 +37,7 @@ class ContextUtil(base: Context) : ContextWrapper(base) {
             val localeList = LocaleList(localeToSwitchTo)
             LocaleList.setDefault(localeList)
             configuration.setLocales(localeList)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                context = context.createConfigurationContext(configuration)
-            } else {
-                resources.updateConfiguration(configuration, resources.displayMetrics)
-            }
+            resources.updateConfiguration(configuration, resources.displayMetrics)
             return ContextUtil(context)
         }
     }

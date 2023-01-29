@@ -12,6 +12,7 @@ class TaskRepository @Inject constructor(
     private val taskDao: TaskDao
 ){
     suspend fun getAllTasks() = withContext(Dispatchers.IO) { taskDao.getAll() }
+//    fun getAllTasks() = taskDao.getAll()
 
     //TODO temporary implement
     suspend fun getAllFutureTasks(currentTime: Date) = withContext(Dispatchers.IO) { taskDao.getAllFutureTasks(currentTime) }

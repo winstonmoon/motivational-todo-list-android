@@ -16,8 +16,8 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemTasksBinding
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
+import com.moonwinston.motivationaltodolist.utils.dateToLocalDateTime
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
-import java.util.*
 
 class TaskAdapter(
     val meatballsMenuCallback: (TaskEntity, DmlState) -> Unit,
@@ -27,55 +27,27 @@ class TaskAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
-            val cal = Calendar.getInstance().apply {
-//                time = taskEntity.taskTime
-                time = taskEntity.taskDate
-            }
-            val taskTime = "${cal.get(Calendar.HOUR_OF_DAY)}:${cal.get(Calendar.MINUTE)}"
+            val hour = taskEntity.taskDate.dateToLocalDateTime().hour
+            val minute = taskEntity.taskDate.dateToLocalDateTime().minute
+            val taskTime = "$hour:$minute"
 
             if (taskEntity.isCompleted) {
                 binding.taskRadioButton.isChecked = true
                 binding.taskTextView.paintFlags =
                     binding.taskTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 binding.taskTextView.text = taskEntity.task
+                binding.timeTextView.text = taskTime
                 binding.taskMeatballsMenu.setOnClickListener { view ->
                     showCopyPopupMenu(view, taskEntity)
                 }
-
-                binding.timeTextView.text = taskTime
             } else {
                 binding.taskRadioButton.isChecked = false
-                //TODO fix
                 binding.taskTextView.paintFlags = 0
                 binding.taskTextView.text = taskEntity.task
                 binding.timeTextView.text = taskTime
-
                 binding.taskRadioButton.setOnClickListener { view ->
-//                    val builder = AlertDialog.Builder(view.context, R.style.CustomAlertDialog)
-//                    builder.setMessage(R.string.message_dialog_confirm_complete)
-//                        .setPositiveButton(R.string.button_ok,
-//                            DialogInterface.OnClickListener { _, _ ->
-//                                if (taskEntity.taskDate.after(dateOfToday())) {
-//                                    Toast.makeText(view.context, R.string.message_toast_uncompletable, Toast.LENGTH_LONG).show()
-//                                    return@OnClickListener
-//                                }
-//                                val taskEntity = TaskEntity(
-//                                    uid = taskEntity.uid,
-//                                    taskDate = taskEntity.taskDate,
-//                                    taskTime = taskEntity.taskTime,
-//                                    task = taskEntity.task,
-//                                    isCompleted = true
-//                                )
-//                                radioButtonCallback(taskEntity)
-//                            })
-//                        .setNegativeButton(R.string.button_cancel) { _, _ ->
-//                            binding.taskRadioButton.isChecked = false
-//                        }
-//                    builder.setOnDismissListener { binding.taskRadioButton.isChecked = false }
-//                    builder.show()
                     showAlertDialog(view = view, binding = binding, taskEntity = taskEntity)
                 }
-
                 binding.taskMeatballsMenu.setOnClickListener { view ->
                     showEditPopupMenu(view, taskEntity)
                 }
@@ -95,7 +67,6 @@ class TaskAdapter(
                     val taskEntity = TaskEntity(
                         uid = taskEntity.uid,
                         taskDate = taskEntity.taskDate,
-//                        taskTime = taskEntity.taskTime,
                         task = taskEntity.task,
                         isCompleted = true
                     )

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
@@ -18,17 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.util.*
-import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class AddDialogFragment : DialogFragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val addDialogViewModel: AddDialogViewModel by viewModels()
     private lateinit var binding: DialogAddBinding
     private lateinit var dmlState: DmlState
     private lateinit var taskEntity: TaskEntity
-    lateinit var date: Date
-    private var positiveButton by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,14 +44,14 @@ class AddDialogFragment : DialogFragment() {
                 DmlState.Update -> initUpdateView(taskEntity)
                 else -> Unit
             }
-            createDialogBuilder(fragmentActivity = it, positiveButton = positiveButton)
+            createDialogBuilder(fragmentActivity = it, positiveButton = addDialogViewModel.positiveButtonStringResource.value)
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
     private fun initCommonView() {
         binding.timePicker.setIs24HourView(true)
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            date = LocalDate.of(year, month, dayOfMonth).localDateToDate()
+            addDialogViewModel.setDate(LocalDate.of(year, month, dayOfMonth).localDateToDate())
         }
     }
 
@@ -61,26 +59,26 @@ class AddDialogFragment : DialogFragment() {
         binding.timePicker.hour
         binding.timePicker.minute
         binding.calendarView.date = taskEntity.taskDate.time
-        date = taskEntity.taskDate
-        positiveButton = R.string.button_add
+        addDialogViewModel.setDate(taskEntity.taskDate)
+        addDialogViewModel.setPositiveButtonStringResource(R.string.button_add)
     }
 
     private fun initCopyView(taskEntity: TaskEntity) {
         binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
         binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
         binding.calendarView.date = taskEntity.taskDate.time
-        date = taskEntity.taskDate
+        addDialogViewModel.setDate(taskEntity.taskDate)
         binding.taskEditText.setText(taskEntity.task)
-        positiveButton = R.string.button_add
+        addDialogViewModel.setPositiveButtonStringResource(R.string.button_add)
     }
 
     private fun initUpdateView(taskEntity: TaskEntity) {
         binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
         binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
         binding.calendarView.date = taskEntity.taskDate.time
-        date = taskEntity.taskDate
+        addDialogViewModel.setDate(taskEntity.taskDate)
         binding.taskEditText.setText(taskEntity.task)
-        positiveButton = R.string.button_edit
+        addDialogViewModel.setPositiveButtonStringResource(R.string.button_edit)
     }
 
     private fun createDialogBuilder(
@@ -92,7 +90,7 @@ class AddDialogFragment : DialogFragment() {
             .setPositiveButton(positiveButton,
                 DialogInterface.OnClickListener { _, _ ->
                     //TODO
-                    if (date.before(dateOfToday())) {
+                    if (addDialogViewModel.date.value.before(dateOfToday())) {
                         Toast.makeText(fragmentActivity, resources.getString(R.string.message_toast_unaddable), Toast.LENGTH_LONG).show()
                         return@OnClickListener
                     }
@@ -115,7 +113,7 @@ class AddDialogFragment : DialogFragment() {
     private fun setTaskEntity(): TaskEntity {
         val hour = binding.timePicker.hour
         val minute = binding.timePicker.minute
-        val taskDate = LocalDateTime.of(date.dateToLocalDate(), LocalTime.of(hour, minute)).localDateTimeToDate()
+        val taskDate = LocalDateTime.of(addDialogViewModel.date.value.dateToLocalDate(), LocalTime.of(hour, minute)).localDateTimeToDate()
         return when (dmlState) {
             DmlState.Insert(method = "copy") ->
                 TaskEntity(
