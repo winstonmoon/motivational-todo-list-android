@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
-import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Month
@@ -18,7 +18,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class MonthlyFragment : Fragment() {
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val monthlySharedViewModel: MonthlyViewModel by activityViewModels()
     private lateinit var binding: FragmentMonthlyBinding
 
@@ -46,7 +46,7 @@ class MonthlyFragment : Fragment() {
     private fun setMonthlyTitleText(year: Int, month: Int): String {
         val wordYear = resources.getString(R.string.label_year)
         val month = Month.of(month).getDisplayName(TextStyle.SHORT, Locale.getDefault())
-        return when (sharedViewModel.languageIndex.value) {
+        return when (mainViewModel.languageIndex.value) {
             ContextUtil.ENGLISH -> "$month, $year"
             else -> "$year$wordYear $month"
         }

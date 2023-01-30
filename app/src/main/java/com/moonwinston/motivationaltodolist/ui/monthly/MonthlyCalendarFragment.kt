@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
-import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.localDateToDate
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +18,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class MonthlyCalendarFragment : Fragment() {
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val monthlySharedViewModel: MonthlyViewModel by activityViewModels()
     private lateinit var binding: FragmentMonthlyCalendarBinding
     private var diffMonth = 0
@@ -68,8 +68,8 @@ class MonthlyCalendarFragment : Fragment() {
 
         monthlySharedViewModel.setMonthlyTitle(year, month + 1)
         //TODO fix to use getAll instead of getAllByDates
-        sharedViewModel.getAllTasksByDates(monthList)
-        sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) { taskEntities ->
+        mainViewModel.getAllTasksByDates(monthList)
+        mainViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) { taskEntities ->
             val adapter = MonthlyCalendarAdapter(taskEntities)
             binding.calendarRecyclerView.adapter = adapter
             adapter.submitList(monthList)
@@ -80,8 +80,8 @@ class MonthlyCalendarFragment : Fragment() {
         super.onResume()
         monthlySharedViewModel.setMonthlyTitle(year, month + 1)
         //TODO fix to use getAll instead of getAllByDates
-        sharedViewModel.getAllTasksByDates(monthList)
-        sharedViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) { taskEntities ->
+        mainViewModel.getAllTasksByDates(monthList)
+        mainViewModel.multipleDaysTasksList.observe(viewLifecycleOwner) { taskEntities ->
             val adapter = MonthlyCalendarAdapter(taskEntities)
             binding.calendarRecyclerView.adapter = adapter
             adapter.submitList(monthList)
