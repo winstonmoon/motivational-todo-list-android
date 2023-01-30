@@ -6,19 +6,20 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
-import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.main.MainActivity
+import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivitySplashBinding
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ThemeUtil().setTheme(sharedViewModel.themeIndex.value)
+        ThemeUtil().setTheme(mainViewModel.themeIndex.value)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         lifecycleScope.launch(Dispatchers.Main) {

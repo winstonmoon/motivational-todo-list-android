@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.ui.common
+package com.moonwinston.motivationaltodolist.ui.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -14,6 +14,7 @@ import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
+import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -22,7 +23,7 @@ import java.time.LocalTime
 
 @AndroidEntryPoint
 class AddDialogFragment : DialogFragment() {
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val addDialogViewModel: AddDialogViewModel by viewModels()
     private lateinit var binding: DialogAddBinding
     private lateinit var dmlState: DmlState
@@ -89,16 +90,15 @@ class AddDialogFragment : DialogFragment() {
         builder.setView(binding.root)
             .setPositiveButton(positiveButton,
                 DialogInterface.OnClickListener { _, _ ->
-                    //TODO
                     if (addDialogViewModel.date.value.before(dateOfToday())) {
                         Toast.makeText(fragmentActivity, resources.getString(R.string.message_toast_unaddable), Toast.LENGTH_LONG).show()
                         return@OnClickListener
                     }
                     val taskEntity = setTaskEntity()
-                    sharedViewModel.insertTask(taskEntity)
+                    mainViewModel.insertTask(taskEntity)
 
                     //TODO
-                    val isNotifyOn = sharedViewModel.themeIndex.value != 0
+                    val isNotifyOn = mainViewModel.themeIndex.value != 0
                     if (isNotifyOn) {
 //                            alarmmanager
 //                            pendingintent

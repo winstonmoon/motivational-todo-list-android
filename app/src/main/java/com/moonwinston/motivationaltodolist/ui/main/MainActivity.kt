@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist
+package com.moonwinston.motivationaltodolist.ui.main
 
 import android.content.Context
 import android.content.ContextWrapper
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
@@ -20,15 +21,16 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
-import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private val MY_REQUEST_CODE = 1
     private lateinit var appUpdateManager: AppUpdateManager
@@ -60,13 +62,25 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics = Firebase.analytics
         MobileAds.initialize(this) {}
 
-        ThemeUtil().setTheme(sharedViewModel.themeIndex.value)
+        ThemeUtil().setTheme(mainViewModel.themeIndex.value)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navController = findNavController(R.id.fragment)
         binding.bottomNavigationView.setupWithNavController(navController)
+
+        //TODO
+        lifecycleScope.launch {
+            mainViewModel.themeIndex.collect {
+                ThemeUtil().setTheme(it)
+            }
+        }
+        lifecycleScope.launch {
+            mainViewModel.languageIndex.collect {
+
+            }
+        }
     }
 
     override fun attachBaseContext(newBase: Context) {

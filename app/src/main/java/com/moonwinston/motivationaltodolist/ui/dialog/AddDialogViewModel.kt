@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.ui.common
+package com.moonwinston.motivationaltodolist.ui.dialog
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

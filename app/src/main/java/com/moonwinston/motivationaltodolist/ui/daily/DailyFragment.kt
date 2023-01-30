@@ -16,12 +16,11 @@ import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.ui.common.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
-import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -30,7 +29,7 @@ import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class DailyFragment : Fragment() {
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val dailyViewModel: DailyViewModel by viewModels()
     private lateinit var binding: FragmentDailyBinding
     val bundleForAddDialog = bundleOf(
@@ -53,12 +52,12 @@ class DailyFragment : Fragment() {
                         val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                         view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
                     }
-                    DmlState.Delete -> sharedViewModel.deleteTask(taskEntity.uid)
+                    DmlState.Delete -> mainViewModel.deleteTask(taskEntity.uid)
                     else -> Unit
                 }
             },
             radioButtonCallback = {
-                sharedViewModel.insertTask(it)
+                mainViewModel.insertTask(it)
                 binding.congratulationsAnimationView.playAnimation()
             })
     }
@@ -77,11 +76,11 @@ class DailyFragment : Fragment() {
         binding.lifecycleOwner = this@DailyFragment
         binding.dailyFragment = this@DailyFragment
         initDisplayCoachMark()
-        binding.dailyTitleTextView.text = setDailyTitleText(sharedViewModel.languageIndex.value)
+        binding.dailyTitleTextView.text = setDailyTitleText(mainViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
 
-        sharedViewModel.getAllTasks()
-        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
+        mainViewModel.getAllTasks()
+        mainViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
             val todayTasksList = mutableListOf<TaskEntity>().apply {
                 tasksList.forEach { taskEntity ->
                     if (taskEntity.taskDate.getDateExceptTime() == dateOfToday()) add(taskEntity)
@@ -91,7 +90,7 @@ class DailyFragment : Fragment() {
             //TODO change flow above
             val calculatedRate = dailyViewModel.calculateRate(todayTasksList)
             val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
-            sharedViewModel.insertAchievementRate(achievementRate)
+            mainViewModel.insertAchievementRate(achievementRate)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

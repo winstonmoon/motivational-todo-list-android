@@ -59,7 +59,7 @@
 
     <dialog
         android:id="@+id/navigation_add"
-        android:name="com.moonwinston.motivationaltodolist.ui.common.AddDialogFragment"
+        android:name="com.moonwinston.motivationaltodolist.ui.dialog.AddDialogFragment"
         tools:layout="@layout/dialog_add" />
 
 </navigation>

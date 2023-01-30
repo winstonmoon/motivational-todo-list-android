@@ -7,22 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.coroutineScope
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
-import com.moonwinston.motivationaltodolist.ui.common.SharedViewModel
+import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import com.moonwinston.motivationaltodolist.utils.localDateToDate
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.util.*
 
 @AndroidEntryPoint
 class WeeklyCalendarFragment : Fragment() {
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val weeklyViewModel: WeeklyViewModel by viewModels()
     private lateinit var binding: FragmentWeeklyCalendarBinding
     private var diffWeek = 0
@@ -68,42 +65,42 @@ class WeeklyCalendarFragment : Fragment() {
 
         binding.mondayCustomPieChart.setPieChartViewDate(weekList[0])
         binding.mondayCustomPieChart.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.mondayCustomPieChart.getPieChartViewDate())
+            mainViewModel.setSelectedDate(binding.mondayCustomPieChart.getPieChartViewDate())
         }
 
         binding.tuesdayCustomPieChart.setPieChartViewDate(weekList[1])
         binding.tuesdayCustomPieChart.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.tuesdayCustomPieChart.getPieChartViewDate())
+            mainViewModel.setSelectedDate(binding.tuesdayCustomPieChart.getPieChartViewDate())
         }
 
         binding.wednesdayCustomPieChart.setPieChartViewDate(weekList[2])
         binding.wednesdayCustomPieChart.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.wednesdayCustomPieChart.getPieChartViewDate())
+            mainViewModel.setSelectedDate(binding.wednesdayCustomPieChart.getPieChartViewDate())
         }
 
         binding.thursdayCustomPieChart.setPieChartViewDate(weekList[3])
         binding.thursdayCustomPieChart.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.thursdayCustomPieChart.getPieChartViewDate())
+            mainViewModel.setSelectedDate(binding.thursdayCustomPieChart.getPieChartViewDate())
         }
 
         binding.fridayCustomPieChart.setPieChartViewDate(weekList[4])
         binding.fridayCustomPieChart.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.fridayCustomPieChart.getPieChartViewDate())
+            mainViewModel.setSelectedDate(binding.fridayCustomPieChart.getPieChartViewDate())
         }
 
         binding.saturdayCustomPieChart.setPieChartViewDate(weekList[5])
         binding.saturdayCustomPieChart.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.saturdayCustomPieChart.getPieChartViewDate())
+            mainViewModel.setSelectedDate(binding.saturdayCustomPieChart.getPieChartViewDate())
         }
 
         binding.sundayCustomPieChart.setPieChartViewDate(weekList[6])
         binding.sundayCustomPieChart.setOnClickListener {
-            sharedViewModel.setSelectedDate(binding.sundayCustomPieChart.getPieChartViewDate())
+            mainViewModel.setSelectedDate(binding.sundayCustomPieChart.getPieChartViewDate())
         }
 
         //TODO
-        sharedViewModel.getAllTasks()
-        sharedViewModel.tasksListLiveData.observe(viewLifecycleOwner) { taskEntities ->
+        mainViewModel.getAllTasks()
+        mainViewModel.tasksListLiveData.observe(viewLifecycleOwner) { taskEntities ->
             val monList: MutableList<TaskEntity>? = null
             val tueList: MutableList<TaskEntity>? = null
             val wedList: MutableList<TaskEntity>? = null
@@ -148,7 +145,7 @@ class WeeklyCalendarFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        sharedViewModel.getAllTasks()
+        mainViewModel.getAllTasks()
     }
 
     companion object {
