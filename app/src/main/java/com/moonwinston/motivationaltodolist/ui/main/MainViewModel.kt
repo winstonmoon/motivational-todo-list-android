@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
+import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,43 +27,43 @@ class MainViewModel @Inject constructor(
     val tasksListLiveData: LiveData<List<TaskEntity>>
         get() = _tasksListLiveData
 
-    fun getAllTasks() = viewModelScope.launch {
-        val list = taskRepository.getAllTasks()
-        val sortedList = list.sortedBy { taskEntity ->
-            taskEntity.taskDate }
-        withContext(Dispatchers.Main) {
-            _tasksListLiveData.value = sortedList.map { taskEntity ->
-                TaskEntity(
-                    uid = taskEntity.uid,
-                    taskDate = taskEntity.taskDate,
-                    task = taskEntity.task,
-                    isCompleted = taskEntity.isCompleted
-                )
-            }
-        }
-    }
+//    fun getAllTasks() = viewModelScope.launch {
+//        val list = taskRepository.getAllTasks()
+//        val sortedList = list.sortedBy { taskEntity ->
+//            taskEntity.taskDate }
+//        withContext(Dispatchers.Main) {
+//            _tasksListLiveData.value = sortedList.map { taskEntity ->
+//                TaskEntity(
+//                    uid = taskEntity.uid,
+//                    taskDate = taskEntity.taskDate,
+//                    task = taskEntity.task,
+//                    isCompleted = taskEntity.isCompleted
+//                )
+//            }
+//        }
+//    }
 
-//    val todayTaskLists = taskRepository.getAllTasks().map { taskEntities ->
-//            val today = mutableListOf<TaskEntity>()
-//            taskEntities.forEach { taskEntity ->
-//                if (taskEntity.taskDate.getDateExceptTime() == dateOfToday()) today.add(taskEntity)
-//            }
-//        }.stateIn(
-//        initialValue = emptyList(),
-//        started = SharingStarted.Eagerly,
-//        scope = viewModelScope
-//    )
-//
-//
-//    val allTaskLists = taskRepository.getAllTasks().map { taskEntities ->
-//            taskEntities.sortedBy { taskEntity ->
-//                taskEntity.taskDate
-//            }
-//        }.stateIn(
-//        initialValue = emptyList(),
-//        started = SharingStarted.Eagerly,
-//        scope = viewModelScope
-//    )
+    val todayTaskLists = taskRepository.getAllTasks().map { taskEntities ->
+        taskEntities.filter { taskEntity ->
+            taskEntity.taskDate.getDateExceptTime() == dateOfToday()
+        }.sortedBy { taskEntity ->
+            taskEntity.taskDate
+        }
+    }.stateIn(
+        initialValue = emptyList(),
+        started = SharingStarted.Eagerly,
+        scope = viewModelScope
+    )
+
+    val allTaskLists = taskRepository.getAllTasks().map { taskEntities ->
+            taskEntities.sortedBy { taskEntity ->
+                taskEntity.taskDate
+            }
+        }.stateIn(
+        initialValue = emptyList(),
+        started = SharingStarted.Eagerly,
+        scope = viewModelScope
+    )
 
     private var _multipleDaysTasksList = MutableLiveData<List<TaskEntity>>()
     val multipleDaysTasksList: LiveData<List<TaskEntity>>
@@ -84,14 +87,10 @@ class MainViewModel @Inject constructor(
 
     fun insertTask(taskEntity: TaskEntity) = viewModelScope.launch {
         taskRepository.insertTask(taskEntity)
-        //TODO
-        getAllTasks()
     }
 
     fun deleteTask(uid: Long) = viewModelScope.launch {
         taskRepository.deleteTask(uid)
-        //TODO
-        getAllTasks()
     }
 
     fun insertAchievementRate(achievementRateEntity: AchievementRateEntity) = viewModelScope.launch {

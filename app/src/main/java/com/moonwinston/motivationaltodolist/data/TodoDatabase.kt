@@ -2,7 +2,6 @@ package com.moonwinston.motivationaltodolist.data
 
 import androidx.room.*
 import androidx.room.migration.AutoMigrationSpec
-import com.moonwinston.motivationaltodolist.utils.RoomTypeConverters
 
 @Database(
     version = 2,

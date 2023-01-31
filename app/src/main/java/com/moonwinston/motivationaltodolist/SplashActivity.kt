@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainActivity
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
-import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
@@ -19,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ThemeUtil().setTheme(mainViewModel.themeIndex.value)
+//        ThemeUtil().setTheme(mainViewModel.themeIndex.value)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         lifecycleScope.launch(Dispatchers.Main) {
