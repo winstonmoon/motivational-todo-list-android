@@ -1,13 +1,14 @@
 package com.moonwinston.motivationaltodolist.data
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 @Dao
 interface TaskDao {
 
     @Query("SELECT * FROM task")
-    fun getAll(): List<TaskEntity>
+    fun getAll(): Flow<List<TaskEntity>>
 
     //TODO temporary implement
     @Query("SELECT * FROM task WHERE taskDate < :currentTime")

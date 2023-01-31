@@ -9,7 +9,7 @@ plugins {
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion "31"
+    buildToolsVersion "33"
 
     lintOptions {
         abortOnError false
@@ -23,7 +23,7 @@ android {
     defaultConfig {
         applicationId "com.moonwinston.motivationaltodolist"
         minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 14
         versionName "1.0.4"
 
@@ -71,23 +71,20 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
-    implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
-    implementation "androidx.preference:preference-ktx:$rootProject.preferenceVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
     implementation "androidx.viewpager2:viewpager2:$rootProject.viewPagerVersion"
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
-    implementation "androidx.datastore:datastore-preferences-core:1.0.0"
-    implementation "androidx.work:work-runtime-ktx:$rootProject.workVersion"
+    implementation "androidx.datastore:datastore-preferences:$rootProject.datastoreVersion"
+    implementation "androidx.datastore:datastore-preferences-core:$rootProject.datastoreVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
-    implementation "com.google.dagger:hilt-android:2.41"
-    kapt "com.google.dagger:hilt-compiler:2.41"
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
     // admob
     implementation "com.google.android.gms:play-services-ads:$rootProject.gmsVersion"
     // in-app update
@@ -97,8 +94,6 @@ dependencies {
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    // window
-    implementation "androidx.window:window:$rootProject.windowVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
@@ -107,12 +102,9 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$rootProject.uiAutomatorVersion"
-    androidTestImplementation "androidx.work:work-testing:$rootProject.workVersion"
     androidTestImplementation "com.google.truth:truth:$rootProject.truthVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
-    // koin DI
-    testImplementation "org.koin:koin-test:$rootProject.koinVersion"
-    androidTestImplementation "androidx.room:room-testing:2.4.3"
+    androidTestImplementation "androidx.room:room-testing:$rootProject.roomTestingVersion"
 }
 
 kapt {

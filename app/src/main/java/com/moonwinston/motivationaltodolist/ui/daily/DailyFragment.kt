@@ -8,12 +8,14 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.ui.common.TaskAdapter
+import com.moonwinston.motivationaltodolist.ui.adapter.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
@@ -79,27 +81,26 @@ class DailyFragment : Fragment() {
         binding.dailyTitleTextView.text = setDailyTitleText(mainViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
 
-        mainViewModel.getAllTasks()
-        mainViewModel.tasksListLiveData.observe(viewLifecycleOwner) { tasksList ->
-            val todayTasksList = mutableListOf<TaskEntity>().apply {
-                tasksList.forEach { taskEntity ->
-                    if (taskEntity.taskDate.getDateExceptTime() == dateOfToday()) add(taskEntity)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.todayTaskLists.collect {todayTasksLists ->
+                    adapter.submitList(todayTasksLists)
+                    val calculatedRate = dailyViewModel.calculateRate(todayTasksLists)
+                    val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
+                    mainViewModel.insertAchievementRate(achievementRate)
                 }
             }
-            adapter.submitList(todayTasksList.sortedBy { it.taskDate })
-            //TODO change flow above
-            val calculatedRate = dailyViewModel.calculateRate(todayTasksList)
-            val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
-            mainViewModel.insertAchievementRate(achievementRate)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            dailyViewModel.todayAchievementRate.collect { rate ->
-                val roundedAchievementRate = (rate * 100).roundToInt()
-                binding.achievementRate.text = "$roundedAchievementRate%"
-                binding.dailyCustomPieChart.alpha = if (rate == 0.0F) 0.2F else 1.0F
-                binding.dailyCustomPieChart.percentage = rate
-                binding.dailyCustomPieChart.invalidate()
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                dailyViewModel.todayAchievementRate.collect { rate ->
+                    val roundedAchievementRate = (rate * 100).roundToInt().toString() + "%"
+                    binding.achievementRate.text = roundedAchievementRate
+                    binding.dailyCustomPieChart.alpha = if (rate == 0.0F) 0.2F else 1.0F
+                    binding.dailyCustomPieChart.percentage = rate
+                    binding.dailyCustomPieChart.invalidate()
+                }
             }
         }
     }

@@ -13,7 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.ui.common.TaskAdapter
+import com.moonwinston.motivationaltodolist.ui.adapter.TaskAdapter
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
@@ -99,7 +99,7 @@ class WeeklyFragment : Fragment() {
         }
 
         mainViewModel.selectedDateLiveData.observe(viewLifecycleOwner) { selectedDate ->
-            mainViewModel.getAllTasks()
+//            mainViewModel.getAllTasks()
             binding.weeklyTitleTextView.text = getWeeklyTitle(selectedDate)
             binding.mondayTextView.background = null
             binding.tuesdayTextView.background = null

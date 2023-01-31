@@ -13,12 +13,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.moonwinston.motivationaltodolist.ui.main.MainActivity
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
-import com.moonwinston.motivationaltodolist.utils.ThemeUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -77,7 +75,6 @@ class SettingsFragment : Fragment() {
                 .setSingleChoiceItems(themeItems, checkedItem) { dialog, which ->
                     binding.theme.text = themeItems[which]
                     mainViewModel.setTheme(which)
-                    ThemeUtil().setTheme(which)
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.button_cancel) { dialog, _ ->
@@ -94,8 +91,6 @@ class SettingsFragment : Fragment() {
                 .setSingleChoiceItems(languageItems, checkedItem) { dialog, which ->
                     binding.language.text = languageItems[which]
                     mainViewModel.setLanguage(which)
-                    val intent = Intent(activity, MainActivity::class.java)
-                    startActivity(intent)
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.button_cancel) { dialog, _ ->

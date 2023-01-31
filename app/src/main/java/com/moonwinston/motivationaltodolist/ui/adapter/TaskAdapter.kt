@@ -1,4 +1,4 @@
-package com.moonwinston.motivationaltodolist.ui.common
+package com.moonwinston.motivationaltodolist.ui.adapter
 
 import android.content.DialogInterface
 import android.graphics.Paint

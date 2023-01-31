@@ -1,7 +1,5 @@
 package com.moonwinston.motivationaltodolist.ui.main
 
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -23,8 +21,8 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
-import com.moonwinston.motivationaltodolist.utils.ContextUtil
-import com.moonwinston.motivationaltodolist.utils.ThemeUtil
+import com.moonwinston.motivationaltodolist.utils.setLanguage
+import com.moonwinston.motivationaltodolist.utils.setNightMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -62,34 +60,22 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics = Firebase.analytics
         MobileAds.initialize(this) {}
 
-        ThemeUtil().setTheme(mainViewModel.themeIndex.value)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navController = findNavController(R.id.fragment)
         binding.bottomNavigationView.setupWithNavController(navController)
 
-        //TODO
         lifecycleScope.launch {
             mainViewModel.themeIndex.collect {
-                ThemeUtil().setTheme(it)
+                setNightMode(it)
             }
         }
         lifecycleScope.launch {
             mainViewModel.languageIndex.collect {
-
+                setLanguage(it)
             }
         }
-    }
-
-    override fun attachBaseContext(newBase: Context) {
-//        val language = sharedViewModel.languageIndex.value
-//        val localeUpdatedContext: ContextWrapper =
-//            ContextUtil.updateLocale(newBase, language)
-        val localeUpdatedContext: ContextWrapper =
-            ContextUtil.updateLocale(newBase, 1)
-        super.attachBaseContext(localeUpdatedContext)
     }
 
     override fun onResume() {

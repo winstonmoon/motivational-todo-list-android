@@ -99,7 +99,7 @@ class WeeklyCalendarFragment : Fragment() {
         }
 
         //TODO
-        mainViewModel.getAllTasks()
+//        mainViewModel.getAllTasks()
         mainViewModel.tasksListLiveData.observe(viewLifecycleOwner) { taskEntities ->
             val monList: MutableList<TaskEntity>? = null
             val tueList: MutableList<TaskEntity>? = null
@@ -145,7 +145,8 @@ class WeeklyCalendarFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        mainViewModel.getAllTasks()
+//        mainViewModel.getAllTasks()
+        //TODO
     }
 
     companion object {
