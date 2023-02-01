@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
@@ -67,13 +69,13 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
 
         lifecycleScope.launch {
-            mainViewModel.themeIndex.collect {
-                setNightMode(it)
+            mainViewModel.themeIndex.collect { themeIndex ->
+                setNightMode(themeIndex)
             }
         }
         lifecycleScope.launch {
-            mainViewModel.languageIndex.collect {
-                setLanguage(it)
+            mainViewModel.languageIndex.collect { languageIndex ->
+                setLanguage(languageIndex)
             }
         }
     }

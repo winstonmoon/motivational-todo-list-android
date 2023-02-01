@@ -21,7 +21,6 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -83,7 +82,7 @@ class DailyFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.todayTaskLists.collect {todayTasksLists ->
+                dailyViewModel.todayTaskLists.collect {todayTasksLists ->
                     adapter.submitList(todayTasksLists)
                     val calculatedRate = dailyViewModel.calculateRate(todayTasksLists)
                     val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)

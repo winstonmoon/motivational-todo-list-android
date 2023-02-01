@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.DmlState
@@ -26,7 +25,7 @@ import java.util.*
 @AndroidEntryPoint
 class WeeklyFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val weeklyViewModel: WeeklyViewModel by viewModels()
+    private val weeklySharedViewModel: WeeklyViewModel by activityViewModels()
     private lateinit var binding: FragmentWeeklyBinding
     private var lastPosition: Int = WeeklyScreenSlidePagerAdapter.START_POSITION
     private val adapter by lazy {
@@ -185,7 +184,7 @@ class WeeklyFragment : Fragment() {
     }
 
     private fun initDisplayCoachMark() {
-        if (weeklyViewModel.isCoachWeeklyDismissed.value.not()) {
+        if (weeklySharedViewModel.isCoachWeeklyDismissed.value.not()) {
             this@WeeklyFragment.binding.addButton.isEnabled = false
             binding.coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
             binding.coachWeeklySwipe.containerCoach.setOnClickListener {
@@ -195,7 +194,7 @@ class WeeklyFragment : Fragment() {
             binding.coachWeeklyTap.containerCoach.setOnClickListener {
                 binding.coachWeeklyTap.containerCoach.visibility = View.GONE
                 this@WeeklyFragment.binding.addButton.isEnabled = true
-                weeklyViewModel.setCoachWeeklyAsDismissed(true)
+                weeklySharedViewModel.setCoachWeeklyAsDismissed(true)
             }
         }
     }

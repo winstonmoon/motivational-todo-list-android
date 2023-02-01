@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
@@ -20,7 +19,7 @@ import java.util.*
 @AndroidEntryPoint
 class WeeklyCalendarFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val weeklyViewModel: WeeklyViewModel by viewModels()
+    private val weeklySharedViewModel: WeeklyViewModel by activityViewModels()
     private lateinit var binding: FragmentWeeklyCalendarBinding
     private var diffWeek = 0
     private val weekList = mutableListOf<Date>()
@@ -43,7 +42,7 @@ class WeeklyCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.weeklyViewModel = weeklyViewModel
+        binding.weeklyViewModel = weeklySharedViewModel
         //TODO fix dayOfWeek logic more simple, viewmodel
         val diffDays = diffWeek * 7
         val calendar = Calendar.getInstance().apply {
@@ -120,25 +119,25 @@ class WeeklyCalendarFragment : Fragment() {
                 }
             }
             monList?.let { tasksList ->
-                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.MONDAY, tasksList = tasksList)
+                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.MONDAY, tasksList = tasksList)
             }
             tueList?.let { tasksList ->
-                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.TUESDAY, tasksList = tasksList)
+                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.TUESDAY, tasksList = tasksList)
             }
             wedList?.let { tasksList ->
-                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.WEDNESDAY, tasksList = tasksList)
+                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.WEDNESDAY, tasksList = tasksList)
             }
             thuList?.let { tasksList ->
-                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.THURSDAY, tasksList = tasksList)
+                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.THURSDAY, tasksList = tasksList)
             }
             friList?.let { tasksList ->
-                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.FRIDAY, tasksList = tasksList)
+                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.FRIDAY, tasksList = tasksList)
             }
             satList?.let { tasksList ->
-                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.SATURDAY, tasksList = tasksList)
+                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.SATURDAY, tasksList = tasksList)
             }
             sunList?.let { tasksList ->
-                weeklyViewModel.setRate(dayOfWeek = DayOfWeek.SUNDAY, tasksList = tasksList)
+                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.SUNDAY, tasksList = tasksList)
             }
         }
     }
