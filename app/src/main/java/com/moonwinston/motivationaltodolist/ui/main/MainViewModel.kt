@@ -43,18 +43,6 @@ class MainViewModel @Inject constructor(
 //        }
 //    }
 
-    val todayTaskLists = taskRepository.getAllTasks().map { taskEntities ->
-        taskEntities.filter { taskEntity ->
-            taskEntity.taskDate.getDateExceptTime() == dateOfToday()
-        }.sortedBy { taskEntity ->
-            taskEntity.taskDate
-        }
-    }.stateIn(
-        initialValue = emptyList(),
-        started = SharingStarted.Eagerly,
-        scope = viewModelScope
-    )
-
     val allTaskLists = taskRepository.getAllTasks().map { taskEntities ->
             taskEntities.sortedBy { taskEntity ->
                 taskEntity.taskDate

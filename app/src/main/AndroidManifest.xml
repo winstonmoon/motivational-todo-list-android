@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MotivationalTodoList">
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
