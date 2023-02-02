@@ -5,15 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.TaskEntity
+import com.moonwinston.motivationaltodolist.data.TaskRepository
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
+import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class WeeklyViewModel @Inject constructor (
+    private val taskRepository: TaskRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
@@ -63,6 +67,25 @@ class WeeklyViewModel @Inject constructor (
         }
     }
 
+    private val _selectedDate = MutableStateFlow(Date())
+    val selectedDate: StateFlow<Date> = _selectedDate
+
+    fun setSelectedDate(date: Date) = viewModelScope.launch {
+        _selectedDate.emit(date)
+    }
+
+    val selectedDayTasks = taskRepository.getAllTasks().map { taskEntities ->
+        taskEntities.filter { taskEntity ->
+            taskEntity.taskDate.getDateExceptTime() == selectedDate
+        }.sortedBy { taskEntity ->
+            taskEntity.taskDate
+        }
+    }.stateIn(
+        initialValue = emptyList(),
+        started = SharingStarted.Eagerly,
+        scope = viewModelScope
+    )
+
     val isCoachWeeklyDismissed = userPreferencesRepository.fetchWeeklyCoachMarkDismissedStatusFlow.stateIn(
         initialValue = false,
         started = SharingStarted.Eagerly,
@@ -73,5 +96,15 @@ class WeeklyViewModel @Inject constructor (
         viewModelScope.launch {
             userPreferencesRepository.updateWeeklyCoachMarkDismissedStatusFlow(dismissWeeklyCoachMark)
         }
+    }
+
+    fun calculateRate(tasksList: List<TaskEntity>): Float {
+        var totalTasks = 0F
+        var doneTasks = 0F
+        for (task in tasksList) {
+            totalTasks += 1F
+            if (task.isCompleted) doneTasks += 1F
+        }
+        return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }
 }

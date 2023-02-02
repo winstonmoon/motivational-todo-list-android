@@ -16,18 +16,37 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.util.*
 
+const val DIFF_WEEK = "diffWeek"
+
 @AndroidEntryPoint
 class WeeklyCalendarFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private val weeklySharedViewModel: WeeklyViewModel by activityViewModels()
     private lateinit var binding: FragmentWeeklyCalendarBinding
-    private var diffWeek = 0
-    private val weekList = mutableListOf<Date>()
+    private val daysOfWeek = mutableListOf<Date>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            diffWeek = it.getInt(DIFF_WEEK)
+        var diffDays = 0
+        arguments?.takeIf { it.containsKey(DIFF_WEEK) }?.apply {
+            diffDays = getInt(DIFF_WEEK) * 7
+        }
+        //TODO make simple
+        val calendar = Calendar.getInstance().apply {
+            add(Calendar.DATE, diffDays)
+            firstDayOfWeek = Calendar.MONDAY
+            val diffDateFromMonday =
+                if (this@apply.get(Calendar.DAY_OF_WEEK) == 1) -6
+                else 2 - this@apply.get(Calendar.DAY_OF_WEEK)
+            add(Calendar.DATE, diffDateFromMonday)
+        }
+
+        (1..7).forEach { _ ->
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val date = calendar.get(Calendar.DATE)
+            daysOfWeek.add(LocalDate.of(year, month + 1, date).localDateToDate())
+            calendar.add(Calendar.DATE, 1)
         }
     }
 
@@ -43,58 +62,34 @@ class WeeklyCalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.weeklyViewModel = weeklySharedViewModel
-        //TODO fix dayOfWeek logic more simple, viewmodel
-        val diffDays = diffWeek * 7
-        val calendar = Calendar.getInstance().apply {
-            add(Calendar.DATE, diffDays)
-            firstDayOfWeek = Calendar.MONDAY
-        }
-        val diffDateFromMonday =
-            if (calendar.get(Calendar.DAY_OF_WEEK) == 1) -6
-            else 2 - calendar.get(Calendar.DAY_OF_WEEK)
-        calendar.add(Calendar.DATE, diffDateFromMonday)
-        (1..7).forEach { _ ->
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val date = calendar.get(Calendar.DATE)
-            weekList.add(LocalDate.of(year, month + 1, date).localDateToDate())
-            calendar.add(Calendar.DATE, 1)
-        }
-        //TODO fix dayOfWeek logic more simple, viewmodel
 
-        binding.mondayCustomPieChart.setPieChartViewDate(weekList[0])
+        binding.mondayCustomPieChart.pieChartViewDate = daysOfWeek[0]
+        binding.tuesdayCustomPieChart.pieChartViewDate = daysOfWeek[1]
+        binding.wednesdayCustomPieChart.pieChartViewDate = daysOfWeek[2]
+        binding.thursdayCustomPieChart.pieChartViewDate = daysOfWeek[3]
+        binding.fridayCustomPieChart.pieChartViewDate = daysOfWeek[4]
+        binding.saturdayCustomPieChart.pieChartViewDate = daysOfWeek[5]
+        binding.sundayCustomPieChart.pieChartViewDate = daysOfWeek[6]
         binding.mondayCustomPieChart.setOnClickListener {
-            mainViewModel.setSelectedDate(binding.mondayCustomPieChart.getPieChartViewDate())
+            weeklySharedViewModel.setSelectedDate(binding.mondayCustomPieChart.pieChartViewDate)
         }
-
-        binding.tuesdayCustomPieChart.setPieChartViewDate(weekList[1])
         binding.tuesdayCustomPieChart.setOnClickListener {
-            mainViewModel.setSelectedDate(binding.tuesdayCustomPieChart.getPieChartViewDate())
+            weeklySharedViewModel.setSelectedDate(binding.tuesdayCustomPieChart.pieChartViewDate)
         }
-
-        binding.wednesdayCustomPieChart.setPieChartViewDate(weekList[2])
         binding.wednesdayCustomPieChart.setOnClickListener {
-            mainViewModel.setSelectedDate(binding.wednesdayCustomPieChart.getPieChartViewDate())
+            weeklySharedViewModel.setSelectedDate(binding.wednesdayCustomPieChart.pieChartViewDate)
         }
-
-        binding.thursdayCustomPieChart.setPieChartViewDate(weekList[3])
         binding.thursdayCustomPieChart.setOnClickListener {
-            mainViewModel.setSelectedDate(binding.thursdayCustomPieChart.getPieChartViewDate())
+            weeklySharedViewModel.setSelectedDate(binding.thursdayCustomPieChart.pieChartViewDate)
         }
-
-        binding.fridayCustomPieChart.setPieChartViewDate(weekList[4])
         binding.fridayCustomPieChart.setOnClickListener {
-            mainViewModel.setSelectedDate(binding.fridayCustomPieChart.getPieChartViewDate())
+            weeklySharedViewModel.setSelectedDate(binding.fridayCustomPieChart.pieChartViewDate)
         }
-
-        binding.saturdayCustomPieChart.setPieChartViewDate(weekList[5])
         binding.saturdayCustomPieChart.setOnClickListener {
-            mainViewModel.setSelectedDate(binding.saturdayCustomPieChart.getPieChartViewDate())
+            weeklySharedViewModel.setSelectedDate(binding.saturdayCustomPieChart.pieChartViewDate)
         }
-
-        binding.sundayCustomPieChart.setPieChartViewDate(weekList[6])
         binding.sundayCustomPieChart.setOnClickListener {
-            mainViewModel.setSelectedDate(binding.sundayCustomPieChart.getPieChartViewDate())
+            weeklySharedViewModel.setSelectedDate(binding.sundayCustomPieChart.pieChartViewDate)
         }
 
         //TODO
@@ -109,13 +104,13 @@ class WeeklyCalendarFragment : Fragment() {
             val sunList: MutableList<TaskEntity>? = null
             taskEntities.forEach { taskEntity ->
                 when (taskEntity.taskDate.getDateExceptTime()) {
-                    weekList[0] -> monList?.add(taskEntity)
-                    weekList[1] -> tueList?.add(taskEntity)
-                    weekList[2] -> wedList?.add(taskEntity)
-                    weekList[3] -> thuList?.add(taskEntity)
-                    weekList[4] -> friList?.add(taskEntity)
-                    weekList[5] -> satList?.add(taskEntity)
-                    weekList[6] -> sunList?.add(taskEntity)
+                    daysOfWeek[0] -> monList?.add(taskEntity)
+                    daysOfWeek[1] -> tueList?.add(taskEntity)
+                    daysOfWeek[2] -> wedList?.add(taskEntity)
+                    daysOfWeek[3] -> thuList?.add(taskEntity)
+                    daysOfWeek[4] -> friList?.add(taskEntity)
+                    daysOfWeek[5] -> satList?.add(taskEntity)
+                    daysOfWeek[6] -> sunList?.add(taskEntity)
                 }
             }
             monList?.let { tasksList ->
@@ -146,14 +141,5 @@ class WeeklyCalendarFragment : Fragment() {
         super.onResume()
 //        mainViewModel.getAllTasks()
         //TODO
-    }
-
-    companion object {
-        private const val DIFF_WEEK = "diffWeek"
-        fun newInstance(diffWeek: Int) = WeeklyCalendarFragment().apply {
-            arguments = Bundle().apply {
-                putInt(DIFF_WEEK, diffWeek)
-            }
-        }
     }
 }

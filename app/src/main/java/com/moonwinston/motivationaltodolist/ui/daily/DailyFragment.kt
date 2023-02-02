@@ -33,14 +33,6 @@ class DailyFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private val dailyViewModel: DailyViewModel by viewModels()
     private lateinit var binding: FragmentDailyBinding
-    val bundleForAddDialog = bundleOf(
-        "dmlState" to DmlState.Insert(method = "insert"),
-        "taskEntity" to TaskEntity(
-            taskDate = Date(),
-            task = "",
-            isCompleted = false
-        )
-    )
     private val adapter by lazy {
         TaskAdapter(
             meatballsMenuCallback = { taskEntity, dmlState ->
@@ -74,17 +66,26 @@ class DailyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this@DailyFragment
-        binding.dailyFragment = this@DailyFragment
         initDisplayCoachMark()
+        binding.addButton.setOnClickListener {
+            val bundle = bundleOf(
+                "dmlState" to DmlState.Insert(method = "insert"),
+                "taskEntity" to TaskEntity(
+                    taskDate = Date(),
+                    task = "",
+                    isCompleted = false
+                )
+            )
+            it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
+        }
         binding.dailyTitleTextView.text = setDailyTitleText(mainViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                dailyViewModel.todayTaskLists.collect {todayTasksLists ->
-                    adapter.submitList(todayTasksLists)
-                    val calculatedRate = dailyViewModel.calculateRate(todayTasksLists)
+                dailyViewModel.todayTasks.collect { todayTasks ->
+                    adapter.submitList(todayTasks)
+                    val calculatedRate = dailyViewModel.calculateRate(todayTasks)
                     val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
                     mainViewModel.insertAchievementRate(achievementRate)
                 }
@@ -97,8 +98,7 @@ class DailyFragment : Fragment() {
                     val roundedAchievementRate = (rate * 100).roundToInt().toString() + "%"
                     binding.achievementRate.text = roundedAchievementRate
                     binding.dailyCustomPieChart.alpha = if (rate == 0.0F) 0.2F else 1.0F
-                    binding.dailyCustomPieChart.percentage = rate
-                    binding.dailyCustomPieChart.invalidate()
+                    binding.dailyCustomPieChart.updatePercentage(rate)
                 }
             }
         }
