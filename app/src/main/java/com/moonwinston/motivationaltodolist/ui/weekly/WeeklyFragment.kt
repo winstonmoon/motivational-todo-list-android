@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.DmlState
@@ -18,6 +21,7 @@ import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.util.*
@@ -27,7 +31,6 @@ class WeeklyFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private val weeklySharedViewModel: WeeklyViewModel by activityViewModels()
     private lateinit var binding: FragmentWeeklyBinding
-    private var lastPosition: Int = WeeklyScreenSlidePagerAdapter.START_POSITION
     private val adapter by lazy {
         TaskAdapter(
             meatballsMenuCallback = { taskEntity, dmlState ->
@@ -49,6 +52,7 @@ class WeeklyFragment : Fragment() {
                 binding.congratulationsAnimationView.playAnimation()
             })
     }
+    private val slideAdapter = WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,80 +65,70 @@ class WeeklyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this@WeeklyFragment
-        binding.weeklyFragment = this@WeeklyFragment
         initDisplayCoachMark()
         setToday()
-
-        val slideAdapter = WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
+        binding.addButton.setOnClickListener {
+            val bundle = bundleOf(
+                "dmlState" to DmlState.Insert(method = "insert"),
+                "taskEntity" to TaskEntity(
+                    taskDate = weeklySharedViewModel.selectedDate.value,
+                    task = "",
+                    isCompleted = false
+                )
+            )
+            it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
+        }
         binding.weeklyPieChartViewPager.adapter = slideAdapter
         binding.weeklyPieChartViewPager.setCurrentItem(
             WeeklyScreenSlidePagerAdapter.START_POSITION,
             false
         )
+        var lastPosition = WeeklyScreenSlidePagerAdapter.START_POSITION
         binding.weeklyPieChartViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val diffDays = (position - lastPosition) * 7
-                val selectedDate = mainViewModel.selectedDateLiveData.value?.dateToLocalDate()?.plusDays(diffDays.toLong())?.localDateToDate()
-                mainViewModel.setSelectedDate(selectedDate!!)
+                val selectedDate = weeklySharedViewModel.selectedDate.value.dateToLocalDate().plusDays(diffDays.toLong()).localDateToDate()
+                weeklySharedViewModel.setSelectedDate(selectedDate)
                 lastPosition = position
             }
         })
+        binding.weeklyTodoRecyclerView.adapter = adapter
 
-        binding.addButton.setOnClickListener {
-            val bundle = bundleOf(
-                "dmlState" to DmlState.Insert(method = "insert"),
-                "taskEntity" to mainViewModel.selectedDateLiveData.value?.let { taskDate ->
-                    TaskEntity(
-                        taskDate = taskDate,
-                        task = "",
-                        isCompleted = false
-                    )
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                weeklySharedViewModel.selectedDate.collect { selectedDate ->
+                    binding.weeklyTitleTextView.text = getWeeklyTitle(selectedDate)
+                    binding.mondayTextView.background = null
+                    binding.tuesdayTextView.background = null
+                    binding.wednesdayTextView.background = null
+                    binding.thursdayTextView.background = null
+                    binding.fridayTextView.background = null
+                    binding.saturdayTextView.background = null
+                    binding.sundayTextView.background = null
+                    when (selectedDate.dateToLocalDate().dayOfWeek) {
+                        DayOfWeek.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        DayOfWeek.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        DayOfWeek.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        DayOfWeek.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        DayOfWeek.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        DayOfWeek.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        DayOfWeek.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
+                        else -> Unit
+                    }
                 }
-            )
-            it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
-        }
-
-        mainViewModel.selectedDateLiveData.observe(viewLifecycleOwner) { selectedDate ->
-//            mainViewModel.getAllTasks()
-            binding.weeklyTitleTextView.text = getWeeklyTitle(selectedDate)
-            binding.mondayTextView.background = null
-            binding.tuesdayTextView.background = null
-            binding.wednesdayTextView.background = null
-            binding.thursdayTextView.background = null
-            binding.fridayTextView.background = null
-            binding.saturdayTextView.background = null
-            binding.sundayTextView.background = null
-
-            when (selectedDate.dateToLocalDate().dayOfWeek) {
-                DayOfWeek.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                DayOfWeek.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                DayOfWeek.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                DayOfWeek.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                DayOfWeek.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                DayOfWeek.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                DayOfWeek.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                else -> Unit
             }
         }
 
-        mainViewModel.tasksListLiveData.observe(viewLifecycleOwner) { taskEntities ->
-            //TODO fix
-            val selectedDayTasksList = mutableListOf<TaskEntity>()
-            taskEntities.forEach { taskEntity ->
-                if (taskEntity.taskDate.getDateExceptTime() == mainViewModel.selectedDateLiveData.value) selectedDayTasksList.add(taskEntity)
-            }
-            binding.weeklyTodoRecyclerView.adapter = adapter
-            adapter.submitList(selectedDayTasksList.sortedBy { taskEntity ->
-                taskEntity.taskDate })
-            //TODO
-            if (selectedDayTasksList.isEmpty().not()) {
-                val rate = mainViewModel.getRate(selectedDayTasksList)
-                val date = selectedDayTasksList[0].taskDate
-                val achievementRate = AchievementRateEntity(date = date, rate = rate)
-                mainViewModel.insertAchievementRate(achievementRate)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                weeklySharedViewModel.selectedDayTasks.collect { selectedDayTasks ->
+                    adapter.submitList(selectedDayTasks)
+                    val calculatedRate = weeklySharedViewModel.calculateRate(selectedDayTasks)
+                    val achievementRate = AchievementRateEntity(date = weeklySharedViewModel.selectedDate.value, rate = calculatedRate)
+                    mainViewModel.insertAchievementRate(achievementRate)
+                }
             }
         }
     }
@@ -144,24 +138,8 @@ class WeeklyFragment : Fragment() {
         setToday()
     }
 
-    private fun getWeeklyTitle(selectedDate: Date): String {
-        val wordYear = resources.getString(R.string.label_year)
-        val wordDay = resources.getString(R.string.label_day)
-        val today = resources.getString(R.string.text_today)
-        val year = selectedDate.dateToLocalDate().year
-        val month = selectedDate.dateToLocalDate().month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-        val date = selectedDate.dateToLocalDate().dayOfMonth
-        val dayOfWeek =
-            if (selectedDate == dateOfToday()) today
-            else selectedDate.dateToLocalDate().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
-        return when (mainViewModel.languageIndex.value) {
-            ContextUtil.ENGLISH -> "$dayOfWeek, $month $date, $year"
-            else -> "$year$wordYear $month $date$wordDay $dayOfWeek"
-        }
-    }
-
     private fun setToday() {
-        mainViewModel.setSelectedDate(dateOfToday())
+        weeklySharedViewModel.setSelectedDate(dateOfToday())
         binding.weeklyTitleTextView.text = getWeeklyTitle(dateOfToday())
         binding.mondayTextView.background = null
         binding.tuesdayTextView.background = null
@@ -180,6 +158,22 @@ class WeeklyFragment : Fragment() {
             DayOfWeek.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
             DayOfWeek.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
             else -> Unit
+        }
+    }
+
+    private fun getWeeklyTitle(selectedDate: Date): String {
+        val wordYear = resources.getString(R.string.label_year)
+        val wordDay = resources.getString(R.string.label_day)
+        val today = resources.getString(R.string.text_today)
+        val year = selectedDate.dateToLocalDate().year
+        val month = selectedDate.dateToLocalDate().month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        val date = selectedDate.dateToLocalDate().dayOfMonth
+        val dayOfWeek =
+            if (selectedDate == dateOfToday()) today
+            else selectedDate.dateToLocalDate().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
+        return when (mainViewModel.languageIndex.value) {
+            ContextUtil.ENGLISH -> "$dayOfWeek, $month $date, $year"
+            else -> "$year$wordYear $month $date$wordDay $dayOfWeek"
         }
     }
 

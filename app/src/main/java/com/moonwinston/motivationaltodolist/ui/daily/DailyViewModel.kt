@@ -20,7 +20,7 @@ class DailyViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    val todayTaskLists = taskRepository.getAllTasks().map { taskEntities ->
+    val todayTasks = taskRepository.getAllTasks().map { taskEntities ->
         taskEntities.filter { taskEntity ->
             taskEntity.taskDate.getDateExceptTime() == dateOfToday()
         }.sortedBy { taskEntity ->

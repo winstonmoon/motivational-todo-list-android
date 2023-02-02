@@ -5,12 +5,7 @@
 
     <data>
         <import type="com.moonwinston.motivationaltodolist.R" />
-
         <import type="androidx.navigation.Navigation" />
-
-        <variable
-            name="weeklyFragment"
-            type="com.moonwinston.motivationaltodolist.ui.weekly.WeeklyFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -5,11 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*
-import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -85,23 +82,15 @@ class MainViewModel @Inject constructor(
         achievementRateRepository.insertRate(achievementRateEntity)
     }
 
-    private var _selectedDateLiveData = MutableLiveData<Date>()
-    val selectedDateLiveData: LiveData<Date>
-        get() = _selectedDateLiveData
-
-    fun setSelectedDate(selectedDate: Date) {
-        _selectedDateLiveData.value = selectedDate
-    }
-
-    fun getRate(tasksList: List<TaskEntity>): Float {
-        var totalTasks = 0F
-        var doneTasks = 0F
-        tasksList.forEach { taskEntity ->
-            totalTasks += 1F
-            if (taskEntity.isCompleted) doneTasks += 1F
-        }
-        return if (doneTasks == 0F) 0F else doneTasks / totalTasks
-    }
+//    fun getRate(tasksList: List<TaskEntity>): Float {
+//        var totalTasks = 0F
+//        var doneTasks = 0F
+//        tasksList.forEach { taskEntity ->
+//            totalTasks += 1F
+//            if (taskEntity.isCompleted) doneTasks += 1F
+//        }
+//        return if (doneTasks == 0F) 0F else doneTasks / totalTasks
+//    }
 
     val languageIndex = userPreferencesRepository.fetchLanguageSettingFlow.stateIn(
         initialValue = 0,

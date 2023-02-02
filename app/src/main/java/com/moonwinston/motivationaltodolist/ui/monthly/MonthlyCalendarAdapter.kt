@@ -38,7 +38,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                     binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
                     if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
-                    binding.monthlyCustomPieChart.setPercentage(calculatedRate)
+                    binding.monthlyCustomPieChart.updatePercentage(calculatedRate)
                 }
                 date.after(dateOfToday()) -> {
                     binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
@@ -47,7 +47,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 else -> {
                     binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
                     if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
-                    binding.monthlyCustomPieChart.setPercentage(calculatedRate)
+                    binding.monthlyCustomPieChart.updatePercentage(calculatedRate)
                 }
             }
         }

@@ -8,7 +8,6 @@ import android.util.AttributeSet
 import android.view.View
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
-import java.util.*
 
 class AchievementPieChartView @JvmOverloads constructor(
     context: Context,
@@ -21,7 +20,7 @@ class AchievementPieChartView @JvmOverloads constructor(
     private var progressiveStrokeWidth = 0.0F
     private var pieChartColor = 0
     private var progressivePieChartColor = 0
-    private var pieChartViewDate = nonExistDate()
+    var pieChartViewDate = nonExistDate()
 
     init {
         context.theme.obtainStyledAttributes(
@@ -81,18 +80,9 @@ class AchievementPieChartView @JvmOverloads constructor(
         canvas?.drawArc(rectF, 270F, percentage * 360F, false, paint)
     }
 
-    @JvmName("setPercentage1")
-    fun setPercentage(percent: Float) {
+    fun updatePercentage(percent: Float) {
         percentage = percent
         invalidate()
         requestLayout()
-    }
-
-    fun setPieChartViewDate(date: Date) {
-        pieChartViewDate = date
-    }
-
-    fun getPieChartViewDate(): Date {
-        return pieChartViewDate
     }
 }
