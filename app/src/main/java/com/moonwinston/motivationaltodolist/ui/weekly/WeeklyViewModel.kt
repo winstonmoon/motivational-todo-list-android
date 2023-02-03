@@ -107,4 +107,8 @@ class WeeklyViewModel @Inject constructor (
         }
         return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }
+
+    fun createDaysOfWeek() {
+
+    }
 }

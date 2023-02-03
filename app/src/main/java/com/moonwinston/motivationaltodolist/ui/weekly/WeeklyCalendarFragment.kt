@@ -62,7 +62,6 @@ class WeeklyCalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.weeklyViewModel = weeklySharedViewModel
-
         binding.mondayCustomPieChart.pieChartViewDate = daysOfWeek[0]
         binding.tuesdayCustomPieChart.pieChartViewDate = daysOfWeek[1]
         binding.wednesdayCustomPieChart.pieChartViewDate = daysOfWeek[2]
@@ -135,6 +134,10 @@ class WeeklyCalendarFragment : Fragment() {
                 weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.SUNDAY, tasksList = tasksList)
             }
         }
+    }
+
+    private fun createDaysOfWeek() {
+
     }
 
     override fun onResume() {
