@@ -78,7 +78,7 @@ class DailyFragment : Fragment() {
             )
             it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
         }
-        binding.dailyTitleTextView.text = setDailyTitleText(mainViewModel.languageIndex.value)
+        binding.dailyTitleTextView.text = createDailyTitle(language = mainViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -104,16 +104,16 @@ class DailyFragment : Fragment() {
         }
     }
 
-    private fun setDailyTitleText(language: Int): String {
+    private fun createDailyTitle(language: Int): String {
         val today = resources.getString(R.string.text_today)
         val wordYear = resources.getString(R.string.label_year)
         val wordDay = resources.getString(R.string.label_day)
         val year = LocalDate.now().year
         val month = LocalDate.now().month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-        val date = LocalDate.now().dayOfMonth
+        val day = LocalDate.now().dayOfMonth
         return when (language) {
-            ContextUtil.ENGLISH -> "$today, $month $date, $year"
-            else -> "$year$wordYear $month $date$wordDay $today"
+            ContextUtil.ENGLISH -> "$today, $month $day, $year"
+            else -> "$year$wordYear $month $day$wordDay $today"
         }
     }
 

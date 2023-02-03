@@ -52,7 +52,9 @@ class WeeklyFragment : Fragment() {
                 binding.congratulationsAnimationView.playAnimation()
             })
     }
-    private val slideAdapter = WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
+    private val slideAdapter by lazy {
+        WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,16 +82,17 @@ class WeeklyFragment : Fragment() {
         }
         binding.weeklyPieChartViewPager.adapter = slideAdapter
         binding.weeklyPieChartViewPager.setCurrentItem(
-            WeeklyScreenSlidePagerAdapter.START_POSITION,
+            START_POSITION,
             false
         )
-        var lastPosition = WeeklyScreenSlidePagerAdapter.START_POSITION
+        var lastPosition = START_POSITION
         binding.weeklyPieChartViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val diffDays = (position - lastPosition) * 7
-                val selectedDate = weeklySharedViewModel.selectedDate.value.dateToLocalDate().plusDays(diffDays.toLong()).localDateToDate()
+                val selectedDate = weeklySharedViewModel.selectedDate.value.dateToLocalDate()
+                    .plusDays(diffDays.toLong()).localDateToDate()
                 weeklySharedViewModel.setSelectedDate(selectedDate)
                 lastPosition = position
             }
@@ -99,24 +102,11 @@ class WeeklyFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 weeklySharedViewModel.selectedDate.collect { selectedDate ->
-                    binding.weeklyTitleTextView.text = getWeeklyTitle(selectedDate)
-                    binding.mondayTextView.background = null
-                    binding.tuesdayTextView.background = null
-                    binding.wednesdayTextView.background = null
-                    binding.thursdayTextView.background = null
-                    binding.fridayTextView.background = null
-                    binding.saturdayTextView.background = null
-                    binding.sundayTextView.background = null
-                    when (selectedDate.dateToLocalDate().dayOfWeek) {
-                        DayOfWeek.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        DayOfWeek.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        DayOfWeek.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        DayOfWeek.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        DayOfWeek.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        DayOfWeek.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        DayOfWeek.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-                        else -> Unit
-                    }
+                    binding.weeklyTitleTextView.text = createWeeklyTitle(
+                        date = selectedDate,
+                        language = mainViewModel.languageIndex.value
+                    )
+                    drawRedDotOnSelectedDate(date = selectedDate)
                 }
             }
         }
@@ -126,7 +116,10 @@ class WeeklyFragment : Fragment() {
                 weeklySharedViewModel.selectedDayTasks.collect { selectedDayTasks ->
                     adapter.submitList(selectedDayTasks)
                     val calculatedRate = weeklySharedViewModel.calculateRate(selectedDayTasks)
-                    val achievementRate = AchievementRateEntity(date = weeklySharedViewModel.selectedDate.value, rate = calculatedRate)
+                    val achievementRate = AchievementRateEntity(
+                        date = weeklySharedViewModel.selectedDate.value,
+                        rate = calculatedRate
+                    )
                     mainViewModel.insertAchievementRate(achievementRate)
                 }
             }
@@ -140,7 +133,30 @@ class WeeklyFragment : Fragment() {
 
     private fun setToday() {
         weeklySharedViewModel.setSelectedDate(dateOfToday())
-        binding.weeklyTitleTextView.text = getWeeklyTitle(dateOfToday())
+        binding.weeklyTitleTextView.text = createWeeklyTitle(
+                date = dateOfToday(),
+                language = mainViewModel.languageIndex.value
+            )
+        drawRedDotOnSelectedDate(date = dateOfToday())
+    }
+
+    private fun createWeeklyTitle(date: Date, language: Int): String {
+        val wordYear = resources.getString(R.string.label_year)
+        val wordDay = resources.getString(R.string.label_day)
+        val today = resources.getString(R.string.text_today)
+        val year = date.dateToLocalDate().year
+        val month = date.dateToLocalDate().month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        val day = date.dateToLocalDate().dayOfMonth
+        val dayOfWeek =
+            if (date == dateOfToday()) today
+            else date.dateToLocalDate().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
+        return when (language) {
+            ContextUtil.ENGLISH -> "$dayOfWeek, $month $day, $year"
+            else -> "$year$wordYear $month $day$wordDay $dayOfWeek"
+        }
+    }
+
+    private fun drawRedDotOnSelectedDate(date: Date) {
         binding.mondayTextView.background = null
         binding.tuesdayTextView.background = null
         binding.wednesdayTextView.background = null
@@ -148,8 +164,7 @@ class WeeklyFragment : Fragment() {
         binding.fridayTextView.background = null
         binding.saturdayTextView.background = null
         binding.sundayTextView.background = null
-
-        when (dateOfToday().dateToLocalDate().dayOfWeek) {
+        when (date.dateToLocalDate().dayOfWeek) {
             DayOfWeek.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
             DayOfWeek.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
             DayOfWeek.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
@@ -158,22 +173,6 @@ class WeeklyFragment : Fragment() {
             DayOfWeek.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
             DayOfWeek.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
             else -> Unit
-        }
-    }
-
-    private fun getWeeklyTitle(selectedDate: Date): String {
-        val wordYear = resources.getString(R.string.label_year)
-        val wordDay = resources.getString(R.string.label_day)
-        val today = resources.getString(R.string.text_today)
-        val year = selectedDate.dateToLocalDate().year
-        val month = selectedDate.dateToLocalDate().month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-        val date = selectedDate.dateToLocalDate().dayOfMonth
-        val dayOfWeek =
-            if (selectedDate == dateOfToday()) today
-            else selectedDate.dateToLocalDate().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
-        return when (mainViewModel.languageIndex.value) {
-            ContextUtil.ENGLISH -> "$dayOfWeek, $month $date, $year"
-            else -> "$year$wordYear $month $date$wordDay $dayOfWeek"
         }
     }
 
