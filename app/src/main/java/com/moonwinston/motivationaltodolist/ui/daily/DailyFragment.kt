@@ -67,6 +67,9 @@ class DailyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initDisplayCoachMark()
+        binding.settingsButton.setOnClickListener {
+            it.findNavController().navigate(R.id.action_daily_to_settings)
+        }
         binding.addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert(method = "insert"),

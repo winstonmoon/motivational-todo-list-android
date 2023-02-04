@@ -1,116 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:id="@+id/container_coach"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0.8"
+    android:background="@color/black"
+    android:clickable="true"
+    android:focusable="true">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal_coach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_coach"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black"
-        android:alpha="0.8"
-        android:clickable="true"
-        android:focusable="true">
+        android:id="@+id/task_container_coach"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="58dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_coach">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_horizontal_coach"
+        <RadioButton
+            android:id="@+id/radiobutton_coach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.35" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/task_container_coach"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="58dp"
-            android:layout_marginEnd="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="false"
+            android:theme="@style/CustomRadioButton"
+            app:layout_constraintBottom_toTopOf="@id/view_underline"
+            app:layout_constraintEnd_toStartOf="@id/text_tasks_coach"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_coach">
-
-            <RadioButton
-                android:id="@+id/radiobutton_coach"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:theme="@style/CustomRadioButton"
-                app:layout_constraintBottom_toTopOf="@id/view_underline"
-                app:layout_constraintEnd_toStartOf="@id/text_tasks_coach"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/text_tasks_coach"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:autoSizeTextType="uniform"
-                android:text="@string/text_coach_task"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toTopOf="@id/time_tasks_coach"
-                app:layout_constraintEnd_toStartOf="@id/meatballsmenu_tasks_coach"
-                app:layout_constraintStart_toEndOf="@id/radiobutton_coach"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/time_tasks_coach"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:autoSizeTextType="uniform"
-                android:text="07:00"
-                android:textColor="@color/gray"
-                app:layout_constraintBottom_toTopOf="@id/view_underline"
-                app:layout_constraintEnd_toStartOf="@id/meatballsmenu_tasks_coach"
-                app:layout_constraintStart_toEndOf="@id/radiobutton_coach"
-                app:layout_constraintTop_toBottomOf="@id/text_tasks_coach" />
-
-            <ImageButton
-                android:id="@+id/meatballsmenu_tasks_coach"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:clickable="false"
-                android:src="@drawable/ic_baseline_edit_24"
-                android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@id/view_underline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/text_tasks_coach"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/view_underline"
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="1dp"
-                android:background="@color/gray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/radiobutton_coach"
-                app:layout_constraintTop_toBottomOf="@id/time_tasks_coach" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/up_left_handdrwan_arrow_coach"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:src="@drawable/ic_up_left_hand_drawn_arrow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/task_container_coach" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_complete_button_coach"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
+            android:id="@+id/text_tasks_coach"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
             android:autoSizeTextType="uniform"
-            android:maxLines="1"
-            android:text="@string/text_coach_tap_complete"
+            android:text="@string/text_coach_task"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/up_left_handdrwan_arrow_coach"
-            app:layout_constraintStart_toEndOf="@id/up_left_handdrwan_arrow_coach" />
+            app:layout_constraintBottom_toTopOf="@id/time_tasks_coach"
+            app:layout_constraintEnd_toStartOf="@id/meatballsmenu_tasks_coach"
+            app:layout_constraintStart_toEndOf="@id/radiobutton_coach"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/time_tasks_coach"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:autoSizeTextType="uniform"
+            android:text="07:00"
+            android:textColor="@color/gray"
+            app:layout_constraintBottom_toTopOf="@id/view_underline"
+            app:layout_constraintEnd_toStartOf="@id/meatballsmenu_tasks_coach"
+            app:layout_constraintStart_toEndOf="@id/radiobutton_coach"
+            app:layout_constraintTop_toBottomOf="@id/text_tasks_coach" />
+
+        <ImageButton
+            android:id="@+id/meatballsmenu_tasks_coach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:clickable="false"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/view_underline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_tasks_coach"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_underline"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/radiobutton_coach"
+            app:layout_constraintTop_toBottomOf="@id/time_tasks_coach" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+
+    <ImageView
+        android:id="@+id/up_left_handdrwan_arrow_coach"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_up_left_hand_drawn_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/task_container_coach" />
+
+    <TextView
+        android:id="@+id/text_complete_button_coach"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:text="@string/text_coach_tap_complete"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/up_left_handdrwan_arrow_coach"
+        app:layout_constraintStart_toEndOf="@id/up_left_handdrwan_arrow_coach" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

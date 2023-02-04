@@ -1,111 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/monthTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
+        android:gravity="center_horizontal"
+        android:minHeight="48dp"
+        android:textColor="@color/main_text"
+        app:layout_constraintBottom_toTopOf="@id/weeklyDateContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Dec" />
+
+    <LinearLayout
+        android:id="@+id/weeklyDateContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="24dp"
+        app:layout_constraintBottom_toTopOf="@id/calendarRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/monthTextView">
 
         <TextView
-            android:id="@+id/monthTextView"
+            android:id="@+id/mondayTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
+            android:layout_weight="1"
             android:autoSizeTextType="uniform"
-            android:gravity="center_horizontal"
-            tools:text="Dec"
-            android:textColor="@color/main_text"
-            app:layout_constraintBottom_toTopOf="@id/weeklyDateContainer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:gravity="center"
+            android:text="@string/label_monday" />
 
-        <LinearLayout
-            android:id="@+id/weeklyDateContainer"
+        <TextView
+            android:id="@+id/tuesdayTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="24dp"
-            app:layout_constraintBottom_toTopOf="@id/calendarRecyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/monthTextView">
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="@string/label_tuesday" />
 
-            <TextView
-                android:id="@+id/mondayTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="@string/label_monday" />
-
-            <TextView
-                android:id="@+id/tuesdayTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="@string/label_tuesday" />
-
-            <TextView
-                android:id="@+id/wednesdayTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="@string/label_wednesday" />
-
-            <TextView
-                android:id="@+id/thursdayTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="@string/label_thursday" />
-
-            <TextView
-                android:id="@+id/fridayTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="@string/label_friday" />
-
-            <TextView
-                android:id="@+id/saturdayTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="@string/label_saturday" />
-
-            <TextView
-                android:id="@+id/sundayTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="@string/label_sunday" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calendarRecyclerView"
+        <TextView
+            android:id="@+id/wednesdayTextView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/weeklyDateContainer"
-            app:spanCount="7" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="@string/label_wednesday" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+        <TextView
+            android:id="@+id/thursdayTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="@string/label_thursday" />
+
+        <TextView
+            android:id="@+id/fridayTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="@string/label_friday" />
+
+        <TextView
+            android:id="@+id/saturdayTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="@string/label_saturday" />
+
+        <TextView
+            android:id="@+id/sundayTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="@string/label_sunday" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendarRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weeklyDateContainer"
+        app:spanCount="7" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

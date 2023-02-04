@@ -1,53 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:id="@+id/container_coach"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0.8"
+    android:background="@color/black"
+    android:clickable="true"
+    android:focusable="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_coach"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.8"
-        android:background="@color/black"
-        android:clickable="true"
-        android:focusable="true">
+    <ImageView
+        android:id="@+id/down_right_handdrwan_arrow_coach"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="75dp"
+        android:src="@drawable/ic_down_right_hand_drawn_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:id="@+id/down_right_handdrwan_arrow_coach"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="75dp"
-            android:src="@drawable/ic_down_right_hand_drawn_arrow"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        android:id="@+id/text_add_task_coach"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginEnd="10dp"
+        android:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:text="@string/text_coach_tap_add"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/down_right_handdrwan_arrow_coach"
+        app:layout_constraintEnd_toStartOf="@id/down_right_handdrwan_arrow_coach" />
 
-        <TextView
-            android:id="@+id/text_add_task_coach"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginEnd="10dp"
-            android:autoSizeTextType="uniform"
-            android:maxLines="1"
-            android:text="@string/text_coach_tap_add"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/down_right_handdrwan_arrow_coach"
-            app:layout_constraintEnd_toStartOf="@id/down_right_handdrwan_arrow_coach" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_coach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@null"
+        android:backgroundTint="@color/blue_icon"
+        android:clickable="false"
+        android:src="@drawable/ic_baseline_add_24"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_coach"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@null"
-            android:backgroundTint="@color/blue_icon"
-            android:clickable="false"
-            android:src="@drawable/ic_baseline_add_24"
-            app:borderWidth="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@color/white" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

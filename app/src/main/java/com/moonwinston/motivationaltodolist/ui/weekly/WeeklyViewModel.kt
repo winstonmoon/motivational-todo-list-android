@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -78,6 +79,16 @@ class WeeklyViewModel @Inject constructor (
         taskEntities.filter { taskEntity ->
             taskEntity.taskDate.getDateExceptTime() == selectedDate
         }.sortedBy { taskEntity ->
+            taskEntity.taskDate
+        }
+    }.stateIn(
+        initialValue = emptyList(),
+        started = SharingStarted.Eagerly,
+        scope = viewModelScope
+    )
+
+    val allTasks = taskRepository.getAllTasks().map { taskEntities ->
+        taskEntities.sortedBy { taskEntity ->
             taskEntity.taskDate
         }
     }.stateIn(

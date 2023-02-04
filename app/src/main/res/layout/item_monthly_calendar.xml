@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/monthlyDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:minWidth="18dp"
+        android:minHeight="18dp"
+        android:textColor="@color/main_text"
+        app:layout_constraintBottom_toTopOf="@id/monthlyCustomPieChart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1" />
 
-        <TextView
-            android:id="@+id/monthlyDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="18dp"
-            android:minWidth="18dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/main_text"
-            app:layout_constraintBottom_toTopOf="@id/monthlyCustomPieChart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="1" />
-
-        <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
-            android:id="@+id/monthlyCustomPieChart"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:borderStrokeWidth="14"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="H, 1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/monthlyDateTextView"
-            app:pieChartColor="@color/pie_chart"
-            app:progressivePieChartColor="@color/progressive_pie_chart"
-            app:progressiveStrokeWidth="7" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    <com.moonwinston.motivationaltodolist.ui.custom.AchievementPieChartView
+        android:id="@+id/monthlyCustomPieChart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:borderStrokeWidth="14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H, 1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/monthlyDateTextView"
+        app:pieChartColor="@color/pie_chart"
+        app:progressivePieChartColor="@color/progressive_pie_chart"
+        app:progressiveStrokeWidth="7" />
+</androidx.constraintlayout.widget.ConstraintLayout>

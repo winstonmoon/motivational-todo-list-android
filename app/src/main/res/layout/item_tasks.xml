@@ -1,72 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:minHeight="50dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <RadioButton
+        android:id="@+id/taskRadioButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="50dp"
-        android:layout_margin="5dp">
+        android:theme="@style/CustomRadioButton"
+        app:layout_constraintBottom_toTopOf="@id/underlineView"
+        app:layout_constraintEnd_toStartOf="@id/taskTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/taskRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/CustomRadioButton"
-            app:layout_constraintBottom_toTopOf="@id/underlineView"
-            app:layout_constraintEnd_toStartOf="@id/taskTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/taskTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
+        android:minHeight="24dp"
+        android:text="test task"
+        android:textColor="@color/main_text"
+        app:layout_constraintBottom_toTopOf="@id/timeTextView"
+        app:layout_constraintEnd_toStartOf="@id/taskMeatballsMenu"
+        app:layout_constraintStart_toEndOf="@id/taskRadioButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/taskTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:minHeight="24dp"
-            android:autoSizeTextType="uniform"
-            android:text="test task"
-            android:textColor="@color/main_text"
-            app:layout_constraintBottom_toTopOf="@id/timeTextView"
-            app:layout_constraintEnd_toStartOf="@id/taskMeatballsMenu"
-            app:layout_constraintStart_toEndOf="@id/taskRadioButton"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
+        android:minHeight="24dp"
+        android:text="12:00"
+        android:textColor="@color/sub_text"
+        app:layout_constraintBottom_toTopOf="@id/underlineView"
+        app:layout_constraintEnd_toStartOf="@id/taskMeatballsMenu"
+        app:layout_constraintStart_toEndOf="@id/taskRadioButton"
+        app:layout_constraintTop_toBottomOf="@id/taskTextView" />
 
-        <TextView
-            android:id="@+id/timeTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:minHeight="24dp"
-            android:autoSizeTextType="uniform"
-            android:text="12:00"
-            android:textColor="@color/sub_text"
-            app:layout_constraintBottom_toTopOf="@id/underlineView"
-            app:layout_constraintEnd_toStartOf="@id/taskMeatballsMenu"
-            app:layout_constraintStart_toEndOf="@id/taskRadioButton"
-            app:layout_constraintTop_toBottomOf="@id/taskTextView" />
+    <ImageButton
+        android:id="@+id/taskMeatballsMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_ripple_oval"
+        android:src="@drawable/ic_baseline_edit_24"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/underlineView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/taskTextView"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/taskMeatballsMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_ripple_oval"
-            android:src="@drawable/ic_baseline_edit_24"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/underlineView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/taskTextView"
-            app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/underlineView"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/sub_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/taskRadioButton"
+        app:layout_constraintTop_toBottomOf="@id/timeTextView" />
 
-        <View
-            android:id="@+id/underlineView"
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="1dp"
-            android:background="@color/sub_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/taskRadioButton"
-            app:layout_constraintTop_toBottomOf="@id/timeTextView" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>
