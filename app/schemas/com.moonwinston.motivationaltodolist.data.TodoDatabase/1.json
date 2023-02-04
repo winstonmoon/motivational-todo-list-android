@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "db63c28736d87ed1c0c9761a90c099ae",
+    "identityHash": "78e494e405aae960466fc24f79984673",
     "entities": [
       {
         "tableName": "task",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `taskDate` INTEGER NOT NULL, `task` TEXT NOT NULL, `isCompleted` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `taskDate` INTEGER NOT NULL, `taskTime` INTEGER NOT NULL, `task` TEXT NOT NULL, `isCompleted` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -17,6 +17,12 @@
           {
             "fieldPath": "taskDate",
             "columnName": "taskDate",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "taskTime",
+            "columnName": "taskTime",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -34,10 +40,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": true,
           "columnNames": [
             "uid"
-          ],
-          "autoGenerate": true
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -60,10 +66,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "date"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -72,7 +78,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'db63c28736d87ed1c0c9761a90c099ae')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '78e494e405aae960466fc24f79984673')"
     ]
   }
 }
