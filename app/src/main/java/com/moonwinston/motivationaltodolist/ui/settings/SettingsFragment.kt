@@ -13,6 +13,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import com.moonwinston.motivationaltodolist.BuildConfig
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
 import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
@@ -38,8 +40,6 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this@SettingsFragment
-
         alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
             PendingIntent.getBroadcast(context, 0, intent, FLAG_IMMUTABLE,)
@@ -48,6 +48,12 @@ class SettingsFragment : Fragment() {
         binding.notify.text = resources.getStringArray(R.array.notify_array)[mainViewModel.notifyIndex.value]
         binding.theme.text = resources.getStringArray(R.array.theme_array)[mainViewModel.themeIndex.value]
         binding.language.text = resources.getStringArray(R.array.language_array)[mainViewModel.languageIndex.value]
+
+        binding.versionTextView.text = BuildConfig.VERSION_NAME
+
+        binding.backButton.setOnClickListener {
+            it.findNavController().popBackStack()
+        }
 
         binding.notifyButton.setOnClickListener {
             val builder = AlertDialog.Builder(it.context, R.style.CustomAlertDialog)

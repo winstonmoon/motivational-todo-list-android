@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import com.google.android.gms.ads.AdRequest
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,6 +32,9 @@ class RewardsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.settingsButton.setOnClickListener {
+            it.findNavController().navigate(R.id.action_rewards_to_settings)
+        }
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
         val adapter = RewardsAdapter()

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
@@ -37,6 +38,9 @@ class MonthlyFragment : Fragment() {
         binding.calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
         binding.calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
         binding.calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
+        binding.settingsButton.setOnClickListener {
+            it.findNavController().navigate(R.id.action_monthly_to_settings)
+        }
 
         monthlySharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
             binding.monthlyTitleTextView.text = setMonthlyTitleText(it.first, it.second)

@@ -69,6 +69,9 @@ class WeeklyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initDisplayCoachMark()
         setToday()
+        binding.settingsButton.setOnClickListener {
+            it.findNavController().navigate(R.id.action_weekly_to_settings)
+        }
         binding.addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert(method = "insert"),

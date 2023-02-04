@@ -1,66 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background">
 
-    <data>
+    <TextView
+        android:id="@+id/monthlyTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
+        android:gravity="center_horizontal"
+        android:minHeight="48dp"
+        android:padding="10dp"
+        android:textColor="@color/main_text"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Dec, 2021" />
 
-        <import type="com.moonwinston.motivationaltodolist.R" />
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:minHeight="48dp"
+        android:padding="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_outline_settings_24"
+        app:layout_constraintBottom_toBottomOf="@id/monthlyTitleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/monthlyTitleTextView" />
 
-        <import type="androidx.navigation.Navigation" />
-    </data>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/calendarViewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/monthlyTitleTextView" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        android:id="@+id/coach_monthly"
+        layout="@layout/layout_coach_monthly_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_background">
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/monthlyTitleTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:autoSizeTextType="uniform"
-            android:gravity="center_horizontal"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:textColor="@color/main_text"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Dec, 2021" />
-
-        <ImageButton
-            android:id="@+id/settingsButton"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:minHeight="48dp"
-            android:onClick="@{view -> Navigation.findNavController(view).navigate(R.id.action_monthly_to_settings)}"
-            android:padding="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_outline_settings_24"
-            app:layout_constraintBottom_toBottomOf="@id/monthlyTitleTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/monthlyTitleTextView" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/calendarViewPager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/monthlyTitleTextView" />
-
-        <include
-            android:id="@+id/coach_monthly"
-            layout="@layout/layout_coach_monthly_swipe"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

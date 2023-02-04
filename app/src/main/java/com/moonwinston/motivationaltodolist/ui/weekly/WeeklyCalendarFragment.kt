@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
-import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
-import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import com.moonwinston.motivationaltodolist.utils.localDateToDate
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.DayOfWeek
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 
@@ -20,7 +21,6 @@ const val DIFF_WEEK = "diffWeek"
 
 @AndroidEntryPoint
 class WeeklyCalendarFragment : Fragment() {
-    private val mainViewModel: MainViewModel by activityViewModels()
     private val weeklySharedViewModel: WeeklyViewModel by activityViewModels()
     private lateinit var binding: FragmentWeeklyCalendarBinding
     private val daysOfWeek = mutableListOf<Date>()
@@ -61,7 +61,6 @@ class WeeklyCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.weeklyViewModel = weeklySharedViewModel
         binding.mondayCustomPieChart.pieChartViewDate = daysOfWeek[0]
         binding.tuesdayCustomPieChart.pieChartViewDate = daysOfWeek[1]
         binding.wednesdayCustomPieChart.pieChartViewDate = daysOfWeek[2]
@@ -91,47 +90,78 @@ class WeeklyCalendarFragment : Fragment() {
             weeklySharedViewModel.setSelectedDate(binding.sundayCustomPieChart.pieChartViewDate)
         }
 
-        //TODO
-//        mainViewModel.getAllTasks()
-        mainViewModel.tasksListLiveData.observe(viewLifecycleOwner) { taskEntities ->
-            val monList: MutableList<TaskEntity>? = null
-            val tueList: MutableList<TaskEntity>? = null
-            val wedList: MutableList<TaskEntity>? = null
-            val thuList: MutableList<TaskEntity>? = null
-            val friList: MutableList<TaskEntity>? = null
-            val satList: MutableList<TaskEntity>? = null
-            val sunList: MutableList<TaskEntity>? = null
-            taskEntities.forEach { taskEntity ->
-                when (taskEntity.taskDate.getDateExceptTime()) {
-                    daysOfWeek[0] -> monList?.add(taskEntity)
-                    daysOfWeek[1] -> tueList?.add(taskEntity)
-                    daysOfWeek[2] -> wedList?.add(taskEntity)
-                    daysOfWeek[3] -> thuList?.add(taskEntity)
-                    daysOfWeek[4] -> friList?.add(taskEntity)
-                    daysOfWeek[5] -> satList?.add(taskEntity)
-                    daysOfWeek[6] -> sunList?.add(taskEntity)
+        //TODO make simple
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                weeklySharedViewModel.allTasks.collect {
+                    val monList = mutableListOf<TaskEntity>()
+                    val tueList = mutableListOf<TaskEntity>()
+                    val wedList = mutableListOf<TaskEntity>()
+                    val thuList = mutableListOf<TaskEntity>()
+                    val friList = mutableListOf<TaskEntity>()
+                    val satList = mutableListOf<TaskEntity>()
+                    val sunList = mutableListOf<TaskEntity>()
+                    for (taskEntity in it) {
+                        when (taskEntity.taskDate) {
+                            daysOfWeek[0] -> monList.add(taskEntity)
+                            daysOfWeek[1] -> tueList.add(taskEntity)
+                            daysOfWeek[2] -> wedList.add(taskEntity)
+                            daysOfWeek[3] -> thuList.add(taskEntity)
+                            daysOfWeek[4] -> friList.add(taskEntity)
+                            daysOfWeek[5] -> satList.add(taskEntity)
+                            daysOfWeek[6] -> sunList.add(taskEntity)
+                        }
+                    }
+                    if (weeklySharedViewModel.calculateRate(monList) == 0F) {
+                        binding.mondayCustomPieChart.alpha = 0.2F
+                    } else {
+                        binding.mondayCustomPieChart.alpha = 1F
+                    }
+                    if (weeklySharedViewModel.calculateRate(tueList) == 0F) {
+                        binding.tuesdayCustomPieChart.alpha = 0.2F
+                    } else {
+                        binding.tuesdayCustomPieChart.alpha = 1F
+                    }
+                    if (weeklySharedViewModel.calculateRate(wedList) == 0F) {
+                        binding.wednesdayCustomPieChart.alpha = 0.2F
+                    } else {
+                        binding.wednesdayCustomPieChart.alpha = 1F
+                    }
+                    if (weeklySharedViewModel.calculateRate(thuList) == 0F) {
+                        binding.thursdayCustomPieChart.alpha = 0.2F
+                    } else {
+                        binding.thursdayCustomPieChart.alpha = 1F
+                    }
+                    if (weeklySharedViewModel.calculateRate(friList) == 0F) {
+                        binding.fridayCustomPieChart.alpha = 0.2F
+                    } else {
+                        binding.fridayCustomPieChart.alpha = 1F
+                    }
+                    if (weeklySharedViewModel.calculateRate(satList) == 0F) {
+                        binding.saturdayCustomPieChart.alpha = 0.2F
+                    } else {
+                        binding.saturdayCustomPieChart.alpha = 1F
+                    }
+                    if (weeklySharedViewModel.calculateRate(sunList) == 0F) {
+                        binding.sundayCustomPieChart.alpha = 0.2F
+                    } else {
+                        binding.sundayCustomPieChart.alpha = 1F
+                    }
+                    val monRate = weeklySharedViewModel.calculateRate(monList)
+                    val tueRate = weeklySharedViewModel.calculateRate(tueList)
+                    val wedRate = weeklySharedViewModel.calculateRate(wedList)
+                    val thuRate = weeklySharedViewModel.calculateRate(thuList)
+                    val friRate = weeklySharedViewModel.calculateRate(friList)
+                    val satRate = weeklySharedViewModel.calculateRate(satList)
+                    val sunRate = weeklySharedViewModel.calculateRate(sunList)
+                    binding.mondayCustomPieChart.updatePercentage(monRate)
+                    binding.tuesdayCustomPieChart.updatePercentage(tueRate)
+                    binding.wednesdayCustomPieChart.updatePercentage(wedRate)
+                    binding.thursdayCustomPieChart.updatePercentage(thuRate)
+                    binding.fridayCustomPieChart.updatePercentage(friRate)
+                    binding.saturdayCustomPieChart.updatePercentage(satRate)
+                    binding.sundayCustomPieChart.updatePercentage(sunRate)
                 }
-            }
-            monList?.let { tasksList ->
-                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.MONDAY, tasksList = tasksList)
-            }
-            tueList?.let { tasksList ->
-                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.TUESDAY, tasksList = tasksList)
-            }
-            wedList?.let { tasksList ->
-                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.WEDNESDAY, tasksList = tasksList)
-            }
-            thuList?.let { tasksList ->
-                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.THURSDAY, tasksList = tasksList)
-            }
-            friList?.let { tasksList ->
-                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.FRIDAY, tasksList = tasksList)
-            }
-            satList?.let { tasksList ->
-                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.SATURDAY, tasksList = tasksList)
-            }
-            sunList?.let { tasksList ->
-                weeklySharedViewModel.setRate(dayOfWeek = DayOfWeek.SUNDAY, tasksList = tasksList)
             }
         }
     }
@@ -140,9 +170,9 @@ class WeeklyCalendarFragment : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
+//    override fun onResume() {
+//        super.onResume()
 //        mainViewModel.getAllTasks()
-        //TODO
-    }
+//        //TODO
+//    }
 }
