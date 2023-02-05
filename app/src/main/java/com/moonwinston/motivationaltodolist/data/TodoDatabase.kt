@@ -4,17 +4,16 @@ import androidx.room.*
 import androidx.room.migration.AutoMigrationSpec
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [TaskEntity::class, AchievementRateEntity::class],
     autoMigrations = [
         AutoMigration (
-            from = 1,
-            to = 2,
-            spec = TodoDatabase.TodoAutoMigration::class
+            from = 2,
+            to = 3
         )
     ]
 )
-@TypeConverters(RoomTypeConverters::class)
+@TypeConverters(TiviTypeConverters::class)
 abstract class TodoDatabase : RoomDatabase() {
 
     companion object {

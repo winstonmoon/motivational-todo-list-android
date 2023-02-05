@@ -3,6 +3,7 @@ package com.moonwinston.motivationaltodolist.data
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.time.OffsetDateTime
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,9 +16,9 @@ class TaskRepository @Inject constructor(
     fun getAllTasks() = taskDao.getAll()
 
     //TODO temporary implement
-    suspend fun getAllFutureTasks(currentTime: Date) = withContext(Dispatchers.IO) { taskDao.getAllFutureTasks(currentTime) }
+    suspend fun getAllFutureTasks(currentTime: OffsetDateTime) = withContext(Dispatchers.IO) { taskDao.getAllFutureTasks(currentTime) }
 
-    suspend fun getAllTasksByDates(taskDatesList: MutableList<Date>) = withContext(Dispatchers.IO) { taskDao.getAllByDates(taskDatesList) }
+    suspend fun getAllTasksByDates(taskDatesList: List<OffsetDateTime>) = withContext(Dispatchers.IO) { taskDao.getAllByDates(taskDatesList) }
 
     suspend fun insertTask(taskEntity: TaskEntity) = withContext(Dispatchers.IO) { taskDao.insert(taskEntity) }
 

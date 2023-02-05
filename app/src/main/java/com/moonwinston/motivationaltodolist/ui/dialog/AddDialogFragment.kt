@@ -20,6 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
 
 @AndroidEntryPoint
 class AddDialogFragment : DialogFragment() {
@@ -52,31 +54,39 @@ class AddDialogFragment : DialogFragment() {
     private fun initCommonView() {
         binding.timePicker.setIs24HourView(true)
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            addDialogViewModel.setDate(LocalDate.of(year, month, dayOfMonth).localDateToDate())
+//            addDialogViewModel.setDate(LocalDate.of(year, month, dayOfMonth).localDateToDate())
+            addDialogViewModel.setDate(OffsetDateTime.of(year, month, dayOfMonth,0,0,0,0,ZoneOffset.UTC))
         }
     }
 
     private fun initInsertView(taskEntity: TaskEntity) {
         binding.timePicker.hour
         binding.timePicker.minute
-        binding.calendarView.date = taskEntity.taskDate.time
+//        binding.calendarView.date = taskEntity.taskDate.time
+        binding.calendarView.date = taskEntity.taskDate.toEpochSecond()
         addDialogViewModel.setDate(taskEntity.taskDate)
         addDialogViewModel.setPositiveButtonStringResource(R.string.button_add)
     }
 
     private fun initCopyView(taskEntity: TaskEntity) {
-        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
-        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
-        binding.calendarView.date = taskEntity.taskDate.time
+//        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
+//        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
+//        binding.calendarView.date = taskEntity.taskDate.time
+        binding.timePicker.hour = taskEntity.taskDate.hour
+        binding.timePicker.minute = taskEntity.taskDate.minute
+        binding.calendarView.date = taskEntity.taskDate.toEpochSecond()
         addDialogViewModel.setDate(taskEntity.taskDate)
         binding.taskEditText.setText(taskEntity.task)
         addDialogViewModel.setPositiveButtonStringResource(R.string.button_add)
     }
 
     private fun initUpdateView(taskEntity: TaskEntity) {
-        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
-        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
-        binding.calendarView.date = taskEntity.taskDate.time
+//        binding.timePicker.hour = taskEntity.taskDate.dateToLocalDateTime().hour
+//        binding.timePicker.minute = taskEntity.taskDate.dateToLocalDateTime().minute
+//        binding.calendarView.date = taskEntity.taskDate.time
+        binding.timePicker.hour = taskEntity.taskDate.hour
+        binding.timePicker.minute = taskEntity.taskDate.minute
+        binding.calendarView.date = taskEntity.taskDate.toEpochSecond()
         addDialogViewModel.setDate(taskEntity.taskDate)
         binding.taskEditText.setText(taskEntity.task)
         addDialogViewModel.setPositiveButtonStringResource(R.string.button_edit)
@@ -90,7 +100,8 @@ class AddDialogFragment : DialogFragment() {
         builder.setView(binding.root)
             .setPositiveButton(positiveButton,
                 DialogInterface.OnClickListener { _, _ ->
-                    if (addDialogViewModel.date.value.before(dateOfToday())) {
+//                    if (addDialogViewModel.date.value.before(dateOfToday())) {
+                    if (addDialogViewModel.date.value.isBefore(dateOfToday())) {
                         Toast.makeText(fragmentActivity, resources.getString(R.string.message_toast_unaddable), Toast.LENGTH_LONG).show()
                         return@OnClickListener
                     }
@@ -113,7 +124,8 @@ class AddDialogFragment : DialogFragment() {
     private fun setTaskEntity(): TaskEntity {
         val hour = binding.timePicker.hour
         val minute = binding.timePicker.minute
-        val taskDate = LocalDateTime.of(addDialogViewModel.date.value.dateToLocalDate(), LocalTime.of(hour, minute)).localDateTimeToDate()
+//        val taskDate = LocalDateTime.of(addDialogViewModel.date.value.dateToLocalDate(), LocalTime.of(hour, minute)).localDateTimeToDate()
+        val taskDate = OffsetDateTime.of(addDialogViewModel.date.value.toLocalDate(), LocalTime.of(hour, minute), ZoneOffset.UTC)
         return when (dmlState) {
             DmlState.Insert(method = "copy") ->
                 TaskEntity(

@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.R
@@ -13,6 +16,7 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.ContextUtil
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.Month
 import java.time.format.TextStyle
 import java.util.*
@@ -36,18 +40,22 @@ class MonthlyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initDisplayCoachMark()
         binding.calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
-        binding.calendarViewPager.setCurrentItem(MonthlyScreenSlidePagerAdapter.START_POSITION, false)
+        binding.calendarViewPager.setCurrentItem(START_POSITION, false)
         binding.calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
         binding.settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_monthly_to_settings)
         }
 
-        monthlySharedViewModel.monthlyTitleLiveData.observe(viewLifecycleOwner) {
-            binding.monthlyTitleTextView.text = setMonthlyTitleText(it.first, it.second)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                monthlySharedViewModel.yearAndMonth.collect { yearAndMonth ->
+                    binding.monthlyTitleTextView.text = createMonthlyTitle(yearAndMonth.first, yearAndMonth.second)
+                }
+            }
         }
     }
 
-    private fun setMonthlyTitleText(year: Int, month: Int): String {
+    private fun createMonthlyTitle(year: Int, month: Int): String {
         val wordYear = resources.getString(R.string.label_year)
         val month = Month.of(month).getDisplayName(TextStyle.SHORT, Locale.getDefault())
         return when (mainViewModel.languageIndex.value) {

@@ -4,15 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.tasks.Task
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
+import com.moonwinston.motivationaltodolist.utils.localDateToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.time.DayOfWeek
+import java.time.*
 import java.util.*
 import javax.inject.Inject
 
@@ -22,62 +24,23 @@ class WeeklyViewModel @Inject constructor (
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private var _mondayRateLiveData = MutableLiveData<Float>()
-    val mondayRateLiveData: LiveData<Float>
-        get() = _mondayRateLiveData
+//    private val _selectedDate = MutableStateFlow(Date())
+//    val selectedDate: StateFlow<Date> = _selectedDate
+//
+//    fun setSelectedDate(date: Date) = viewModelScope.launch {
+//        _selectedDate.emit(date)
+//    }
 
-    private var _tuesdayRateLiveData = MutableLiveData<Float>()
-    val tuesdayRateLiveData: LiveData<Float>
-        get() = _tuesdayRateLiveData
+    private val _selectedDate = MutableStateFlow(OffsetDateTime.now())
+    val selectedDate: StateFlow<OffsetDateTime> = _selectedDate
 
-    private var _wednesdayRateLiveData = MutableLiveData<Float>()
-    val wednesdayRateLiveData: LiveData<Float>
-        get() = _wednesdayRateLiveData
-
-    private var _thursdayRateLiveData = MutableLiveData<Float>()
-    val thursdayRateLiveData: LiveData<Float>
-        get() = _thursdayRateLiveData
-
-    private var _fridayRateLiveData = MutableLiveData<Float>()
-    val fridayRateLiveData: LiveData<Float>
-        get() = _fridayRateLiveData
-
-    private var _saturdayRateLiveData = MutableLiveData<Float>()
-    val saturdayRateLiveData: LiveData<Float>
-        get() = _saturdayRateLiveData
-
-    private var _sundayRateLiveData = MutableLiveData<Float>()
-    val sundayRateLiveData: LiveData<Float>
-        get() = _sundayRateLiveData
-
-    fun setRate(dayOfWeek: DayOfWeek, tasksList: List<TaskEntity>) {
-        var totalTasks = 0F
-        var doneTasks = 0F
-        tasksList.forEach { taskEntity ->
-            totalTasks += 1F
-            if (taskEntity.isCompleted) doneTasks += 1F
-        }
-        when (dayOfWeek) {
-            DayOfWeek.MONDAY -> _mondayRateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
-            DayOfWeek.TUESDAY -> _tuesdayRateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
-            DayOfWeek.WEDNESDAY -> _wednesdayRateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
-            DayOfWeek.THURSDAY -> _thursdayRateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
-            DayOfWeek.FRIDAY -> _fridayRateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
-            DayOfWeek.SATURDAY -> _saturdayRateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
-            DayOfWeek.SUNDAY-> _sundayRateLiveData.value = if (doneTasks == 0F) 0F else doneTasks / totalTasks
-        }
-    }
-
-    private val _selectedDate = MutableStateFlow(Date())
-    val selectedDate: StateFlow<Date> = _selectedDate
-
-    fun setSelectedDate(date: Date) = viewModelScope.launch {
+    fun setSelectedDate(date: OffsetDateTime) = viewModelScope.launch {
         _selectedDate.emit(date)
     }
 
     val selectedDayTasks = taskRepository.getAllTasks().map { taskEntities ->
         taskEntities.filter { taskEntity ->
-            taskEntity.taskDate.getDateExceptTime() == selectedDate
+            taskEntity.taskDate.getDateExceptTime() == selectedDate.value
         }.sortedBy { taskEntity ->
             taskEntity.taskDate
         }
@@ -109,6 +72,79 @@ class WeeklyViewModel @Inject constructor (
         }
     }
 
+//    fun createDaysOfWeek(diffDays: Int): List<Date> {
+//        val daysOfWeek = mutableListOf<Date>()
+//        val calendar = Calendar.getInstance().apply {
+//            add(Calendar.DATE, diffDays)
+//            firstDayOfWeek = Calendar.MONDAY
+//            val diffDateFromMonday =
+//                if (this@apply.get(Calendar.DAY_OF_WEEK) == 1) -6
+//                else 2 - this@apply.get(Calendar.DAY_OF_WEEK)
+//            add(Calendar.DATE, diffDateFromMonday)
+//        }
+//
+//        (1..7).forEach { _ ->
+//            val year = calendar.get(Calendar.YEAR)
+//            val month = calendar.get(Calendar.MONTH)
+//            val date = calendar.get(Calendar.DATE)
+//            daysOfWeek.add(LocalDate.of(year, month + 1, date).localDateToDate())
+//            calendar.add(Calendar.DATE, 1)
+//        }
+//        return daysOfWeek
+//    }
+
+    fun createDaysOfWeek(diffDays: Int): List<OffsetDateTime> {
+        val daysOfWeek = mutableListOf<OffsetDateTime>()
+        val calendar = Calendar.getInstance().apply {
+            add(Calendar.DATE, diffDays)
+            firstDayOfWeek = Calendar.MONDAY
+            val diffDateFromMonday =
+                if (this@apply.get(Calendar.DAY_OF_WEEK) == 1) -6
+                else 2 - this@apply.get(Calendar.DAY_OF_WEEK)
+            add(Calendar.DATE, diffDateFromMonday)
+        }
+
+        (1..7).forEach { _ ->
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val date = calendar.get(Calendar.DATE)
+            daysOfWeek.add(OffsetDateTime.of(LocalDate.of(year, month + 1, date), LocalTime.of(0,0), ZoneOffset.UTC))
+            calendar.add(Calendar.DATE, 1)
+        }
+        return daysOfWeek
+    }
+
+//    fun getWeeklyRateListsFromAllTasks(allTasks: List<TaskEntity>, daysOfWeek: List<Date>): List<Float> {
+    fun getWeeklyRateListsFromAllTasks(allTasks: List<TaskEntity>, daysOfWeek: List<OffsetDateTime>): List<Float> {
+        val monList = mutableListOf<TaskEntity>()
+        val tueList = mutableListOf<TaskEntity>()
+        val wedList = mutableListOf<TaskEntity>()
+        val thuList = mutableListOf<TaskEntity>()
+        val friList = mutableListOf<TaskEntity>()
+        val satList = mutableListOf<TaskEntity>()
+        val sunList = mutableListOf<TaskEntity>()
+        allTasks.forEach { taskEntity ->
+            when (taskEntity.taskDate.getDateExceptTime()) {
+                daysOfWeek[0] -> monList.add(taskEntity)
+                daysOfWeek[1] -> tueList.add(taskEntity)
+                daysOfWeek[2] -> wedList.add(taskEntity)
+                daysOfWeek[3] -> thuList.add(taskEntity)
+                daysOfWeek[4] -> friList.add(taskEntity)
+                daysOfWeek[5] -> satList.add(taskEntity)
+                daysOfWeek[6] -> sunList.add(taskEntity)
+            }
+        }
+        val weeklyRates = mutableListOf<Float>()
+        weeklyRates.add(calculateRate(monList))
+        weeklyRates.add(calculateRate(tueList))
+        weeklyRates.add(calculateRate(wedList))
+        weeklyRates.add(calculateRate(thuList))
+        weeklyRates.add(calculateRate(friList))
+        weeklyRates.add(calculateRate(satList))
+        weeklyRates.add(calculateRate(sunList))
+        return weeklyRates
+    }
+
     fun calculateRate(tasksList: List<TaskEntity>): Float {
         var totalTasks = 0F
         var doneTasks = 0F
@@ -117,9 +153,5 @@ class WeeklyViewModel @Inject constructor (
             if (task.isCompleted) doneTasks += 1F
         }
         return if (doneTasks == 0F) 0F else doneTasks / totalTasks
-    }
-
-    fun createDaysOfWeek() {
-
     }
 }

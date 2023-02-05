@@ -15,7 +15,8 @@ class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHold
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(achievementRateEntity: AchievementRateEntity) {
-            val achievedDate = achievementRateEntity.date.dateToLocalDate()
+//            val achievedDate = achievementRateEntity.date.dateToLocalDate()
+            val achievedDate = achievementRateEntity.date
             val achievedDateText = "${achievedDate.year}\n${achievedDate.monthValue}/${achievedDate.dayOfMonth}"
             binding.achievedDateTextView.text = achievedDateText
         }

@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
+import java.time.OffsetDateTime
 
 class AchievementPieChartView @JvmOverloads constructor(
     context: Context,
@@ -20,7 +21,7 @@ class AchievementPieChartView @JvmOverloads constructor(
     private var progressiveStrokeWidth = 0.0F
     private var pieChartColor = 0
     private var progressivePieChartColor = 0
-    var pieChartViewDate = nonExistDate()
+    var pieChartViewDate: OffsetDateTime = nonExistDate()
 
     init {
         context.theme.obtainStyledAttributes(
