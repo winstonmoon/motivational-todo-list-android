@@ -24,6 +24,7 @@ import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.time.format.TextStyle
 import java.util.*
 import kotlin.math.roundToInt
@@ -33,27 +34,6 @@ class DailyFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private val dailyViewModel: DailyViewModel by viewModels()
     private lateinit var binding: FragmentDailyBinding
-    private val adapter by lazy {
-        TaskAdapter(
-            meatballsMenuCallback = { taskEntity, dmlState ->
-                when (dmlState) {
-                    DmlState.Insert(method = "copy") -> {
-                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                        view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
-                    }
-                    DmlState.Update -> {
-                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                        view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
-                    }
-                    DmlState.Delete -> mainViewModel.deleteTask(taskEntity.uid)
-                    else -> Unit
-                }
-            },
-            radioButtonCallback = {
-                mainViewModel.insertTask(it)
-                binding.congratulationsAnimationView.playAnimation()
-            })
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,18 +50,42 @@ class DailyFragment : Fragment() {
         binding.settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_daily_to_settings)
         }
+
         binding.addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert(method = "insert"),
                 "taskEntity" to TaskEntity(
-                    taskDate = Date(),
+//                    taskDate = Date(),
+                    taskDate = OffsetDateTime.now(),
                     task = "",
                     isCompleted = false
                 )
             )
-            it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
+            it.findNavController().navigate(R.id.action_daily_to_add, bundle)
         }
+
         binding.dailyTitleTextView.text = createDailyTitle(language = mainViewModel.languageIndex.value)
+
+        val adapter = TaskAdapter(
+            meatballsMenuCallback = { taskEntity, dmlState ->
+                when (dmlState) {
+                    DmlState.Insert(method = "copy") -> {
+                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        view.findNavController().navigate(R.id.action_daily_to_add, bundle)
+                    }
+                    DmlState.Update -> {
+                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                        view.findNavController().navigate(R.id.action_daily_to_add, bundle)
+                    }
+                    DmlState.Delete -> mainViewModel.deleteTask(taskEntity.uid)
+                    else -> Unit
+                }
+                                    },
+            radioButtonCallback = { taskEntity ->
+                mainViewModel.insertTask(taskEntity)
+                binding.congratulationsAnimationView.playAnimation()
+            }
+        )
         binding.dailyTodoRecyclerView.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {

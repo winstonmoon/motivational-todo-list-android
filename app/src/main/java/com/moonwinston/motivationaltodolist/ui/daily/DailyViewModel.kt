@@ -11,6 +11,7 @@ import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +20,21 @@ class DailyViewModel @Inject constructor(
     private val achievementRateRepository: AchievementRateRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
+
+//    private val _todayTasks = MutableStateFlow(listOf<TaskEntity>())
+//    val todayTasks: StateFlow<List<TaskEntity>> = _todayTasks
+//
+//    fun getAllTasks() = viewModelScope.launch {
+//        todayTasks.value =
+//            taskRepository.getAllTasks().map { taskEntities ->
+//                taskEntities.filter { taskEntity ->
+//                    taskEntity.taskDate.getDateExceptTime() == dateOfToday()
+//                }.sortedBy { taskEntity ->
+//                    taskEntity.taskDate
+//                }
+//            }.
+//
+//    }
 
     val todayTasks = taskRepository.getAllTasks().map { taskEntities ->
         taskEntities.filter { taskEntity ->

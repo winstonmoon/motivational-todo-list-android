@@ -13,17 +13,18 @@ import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
+import java.time.OffsetDateTime
 import java.util.*
 
 class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
-    ListAdapter<Date, MonthlyCalendarAdapter.ViewHolder>(diffUtil) {
+    ListAdapter<OffsetDateTime, MonthlyCalendarAdapter.ViewHolder>(diffUtil) {
     private val _monTasksList = monthTasksList
 
     inner class ViewHolder(private val binding: ItemMonthlyCalendarBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val monTasksList = _monTasksList
 
-        fun bind(date: Date) {
+        fun bind(date: OffsetDateTime) {
             val tempTaskList = mutableListOf<TaskEntity>()
             monTasksList.forEach { taskEntity ->
                 if (taskEntity.taskDate.getDateExceptTime() == date) tempTaskList.add(taskEntity)
@@ -36,16 +37,16 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 }
                 date == dateOfToday() -> {
                     binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
-                    binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
+                    binding.monthlyDateTextView.text = "${date.dayOfMonth}"
                     if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.updatePercentage(calculatedRate)
                 }
-                date.after(dateOfToday()) -> {
-                    binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
+                date.isAfter(dateOfToday()) -> {
+                    binding.monthlyDateTextView.text = "${date.dayOfMonth}"
                     binding.monthlyCustomPieChart.visibility = View.INVISIBLE
                 }
                 else -> {
-                    binding.monthlyDateTextView.text = "${date.dateToLocalDate().dayOfMonth}"
+                    binding.monthlyDateTextView.text = "${date.dayOfMonth}"
                     if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.updatePercentage(calculatedRate)
                 }
@@ -78,12 +79,12 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<Date>() {
-            override fun areItemsTheSame(oldItem: Date, newItem: Date): Boolean {
-                return oldItem.time == newItem.time
+        val diffUtil = object : DiffUtil.ItemCallback<OffsetDateTime>() {
+            override fun areItemsTheSame(oldItem: OffsetDateTime, newItem: OffsetDateTime): Boolean {
+                return oldItem.toLocalDate() == newItem.toLocalDate()
             }
 
-            override fun areContentsTheSame(oldItem: Date, newItem: Date): Boolean {
+            override fun areContentsTheSame(oldItem: OffsetDateTime, newItem: OffsetDateTime): Boolean {
                 return oldItem == newItem
             }
         }
