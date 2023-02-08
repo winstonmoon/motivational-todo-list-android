@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.moonwinston.motivationaltodolist.ui.main.MainActivity
 
@@ -29,19 +28,17 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                PRIMARY_CHANNEL_ID,
-                "Stand up notification",
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationChannel.enableLights(true)
+        val notificationChannel = NotificationChannel(
+            PRIMARY_CHANNEL_ID,
+            "Stand up notification",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        notificationChannel.enableLights(true)
 //            notificationChannel.lightColor = Color.RED
-            notificationChannel.enableVibration(true)
-            notificationChannel.description = "AlarmManager Tests"
-            notificationManager.createNotificationChannel(
-                notificationChannel)
-        }
+        notificationChannel.enableVibration(true)
+        notificationChannel.description = "AlarmManager Tests"
+        notificationManager.createNotificationChannel(
+            notificationChannel)
     }
 
     private fun deliverNotification(context: Context, contextText: String) {

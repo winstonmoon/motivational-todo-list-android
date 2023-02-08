@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemRewardsBinding
-import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
 
 class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHolder>(diffUtil) {
 
@@ -15,7 +14,6 @@ class RewardsAdapter: ListAdapter<AchievementRateEntity, RewardsAdapter.ViewHold
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(achievementRateEntity: AchievementRateEntity) {
-//            val achievedDate = achievementRateEntity.date.dateToLocalDate()
             val achievedDate = achievementRateEntity.date
             val achievedDateText = "${achievedDate.year}\n${achievedDate.monthValue}/${achievedDate.dayOfMonth}"
             binding.achievedDateTextView.text = achievedDateText

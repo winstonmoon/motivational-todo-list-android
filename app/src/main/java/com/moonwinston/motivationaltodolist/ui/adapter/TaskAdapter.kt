@@ -16,7 +16,6 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemTasksBinding
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import com.moonwinston.motivationaltodolist.utils.dateToLocalDateTime
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 
 class TaskAdapter(
@@ -27,8 +26,6 @@ class TaskAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
-//            val hour = taskEntity.taskDate.dateToLocalDateTime().hour
-//            val minute = taskEntity.taskDate.dateToLocalDateTime().minute
             val hour = taskEntity.taskDate.hour
             val minute = taskEntity.taskDate.minute
             val taskTime = "$hour:$minute"
@@ -40,7 +37,7 @@ class TaskAdapter(
                 binding.taskTextView.text = taskEntity.task
                 binding.timeTextView.text = taskTime
                 binding.taskMeatballsMenu.setOnClickListener { view ->
-                    showCopyPopupMenu(view, taskEntity)
+                    showDuplicatePopupMenu(view, taskEntity)
                 }
             } else {
                 binding.taskRadioButton.isChecked = false
@@ -62,7 +59,6 @@ class TaskAdapter(
         builder.setMessage(R.string.message_dialog_confirm_complete)
             .setPositiveButton(R.string.button_ok,
                 DialogInterface.OnClickListener { _, _ ->
-//                    if (taskEntity.taskDate.getDateExceptTime().after(dateOfToday())) {
                     if (taskEntity.taskDate.getDateExceptTime().isAfter(dateOfToday())) {
                         Toast.makeText(view.context, R.string.message_toast_uncompletable, Toast.LENGTH_LONG).show()
                         return@OnClickListener
@@ -82,12 +78,12 @@ class TaskAdapter(
         builder.show()
     }
 
-    fun showCopyPopupMenu(view: View, taskEntity: TaskEntity) {
+    fun showDuplicatePopupMenu(view: View, taskEntity: TaskEntity) {
         val popupMenu = PopupMenu(view.context, view)
-        popupMenu.menuInflater.inflate(R.menu.task_copy_menu, popupMenu.menu)
+        popupMenu.menuInflater.inflate(R.menu.task_duplicate_menu, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "copy"))
+                R.id.duplicate -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "duplicate"))
             }
             false
         }
@@ -99,7 +95,7 @@ class TaskAdapter(
         popupMenu.menuInflater.inflate(R.menu.task_edit_menu, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "copy"))
+                R.id.duplicate -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "duplicate"))
                 R.id.edit -> meatballsMenuCallback(taskEntity, DmlState.Update)
                 R.id.delete -> meatballsMenuCallback(taskEntity, DmlState.Delete)
             }

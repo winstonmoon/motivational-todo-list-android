@@ -42,7 +42,7 @@
 
     <!-- Dialog Add -->
     <string name="button_add">Add</string>
-    <string name="button_copy">Copy</string>
+    <string name="button_duplicate">Duplicate</string>
     <string name="button_edit">Edit</string>
     <string name="label_date">Date</string>
     <string name="label_time">Time</string>

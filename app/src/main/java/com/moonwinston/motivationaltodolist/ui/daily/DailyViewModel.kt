@@ -7,11 +7,10 @@ import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.*
+import java.time.OffsetDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,28 +20,7 @@ class DailyViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-//    private val _todayTasks = MutableStateFlow(listOf<TaskEntity>())
-//    val todayTasks: StateFlow<List<TaskEntity>> = _todayTasks
-//
-//    fun getAllTasks() = viewModelScope.launch {
-//        todayTasks.value =
-//            taskRepository.getAllTasks().map { taskEntities ->
-//                taskEntities.filter { taskEntity ->
-//                    taskEntity.taskDate.getDateExceptTime() == dateOfToday()
-//                }.sortedBy { taskEntity ->
-//                    taskEntity.taskDate
-//                }
-//            }.
-//
-//    }
-
-    val todayTasks = taskRepository.getAllTasks().map { taskEntities ->
-        taskEntities.filter { taskEntity ->
-            taskEntity.taskDate.getDateExceptTime() == dateOfToday()
-        }.sortedBy { taskEntity ->
-            taskEntity.taskDate
-        }
-    }.stateIn(
+    val todayTasks = taskRepository.getAllTasksByDate(OffsetDateTime.now()).filterNotNull().stateIn(
         initialValue = emptyList(),
         started = SharingStarted.Eagerly,
         scope = viewModelScope
@@ -71,9 +49,9 @@ class DailyViewModel @Inject constructor(
     fun calculateRate(tasksList: List<TaskEntity>): Float {
         var totalTasks = 0F
         var doneTasks = 0F
-        for (task in tasksList) {
+        tasksList.forEach { taskEntity ->
             totalTasks += 1F
-            if (task.isCompleted) doneTasks += 1F
+            if (taskEntity.isCompleted) doneTasks += 1F
         }
         return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }

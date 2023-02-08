@@ -1,13 +1,23 @@
 package com.moonwinston.motivationaltodolist.data
 
 import androidx.room.TypeConverter
-import java.util.*
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 
-class RoomTypeConverters {
+object RoomTypeConverters {
+    private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? = value?.let { Date(it) }
+    @JvmStatic
+    fun toOffsetDateTime(value: String?): OffsetDateTime? {
+        return value?.let {
+            return formatter.parse(value, OffsetDateTime::from)
+        }
+    }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? = date?.time
+    @JvmStatic
+    fun fromOffsetDateTime(date: OffsetDateTime?): String? {
+        return date?.format(formatter)
+    }
 }
