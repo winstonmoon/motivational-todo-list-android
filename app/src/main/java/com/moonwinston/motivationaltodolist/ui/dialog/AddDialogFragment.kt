@@ -43,7 +43,8 @@ class AddDialogFragment : DialogFragment() {
             initCommonView()
             when (dmlState) {
                 DmlState.Insert(method = "insert") -> initInsertView(taskEntity)
-                DmlState.Insert(method = "copy") -> initCopyView(taskEntity)
+                DmlState.Insert(method = "duplicate") -> initCopyView(taskEntity)
+                DmlState.Insert(method = "duplicate") -> initCopyView(taskEntity)
                 DmlState.Update -> initUpdateView(taskEntity)
                 else -> Unit
             }
@@ -127,7 +128,7 @@ class AddDialogFragment : DialogFragment() {
 //        val taskDate = LocalDateTime.of(addDialogViewModel.date.value.dateToLocalDate(), LocalTime.of(hour, minute)).localDateTimeToDate()
         val taskDate = OffsetDateTime.of(addDialogViewModel.date.value.toLocalDate(), LocalTime.of(hour, minute), ZoneOffset.UTC)
         return when (dmlState) {
-            DmlState.Insert(method = "copy") ->
+            DmlState.Insert(method = "duplicate") ->
                 TaskEntity(
                     taskDate = taskDate,
                     task = binding.taskEditText.text.toString(),

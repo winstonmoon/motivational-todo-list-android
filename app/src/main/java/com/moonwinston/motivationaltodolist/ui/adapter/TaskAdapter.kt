@@ -16,7 +16,6 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemTasksBinding
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import com.moonwinston.motivationaltodolist.utils.dateToLocalDateTime
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 
 class TaskAdapter(
@@ -84,10 +83,10 @@ class TaskAdapter(
 
     fun showCopyPopupMenu(view: View, taskEntity: TaskEntity) {
         val popupMenu = PopupMenu(view.context, view)
-        popupMenu.menuInflater.inflate(R.menu.task_copy_menu, popupMenu.menu)
+        popupMenu.menuInflater.inflate(R.menu.task_duplicate_menu, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "copy"))
+                R.id.duplicate -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "duplicate"))
             }
             false
         }
@@ -99,7 +98,7 @@ class TaskAdapter(
         popupMenu.menuInflater.inflate(R.menu.task_edit_menu, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.copy -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "copy"))
+                R.id.duplicate -> meatballsMenuCallback(taskEntity, DmlState.Insert(method = "duplicate"))
                 R.id.edit -> meatballsMenuCallback(taskEntity, DmlState.Update)
                 R.id.delete -> meatballsMenuCallback(taskEntity, DmlState.Delete)
             }

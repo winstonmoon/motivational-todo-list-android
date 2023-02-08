@@ -17,7 +17,7 @@
     <string name="title_splash">Motivational\nTodo List</string>
     <string name="button_snack_restart">再起動</string>
     <string name="button_add">追加</string>
-    <string name="button_copy">コピー</string>
+    <string name="button_duplicate">複製</string>
     <string name="button_edit">更新</string>
     <string name="button_delete">削除</string>
     <string name="label_date">日時</string>

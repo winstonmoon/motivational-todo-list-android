@@ -84,7 +84,7 @@ class WeeklyFragment : Fragment() {
         val adapter = TaskAdapter(
             meatballsMenuCallback = { taskEntity, dmlState ->
                 when (dmlState) {
-                    DmlState.Insert(method = "copy") -> {
+                    DmlState.Insert(method = "duplicate") -> {
                         val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
                         view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
                     }
