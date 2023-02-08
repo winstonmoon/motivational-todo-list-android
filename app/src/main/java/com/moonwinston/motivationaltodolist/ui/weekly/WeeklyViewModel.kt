@@ -1,16 +1,11 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.tasks.Task
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
-import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
-import com.moonwinston.motivationaltodolist.utils.localDateToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,37 +19,29 @@ class WeeklyViewModel @Inject constructor (
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-//    private val _selectedDate = MutableStateFlow(Date())
-//    val selectedDate: StateFlow<Date> = _selectedDate
-//
-//    fun setSelectedDate(date: Date) = viewModelScope.launch {
-//        _selectedDate.emit(date)
-//    }
-
     private val _selectedDate = MutableStateFlow(OffsetDateTime.now())
     val selectedDate: StateFlow<OffsetDateTime> = _selectedDate
 
+    private val _selectedDayTasks = MutableStateFlow(listOf<TaskEntity>())
+    val selectedDayTasks: StateFlow<List<TaskEntity>> = _selectedDayTasks
+
     fun setSelectedDate(date: OffsetDateTime) = viewModelScope.launch {
         _selectedDate.emit(date)
+//        _selectedDayTasks.value = taskRepository.getAllTasksByDate(date)
+        _selectedDayTasks.value = taskRepository.getAllTasksByDate(date).stateIn(
+            initialValue = emptyList(),
+            started = SharingStarted.Eagerly,
+            scope = viewModelScope
+        )
     }
 
-    val selectedDayTasks = taskRepository.getAllTasks().map { taskEntities ->
-        taskEntities.filter { taskEntity ->
-            taskEntity.taskDate.getDateExceptTime() == selectedDate.value
-        }.sortedBy { taskEntity ->
-            taskEntity.taskDate
-        }
-    }.stateIn(
-        initialValue = emptyList(),
-        started = SharingStarted.Eagerly,
-        scope = viewModelScope
-    )
+//    val selectedDayTasks = taskRepository.getAllTasksByDate(selectedDate.value).stateIn(
+//        initialValue = emptyList(),
+//        started = SharingStarted.Eagerly,
+//        scope = viewModelScope
+//    )
 
-    val allTasks = taskRepository.getAllTasks().map { taskEntities ->
-        taskEntities.sortedBy { taskEntity ->
-            taskEntity.taskDate
-        }
-    }.stateIn(
+    val allTasks = taskRepository.getAllTasks().stateIn(
         initialValue = emptyList(),
         started = SharingStarted.Eagerly,
         scope = viewModelScope
@@ -71,27 +58,6 @@ class WeeklyViewModel @Inject constructor (
             userPreferencesRepository.updateWeeklyCoachMarkDismissedStatusFlow(dismissWeeklyCoachMark)
         }
     }
-
-//    fun createDaysOfWeek(diffDays: Int): List<Date> {
-//        val daysOfWeek = mutableListOf<Date>()
-//        val calendar = Calendar.getInstance().apply {
-//            add(Calendar.DATE, diffDays)
-//            firstDayOfWeek = Calendar.MONDAY
-//            val diffDateFromMonday =
-//                if (this@apply.get(Calendar.DAY_OF_WEEK) == 1) -6
-//                else 2 - this@apply.get(Calendar.DAY_OF_WEEK)
-//            add(Calendar.DATE, diffDateFromMonday)
-//        }
-//
-//        (1..7).forEach { _ ->
-//            val year = calendar.get(Calendar.YEAR)
-//            val month = calendar.get(Calendar.MONTH)
-//            val date = calendar.get(Calendar.DATE)
-//            daysOfWeek.add(LocalDate.of(year, month + 1, date).localDateToDate())
-//            calendar.add(Calendar.DATE, 1)
-//        }
-//        return daysOfWeek
-//    }
 
     fun createDaysOfWeek(diffDays: Int): List<OffsetDateTime> {
         val daysOfWeek = mutableListOf<OffsetDateTime>()
@@ -114,7 +80,6 @@ class WeeklyViewModel @Inject constructor (
         return daysOfWeek
     }
 
-//    fun getWeeklyRateListsFromAllTasks(allTasks: List<TaskEntity>, daysOfWeek: List<Date>): List<Float> {
     fun getWeeklyRateListsFromAllTasks(allTasks: List<TaskEntity>, daysOfWeek: List<OffsetDateTime>): List<Float> {
         val monList = mutableListOf<TaskEntity>()
         val tueList = mutableListOf<TaskEntity>()

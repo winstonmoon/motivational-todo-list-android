@@ -23,7 +23,6 @@ const val DIFF_MONTH = "diffMonth"
 class MonthlyCalendarFragment : Fragment() {
     private val monthlySharedViewModel: MonthlyViewModel by activityViewModels()
     private lateinit var binding: FragmentMonthlyCalendarBinding
-//    private var daysOfMonth = listOf<Date>()
     private var daysOfMonth = listOf<OffsetDateTime>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

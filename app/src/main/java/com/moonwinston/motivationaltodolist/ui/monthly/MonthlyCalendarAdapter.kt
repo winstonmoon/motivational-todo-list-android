@@ -10,11 +10,9 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import com.moonwinston.motivationaltodolist.utils.dateToLocalDate
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
 import java.time.OffsetDateTime
-import java.util.*
 
 class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
     ListAdapter<OffsetDateTime, MonthlyCalendarAdapter.ViewHolder>(diffUtil) {
@@ -38,7 +36,8 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 date == dateOfToday() -> {
                     binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.monthlyDateTextView.text = "${date.dayOfMonth}"
-                    if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
+//                    if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
+                    binding.monthlyCustomPieChart.alpha = if (calculatedRate == 0F) 0.2F else 1F
                     binding.monthlyCustomPieChart.updatePercentage(calculatedRate)
                 }
                 date.isAfter(dateOfToday()) -> {
@@ -47,7 +46,8 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                 }
                 else -> {
                     binding.monthlyDateTextView.text = "${date.dayOfMonth}"
-                    if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
+//                    if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
+                    binding.monthlyCustomPieChart.alpha = if (calculatedRate == 0F) 0.2F else 1F
                     binding.monthlyCustomPieChart.updatePercentage(calculatedRate)
                 }
             }
@@ -81,7 +81,7 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<OffsetDateTime>() {
             override fun areItemsTheSame(oldItem: OffsetDateTime, newItem: OffsetDateTime): Boolean {
-                return oldItem.toLocalDate() == newItem.toLocalDate()
+                return oldItem.toEpochSecond() == newItem.toEpochSecond()
             }
 
             override fun areContentsTheSame(oldItem: OffsetDateTime, newItem: OffsetDateTime): Boolean {

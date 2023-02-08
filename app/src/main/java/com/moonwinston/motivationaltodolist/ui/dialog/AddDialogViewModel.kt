@@ -10,13 +10,6 @@ import java.util.*
 
 class AddDialogViewModel : ViewModel() {
 
-//    private val _date = MutableStateFlow(Date())
-//    val date: StateFlow<Date> = _date
-//
-//    fun setDate(date: Date) = viewModelScope.launch {
-//        _date.emit(date)
-//    }
-
     private val _date = MutableStateFlow(OffsetDateTime.now())
     val date: StateFlow<OffsetDateTime> = _date
 

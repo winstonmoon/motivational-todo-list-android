@@ -11,13 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
-import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import com.moonwinston.motivationaltodolist.utils.localDateToDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.time.OffsetDateTime
-import java.util.*
 
 const val DIFF_WEEK = "diffWeek"
 
@@ -25,7 +21,6 @@ const val DIFF_WEEK = "diffWeek"
 class WeeklyCalendarFragment : Fragment() {
     private val weeklySharedViewModel: WeeklyViewModel by activityViewModels()
     private lateinit var binding: FragmentWeeklyCalendarBinding
-//    private var daysOfWeek = listOf<Date>()
     private var daysOfWeek = listOf<OffsetDateTime>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

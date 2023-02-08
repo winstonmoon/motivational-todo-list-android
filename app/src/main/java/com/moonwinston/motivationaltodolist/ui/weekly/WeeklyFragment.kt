@@ -21,7 +21,6 @@ import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.OffsetDateTime
@@ -74,8 +73,6 @@ class WeeklyFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val diffDays = (position - lastPosition) * 7
-//                val selectedDate = weeklySharedViewModel.selectedDate.value.dateToLocalDate()
-//                    .plusDays(diffDays.toLong()).localDateToDate()
                 val selectedDate = weeklySharedViewModel.selectedDate.value.plusDays(diffDays.toLong())
                 weeklySharedViewModel.setSelectedDate(selectedDate)
                 lastPosition = position
@@ -144,22 +141,6 @@ class WeeklyFragment : Fragment() {
         drawRedDotOnSelectedDate(date = dateOfToday())
     }
 
-//    private fun createWeeklyTitle(date: Date, language: Int): String {
-//        val wordYear = resources.getString(R.string.label_year)
-//        val wordDay = resources.getString(R.string.label_day)
-//        val today = resources.getString(R.string.text_today)
-//        val year = date.dateToLocalDate().year
-//        val month = date.dateToLocalDate().month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-//        val day = date.dateToLocalDate().dayOfMonth
-//        val dayOfWeek =
-//            if (date == dateOfToday()) today
-//            else date.dateToLocalDate().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
-//        return when (language) {
-//            ContextUtil.ENGLISH -> "$dayOfWeek, $month $day, $year"
-//            else -> "$year$wordYear $month $day$wordDay $dayOfWeek"
-//        }
-//    }
-
     private fun createWeeklyTitle(date: OffsetDateTime, language: Int): String {
         val wordYear = resources.getString(R.string.label_year)
         val wordDay = resources.getString(R.string.label_day)
@@ -175,26 +156,6 @@ class WeeklyFragment : Fragment() {
             else -> "$year$wordYear $month $day$wordDay $dayOfWeek"
         }
     }
-
-//    private fun drawRedDotOnSelectedDate(date: Date) {
-//        binding.mondayTextView.background = null
-//        binding.tuesdayTextView.background = null
-//        binding.wednesdayTextView.background = null
-//        binding.thursdayTextView.background = null
-//        binding.fridayTextView.background = null
-//        binding.saturdayTextView.background = null
-//        binding.sundayTextView.background = null
-//        when (date.dateToLocalDate().dayOfWeek) {
-//            DayOfWeek.MONDAY -> binding.mondayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-//            DayOfWeek.TUESDAY -> binding.tuesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-//            DayOfWeek.WEDNESDAY -> binding.wednesdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-//            DayOfWeek.THURSDAY -> binding.thursdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-//            DayOfWeek.FRIDAY -> binding.fridayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-//            DayOfWeek.SATURDAY -> binding.saturdayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-//            DayOfWeek.SUNDAY -> binding.sundayTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_28)
-//            else -> Unit
-//        }
-//    }
 
     private fun drawRedDotOnSelectedDate(date: OffsetDateTime) {
         binding.mondayTextView.background = null

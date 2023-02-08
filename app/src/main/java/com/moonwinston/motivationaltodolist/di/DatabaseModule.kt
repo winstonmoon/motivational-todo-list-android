@@ -18,11 +18,20 @@ import javax.inject.Singleton
 @Module
 object DatabaseModule {
 
+    val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE Book ADD COLUMN pub_year INTEGER")
+            database.execSQL("ALTER TABLE Book ADD COLUMN pub_year INTEGER")
+            database.execSQL("ALTER TABLE Book ADD COLUMN pub_year INTEGER")
+        }
+    }
+
     @Singleton
     @Provides
     fun provideTodoDatabase(
         @ApplicationContext context: Context
     ): TodoDatabase = Room.databaseBuilder(context, TodoDatabase::class.java, TodoDatabase.DB_NAME).build()
+//    ): TodoDatabase = Room.databaseBuilder(context, TodoDatabase::class.java, TodoDatabase.DB_NAME).addMigrations(MIGRATION_2_3).build()
 
     @Singleton
     @Provides
