@@ -27,19 +27,10 @@ class WeeklyViewModel @Inject constructor (
 
     fun setSelectedDate(date: OffsetDateTime) = viewModelScope.launch {
         _selectedDate.emit(date)
-//        _selectedDayTasks.value = taskRepository.getAllTasksByDate(date)
-        _selectedDayTasks.value = taskRepository.getAllTasksByDate(date).stateIn(
-            initialValue = emptyList(),
-            started = SharingStarted.Eagerly,
-            scope = viewModelScope
-        )
+        taskRepository.getAllTasksByDate(date).collect { taskEntities ->
+            _selectedDayTasks.emit(taskEntities)
+        }
     }
-
-//    val selectedDayTasks = taskRepository.getAllTasksByDate(selectedDate.value).stateIn(
-//        initialValue = emptyList(),
-//        started = SharingStarted.Eagerly,
-//        scope = viewModelScope
-//    )
 
     val allTasks = taskRepository.getAllTasks().stateIn(
         initialValue = emptyList(),
