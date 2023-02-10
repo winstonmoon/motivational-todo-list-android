@@ -15,7 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.ui.adapter.TaskAdapter
+import com.moonwinston.motivationaltodolist.ui.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
@@ -151,8 +151,8 @@ class WeeklyFragment : Fragment() {
         val dayOfWeek =
             if (date == dateOfToday()) today
             else date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
-        return when (language) {
-            ContextUtil.ENGLISH -> "$dayOfWeek, $month $day, $year"
+        return when (Language.values()[language]) {
+            Language.ENGLISH -> "$dayOfWeek, $month $day, $year"
             else -> "$year$wordYear $month $day$wordDay $dayOfWeek"
         }
     }

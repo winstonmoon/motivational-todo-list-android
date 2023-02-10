@@ -15,11 +15,11 @@ import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.ui.adapter.TaskAdapter
+import com.moonwinston.motivationaltodolist.ui.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
-import com.moonwinston.motivationaltodolist.utils.ContextUtil
+import com.moonwinston.motivationaltodolist.utils.Language
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -55,7 +55,6 @@ class DailyFragment : Fragment() {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert(method = "insert"),
                 "taskEntity" to TaskEntity(
-//                    taskDate = Date(),
                     taskDate = OffsetDateTime.now(),
                     task = "",
                     isCompleted = false
@@ -118,8 +117,8 @@ class DailyFragment : Fragment() {
         val year = LocalDate.now().year
         val month = LocalDate.now().month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
         val day = LocalDate.now().dayOfMonth
-        return when (language) {
-            ContextUtil.ENGLISH -> "$today, $month $day, $year"
+        return when (Language.values()[language]) {
+            Language.ENGLISH -> "$today, $month $day, $year"
             else -> "$year$wordYear $month $day$wordDay $today"
         }
     }

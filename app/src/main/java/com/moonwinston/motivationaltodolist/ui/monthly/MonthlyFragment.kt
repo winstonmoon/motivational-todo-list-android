@@ -14,7 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
-import com.moonwinston.motivationaltodolist.utils.ContextUtil
+import com.moonwinston.motivationaltodolist.utils.Language
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.Month
@@ -58,8 +58,8 @@ class MonthlyFragment : Fragment() {
     private fun createMonthlyTitle(year: Int, month: Int): String {
         val wordYear = resources.getString(R.string.label_year)
         val month = Month.of(month).getDisplayName(TextStyle.SHORT, Locale.getDefault())
-        return when (mainViewModel.languageIndex.value) {
-            ContextUtil.ENGLISH -> "$month, $year"
+        return when (Language.values()[mainViewModel.languageIndex.value]) {
+            Language.ENGLISH -> "$month, $year"
             else -> "$year$wordYear $month"
         }
     }
