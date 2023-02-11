@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemMonthlyCalendarBinding
+import com.moonwinston.motivationaltodolist.utils.calculateRate
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
@@ -51,16 +52,6 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                     binding.monthlyCustomPieChart.updatePercentage(calculatedRate)
                 }
             }
-        }
-
-        private fun calculateRate(tasksList: List<TaskEntity>): Float {
-            var totalTasks = 0F
-            var doneTasks = 0F
-            tasksList.forEach {  taskEntity ->
-                totalTasks += 1F
-                if (taskEntity.isCompleted) doneTasks += 1F
-            }
-            return if (doneTasks == 0F) 0F else doneTasks / totalTasks
         }
     }
 

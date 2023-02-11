@@ -4,7 +4,6 @@ import android.content.res.Resources
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
-import java.util.*
 
 fun setNightMode(theme: Int) {
     when (Theme.values()[theme]) {

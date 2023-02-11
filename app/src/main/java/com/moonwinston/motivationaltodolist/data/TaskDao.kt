@@ -10,11 +10,10 @@ interface TaskDao {
 
     @Query("SELECT * FROM task ORDER BY taskDate")
     fun getAll(): Flow<List<TaskEntity>>
-//    fun getAll(): List<TaskEntity>
 
     //TODO temporary implement
     @Query("SELECT * FROM task WHERE taskDate < :currentTime ORDER BY taskDate")
-    fun getAllFutureTasks(currentTime: OffsetDateTime): List<TaskEntity>
+    fun getAllFutureTasks(currentTime: OffsetDateTime): Flow<List<TaskEntity>>
 
     @Query("SELECT * FROM task WHERE date(taskDate) = date(:date) ORDER BY taskDate")
     fun getAllByDate(date: OffsetDateTime): Flow<List<TaskEntity>>
