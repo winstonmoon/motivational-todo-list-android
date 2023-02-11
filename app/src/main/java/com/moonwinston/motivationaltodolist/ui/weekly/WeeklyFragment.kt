@@ -116,7 +116,7 @@ class WeeklyFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 weeklySharedViewModel.selectedDayTasks.collect { selectedDayTasks ->
                     adapter.submitList(selectedDayTasks)
-                    val calculatedRate = weeklySharedViewModel.calculateRate(selectedDayTasks)
+                    val calculatedRate = calculateRate(selectedDayTasks)
                     val achievementRate = AchievementRateEntity(
                         date = weeklySharedViewModel.selectedDate.value,
                         rate = calculatedRate

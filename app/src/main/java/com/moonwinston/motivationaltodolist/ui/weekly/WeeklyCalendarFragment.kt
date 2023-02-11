@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 
@@ -70,6 +71,14 @@ class WeeklyCalendarFragment : Fragment() {
         }
         binding.sundayCustomPieChart.setOnClickListener {
             weeklySharedViewModel.setSelectedDate(binding.sundayCustomPieChart.pieChartViewDate)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                weeklySharedViewModel.daysOfWeek.collect {
+
+                }
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

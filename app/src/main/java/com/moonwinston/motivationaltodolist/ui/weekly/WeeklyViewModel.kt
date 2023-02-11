@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
+import com.moonwinston.motivationaltodolist.utils.calculateRate
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -30,6 +31,17 @@ class WeeklyViewModel @Inject constructor (
         taskRepository.getAllTasksByDate(date).collect { taskEntities ->
             _selectedDayTasks.emit(taskEntities)
         }
+    }
+
+    private val _daysOfWeek = MutableStateFlow(listOf<OffsetDateTime>())
+    val daysOfWeek: StateFlow<List<OffsetDateTime>> = _daysOfWeek
+
+    private val _weeklyTasks = MutableStateFlow(listOf<TaskEntity>())
+    val weeklyTasks: StateFlow<List<TaskEntity>> = _weeklyTasks
+
+    fun setDaysOfWeek(daysOfWeek: List<OffsetDateTime>) = viewModelScope.launch {
+        _daysOfWeek.emit(daysOfWeek)
+        taskRepository.getAllTasksByDatesFlow(daysOfWeek)
     }
 
     val allTasks = taskRepository.getAllTasks().stateIn(
@@ -99,15 +111,5 @@ class WeeklyViewModel @Inject constructor (
         weeklyRates.add(calculateRate(satList))
         weeklyRates.add(calculateRate(sunList))
         return weeklyRates
-    }
-
-    fun calculateRate(tasksList: List<TaskEntity>): Float {
-        var totalTasks = 0F
-        var doneTasks = 0F
-        for (task in tasksList) {
-            totalTasks += 1F
-            if (task.isCompleted) doneTasks += 1F
-        }
-        return if (doneTasks == 0F) 0F else doneTasks / totalTasks
     }
 }
