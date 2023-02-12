@@ -3,8 +3,10 @@ package com.moonwinston.motivationaltodolist.ui.dialog
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
@@ -29,6 +31,7 @@ class AddDialogFragment : DialogFragment() {
     private lateinit var dmlState: DmlState
     private lateinit var taskEntity: TaskEntity
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dmlState = arguments?.getParcelable<DmlState>("dmlState") as DmlState
@@ -59,7 +62,7 @@ class AddDialogFragment : DialogFragment() {
     private fun initInsertView(taskEntity: TaskEntity) {
         binding.timePicker.hour
         binding.timePicker.minute
-        binding.calendarView.date = taskEntity.taskDate.toEpochSecond()
+        binding.calendarView.date = taskEntity.taskDate.getEpoch()
         addDialogViewModel.setDate(taskEntity.taskDate)
         addDialogViewModel.setPositiveButtonStringResource(R.string.button_add)
     }
@@ -67,7 +70,7 @@ class AddDialogFragment : DialogFragment() {
     private fun initDuplicateView(taskEntity: TaskEntity) {
         binding.timePicker.hour = taskEntity.taskDate.hour
         binding.timePicker.minute = taskEntity.taskDate.minute
-        binding.calendarView.date = taskEntity.taskDate.toEpochSecond()
+        binding.calendarView.date = taskEntity.taskDate.getEpoch()
         addDialogViewModel.setDate(taskEntity.taskDate)
         binding.taskEditText.setText(taskEntity.task)
         addDialogViewModel.setPositiveButtonStringResource(R.string.button_add)
@@ -76,7 +79,7 @@ class AddDialogFragment : DialogFragment() {
     private fun initUpdateView(taskEntity: TaskEntity) {
         binding.timePicker.hour = taskEntity.taskDate.hour
         binding.timePicker.minute = taskEntity.taskDate.minute
-        binding.calendarView.date = taskEntity.taskDate.toEpochSecond()
+        binding.calendarView.date = taskEntity.taskDate.getEpoch()
         addDialogViewModel.setDate(taskEntity.taskDate)
         binding.taskEditText.setText(taskEntity.task)
         addDialogViewModel.setPositiveButtonStringResource(R.string.button_edit)

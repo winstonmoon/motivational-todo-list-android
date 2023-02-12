@@ -12,3 +12,7 @@ fun OffsetDateTime.getDateExceptTime(): OffsetDateTime {
     val day = this@getDateExceptTime.dayOfMonth
     return OffsetDateTime.of(LocalDate.of(year, month, day), LocalTime.of(0, 0),ZoneOffset.UTC)
 }
+
+fun OffsetDateTime.getEpoch(): Long {
+    return this@getEpoch.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+}
