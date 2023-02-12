@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.moonwinston.motivationaltodolist">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
         android:name=".MotivationalTodoListApplication"
         android:allowBackup="true"
@@ -23,10 +27,11 @@
             android:name=".ui.main.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <receiver android:name=".receiver.AlarmReceiver"  android:exported="false">
+        <receiver android:name=".receiver.AlarmReceiver"
+            android:exported="false"
+            android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
             </intent-filter>
         </receiver>
         <service

@@ -8,21 +8,17 @@ import java.util.*
 @Dao
 interface TaskDao {
 
-    @Query("SELECT * FROM task ORDER BY taskDate")
-    fun getAll(): Flow<List<TaskEntity>>
-
-    //TODO temporary implement
     @Query("SELECT * FROM task WHERE taskDate < :currentTime ORDER BY taskDate")
     fun getAllFutureTasks(currentTime: OffsetDateTime): Flow<List<TaskEntity>>
 
     @Query("SELECT * FROM task WHERE date(taskDate) = date(:date) ORDER BY taskDate")
     fun getAllByDate(date: OffsetDateTime): Flow<List<TaskEntity>>
 
-    @Query("SELECT * FROM task WHERE date(taskDate) IN (date(:taskDatesList)) ORDER BY taskDate")
-    fun getAllByDatesFlow(taskDatesList: List<OffsetDateTime>): Flow<List<TaskEntity>>
+    @Query("SELECT * FROM task WHERE date(:startDate) <= date(taskDate) <= date(:endDate) ORDER BY taskDate")
+    fun getAllByStartEndDateFlow(startDate: OffsetDateTime, endDate: OffsetDateTime): Flow<List<TaskEntity>>
 
-    @Query("SELECT * FROM task WHERE date(taskDate) IN (date(:taskDatesList)) ORDER BY taskDate")
-    fun getAllByDates(taskDatesList: List<OffsetDateTime>): List<TaskEntity>
+    @Query("SELECT * FROM task WHERE date(:startDate) <= date(taskDate) <= date(:endDate) ORDER BY taskDate")
+    fun getAllByStartEndDate(startDate: OffsetDateTime, endDate: OffsetDateTime): List<TaskEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(taskEntity: TaskEntity)

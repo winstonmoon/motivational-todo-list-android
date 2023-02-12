@@ -149,7 +149,7 @@ class WeeklyFragment : Fragment() {
         val month = date.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
         val day = date.dayOfMonth
         val dayOfWeek =
-            if (date == dateOfToday()) today
+            if (date.isEqual(dateOfToday())) today
             else date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
         return when (Language.values()[language]) {
             Language.ENGLISH -> "$dayOfWeek, $month $day, $year"

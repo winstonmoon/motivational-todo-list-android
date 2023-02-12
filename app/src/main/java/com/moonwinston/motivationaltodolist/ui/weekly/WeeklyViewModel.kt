@@ -41,14 +41,10 @@ class WeeklyViewModel @Inject constructor (
 
     fun setDaysOfWeek(daysOfWeek: List<OffsetDateTime>) = viewModelScope.launch {
         _daysOfWeek.emit(daysOfWeek)
-        taskRepository.getAllTasksByDatesFlow(daysOfWeek)
+        taskRepository.getAllTasksByStartEndDateFlow(daysOfWeek.first(), daysOfWeek.last()).collect { taskEntities ->
+            _weeklyTasks.emit(taskEntities)
+        }
     }
-
-    val allTasks = taskRepository.getAllTasks().stateIn(
-        initialValue = emptyList(),
-        started = SharingStarted.Eagerly,
-        scope = viewModelScope
-    )
 
     val isCoachWeeklyDismissed = userPreferencesRepository.fetchWeeklyCoachMarkDismissedStatusFlow.stateIn(
         initialValue = false,
@@ -83,7 +79,7 @@ class WeeklyViewModel @Inject constructor (
         return daysOfWeek
     }
 
-    fun getWeeklyRateListsFromAllTasks(allTasks: List<TaskEntity>, daysOfWeek: List<OffsetDateTime>): List<Float> {
+    fun getWeeklyRateListsFromAllTasks(tasks: List<TaskEntity>): List<Float> {
         val monList = mutableListOf<TaskEntity>()
         val tueList = mutableListOf<TaskEntity>()
         val wedList = mutableListOf<TaskEntity>()
@@ -91,15 +87,15 @@ class WeeklyViewModel @Inject constructor (
         val friList = mutableListOf<TaskEntity>()
         val satList = mutableListOf<TaskEntity>()
         val sunList = mutableListOf<TaskEntity>()
-        allTasks.forEach { taskEntity ->
+        tasks.forEach { taskEntity ->
             when (taskEntity.taskDate.getDateExceptTime()) {
-                daysOfWeek[0] -> monList.add(taskEntity)
-                daysOfWeek[1] -> tueList.add(taskEntity)
-                daysOfWeek[2] -> wedList.add(taskEntity)
-                daysOfWeek[3] -> thuList.add(taskEntity)
-                daysOfWeek[4] -> friList.add(taskEntity)
-                daysOfWeek[5] -> satList.add(taskEntity)
-                daysOfWeek[6] -> sunList.add(taskEntity)
+                daysOfWeek.value[0] -> monList.add(taskEntity)
+                daysOfWeek.value[1] -> tueList.add(taskEntity)
+                daysOfWeek.value[2] -> wedList.add(taskEntity)
+                daysOfWeek.value[3] -> thuList.add(taskEntity)
+                daysOfWeek.value[4] -> friList.add(taskEntity)
+                daysOfWeek.value[5] -> satList.add(taskEntity)
+                daysOfWeek.value[6] -> sunList.add(taskEntity)
             }
         }
         val weeklyRates = mutableListOf<Float>()

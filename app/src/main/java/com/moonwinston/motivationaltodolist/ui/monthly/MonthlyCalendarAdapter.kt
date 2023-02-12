@@ -26,18 +26,17 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
         fun bind(date: OffsetDateTime) {
             val tempTaskList = mutableListOf<TaskEntity>()
             monTasksList.forEach { taskEntity ->
-                if (taskEntity.taskDate.getDateExceptTime() == date) tempTaskList.add(taskEntity)
+                if (taskEntity.taskDate.getDateExceptTime().isEqual(date)) tempTaskList.add(taskEntity)
             }
             val calculatedRate = calculateRate(tempTaskList)
             when {
-                date == nonExistDate() -> {
+                date.isEqual(nonExistDate()) -> {
                     binding.monthlyDateTextView.visibility = View.GONE
                     binding.monthlyCustomPieChart.visibility = View.GONE
                 }
-                date == dateOfToday() -> {
+                date.isEqual(dateOfToday()) -> {
                     binding.monthlyDateTextView.setBackgroundResource(R.drawable.bg_shape_oval_red_22)
                     binding.monthlyDateTextView.text = "${date.dayOfMonth}"
-//                    if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.alpha = if (calculatedRate == 0F) 0.2F else 1F
                     binding.monthlyCustomPieChart.updatePercentage(calculatedRate)
                 }
@@ -46,8 +45,8 @@ class MonthlyCalendarAdapter(monthTasksList: List<TaskEntity>) :
                     binding.monthlyCustomPieChart.visibility = View.INVISIBLE
                 }
                 else -> {
+                    // days of this month except today
                     binding.monthlyDateTextView.text = "${date.dayOfMonth}"
-//                    if (calculatedRate == 0.0F) binding.monthlyCustomPieChart.alpha = 0.2F
                     binding.monthlyCustomPieChart.alpha = if (calculatedRate == 0F) 0.2F else 1F
                     binding.monthlyCustomPieChart.updatePercentage(calculatedRate)
                 }

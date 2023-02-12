@@ -9,12 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.time.OffsetDateTime
 
 const val DIFF_WEEK = "diffWeek"
 
@@ -22,7 +19,6 @@ const val DIFF_WEEK = "diffWeek"
 class WeeklyCalendarFragment : Fragment() {
     private val weeklySharedViewModel: WeeklyViewModel by activityViewModels()
     private lateinit var binding: FragmentWeeklyCalendarBinding
-    private var daysOfWeek = listOf<OffsetDateTime>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +26,8 @@ class WeeklyCalendarFragment : Fragment() {
         arguments?.takeIf { it.containsKey(DIFF_WEEK) }?.apply {
             diffDays = getInt(DIFF_WEEK) * 7
         }
-        daysOfWeek = weeklySharedViewModel.createDaysOfWeek(diffDays)
+        val daysOfWeek = weeklySharedViewModel.createDaysOfWeek(diffDays)
+        weeklySharedViewModel.setDaysOfWeek(daysOfWeek)
     }
 
     override fun onCreateView(
@@ -44,13 +41,6 @@ class WeeklyCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mondayCustomPieChart.pieChartViewDate = daysOfWeek[0]
-        binding.tuesdayCustomPieChart.pieChartViewDate = daysOfWeek[1]
-        binding.wednesdayCustomPieChart.pieChartViewDate = daysOfWeek[2]
-        binding.thursdayCustomPieChart.pieChartViewDate = daysOfWeek[3]
-        binding.fridayCustomPieChart.pieChartViewDate = daysOfWeek[4]
-        binding.saturdayCustomPieChart.pieChartViewDate = daysOfWeek[5]
-        binding.sundayCustomPieChart.pieChartViewDate = daysOfWeek[6]
         binding.mondayCustomPieChart.setOnClickListener {
             weeklySharedViewModel.setSelectedDate(binding.mondayCustomPieChart.pieChartViewDate)
         }
@@ -75,16 +65,22 @@ class WeeklyCalendarFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                weeklySharedViewModel.daysOfWeek.collect {
-
+                weeklySharedViewModel.daysOfWeek.collect { daysOfWeek ->
+                    binding.mondayCustomPieChart.pieChartViewDate = daysOfWeek[0]
+                    binding.tuesdayCustomPieChart.pieChartViewDate = daysOfWeek[1]
+                    binding.wednesdayCustomPieChart.pieChartViewDate = daysOfWeek[2]
+                    binding.thursdayCustomPieChart.pieChartViewDate = daysOfWeek[3]
+                    binding.fridayCustomPieChart.pieChartViewDate = daysOfWeek[4]
+                    binding.saturdayCustomPieChart.pieChartViewDate = daysOfWeek[5]
+                    binding.sundayCustomPieChart.pieChartViewDate = daysOfWeek[6]
                 }
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                weeklySharedViewModel.allTasks.collect { taskEntities ->
-                    val weeklyRates = weeklySharedViewModel.getWeeklyRateListsFromAllTasks(taskEntities, daysOfWeek)
+                weeklySharedViewModel.weeklyTasks.collect { taskEntities ->
+                    val weeklyRates = weeklySharedViewModel.getWeeklyRateListsFromAllTasks(taskEntities)
                     binding.mondayCustomPieChart.alpha = if (weeklyRates[0] == 0F) 0.2F else 1F
                     binding.tuesdayCustomPieChart.alpha = if (weeklyRates[1] == 0F) 0.2F else 1F
                     binding.wednesdayCustomPieChart.alpha = if (weeklyRates[2] == 0F) 0.2F else 1F

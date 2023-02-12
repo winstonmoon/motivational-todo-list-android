@@ -53,11 +53,11 @@ class AchievementPieChartView @JvmOverloads constructor(
         val paint = Paint()
         paint.style = Paint.Style.STROKE;
 
-        drawPieChart(canvas, rectF, paint)
-        drawProgressivePieChart(canvas, rectF, paint)
+        drawBackgroundPieChart(canvas, rectF, paint)
+        drawInnerPieChart(canvas, rectF, paint)
     }
 
-    private fun drawPieChart(
+    private fun drawBackgroundPieChart(
         canvas: Canvas?,
         rectF: RectF,
         paint: Paint
@@ -69,7 +69,7 @@ class AchievementPieChartView @JvmOverloads constructor(
         canvas?.drawArc(rectF, 270F, 360F, false, paint)
     }
 
-    private fun drawProgressivePieChart(
+    private fun drawInnerPieChart(
         canvas: Canvas?,
         rectF: RectF,
         paint: Paint
@@ -77,6 +77,7 @@ class AchievementPieChartView @JvmOverloads constructor(
         paint.apply {
             strokeWidth = progressiveStrokeWidth
             color = progressivePieChartColor
+            strokeCap = Paint.Cap.ROUND
         }
         canvas?.drawArc(rectF, 270F, percentage * 360F, false, paint)
     }

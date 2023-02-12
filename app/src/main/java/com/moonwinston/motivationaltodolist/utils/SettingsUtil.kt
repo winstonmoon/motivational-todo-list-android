@@ -50,3 +50,12 @@ enum class Language(val index: Int) {
     JAPANESE(3),
     SIMPLIFIED_CHINESE(4)
 }
+
+enum class Notification(val index: Int) {
+    OFF(0),
+    FIVE_MIN(1),
+    TEN_MIN(2),
+    FIFTEEN_MIN(3),
+    THIRTY_MIN(4),
+    ONE_HOUR(5)
+}
