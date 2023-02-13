@@ -1,11 +1,16 @@
 package com.moonwinston.motivationaltodolist.ui.main
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
@@ -20,7 +25,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.moonwinston.motivationaltodolist.R
+import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
+import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
+import com.moonwinston.motivationaltodolist.utils.Notification
+import com.moonwinston.motivationaltodolist.utils.getEpoch
 import com.moonwinston.motivationaltodolist.utils.setLanguage
 import com.moonwinston.motivationaltodolist.utils.setNightMode
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +43,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var listener: InstallStateUpdatedListener
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var alarmManager: AlarmManager
+//    private lateinit var alarmIntents: MutableList<PendingIntent>
+    private var alarmIntents = mutableListOf<PendingIntent>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +72,8 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics = Firebase.analytics
         MobileAds.initialize(this) {}
 
+        alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -67,13 +81,45 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
 
         lifecycleScope.launch {
-            mainViewModel.themeIndex.collect { themeIndex ->
-                setNightMode(themeIndex)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.themeIndex.collect { themeIndex ->
+                    setNightMode(themeIndex)
+                }
             }
         }
         lifecycleScope.launch {
-            mainViewModel.languageIndex.collect { languageIndex ->
-                setLanguage(languageIndex)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.languageIndex.collect { languageIndex ->
+                    setLanguage(languageIndex)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.notifyIndex.collect { notifyIndex ->
+                    when (Notification.values()[notifyIndex]) {
+                        Notification.OFF -> cancelAlarm(alarmIntents)
+                        else -> mainViewModel.getFutureTasks(notifyIndex)
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.futureTasks.collect { futureTasks ->
+                    when (Notification.values()[mainViewModel.notifyIndex.value]) {
+                        Notification.OFF -> Unit
+                        else -> {
+                            cancelAlarm(alarmIntents)
+                            setAlarm(
+                                notificationTime = mainViewModel.notifyIndex.value,
+                                futureTasks = futureTasks
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -107,6 +153,32 @@ class MainActivity : AppCompatActivity() {
         ).apply {
             setAction(R.string.button_snack_restart) { appUpdateManager.completeUpdate() }
             show()
+        }
+    }
+
+    private fun setAlarm (notificationTime: Int, futureTasks: List<TaskEntity>) {
+        alarmIntents.clear()
+        var requestCode = 0
+        futureTasks.forEach { taskEntity ->
+            val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
+                intent.putExtra("task", taskEntity.task)
+                intent.putExtra("taskDate", taskEntity.taskDate)
+                PendingIntent.getBroadcast(this, requestCode, intent,
+                    PendingIntent.FLAG_IMMUTABLE
+                )
+            }
+            alarmManager.setExact(
+                AlarmManager.RTC,
+                taskEntity.taskDate.minusMinutes(notificationTime.toLong()).getEpoch(),
+                alarmIntent)
+            alarmIntents.add(alarmIntent)
+            requestCode =+ 1
+        }
+    }
+
+    private fun cancelAlarm(alarmIntents: List<PendingIntent>) {
+        alarmIntents.forEach { alarmIntent ->
+            alarmManager.cancel(alarmIntent)
         }
     }
 }

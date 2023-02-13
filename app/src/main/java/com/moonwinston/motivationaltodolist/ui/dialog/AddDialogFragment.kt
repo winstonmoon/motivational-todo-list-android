@@ -31,7 +31,6 @@ class AddDialogFragment : DialogFragment() {
     private lateinit var dmlState: DmlState
     private lateinit var taskEntity: TaskEntity
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dmlState = arguments?.getParcelable<DmlState>("dmlState") as DmlState

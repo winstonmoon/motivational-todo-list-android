@@ -1,11 +1,14 @@
 package com.moonwinston.motivationaltodolist.ui.main
 
+import android.app.PendingIntent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*
+import com.moonwinston.motivationaltodolist.utils.Notification
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.OffsetDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,6 +63,26 @@ class MainViewModel @Inject constructor(
     fun setNotify(notifyIndex: Int) {
         viewModelScope.launch {
             userPreferencesRepository.updateNotifySettingFlow(notifyIndex)
+        }
+    }
+
+    private val _futureTasks = MutableStateFlow(listOf<TaskEntity>())
+    val futureTasks: StateFlow<List<TaskEntity>> = _futureTasks
+
+    fun getFutureTasks(index: Int) {
+        val notificationTime =
+            when (Notification.values()[index]) {
+                Notification.OFF -> 0L
+                Notification.FIVE_MIN -> 5L
+                Notification.TEN_MIN -> 10L
+                Notification.FIFTEEN_MIN -> 15L
+                Notification.THIRTY_MIN -> 30L
+                Notification.ONE_HOUR -> 60L
+            }
+        viewModelScope.launch {
+            taskRepository.getAllFutureTasks(OffsetDateTime.now().plusMinutes(notificationTime)).collect { taskEntities ->
+                _futureTasks.emit(taskEntities)
+            }
         }
     }
 }
