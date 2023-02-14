@@ -1,6 +1,5 @@
 package com.moonwinston.motivationaltodolist.ui.main
 
-import android.app.PendingIntent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*

@@ -8,7 +8,7 @@ import java.util.*
 @Dao
 interface TaskDao {
 
-    @Query("SELECT * FROM task WHERE taskDate < :currentTime ORDER BY taskDate")
+    @Query("SELECT * FROM task WHERE datetime(:currentTime) < datetime(taskDate) ORDER BY taskDate")
     fun getAllFutureTasks(currentTime: OffsetDateTime): Flow<List<TaskEntity>>
 
     @Query("SELECT * FROM task WHERE date(taskDate) = date(:date) ORDER BY taskDate")

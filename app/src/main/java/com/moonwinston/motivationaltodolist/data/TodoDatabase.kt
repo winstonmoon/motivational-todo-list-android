@@ -4,14 +4,15 @@ import androidx.room.*
 import androidx.room.migration.AutoMigrationSpec
 
 @Database(
-    version = 3,
+//    version = 3,
+    version = 2,
     entities = [TaskEntity::class, AchievementRateEntity::class],
     autoMigrations = [
         AutoMigration (
-//            from = 1,
-//            to = 2,
-            from = 2,
-            to = 3,
+            from = 1,
+            to = 2,
+//            from = 2,
+//            to = 3,
             spec = TodoDatabase.TodoAutoMigration::class
         )
     ]
