@@ -10,7 +10,7 @@ import javax.inject.Singleton
 class TaskRepository @Inject constructor(
     private val taskDao: TaskDao
 ){
-    suspend fun getAllFutureTasks(currentTime: OffsetDateTime) = withContext(Dispatchers.IO) { taskDao.getAllFutureTasks(currentTime = currentTime) }
+    fun getAllFutureTasks(currentTime: OffsetDateTime) = taskDao.getAllFutureTasks(currentTime = currentTime)
 
     fun getAllTasksByDate(date: OffsetDateTime) = taskDao.getAllByDate(date)
 
