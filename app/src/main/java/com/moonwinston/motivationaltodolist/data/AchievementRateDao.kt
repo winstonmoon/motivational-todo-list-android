@@ -11,7 +11,7 @@ import java.util.*
 @Dao
 interface AchievementRateDao {
 
-    @Query("SELECT rate FROM achievementRate WHERE date = :date")
+    @Query("SELECT rate FROM achievementRate WHERE date(date) = date(:date)")
     fun getRateByDates(date: OffsetDateTime): Flow<Float>
 
     @Query("SELECT * FROM achievementRate WHERE rate = 1")
