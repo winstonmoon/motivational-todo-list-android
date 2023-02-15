@@ -19,7 +19,7 @@ class AlarmReceiver : BroadcastReceiver() {
     private lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+//        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
             notificationManager = context.getSystemService(
                 Context.NOTIFICATION_SERVICE) as NotificationManager
             //Todo
@@ -27,7 +27,7 @@ class AlarmReceiver : BroadcastReceiver() {
             val taskDate = intent.extras?.getString("taskDate")?:""
             createNotificationChannel()
             deliverNotification(context, task, taskDate)
-        }
+//        }
     }
 
     private fun createNotificationChannel() {

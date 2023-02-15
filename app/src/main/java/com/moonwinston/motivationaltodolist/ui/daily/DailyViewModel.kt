@@ -27,7 +27,7 @@ class DailyViewModel @Inject constructor(
     )
 
     val todayAchievementRate =
-        achievementRateRepository.getRateByDates(dateOfToday()).filterNotNull().stateIn(
+        achievementRateRepository.getRateByDates(OffsetDateTime.now()).filterNotNull().stateIn(
             initialValue = 0.0F,
             started = SharingStarted.Eagerly,
             scope = viewModelScope
