@@ -14,7 +14,7 @@ interface AchievementRateDao {
     @Query("SELECT rate FROM achievementRate WHERE date(date) = date(:date)")
     fun getRateByDates(date: OffsetDateTime): Flow<Float>
 
-    @Query("SELECT * FROM achievementRate WHERE rate = 1")
+    @Query("SELECT * FROM achievementRate WHERE rate = 1 ORDER BY date")
     fun getAllComplete(): Flow<List<AchievementRateEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

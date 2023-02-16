@@ -14,11 +14,7 @@ class RewardsViewModel @Inject constructor(
     private val achievementRateRepository: AchievementRateRepository
 ) : ViewModel() {
 
-    val completedTask = achievementRateRepository.getAllCompleteRate().map { achievementRateEntities ->
-        achievementRateEntities.sortedBy { achievementRateEntity ->
-            achievementRateEntity.date
-        }
-    }.stateIn(
+    val completedTask = achievementRateRepository.getAllCompleteRate().stateIn(
         initialValue = emptyList(),
         started = SharingStarted.Eagerly,
         scope = viewModelScope
