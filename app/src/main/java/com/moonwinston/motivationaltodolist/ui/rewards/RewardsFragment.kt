@@ -36,8 +36,8 @@ class RewardsFragment : Fragment() {
             it.findNavController().navigate(R.id.action_rewards_to_settings)
         }
 
-        val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
+//        val adRequest = AdRequest.Builder().build()
+//        binding.adView.loadAd(adRequest)
 
         val adapter = RewardsAdapter()
         binding.rewardsRecyclerView.adapter = adapter

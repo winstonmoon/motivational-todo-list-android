@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         firebaseAnalytics = Firebase.analytics
-        MobileAds.initialize(this) {}
+//        MobileAds.initialize(this) {}
 
         alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
