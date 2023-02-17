@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.ui.main.MainActivity
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -19,15 +20,14 @@ class AlarmReceiver : BroadcastReceiver() {
     private lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
-//        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
             notificationManager = context.getSystemService(
                 Context.NOTIFICATION_SERVICE) as NotificationManager
-            //Todo
             val task = intent.extras?.getString("task")?:""
             val taskDate = intent.extras?.getString("taskDate")?:""
             createNotificationChannel()
             deliverNotification(context, task, taskDate)
-//        }
+        }
     }
 
     private fun createNotificationChannel() {
@@ -50,11 +50,12 @@ class AlarmReceiver : BroadcastReceiver() {
             context,
             NOTIFICATION_ID,
             contentIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+//            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE
         )
         val builder =
             NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
-//                .setSmallIcon(R.drawable.ic_alarm)
+                .setSmallIcon(R.drawable.ic_alarm)
                 .setContentTitle("Motivational Todo List")
                 .setContentText("${taskDate}\n${task}")
                 .setContentIntent(contentPendingIntent)
