@@ -34,6 +34,7 @@ import com.moonwinston.motivationaltodolist.utils.setLanguage
 import com.moonwinston.motivationaltodolist.utils.setNightMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -44,8 +45,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var listener: InstallStateUpdatedListener
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var alarmManager: AlarmManager
-//    private lateinit var alarmIntents: MutableList<PendingIntent>
-    private var alarmIntents = mutableListOf<PendingIntent>()
+    private var requestCodes = mutableListOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.notifyIndex.collect { notifyIndex ->
                     when (Notification.values()[notifyIndex]) {
-                        Notification.OFF -> cancelAlarm(alarmIntents)
+                        Notification.OFF -> cancelAlarm(requestCodes)
                         else -> mainViewModel.getFutureTasks(notifyIndex)
                     }
                 }
@@ -112,7 +112,6 @@ class MainActivity : AppCompatActivity() {
                     when (Notification.values()[mainViewModel.notifyIndex.value]) {
                         Notification.OFF -> Unit
                         else -> {
-                            cancelAlarm(alarmIntents)
                             setAlarm(
                                 notificationTime = mainViewModel.notifyIndex.value,
                                 futureTasks = futureTasks
@@ -157,28 +156,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAlarm (notificationTime: Int, futureTasks: List<TaskEntity>) {
-        alarmIntents.clear()
-        var requestCode = 0
+        val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
         futureTasks.forEach { taskEntity ->
+            val requestCode = taskEntity.taskDate.getEpoch().toInt()
             val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
                 intent.putExtra("task", taskEntity.task)
-                intent.putExtra("taskDate", taskEntity.taskDate)
-                PendingIntent.getBroadcast(this, requestCode, intent,
-                    PendingIntent.FLAG_IMMUTABLE
-                )
+                intent.putExtra("taskDate", taskEntity.taskDate.format(formatter))
+                PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
             }
             alarmManager.setExact(
                 AlarmManager.RTC,
                 taskEntity.taskDate.minusMinutes(notificationTime.toLong()).getEpoch(),
                 alarmIntent)
-            alarmIntents.add(alarmIntent)
-            requestCode =+ 1
+            requestCodes.add(requestCode)
         }
     }
 
-    private fun cancelAlarm(alarmIntents: List<PendingIntent>) {
-        alarmIntents.forEach { alarmIntent ->
-            alarmManager.cancel(alarmIntent)
+    private fun cancelAlarm(requestCodes: List<Int>) {
+        requestCodes.forEach { requestCode ->
+            val pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
+            alarmManager.cancel(pendingIntent)
         }
     }
 }

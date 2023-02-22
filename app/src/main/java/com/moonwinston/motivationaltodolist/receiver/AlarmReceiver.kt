@@ -24,8 +24,9 @@ class AlarmReceiver : BroadcastReceiver() {
             Context.NOTIFICATION_SERVICE) as NotificationManager
         val task = intent.extras?.getString("task")?:""
         val taskDate = intent.extras?.getString("taskDate")?:""
+        val contentText = "$taskDate $task"
         createNotificationChannel()
-        deliverNotification(context, task, taskDate)
+        deliverNotification(context, contentText)
     }
 
     private fun createNotificationChannel() {
@@ -42,7 +43,7 @@ class AlarmReceiver : BroadcastReceiver() {
             notificationChannel)
     }
 
-    private fun deliverNotification(context: Context, task: String, taskDate: String) {
+    private fun deliverNotification(context: Context, contentText: String) {
         val contentIntent = Intent(context, MainActivity::class.java)
         val contentPendingIntent = PendingIntent.getActivity(
             context,
@@ -54,7 +55,7 @@ class AlarmReceiver : BroadcastReceiver() {
             NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alarm)
                 .setContentTitle("Motivational Todo List")
-                .setContentText("${taskDate}${task}")
+                .setContentText(contentText)
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
