@@ -1,11 +1,7 @@
 package com.moonwinston.motivationaltodolist.ui.daily
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -18,6 +14,7 @@ import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.ui.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
+import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.Language
 import com.moonwinston.motivationaltodolist.utils.calculateRate
@@ -31,27 +28,42 @@ import java.util.*
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class DailyFragment : Fragment() {
+class DailyFragment: BaseFragment<FragmentDailyBinding, DailyViewModel>() {
+    override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
+    override val viewModel: DailyViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val dailyViewModel: DailyViewModel by viewModels()
-    private lateinit var binding: FragmentDailyBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentDailyBinding.inflate(inflater, container, false)
-        return binding.root
+    private val adapter = TaskAdapter(
+        meatballsMenuCallback = { taskEntity, dmlState ->
+            when (dmlState) {
+                DmlState.Insert(method = "duplicate") -> {
+                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                    view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
+                }
+                DmlState.Update -> {
+                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                    view?.findNavController()?.navigate(R.id.action_daily_to_add, bundle)
+                }
+                DmlState.Delete -> mainViewModel.deleteTask(taskEntity.uid)
+                else -> Unit
+            }
+        },
+        radioButtonCallback = { taskEntity ->
+            mainViewModel.insertTask(taskEntity)
+            binding.congratulationsAnimationView.playAnimation()
+        }
+    )
+
+    override fun initViews() {
+        initDisplayCoachMark()
+        binding.dailyTitleTextView.text = createDailyTitle(language = mainViewModel.languageIndex.value)
+        binding.dailyTodoRecyclerView.adapter = adapter
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initDisplayCoachMark()
+    override fun initListeners() {
         binding.settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_daily_to_settings)
         }
-
         binding.addButton.setOnClickListener {
             val bundle = bundleOf(
                 "dmlState" to DmlState.Insert(method = "insert"),
@@ -63,34 +75,12 @@ class DailyFragment : Fragment() {
             )
             it.findNavController().navigate(R.id.action_daily_to_add, bundle)
         }
+    }
 
-        binding.dailyTitleTextView.text = createDailyTitle(language = mainViewModel.languageIndex.value)
-
-        val adapter = TaskAdapter(
-            meatballsMenuCallback = { taskEntity, dmlState ->
-                when (dmlState) {
-                    DmlState.Insert(method = "duplicate") -> {
-                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                        view.findNavController().navigate(R.id.action_daily_to_add, bundle)
-                    }
-                    DmlState.Update -> {
-                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                        view.findNavController().navigate(R.id.action_daily_to_add, bundle)
-                    }
-                    DmlState.Delete -> mainViewModel.deleteTask(taskEntity.uid)
-                    else -> Unit
-                }
-                                    },
-            radioButtonCallback = { taskEntity ->
-                mainViewModel.insertTask(taskEntity)
-                binding.congratulationsAnimationView.playAnimation()
-            }
-        )
-        binding.dailyTodoRecyclerView.adapter = adapter
-
+    override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                dailyViewModel.todayTasks.collect { todayTasks ->
+                viewModel.todayTasks.collect { todayTasks ->
                     adapter.submitList(todayTasks)
                     val calculatedRate = calculateRate(todayTasks)
                     val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
@@ -98,10 +88,9 @@ class DailyFragment : Fragment() {
                 }
             }
         }
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                dailyViewModel.todayAchievementRate.collect { rate ->
+                viewModel.todayAchievementRate.collect { rate ->
                     val roundedAchievementRate = (rate * 100).roundToInt().toString() + "%"
                     binding.achievementRate.text = roundedAchievementRate
                     binding.dailyCustomPieChart.alpha = if (rate == 0.0F) 0.2F else 1.0F
@@ -125,7 +114,7 @@ class DailyFragment : Fragment() {
     }
 
     private fun initDisplayCoachMark() {
-        if (dailyViewModel.isCoachDailyDismissed.value.not()) {
+        if (viewModel.isCoachDailyDismissed.value.not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
             binding.coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
             binding.coachDailyTapAdd.containerCoach.setOnClickListener {
@@ -139,7 +128,7 @@ class DailyFragment : Fragment() {
             binding.coachDailyTapComplete.containerCoach.setOnClickListener {
                 binding.coachDailyTapComplete.containerCoach.visibility = View.GONE
                 this@DailyFragment.binding.addButton.isEnabled = true
-                dailyViewModel.setCoachDailyAsDismissed(true)
+                viewModel.setCoachDailyAsDismissed(true)
             }
         }
     }

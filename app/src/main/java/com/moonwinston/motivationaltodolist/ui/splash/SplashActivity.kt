@@ -1,11 +1,10 @@
 package com.moonwinston.motivationaltodolist.ui.splash
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.moonwinston.motivationaltodolist.databinding.ActivitySplashBinding
+import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import com.moonwinston.motivationaltodolist.ui.main.MainActivity
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.setNightMode
@@ -13,19 +12,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
 @AndroidEntryPoint
-class SplashActivity : AppCompatActivity() {
-    private val mainViewModel: MainViewModel by viewModels()
-    private lateinit var binding: ActivitySplashBinding
-    
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        lifecycleScope.launch {
-            mainViewModel.themeIndex.collect { themeIndex ->
-                setNightMode(themeIndex)
-            }
-        }
+class SplashActivity : BaseActivity<ActivitySplashBinding, MainViewModel>() {
+    override fun getViewBinding() = ActivitySplashBinding.inflate(layoutInflater)
+    override val viewModel: MainViewModel by viewModels()
+
+    override fun initViews() {
         lifecycleScope.launch(Dispatchers.Main) {
             delay(2000)
             val intent = Intent(this@SplashActivity, MainActivity::class.java).apply {
@@ -33,6 +24,15 @@ class SplashActivity : AppCompatActivity() {
             }
             startActivity(intent)
             finish()
+        }
+    }
+    override fun initListeners() {
+    }
+    override fun initObservers() {
+        lifecycleScope.launch {
+            viewModel.themeIndex.collect { themeIndex ->
+                setNightMode(themeIndex)
+            }
         }
     }
 }
