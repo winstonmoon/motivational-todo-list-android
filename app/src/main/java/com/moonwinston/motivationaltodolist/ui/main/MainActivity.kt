@@ -7,13 +7,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -28,6 +26,7 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
+import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import com.moonwinston.motivationaltodolist.utils.Notification
 import com.moonwinston.motivationaltodolist.utils.getEpoch
 import com.moonwinston.motivationaltodolist.utils.setLanguage
@@ -37,9 +36,9 @@ import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    private val mainViewModel: MainViewModel by viewModels()
-    private lateinit var binding: ActivityMainBinding
+class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
+    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
+    override val viewModel: MainViewModel by viewModels()
     private val MY_REQUEST_CODE = 1
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var listener: InstallStateUpdatedListener
@@ -71,51 +70,46 @@ class MainActivity : AppCompatActivity() {
         }
         firebaseAnalytics = Firebase.analytics
 //        MobileAds.initialize(this) {}
-
         alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    }
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+    override fun initViews() {
         val navController = findNavController(R.id.fragment)
         binding.bottomNavigationView.setupWithNavController(navController)
-
+    }
+    override fun initListeners() {
+    }
+    override fun initObservers() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.themeIndex.collect { themeIndex ->
-                    setNightMode(themeIndex)
-                }
-            }
-        }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.languageIndex.collect { languageIndex ->
-                    setLanguage(languageIndex)
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.notifyIndex.collect { notifyIndex ->
-                    when (Notification.values()[notifyIndex]) {
-                        Notification.OFF -> cancelAlarm(requestCodes)
-                        else -> mainViewModel.getFutureTasks(notifyIndex)
+                launch {
+                    viewModel.themeIndex.collect { themeIndex ->
+                        setNightMode(themeIndex)
                     }
                 }
-            }
-        }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.futureTasks.collect { futureTasks ->
-                    when (Notification.values()[mainViewModel.notifyIndex.value]) {
-                        Notification.OFF -> Unit
-                        else -> {
-                            setAlarm(
-                                notificationTime = mainViewModel.notifyIndex.value,
-                                futureTasks = futureTasks
-                            )
+                launch {
+                    viewModel.languageIndex.collect { languageIndex ->
+                        setLanguage(languageIndex)
+                    }
+                }
+                launch {
+                    viewModel.notifyIndex.collect { notifyIndex ->
+                        when (Notification.values()[notifyIndex]) {
+                            Notification.OFF -> cancelAlarm(requestCodes)
+                            else -> viewModel.getFutureTasks(notifyIndex)
+                        }
+                    }
+                }
+                launch {
+                    viewModel.futureTasks.collect { futureTasks ->
+                        when (Notification.values()[viewModel.notifyIndex.value]) {
+                            Notification.OFF -> Unit
+                            else -> {
+                                setAlarm(
+                                    notificationTime = viewModel.notifyIndex.value,
+                                    futureTasks = futureTasks
+                                )
+                            }
                         }
                     }
                 }

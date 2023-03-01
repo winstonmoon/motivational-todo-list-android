@@ -1,15 +1,12 @@
 package com.moonwinston.motivationaltodolist.ui.monthly
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
+import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.Month
@@ -20,9 +17,9 @@ import java.util.*
 const val DIFF_MONTH = "diffMonth"
 
 @AndroidEntryPoint
-class MonthlyCalendarFragment : Fragment() {
-    private val monthlySharedViewModel: MonthlyViewModel by activityViewModels()
-    private lateinit var binding: FragmentMonthlyCalendarBinding
+class MonthlyCalendarFragment: BaseFragment<FragmentMonthlyCalendarBinding, MonthlyViewModel>() {
+    override fun getViewBinding() = FragmentMonthlyCalendarBinding.inflate(layoutInflater)
+    override val viewModel: MonthlyViewModel by activityViewModels()
     private var daysOfMonth = listOf<OffsetDateTime>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,37 +28,30 @@ class MonthlyCalendarFragment : Fragment() {
         arguments?.takeIf { it.containsKey(DIFF_MONTH) }?.apply {
             diffMonth = getInt(DIFF_MONTH)
         }
-        daysOfMonth = monthlySharedViewModel.createDaysOfMonth(diffMonth)
-        monthlySharedViewModel.setYearAndMonthByLastDayOfMonth(daysOfMonth)
+        daysOfMonth = viewModel.createDaysOfMonth(diffMonth)
+        viewModel.setYearAndMonthByLastDayOfMonth(daysOfMonth)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMonthlyCalendarBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun initViews() {
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initListeners() {
+    }
+    override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                monthlySharedViewModel.yearAndMonth.collect { yearAndMonth ->
-                    binding.monthTextView.text = Month.of(yearAndMonth.second)
-                        .getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                launch {
+                    viewModel.yearAndMonth.collect { yearAndMonth ->
+                        binding.monthTextView.text = Month.of(yearAndMonth.second)
+                            .getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                    }
                 }
-            }
-        }
-
-        monthlySharedViewModel.getAllTasksByDates(daysOfMonth)
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                monthlySharedViewModel.monthTasks.collect { taskEntities ->
-                    val adapter = MonthlyCalendarAdapter(taskEntities)
-                    binding.calendarRecyclerView.adapter = adapter
-                    adapter.submitList(daysOfMonth)
+                viewModel.getAllTasksByDates(daysOfMonth)
+                launch {
+                    viewModel.monthTasks.collect { taskEntities ->
+                        val adapter = MonthlyCalendarAdapter(taskEntities)
+                        binding.calendarRecyclerView.adapter = adapter
+                        adapter.submitList(daysOfMonth)
+                    }
                 }
             }
         }
@@ -69,7 +59,7 @@ class MonthlyCalendarFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        monthlySharedViewModel.setYearAndMonthByLastDayOfMonth(daysOfMonth)
-        monthlySharedViewModel.getAllTasksByDates(daysOfMonth)
+        viewModel.setYearAndMonthByLastDayOfMonth(daysOfMonth)
+        viewModel.getAllTasksByDates(daysOfMonth)
     }
 }

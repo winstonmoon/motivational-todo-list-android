@@ -8,7 +8,6 @@
 
     <application
         android:name=".MotivationalTodoListApplication"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_motivational_todolist"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_motivational_todolist_round"
