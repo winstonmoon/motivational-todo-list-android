@@ -1,11 +1,7 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +14,7 @@ import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
 import com.moonwinston.motivationaltodolist.ui.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
+import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,39 +25,35 @@ import java.time.format.TextStyle
 import java.util.*
 
 @AndroidEntryPoint
-class WeeklyFragment : Fragment() {
+class WeeklyFragment: BaseFragment<FragmentWeeklyBinding, WeeklyViewModel>() {
+    override fun getViewBinding() = FragmentWeeklyBinding.inflate(layoutInflater)
+    override val viewModel: WeeklyViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val weeklySharedViewModel: WeeklyViewModel by activityViewModels()
-    private lateinit var binding: FragmentWeeklyBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentWeeklyBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val adapter = TaskAdapter(
+        meatballsMenuCallback = { taskEntity, dmlState ->
+            when (dmlState) {
+                DmlState.Insert(method = "duplicate") -> {
+                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                    view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
+                }
+                DmlState.Update -> {
+                    val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
+                    view?.findNavController()?.navigate(R.id.action_weekly_to_add, bundle)
+                }
+                DmlState.Delete -> mainViewModel.deleteTask(taskEntity.uid)
+                else -> Unit
+            }
+        },
+        radioButtonCallback = { taskEntity ->
+            mainViewModel.insertTask(taskEntity)
+            binding.congratulationsAnimationView.playAnimation()
+        }
+    )
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initViews() {
         initDisplayCoachMark()
         setToday()
-        binding.settingsButton.setOnClickListener {
-            it.findNavController().navigate(R.id.action_weekly_to_settings)
-        }
-        binding.addButton.setOnClickListener {
-            val bundle = bundleOf(
-                "dmlState" to DmlState.Insert(method = "insert"),
-                "taskEntity" to TaskEntity(
-                    taskDate = weeklySharedViewModel.selectedDate.value,
-                    task = "",
-                    isCompleted = false
-                )
-            )
-            it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
-        }
-
         val slideAdapter = WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
         binding.weeklyPieChartViewPager.adapter = slideAdapter
         binding.weeklyPieChartViewPager.setCurrentItem(
@@ -73,55 +66,51 @@ class WeeklyFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val diffDays = (position - lastPosition) * 7
-                val selectedDate = weeklySharedViewModel.selectedDate.value.plusDays(diffDays.toLong())
-                weeklySharedViewModel.setSelectedDate(selectedDate)
+                val selectedDate = viewModel.selectedDate.value.plusDays(diffDays.toLong())
+                viewModel.setSelectedDate(selectedDate)
                 lastPosition = position
             }
         })
-        val adapter = TaskAdapter(
-            meatballsMenuCallback = { taskEntity, dmlState ->
-                when (dmlState) {
-                    DmlState.Insert(method = "duplicate") -> {
-                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                        view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
-                    }
-                    DmlState.Update -> {
-                        val bundle = bundleOf("dmlState" to dmlState, "taskEntity" to taskEntity)
-                        view.findNavController().navigate(R.id.action_weekly_to_add, bundle)
-                    }
-                    DmlState.Delete -> mainViewModel.deleteTask(taskEntity.uid)
-                    else -> Unit
-                }
-                                    },
-            radioButtonCallback = { taskEntity ->
-                mainViewModel.insertTask(taskEntity)
-                binding.congratulationsAnimationView.playAnimation()
-            }
-        )
         binding.weeklyTodoRecyclerView.adapter = adapter
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                weeklySharedViewModel.selectedDate.collect { selectedDate ->
-                    binding.weeklyTitleTextView.text = createWeeklyTitle(
-                        date = selectedDate,
-                        language = mainViewModel.languageIndex.value
-                    )
-                    drawRedDotOnSelectedDate(date = selectedDate)
-                }
-            }
+    }
+    override fun initListeners() {
+        binding.settingsButton.setOnClickListener {
+            it.findNavController().navigate(R.id.action_weekly_to_settings)
         }
-
+        binding.addButton.setOnClickListener {
+            val bundle = bundleOf(
+                "dmlState" to DmlState.Insert(method = "insert"),
+                "taskEntity" to TaskEntity(
+                    taskDate = viewModel.selectedDate.value,
+                    task = "",
+                    isCompleted = false
+                )
+            )
+            it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
+        }
+    }
+    override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                weeklySharedViewModel.selectedDayTasks.collect { selectedDayTasks ->
-                    adapter.submitList(selectedDayTasks)
-                    val calculatedRate = calculateRate(selectedDayTasks)
-                    val achievementRate = AchievementRateEntity(
-                        date = weeklySharedViewModel.selectedDate.value,
-                        rate = calculatedRate
-                    )
-                    mainViewModel.insertAchievementRate(achievementRate)
+                launch {
+                    viewModel.selectedDate.collect { selectedDate ->
+                        binding.weeklyTitleTextView.text = createWeeklyTitle(
+                            date = selectedDate,
+                            language = mainViewModel.languageIndex.value
+                        )
+                        drawRedDotOnSelectedDate(date = selectedDate)
+                    }
+                }
+                launch {
+                    viewModel.selectedDayTasks.collect { selectedDayTasks ->
+                        adapter.submitList(selectedDayTasks)
+                        val calculatedRate = calculateRate(selectedDayTasks)
+                        val achievementRate = AchievementRateEntity(
+                            date = viewModel.selectedDate.value,
+                            rate = calculatedRate
+                        )
+                        mainViewModel.insertAchievementRate(achievementRate)
+                    }
                 }
             }
         }
@@ -133,7 +122,7 @@ class WeeklyFragment : Fragment() {
     }
 
     private fun setToday() {
-        weeklySharedViewModel.setSelectedDate(dateOfToday())
+        viewModel.setSelectedDate(dateOfToday())
         binding.weeklyTitleTextView.text = createWeeklyTitle(
                 date = dateOfToday(),
                 language = mainViewModel.languageIndex.value
@@ -178,7 +167,7 @@ class WeeklyFragment : Fragment() {
     }
 
     private fun initDisplayCoachMark() {
-        if (weeklySharedViewModel.isCoachWeeklyDismissed.value.not()) {
+        if (viewModel.isCoachWeeklyDismissed.value.not()) {
             this@WeeklyFragment.binding.addButton.isEnabled = false
             binding.coachWeeklySwipe.containerCoach.visibility = View.VISIBLE
             binding.coachWeeklySwipe.containerCoach.setOnClickListener {
@@ -188,7 +177,7 @@ class WeeklyFragment : Fragment() {
             binding.coachWeeklyTap.containerCoach.setOnClickListener {
                 binding.coachWeeklyTap.containerCoach.visibility = View.GONE
                 this@WeeklyFragment.binding.addButton.isEnabled = true
-                weeklySharedViewModel.setCoachWeeklyAsDismissed(true)
+                viewModel.setCoachWeeklyAsDismissed(true)
             }
         }
     }

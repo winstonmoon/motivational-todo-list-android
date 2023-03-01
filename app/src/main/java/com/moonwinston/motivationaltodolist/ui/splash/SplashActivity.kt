@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
 @AndroidEntryPoint
-class SplashActivity : BaseActivity<ActivitySplashBinding, MainViewModel>() {
+class SplashActivity: BaseActivity<ActivitySplashBinding, MainViewModel>() {
     override fun getViewBinding() = ActivitySplashBinding.inflate(layoutInflater)
     override val viewModel: MainViewModel by viewModels()
 

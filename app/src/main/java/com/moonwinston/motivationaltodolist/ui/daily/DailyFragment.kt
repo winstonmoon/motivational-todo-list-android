@@ -32,7 +32,6 @@ class DailyFragment: BaseFragment<FragmentDailyBinding, DailyViewModel>() {
     override fun getViewBinding() = FragmentDailyBinding.inflate(layoutInflater)
     override val viewModel: DailyViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
-
     private val adapter = TaskAdapter(
         meatballsMenuCallback = { taskEntity, dmlState ->
             when (dmlState) {
@@ -80,21 +79,21 @@ class DailyFragment: BaseFragment<FragmentDailyBinding, DailyViewModel>() {
     override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.todayTasks.collect { todayTasks ->
-                    adapter.submitList(todayTasks)
-                    val calculatedRate = calculateRate(todayTasks)
-                    val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
-                    mainViewModel.insertAchievementRate(achievementRate)
+                launch {
+                    viewModel.todayTasks.collect { todayTasks ->
+                        adapter.submitList(todayTasks)
+                        val calculatedRate = calculateRate(todayTasks)
+                        val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
+                        mainViewModel.insertAchievementRate(achievementRate)
+                    }
                 }
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.todayAchievementRate.collect { rate ->
-                    val roundedAchievementRate = (rate * 100).roundToInt().toString() + "%"
-                    binding.achievementRate.text = roundedAchievementRate
-                    binding.dailyCustomPieChart.alpha = if (rate == 0.0F) 0.2F else 1.0F
-                    binding.dailyCustomPieChart.updatePercentage(rate)
+                launch {
+                    viewModel.todayAchievementRate.collect { rate ->
+                        val roundedAchievementRate = (rate * 100).roundToInt().toString() + "%"
+                        binding.achievementRate.text = roundedAchievementRate
+                        binding.dailyCustomPieChart.alpha = if (rate == 0.0F) 0.2F else 1.0F
+                        binding.dailyCustomPieChart.updatePercentage(rate)
+                    }
                 }
             }
         }

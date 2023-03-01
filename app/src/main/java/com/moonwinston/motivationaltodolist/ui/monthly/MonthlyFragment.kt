@@ -1,10 +1,6 @@
 package com.moonwinston.motivationaltodolist.ui.monthly
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
+import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.Language
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,33 +19,28 @@ import java.time.format.TextStyle
 import java.util.*
 
 @AndroidEntryPoint
-class MonthlyFragment : Fragment() {
+class MonthlyFragment: BaseFragment<FragmentMonthlyBinding, MonthlyViewModel>() {
+    override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
+    override val viewModel: MonthlyViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val monthlySharedViewModel: MonthlyViewModel by activityViewModels()
-    private lateinit var binding: FragmentMonthlyBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMonthlyBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initViews() {
         initDisplayCoachMark()
         binding.calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
         binding.calendarViewPager.setCurrentItem(START_POSITION, false)
         binding.calendarViewPager.setPageTransformer(ZoomOutPageTransformer())
+    }
+
+    override fun initListeners() {
         binding.settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_monthly_to_settings)
         }
+    }
 
+    override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                monthlySharedViewModel.yearAndMonth.collect { yearAndMonth ->
+                viewModel.yearAndMonth.collect { yearAndMonth ->
                     binding.monthlyTitleTextView.text = createMonthlyTitle(yearAndMonth.first, yearAndMonth.second)
                 }
             }
@@ -65,11 +57,11 @@ class MonthlyFragment : Fragment() {
     }
 
     private fun initDisplayCoachMark() {
-        if (monthlySharedViewModel.isCoachMonthlyDismissed.value.not()) {
+        if (viewModel.isCoachMonthlyDismissed.value.not()) {
             binding.coachMonthly.containerCoach.visibility = View.VISIBLE
             binding.coachMonthly.containerCoach.setOnClickListener {
                 binding.coachMonthly.containerCoach.visibility = View.GONE
-                monthlySharedViewModel.setCoachMonthlyAsDismissed(true)
+                viewModel.setCoachMonthlyAsDismissed(true)
             }
         }
     }
