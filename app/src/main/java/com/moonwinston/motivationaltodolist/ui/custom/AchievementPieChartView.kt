@@ -85,6 +85,5 @@ class AchievementPieChartView @JvmOverloads constructor(
     fun updatePercentage(percent: Float) {
         percentage = percent
         invalidate()
-        requestLayout()
     }
 }
