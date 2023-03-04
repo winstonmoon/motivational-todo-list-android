@@ -22,8 +22,8 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         notificationManager = context.getSystemService(
             Context.NOTIFICATION_SERVICE) as NotificationManager
-        val task = intent.extras?.getString("task")?:""
         val taskDate = intent.extras?.getString("taskDate")?:""
+        val task = intent.extras?.getString("task")?:""
         val contentText = "$taskDate $task"
         createNotificationChannel()
         deliverNotification(context, contentText)
@@ -36,7 +36,6 @@ class AlarmReceiver : BroadcastReceiver() {
             NotificationManager.IMPORTANCE_HIGH
         )
         notificationChannel.enableLights(true)
-//            notificationChannel.lightColor = Color.RED
         notificationChannel.enableVibration(true)
         notificationChannel.description = "AlarmManager Tests"
         notificationManager.createNotificationChannel(
