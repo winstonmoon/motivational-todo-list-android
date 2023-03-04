@@ -34,6 +34,7 @@ import com.moonwinston.motivationaltodolist.utils.setNightMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 @AndroidEntryPoint
 class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
@@ -150,19 +151,20 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun setAlarm (notificationTime: Int, futureTasks: List<TaskEntity>) {
-        val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
         futureTasks.forEach { taskEntity ->
-            val requestCode = taskEntity.taskDate.getEpoch().toInt()
+            val requestCode = taskEntity.uid.toInt()
             val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
-                intent.putExtra("task", taskEntity.task)
+                val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
                 intent.putExtra("taskDate", taskEntity.taskDate.format(formatter))
+                intent.putExtra("task", taskEntity.task)
                 PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
             }
             alarmManager.setExact(
                 AlarmManager.RTC,
+                //TODO fix time
                 taskEntity.taskDate.minusMinutes(notificationTime.toLong()).getEpoch(),
                 alarmIntent)
-            requestCodes.add(requestCode)
+            if (requestCodes.contains(requestCode).not()) requestCodes.add(requestCode)
         }
     }
 
