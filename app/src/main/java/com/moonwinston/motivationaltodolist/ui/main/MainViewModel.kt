@@ -69,15 +69,7 @@ class MainViewModel @Inject constructor(
     val futureTasks: StateFlow<List<TaskEntity>> = _futureTasks
 
     fun getFutureTasks(index: Int) {
-        val notificationTime =
-            when (Notification.values()[index]) {
-                Notification.OFF -> 0L
-                Notification.FIVE_MIN -> 5L
-                Notification.TEN_MIN -> 10L
-                Notification.FIFTEEN_MIN -> 15L
-                Notification.THIRTY_MIN -> 30L
-                Notification.ONE_HOUR -> 60L
-            }
+        val notificationTime = Notification.values()[index].time
         viewModelScope.launch {
             taskRepository.getAllFutureTasks(OffsetDateTime.now().plusMinutes(notificationTime)).collect { taskEntities ->
                 _futureTasks.emit(taskEntities)
