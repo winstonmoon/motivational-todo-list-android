@@ -51,11 +51,11 @@ enum class Language(val index: Int) {
     SIMPLIFIED_CHINESE(4)
 }
 
-enum class Notification(val index: Int) {
-    OFF(0),
-    FIVE_MIN(1),
-    TEN_MIN(2),
-    FIFTEEN_MIN(3),
-    THIRTY_MIN(4),
-    ONE_HOUR(5)
+enum class Notification(val index: Int, val time: Long) {
+    OFF(0, 0L),
+    FIVE_MIN(1, 5L),
+    TEN_MIN(2, 10L),
+    FIFTEEN_MIN(3, 15L),
+    THIRTY_MIN(4, 30L),
+    ONE_HOUR(5, 60L)
 }

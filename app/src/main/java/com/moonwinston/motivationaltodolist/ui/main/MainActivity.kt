@@ -107,7 +107,7 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
                             Notification.OFF -> Unit
                             else -> {
                                 setAlarm(
-                                    notificationTime = viewModel.notifyIndex.value,
+                                    notificationTime = Notification.values()[viewModel.notifyIndex.value].time,
                                     futureTasks = futureTasks
                                 )
                             }
@@ -150,7 +150,7 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
-    private fun setAlarm (notificationTime: Int, futureTasks: List<TaskEntity>) {
+    private fun setAlarm (notificationTime: Long, futureTasks: List<TaskEntity>) {
         futureTasks.forEach { taskEntity ->
             val requestCode = taskEntity.uid.toInt()
             val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
@@ -161,8 +161,7 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
             alarmManager.setExact(
                 AlarmManager.RTC,
-                //TODO fix time
-                taskEntity.taskDate.minusMinutes(notificationTime.toLong()).getEpoch(),
+                taskEntity.taskDate.minusMinutes(notificationTime).getEpoch(),
                 alarmIntent)
             if (requestCodes.contains(requestCode).not()) requestCodes.add(requestCode)
         }
