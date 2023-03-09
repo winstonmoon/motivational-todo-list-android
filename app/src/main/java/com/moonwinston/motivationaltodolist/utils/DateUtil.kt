@@ -16,3 +16,7 @@ fun OffsetDateTime.getDateExceptTime(): OffsetDateTime {
 fun OffsetDateTime.getEpoch(): Long {
     return this@getEpoch.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 }
+
+fun OffsetDateTime.getEpochTest(): Long {
+    return this@getEpochTest.toInstant().toEpochMilli()
+}

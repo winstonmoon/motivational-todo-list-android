@@ -27,12 +27,10 @@ import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
 import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
-import com.moonwinston.motivationaltodolist.utils.Notification
-import com.moonwinston.motivationaltodolist.utils.getEpoch
-import com.moonwinston.motivationaltodolist.utils.setLanguage
-import com.moonwinston.motivationaltodolist.utils.setNightMode
+import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -159,9 +157,12 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
                 intent.putExtra("task", taskEntity.task)
                 PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
             }
+            val testTime = taskEntity.taskDate.minusHours(9L).minusMinutes(notificationTime).toInstant().toEpochMilli()
+            val testTimeTwo = taskEntity.taskDate.minusMinutes(notificationTime).atZoneSameInstant(ZoneId.systemDefault()).toInstant().toEpochMilli()
             alarmManager.setExact(
-                AlarmManager.RTC,
-                taskEntity.taskDate.minusMinutes(notificationTime).getEpoch(),
+                AlarmManager.RTC_WAKEUP,
+//                taskEntity.taskDate.minusMinutes(notificationTime).getEpoch(),
+                testTime,
                 alarmIntent)
             if (requestCodes.contains(requestCode).not()) requestCodes.add(requestCode)
         }
