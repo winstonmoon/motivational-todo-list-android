@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.icu.util.TimeZone
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -157,12 +158,10 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
                 intent.putExtra("task", taskEntity.task)
                 PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
             }
-            val testTime = taskEntity.taskDate.minusHours(9L).minusMinutes(notificationTime).toInstant().toEpochMilli()
-            val testTimeTwo = taskEntity.taskDate.minusMinutes(notificationTime).atZoneSameInstant(ZoneId.systemDefault()).toInstant().toEpochMilli()
+            val alarmTimeEpochMilli = taskEntity.taskDate.minusMinutes(notificationTime).atZoneSameInstant(zoneId).toInstant().toEpochMilli()
             alarmManager.setExact(
                 AlarmManager.RTC_WAKEUP,
-//                taskEntity.taskDate.minusMinutes(notificationTime).getEpoch(),
-                testTime,
+                alarmTimeEpochMilli,
                 alarmIntent)
             if (requestCodes.contains(requestCode).not()) requestCodes.add(requestCode)
         }
