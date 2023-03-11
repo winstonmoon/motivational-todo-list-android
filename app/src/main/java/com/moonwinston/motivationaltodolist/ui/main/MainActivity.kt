@@ -4,8 +4,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.icu.util.TimeZone
 import android.os.Bundle
+import android.os.SystemClock
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
@@ -31,9 +31,9 @@ import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
@@ -152,18 +152,23 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun setAlarm (notificationTime: Long, futureTasks: List<TaskEntity>) {
         futureTasks.forEach { taskEntity ->
             val requestCode = taskEntity.uid.toInt()
-            val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
-                val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                intent.putExtra("taskDate", taskEntity.taskDate.format(formatter))
-                intent.putExtra("task", taskEntity.task)
-                PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
+            if (requestCodes.contains(requestCode).not()) {
+                val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
+                    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                    intent.putExtra("taskDate", taskEntity.taskDate.format(formatter))
+                    intent.putExtra("task", taskEntity.task)
+                    PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
+                }
+//                val alarmTimeEpochMilli = taskEntity.taskDate.minusMinutes(notificationTime).getZonedEpochMilliFromOffset()
+//                val alarmTimeEpochMilli = taskEntity.taskDate.minusMinutes(notificationTime).getEpochMilli()
+                val alarmTimeEpochMilli = taskEntity.taskDate.minusMinutes(notificationTime).getGMTEpochMilliFromOffset()
+                val test = Calendar.getInstance().timeInMillis
+                alarmManager.setExact(
+                    AlarmManager.RTC,
+                    alarmTimeEpochMilli,
+                    alarmIntent)
+                requestCodes.add(requestCode)
             }
-            val alarmTimeEpochMilli = taskEntity.taskDate.minusMinutes(notificationTime).atZoneSameInstant(zoneId).toInstant().toEpochMilli()
-            alarmManager.setExact(
-                AlarmManager.RTC_WAKEUP,
-                alarmTimeEpochMilli,
-                alarmIntent)
-            if (requestCodes.contains(requestCode).not()) requestCodes.add(requestCode)
         }
     }
 
