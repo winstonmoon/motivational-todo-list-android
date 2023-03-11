@@ -59,7 +59,7 @@ class AddDialogFragment : DialogFragment() {
     private fun initInsertView(taskEntity: TaskEntity) {
         binding.timePicker.hour
         binding.timePicker.minute
-        binding.calendarView.date = taskEntity.taskDate.getEpoch()
+        binding.calendarView.date = taskEntity.taskDate.getEpochMilli()
         addDialogViewModel.setDate(taskEntity.taskDate)
         addDialogViewModel.setPositiveButtonStringResource(R.string.button_add)
     }
@@ -67,7 +67,7 @@ class AddDialogFragment : DialogFragment() {
     private fun initDuplicateView(taskEntity: TaskEntity) {
         binding.timePicker.hour = taskEntity.taskDate.hour
         binding.timePicker.minute = taskEntity.taskDate.minute
-        binding.calendarView.date = taskEntity.taskDate.getEpoch()
+        binding.calendarView.date = taskEntity.taskDate.getEpochMilli()
         addDialogViewModel.setDate(taskEntity.taskDate)
         binding.taskEditText.setText(taskEntity.task)
         addDialogViewModel.setPositiveButtonStringResource(R.string.button_add)
@@ -76,7 +76,7 @@ class AddDialogFragment : DialogFragment() {
     private fun initUpdateView(taskEntity: TaskEntity) {
         binding.timePicker.hour = taskEntity.taskDate.hour
         binding.timePicker.minute = taskEntity.taskDate.minute
-        binding.calendarView.date = taskEntity.taskDate.getEpoch()
+        binding.calendarView.date = taskEntity.taskDate.getEpochMilli()
         addDialogViewModel.setDate(taskEntity.taskDate)
         binding.taskEditText.setText(taskEntity.task)
         addDialogViewModel.setPositiveButtonStringResource(R.string.button_edit)
