@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.SystemClock
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
@@ -33,7 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
@@ -159,10 +157,7 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
                     intent.putExtra("task", taskEntity.task)
                     PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
                 }
-//                val alarmTimeEpochMilli = taskEntity.taskDate.minusMinutes(notificationTime).getZonedEpochMilliFromOffset()
-//                val alarmTimeEpochMilli = taskEntity.taskDate.minusMinutes(notificationTime).getEpochMilli()
-                val alarmTimeEpochMilli = taskEntity.taskDate.minusMinutes(notificationTime).getGMTEpochMilliFromOffset()
-                val test = Calendar.getInstance().timeInMillis
+                val alarmTimeEpochMilli = taskEntity.taskDate.minusMinutes(notificationTime).getZonedEpochMilliFromOffset()
                 alarmManager.setExact(
                     AlarmManager.RTC,
                     alarmTimeEpochMilli,

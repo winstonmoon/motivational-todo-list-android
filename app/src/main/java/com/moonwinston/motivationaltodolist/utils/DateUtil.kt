@@ -16,18 +16,10 @@ fun OffsetDateTime.getDateExceptTime(): OffsetDateTime {
     return OffsetDateTime.of(LocalDate.of(year, month, day), LocalTime.of(0, 0),ZoneOffset.UTC)
 }
 
-//fun OffsetDateTime.getEpoch(): Long {
-//    return this@getEpoch.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-//}
-
 fun OffsetDateTime.getEpochMilli(): Long {
     return this@getEpochMilli.toInstant().toEpochMilli()
 }
 
 fun OffsetDateTime.getZonedEpochMilliFromOffset(): Long {
-    return this@getZonedEpochMilliFromOffset.atZoneSameInstant(zoneId).toInstant().toEpochMilli()
-}
-
-fun OffsetDateTime.getGMTEpochMilliFromOffset(): Long {
-    return this@getGMTEpochMilliFromOffset.atZoneSameInstant(ZoneId.of(ZoneOffset.UTC.id)).toInstant().toEpochMilli()
+    return this@getZonedEpochMilliFromOffset.atZoneSimilarLocal(zoneId).toInstant().toEpochMilli()
 }
