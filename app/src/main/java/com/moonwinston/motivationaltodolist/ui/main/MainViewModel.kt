@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*
 import com.moonwinston.motivationaltodolist.utils.Notification
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
+import com.moonwinston.motivationaltodolist.utils.getEpochMilli
+import com.moonwinston.motivationaltodolist.utils.zoneId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -71,8 +74,18 @@ class MainViewModel @Inject constructor(
     fun getFutureTasks(index: Int) {
         val notificationTime = Notification.values()[index].time
         viewModelScope.launch {
-            taskRepository.getAllFutureTasks(OffsetDateTime.now().plusMinutes(notificationTime)).collect { taskEntities ->
-                _futureTasks.emit(taskEntities)
+            taskRepository.getAllTasksByDate(dateOfToday()).collect { taskEntities ->
+                taskEntities.filter {
+                    //TODO 
+                    val test2 = it.taskDate.getEpochMilli()
+                    val test = OffsetDateTime.now(zoneId).plusMinutes(notificationTime).getEpochMilli()
+                    test < test2
+//                    it.taskDate.isAfter(test)
+                }.filter{
+                    it.isCompleted.not()
+                }.let {
+                    _futureTasks.emit(it)
+                }
             }
         }
     }
