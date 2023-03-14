@@ -30,16 +30,12 @@ class TaskAdapter(
         fun bind(taskEntity: TaskEntity) {
             val hourMinute = "HH:mm"
             val formatter = DateTimeFormatter.ofPattern(hourMinute)
-//            val hour = taskEntity.taskDate.hour
-//            val minute = taskEntity.taskDate.minute
-//            val taskTime = "$hour:$minute"
 
             if (taskEntity.isCompleted) {
                 binding.taskRadioButton.isChecked = true
                 binding.taskTextView.paintFlags =
                     binding.taskTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 binding.taskTextView.text = taskEntity.task
-//                binding.timeTextView.text = taskTime
                 binding.timeTextView.text = taskEntity.taskDate.format(formatter)
                 binding.taskMeatballsMenu.setOnClickListener { view ->
                     showDuplicatePopupMenu(view, taskEntity)
@@ -48,7 +44,6 @@ class TaskAdapter(
                 binding.taskRadioButton.isChecked = false
                 binding.taskTextView.paintFlags = 0
                 binding.taskTextView.text = taskEntity.task
-//                binding.timeTextView.text = taskTime
                 binding.timeTextView.text = taskEntity.taskDate.format(formatter)
                 binding.taskRadioButton.setOnClickListener { view ->
                     showAlertDialog(view = view, binding = binding, taskEntity = taskEntity)

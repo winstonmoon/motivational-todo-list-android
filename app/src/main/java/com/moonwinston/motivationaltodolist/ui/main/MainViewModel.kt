@@ -10,7 +10,10 @@ import com.moonwinston.motivationaltodolist.utils.zoneId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import java.time.OffsetDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -75,14 +78,9 @@ class MainViewModel @Inject constructor(
         val notificationTime = Notification.values()[index].time
         viewModelScope.launch {
             taskRepository.getAllTasksByDate(dateOfToday()).collect { taskEntities ->
-                taskEntities.filter {
-                    //TODO 
-                    val test2 = it.taskDate.getEpochMilli()
-                    val test = OffsetDateTime.now(zoneId).plusMinutes(notificationTime).getEpochMilli()
-                    test < test2
-//                    it.taskDate.isAfter(test)
-                }.filter{
-                    it.isCompleted.not()
+                taskEntities.filter { taskEntity ->
+                    val afterNotificationTimeFromNow = OffsetDateTime.of(LocalDateTime.now().plusMinutes(notificationTime), ZoneOffset.UTC)
+                    taskEntity.taskDate.isAfter(afterNotificationTimeFromNow)
                 }.let {
                     _futureTasks.emit(it)
                 }
