@@ -76,10 +76,11 @@ class MainViewModel @Inject constructor(
 
     fun getFutureTasks(index: Int) {
         val notificationTime = Notification.values()[index].time
+        val afterNotificationTimeFromNow = OffsetDateTime.of(LocalDateTime.now().plusMinutes(notificationTime), ZoneOffset.UTC)
+
         viewModelScope.launch {
             taskRepository.getAllTasksByDate(dateOfToday()).collect { taskEntities ->
                 taskEntities.filter { taskEntity ->
-                    val afterNotificationTimeFromNow = OffsetDateTime.of(LocalDateTime.now().plusMinutes(notificationTime), ZoneOffset.UTC)
                     taskEntity.taskDate.isAfter(afterNotificationTimeFromNow)
                 }.let {
                     _futureTasks.emit(it)
