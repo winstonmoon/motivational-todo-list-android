@@ -42,7 +42,7 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
     private lateinit var listener: InstallStateUpdatedListener
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var alarmManager: AlarmManager
-    private var requestCodes = mutableListOf<Int>()
+    private var requestCodeToPendingIntent = mutableMapOf<Int, PendingIntent>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +93,11 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
                 launch {
                     viewModel.notifyIndex.collect { notifyIndex ->
                         when (Notification.values()[notifyIndex]) {
-                            Notification.OFF -> cancelAlarm(requestCodes)
-                            else -> viewModel.getFutureTasks(notifyIndex)
+                            Notification.OFF -> cancelAlarm()
+                            else -> {
+                                cancelAlarm()
+                                viewModel.getFutureTasks(notifyIndex)
+                            }
                         }
                     }
                 }
@@ -150,7 +153,7 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun setAlarm (notificationTime: Long, futureTasks: List<TaskEntity>) {
         futureTasks.forEach { taskEntity ->
             val requestCode = taskEntity.uid.toInt()
-            if (requestCodes.contains(requestCode).not()) {
+            if (requestCodeToPendingIntent.containsKey(requestCode).not()) {
                 val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
                     val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
                     intent.putExtra("taskDate", taskEntity.taskDate.format(formatter))
@@ -162,15 +165,14 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
                     AlarmManager.RTC,
                     alarmTimeEpochMilli,
                     alarmIntent)
-                requestCodes.add(requestCode)
+                requestCodeToPendingIntent[requestCode] = alarmIntent
             }
         }
     }
 
-    private fun cancelAlarm(requestCodes: List<Int>) {
-        requestCodes.forEach { requestCode ->
-            val pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
-            alarmManager.cancel(pendingIntent)
+    private fun cancelAlarm() {
+        requestCodeToPendingIntent.forEach {
+            alarmManager.cancel(it.value)
         }
     }
 }
