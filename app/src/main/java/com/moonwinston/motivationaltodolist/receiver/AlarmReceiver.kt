@@ -37,25 +37,25 @@ class AlarmReceiver : BroadcastReceiver() {
         )
         notificationChannel.enableLights(true)
         notificationChannel.enableVibration(true)
-        notificationChannel.description = "AlarmManager Tests"
         notificationManager.createNotificationChannel(
             notificationChannel)
     }
 
     private fun deliverNotification(context: Context, contentText: String) {
-        val contentIntent = Intent(context, MainActivity::class.java)
-        val contentPendingIntent = PendingIntent.getActivity(
-            context,
-            NOTIFICATION_ID,
-            contentIntent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
+//        val contentIntent = Intent(context, MainActivity::class.java)
+//        val contentPendingIntent = PendingIntent.getActivity(
+//            context,
+//            NOTIFICATION_ID,
+//            contentIntent,
+//            PendingIntent.FLAG_IMMUTABLE
+//        )
+
         val builder =
             NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alarm)
-                .setContentTitle("Motivational Todo List")
+                .setContentTitle(context.resources.getString(R.string.app_name))
                 .setContentText(contentText)
-                .setContentIntent(contentPendingIntent)
+//                .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)

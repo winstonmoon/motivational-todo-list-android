@@ -174,5 +174,6 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
         requestCodeToPendingIntent.forEach {
             alarmManager.cancel(it.value)
         }
+        requestCodeToPendingIntent.clear()
     }
 }
