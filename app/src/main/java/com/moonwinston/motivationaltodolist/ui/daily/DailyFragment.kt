@@ -54,7 +54,7 @@ class DailyFragment: BaseFragment<FragmentDailyBinding, DailyViewModel>() {
     )
 
     override fun initViews() {
-        initDisplayCoachMark()
+//        initDisplayCoachMark()
         binding.dailyTitleTextView.text = createDailyTitle(language = mainViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
     }
@@ -112,7 +112,28 @@ class DailyFragment: BaseFragment<FragmentDailyBinding, DailyViewModel>() {
         }
     }
 
-    private fun initDisplayCoachMark() {
+//    private fun initDisplayCoachMark() {
+//        if (viewModel.isCoachDailyDismissed.value.not()) {
+//            this@DailyFragment.binding.addButton.isEnabled = false
+//            binding.coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
+//            binding.coachDailyTapAdd.containerCoach.setOnClickListener {
+//                binding.coachDailyTapAdd.containerCoach.visibility = View.GONE
+//                binding.coachDailyTapEditOrDelete.containerCoach.visibility = View.VISIBLE
+//            }
+//            binding.coachDailyTapEditOrDelete.containerCoach.setOnClickListener {
+//                binding.coachDailyTapEditOrDelete.containerCoach.visibility = View.GONE
+//                binding.coachDailyTapComplete.containerCoach.visibility = View.VISIBLE
+//            }
+//            binding.coachDailyTapComplete.containerCoach.setOnClickListener {
+//                binding.coachDailyTapComplete.containerCoach.visibility = View.GONE
+//                this@DailyFragment.binding.addButton.isEnabled = true
+//                viewModel.setCoachDailyAsDismissed(true)
+//            }
+//        }
+//    }
+
+    override fun onStart() {
+        super.onStart()
         if (viewModel.isCoachDailyDismissed.value.not()) {
             this@DailyFragment.binding.addButton.isEnabled = false
             binding.coachDailyTapAdd.containerCoach.visibility = View.VISIBLE
