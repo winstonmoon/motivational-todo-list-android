@@ -5,15 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.moonwinston.motivationaltodolist.data.*
 import com.moonwinston.motivationaltodolist.utils.Notification
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
-import com.moonwinston.motivationaltodolist.utils.getEpochMilli
-import com.moonwinston.motivationaltodolist.utils.zoneId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
