@@ -18,7 +18,6 @@ import com.moonwinston.motivationaltodolist.databinding.ItemTasksBinding
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 class TaskAdapter(
     val meatballsMenuCallback: (TaskEntity, DmlState) -> Unit,
