@@ -1,23 +1,22 @@
 package com.moonwinston.motivationaltodolist.data
 
 import androidx.room.TypeConverter
+import com.moonwinston.motivationaltodolist.utils.isoOffsetDateTimeFormatter
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
 object RoomTypeConverters {
-    private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
-
     @TypeConverter
     @JvmStatic
     fun toOffsetDateTime(value: String?): OffsetDateTime? {
         return value?.let {
-            return formatter.parse(value, OffsetDateTime::from)
+            return isoOffsetDateTimeFormatter.parse(value, OffsetDateTime::from)
         }
     }
 
     @TypeConverter
     @JvmStatic
     fun fromOffsetDateTime(date: OffsetDateTime?): String? {
-        return date?.format(formatter)
+        return date?.format(isoOffsetDateTimeFormatter)
     }
 }

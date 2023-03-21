@@ -17,6 +17,7 @@ import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ItemTasksBinding
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
+import com.moonwinston.motivationaltodolist.utils.hourMinuteFormatter
 import java.time.format.DateTimeFormatter
 
 class TaskAdapter(
@@ -27,15 +28,12 @@ class TaskAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
-            val hourMinute = "HH:mm"
-            val formatter = DateTimeFormatter.ofPattern(hourMinute)
-
             if (taskEntity.isCompleted) {
                 binding.taskRadioButton.isChecked = true
                 binding.taskTextView.paintFlags =
                     binding.taskTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 binding.taskTextView.text = taskEntity.task
-                binding.timeTextView.text = taskEntity.taskDate.format(formatter)
+                binding.timeTextView.text = taskEntity.taskDate.format(hourMinuteFormatter)
                 binding.taskMeatballsMenu.setOnClickListener { view ->
                     showDuplicatePopupMenu(view, taskEntity)
                 }
@@ -43,7 +41,7 @@ class TaskAdapter(
                 binding.taskRadioButton.isChecked = false
                 binding.taskTextView.paintFlags = 0
                 binding.taskTextView.text = taskEntity.task
-                binding.timeTextView.text = taskEntity.taskDate.format(formatter)
+                binding.timeTextView.text = taskEntity.taskDate.format(hourMinuteFormatter)
                 binding.taskRadioButton.setOnClickListener { view ->
                     showAlertDialog(view = view, binding = binding, taskEntity = taskEntity)
                 }
