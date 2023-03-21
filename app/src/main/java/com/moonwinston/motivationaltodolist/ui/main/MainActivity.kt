@@ -155,8 +155,7 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
             val requestCode = taskEntity.uid.toInt()
             if (requestCodeToPendingIntent.containsKey(requestCode).not()) {
                 val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
-                    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                    intent.putExtra("taskDate", taskEntity.taskDate.format(formatter))
+                    intent.putExtra("taskDate", taskEntity.taskDate.format(mediumFormatStyleFormatter))
                     intent.putExtra("task", taskEntity.task)
                     PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
                 }

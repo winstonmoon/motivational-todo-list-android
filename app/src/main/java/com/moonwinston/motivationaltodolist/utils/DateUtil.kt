@@ -2,8 +2,16 @@ package com.moonwinston.motivationaltodolist.utils
 
 import android.icu.util.TimeZone
 import java.time.*
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 val zoneId: ZoneId = ZoneId.of(TimeZone.getDefault().id)
+
+val hourMinuteFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+val mediumFormatStyleFormatter: DateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+
+val isoOffsetDateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
 fun dateOfToday(): OffsetDateTime = OffsetDateTime.of(LocalDate.now(), LocalTime.of(0,0), ZoneOffset.UTC)
 
