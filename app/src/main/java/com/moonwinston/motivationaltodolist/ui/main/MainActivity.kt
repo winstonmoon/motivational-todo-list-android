@@ -30,8 +30,6 @@ import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
 import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 @AndroidEntryPoint
 class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {

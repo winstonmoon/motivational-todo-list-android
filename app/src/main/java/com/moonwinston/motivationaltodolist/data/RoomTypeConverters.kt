@@ -3,7 +3,6 @@ package com.moonwinston.motivationaltodolist.data
 import androidx.room.TypeConverter
 import com.moonwinston.motivationaltodolist.utils.isoOffsetDateTimeFormatter
 import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
 
 object RoomTypeConverters {
     @TypeConverter

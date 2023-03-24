@@ -11,9 +11,6 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion "33"
 
-    lintOptions {
-        abortOnError false
-    }
 
     buildFeatures {
         dataBinding true
@@ -57,6 +54,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
+    }
+    lint {
+        abortOnError false
     }
 }
 
@@ -102,6 +102,7 @@ dependencies {
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$rootProject.uiAutomatorVersion"
     androidTestImplementation "com.google.truth:truth:$rootProject.truthVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter:$rootProject.junitJupiterVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomTestingVersion"
 }
 
