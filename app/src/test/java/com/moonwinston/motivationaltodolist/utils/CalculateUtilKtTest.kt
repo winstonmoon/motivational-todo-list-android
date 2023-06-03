@@ -1,19 +1,28 @@
 package com.moonwinston.motivationaltodolist.utils
 
 import com.moonwinston.motivationaltodolist.data.TaskEntity
-import org.junit.jupiter.api.Assertions.*
+import org.junit.Assert.*
+
+import org.junit.Test
 import java.time.OffsetDateTime
 
-internal class CalculateUtilKtTest {
+class CalculateUtilKtTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun calculateRate_oneTaskEntity_notCompleted() {
-        val taskEntity = listOf(TaskEntity(uid = 1, taskDate = OffsetDateTime.now(), task = "", isCompleted = false))
+        val taskEntity = listOf(
+            TaskEntity(
+                uid = 1,
+                taskDate = OffsetDateTime.now(),
+                task = "",
+                isCompleted = false
+            )
+        )
         val result = calculateRate(taskEntity)
         assertEquals(result, 0F)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun calculateRate_twoTaskEntity_oneCompleted() {
         val taskEntity = listOf(
             TaskEntity(uid = 1, taskDate = OffsetDateTime.now(), task = "", isCompleted = false),

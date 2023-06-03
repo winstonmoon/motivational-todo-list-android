@@ -61,6 +61,7 @@ android {
 }
 
 dependencies {
+    testImplementation 'junit:junit:4.12'
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
@@ -92,18 +93,18 @@ dependencies {
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-
-    // Testing dependencies
-    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espressoVersion"
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
-    androidTestImplementation "androidx.test.uiautomator:uiautomator:$rootProject.uiAutomatorVersion"
-    androidTestImplementation "com.google.truth:truth:$rootProject.truthVersion"
-    testImplementation "junit:junit:$rootProject.junitVersion"
-    testImplementation "org.junit.jupiter:junit-jupiter:$rootProject.junitJupiterVersion"
-    androidTestImplementation "androidx.room:room-testing:$rootProject.roomTestingVersion"
+    // Required -- JUnit 4 framework
+    testImplementation "junit:junit:$jUnitVersion"
+    // Optional -- Robolectric environment
+    testImplementation "androidx.test:core:$androidXTestVersion"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation "androidx.room:room-testing:2.5.1"
+    // Optional -- Mockito framework
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    // Optional -- mockito-kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion"
+    // Optional -- Mockk framework
+    testImplementation "io.mockk:mockk:$mockkVersion"
 }
 
 kapt {
