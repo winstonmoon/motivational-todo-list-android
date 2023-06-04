@@ -1,6 +1,7 @@
 <h1 align="center">Motivational Todo List</h1>
 
-![Motivational_Todo_List_AdobeExpress](https://github.com/winstonmoon/motivational-todo-list-android/assets/60098120/e99e9b18-e22d-4c16-a286-ed8ddd4f2524)
+![Motivational_Todo_List_AdobeExpress](https://github.com/winstonmoon/motivational-todo-list-android/assets/60098120/e99e9b18-e22d-4c16-a286-ed8ddd4f2524)  
+Todo List with achievement rate
 
 ## Download
 [Play Store](https://play.google.com/store/apps/details?id=com.moonwinston.motivationaltodolist)
