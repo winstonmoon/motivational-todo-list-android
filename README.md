@@ -2,6 +2,8 @@
 
 ![Motivational_Todo_List_AdobeExpress](https://github.com/winstonmoon/motivational-todo-list-android/assets/60098120/e99e9b18-e22d-4c16-a286-ed8ddd4f2524)
 
+## Download
+[Play Store](https://play.google.com/store/apps/details?id=com.moonwinston.motivationaltodolist)
 
 ## Tech stack & Open-source libraries
 - Minimum SDK level 26
