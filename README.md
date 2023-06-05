@@ -6,6 +6,7 @@ Todo List with achievement rate
     - add, edit, delete and duplicate Todo
     - multi language
     - dark theme
+    - alarm (work in progress)
 
 ## Download
 [Play Store](https://play.google.com/store/apps/details?id=com.moonwinston.motivationaltodolist)
