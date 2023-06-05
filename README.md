@@ -1,14 +1,18 @@
 <h1 align="center">Motivational Todo List</h1>
 
-![Motivational_Todo_List_AdobeExpress](https://github.com/winstonmoon/motivational-todo-list-android/assets/60098120/e99e9b18-e22d-4c16-a286-ed8ddd4f2524)  
-Todo List with achievement rate
+![Screen_Recording_20230605-214005_Motivational_Todo_List_AdobeExpress](https://github.com/winstonmoon/motivational-todo-list-android/assets/60098120/da47b39f-c8fb-4668-babb-ae388d230db9)  
+Todo List with achievement rate  
+- features
+    - add, edit, delete and duplicate Todo
+    - multi language
+    - dark theme
 
 ## Download
 [Play Store](https://play.google.com/store/apps/details?id=com.moonwinston.motivationaltodolist)
 
 ## Tech stack & Open-source libraries
-- Minimum SDK level 26
-- [Kotlin](https://kotlinlang.org/) based, [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) + [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) for asynchronous.
+- Minimum SDK level 26, Target SDK level 33
+- Kotlin based, Coroutines + Flow for asynchronous.
 - Jetpack
     - Lifecycle
     - ViewModel
@@ -18,6 +22,6 @@ Todo List with achievement rate
     - ViewPager2
     - Navigation
 - Architecture
-    - MVVM Architecture (View - DataBinding - ViewModel - Model)
+    - MVVM Architecture
     - Repository Pattern
 - Lottie
