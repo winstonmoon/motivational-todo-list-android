@@ -10,25 +10,37 @@ class CalculateUtilKtTest {
 
     @Test
     fun calculateRate_oneTaskEntity_notCompleted() {
-        val taskEntity = listOf(
-            TaskEntity(
-                uid = 1,
-                taskDate = OffsetDateTime.now(),
-                task = "",
-                isCompleted = false
-            )
-        )
+        //Given
+        val taskEntity = listOf(TaskEntity(uid = 1, taskDate = OffsetDateTime.now(), task = "", isCompleted = false))
+        //When
         val result = calculateRate(taskEntity)
+        //Then
         assertEquals(result, 0F)
     }
 
     @Test
-    fun calculateRate_twoTaskEntity_oneCompleted() {
+    fun calculateRate_twoTaskEntities_oneCompleted() {
+        //Given
         val taskEntity = listOf(
             TaskEntity(uid = 1, taskDate = OffsetDateTime.now(), task = "", isCompleted = false),
             TaskEntity(uid = 2, taskDate = OffsetDateTime.now(), task = "", isCompleted = true)
         )
+        //When
         val result = calculateRate(taskEntity)
+        //Then
         assertEquals(result, 0.5F)
+    }
+
+    @Test
+    fun calculateRate_twoTaskEntities_twoCompleted() {
+        //Given
+        val taskEntity = listOf(
+            TaskEntity(uid = 1, taskDate = OffsetDateTime.now(), task = "", isCompleted = true),
+            TaskEntity(uid = 2, taskDate = OffsetDateTime.now(), task = "", isCompleted = true)
+        )
+        //When
+        val result = calculateRate(taskEntity)
+        //Then
+        assertEquals(result, 1F)
     }
 }
