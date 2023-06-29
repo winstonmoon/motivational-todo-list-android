@@ -8,6 +8,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.Month
 import java.time.OffsetDateTime
@@ -40,18 +42,18 @@ class MonthlyCalendarFragment: BaseFragment<FragmentMonthlyCalendarBinding, Mont
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.yearAndMonth.collect { yearAndMonth ->
+                    viewModel.yearAndMonth.onEach { yearAndMonth ->
                         binding.monthTextView.text = Month.of(yearAndMonth.second)
                             .getDisplayName(TextStyle.SHORT, Locale.getDefault())
-                    }
+                    }.launchIn(viewLifecycleOwner.lifecycleScope)
                 }
                 viewModel.getAllTasksByDates(daysOfMonth)
                 launch {
-                    viewModel.monthTasks.collect { taskEntities ->
+                    viewModel.monthTasks.onEach { taskEntities ->
                         val adapter = MonthlyCalendarAdapter(taskEntities)
                         binding.calendarRecyclerView.adapter = adapter
                         adapter.submitList(daysOfMonth)
-                    }
+                    }.launchIn(viewLifecycleOwner.lifecycleScope)
                 }
             }
         }

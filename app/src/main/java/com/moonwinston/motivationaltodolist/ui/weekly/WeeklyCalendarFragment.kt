@@ -8,6 +8,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 const val DIFF_WEEK = "diffWeek"
@@ -56,7 +58,7 @@ class WeeklyCalendarFragment: BaseFragment<FragmentWeeklyCalendarBinding, Weekly
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.daysOfWeek.collect { daysOfWeek ->
+                    viewModel.daysOfWeek.onEach { daysOfWeek ->
                         binding.mondayCustomPieChart.pieChartViewDate = daysOfWeek[0]
                         binding.tuesdayCustomPieChart.pieChartViewDate = daysOfWeek[1]
                         binding.wednesdayCustomPieChart.pieChartViewDate = daysOfWeek[2]
@@ -64,10 +66,10 @@ class WeeklyCalendarFragment: BaseFragment<FragmentWeeklyCalendarBinding, Weekly
                         binding.fridayCustomPieChart.pieChartViewDate = daysOfWeek[4]
                         binding.saturdayCustomPieChart.pieChartViewDate = daysOfWeek[5]
                         binding.sundayCustomPieChart.pieChartViewDate = daysOfWeek[6]
-                    }
+                    }.launchIn(viewLifecycleOwner.lifecycleScope)
                 }
                 launch {
-                    viewModel.weeklyTasks.collect { taskEntities ->
+                    viewModel.weeklyTasks.onEach { taskEntities ->
                         val weeklyRates = viewModel.getWeeklyRateListsFromAllTasks(taskEntities)
                         binding.mondayCustomPieChart.alpha = if (weeklyRates[0] == 0F) 0.2F else 1F
                         binding.tuesdayCustomPieChart.alpha = if (weeklyRates[1] == 0F) 0.2F else 1F
@@ -83,7 +85,7 @@ class WeeklyCalendarFragment: BaseFragment<FragmentWeeklyCalendarBinding, Weekly
                         binding.fridayCustomPieChart.updatePercentage(weeklyRates[4])
                         binding.saturdayCustomPieChart.updatePercentage(weeklyRates[5])
                         binding.sundayCustomPieChart.updatePercentage(weeklyRates[6])
-                    }
+                    }.launchIn(viewLifecycleOwner.lifecycleScope)
                 }
             }
         }

@@ -9,6 +9,8 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -32,9 +34,9 @@ class RewardsFragment: BaseFragment<FragmentRewardsBinding, RewardsViewModel>() 
         binding.rewardsRecyclerView.adapter = adapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.completedTask.collect { achievementRateEntities ->
+                viewModel.completedTask.onEach { achievementRateEntities ->
                     adapter.submitList(achievementRateEntities)
-                }
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
             }
         }
     }
