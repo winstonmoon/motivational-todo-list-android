@@ -20,6 +20,8 @@ import com.moonwinston.motivationaltodolist.utils.Language
 import com.moonwinston.motivationaltodolist.utils.calculateRate
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -80,20 +82,20 @@ class DailyFragment: BaseFragment<FragmentDailyBinding, DailyViewModel>() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.todayTasks.collect { todayTasks ->
+                    viewModel.todayTasks.onEach { todayTasks ->
                         adapter.submitList(todayTasks)
                         val calculatedRate = calculateRate(todayTasks)
                         val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
                         mainViewModel.insertAchievementRate(achievementRate)
-                    }
+                    }.launchIn(viewLifecycleOwner.lifecycleScope)
                 }
                 launch {
-                    viewModel.todayAchievementRate.collect { rate ->
+                    viewModel.todayAchievementRate.onEach { rate ->
                         val roundedAchievementRate = (rate * 100).roundToInt().toString() + "%"
                         binding.achievementRate.text = roundedAchievementRate
                         binding.dailyCustomPieChart.alpha = if (rate == 0.0F) 0.2F else 1.0F
                         binding.dailyCustomPieChart.updatePercentage(rate)
-                    }
+                    }.launchIn(viewLifecycleOwner.lifecycleScope)
                 }
             }
         }

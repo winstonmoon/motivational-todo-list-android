@@ -18,6 +18,8 @@ import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.OffsetDateTime
@@ -93,16 +95,16 @@ class WeeklyFragment: BaseFragment<FragmentWeeklyBinding, WeeklyViewModel>() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.selectedDate.collect { selectedDate ->
+                    viewModel.selectedDate.onEach { selectedDate ->
                         binding.weeklyTitleTextView.text = createWeeklyTitle(
                             date = selectedDate,
                             language = mainViewModel.languageIndex.value
                         )
                         drawRedDotOnSelectedDate(date = selectedDate)
-                    }
+                    }.launchIn(viewLifecycleOwner.lifecycleScope)
                 }
                 launch {
-                    viewModel.selectedDayTasks.collect { selectedDayTasks ->
+                    viewModel.selectedDayTasks.onEach { selectedDayTasks ->
                         adapter.submitList(selectedDayTasks)
                         val calculatedRate = calculateRate(selectedDayTasks)
                         val achievementRate = AchievementRateEntity(
@@ -110,7 +112,7 @@ class WeeklyFragment: BaseFragment<FragmentWeeklyBinding, WeeklyViewModel>() {
                             rate = calculatedRate
                         )
                         mainViewModel.insertAchievementRate(achievementRate)
-                    }
+                    }.launchIn(viewLifecycleOwner.lifecycleScope)
                 }
             }
         }

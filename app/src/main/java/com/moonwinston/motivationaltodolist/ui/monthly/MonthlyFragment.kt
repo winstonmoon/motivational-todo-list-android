@@ -13,6 +13,8 @@ import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.Language
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.Month
 import java.time.format.TextStyle
@@ -40,9 +42,9 @@ class MonthlyFragment: BaseFragment<FragmentMonthlyBinding, MonthlyViewModel>() 
     override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.yearAndMonth.collect { yearAndMonth ->
+                viewModel.yearAndMonth.onEach { yearAndMonth ->
                     binding.monthlyTitleTextView.text = createMonthlyTitle(yearAndMonth.first, yearAndMonth.second)
-                }
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
             }
         }
     }
