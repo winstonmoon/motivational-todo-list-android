@@ -80,7 +80,7 @@ class MainViewModel @Inject constructor(
                 taskEntities.filter { taskEntity ->
                     taskEntity.taskDate.isAfter(afterNotificationTimeFromNow)
                 }.let {
-                    _futureTasks.emit(it)
+                    _futureTasks.value = it
                 }
             }
         }
