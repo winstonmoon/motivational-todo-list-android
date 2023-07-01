@@ -14,13 +14,13 @@ class AddDialogViewModel : ViewModel() {
     val date: StateFlow<OffsetDateTime> = _date
 
     fun setDate(date: OffsetDateTime) = viewModelScope.launch {
-        _date.emit(date)
+        _date.value = date
     }
 
     private val _positiveButtonStringResource = MutableStateFlow(0)
     val positiveButtonStringResource: StateFlow<Int> = _positiveButtonStringResource
 
     fun setPositiveButtonStringResource(buttonStringResource: Int) = viewModelScope.launch {
-        _positiveButtonStringResource.emit(buttonStringResource)
+        _positiveButtonStringResource.value = buttonStringResource
     }
 }

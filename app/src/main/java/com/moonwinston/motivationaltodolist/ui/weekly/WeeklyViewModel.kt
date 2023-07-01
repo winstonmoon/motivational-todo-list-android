@@ -27,9 +27,9 @@ class WeeklyViewModel @Inject constructor (
     val selectedDayTasks: StateFlow<List<TaskEntity>> = _selectedDayTasks
 
     fun setSelectedDate(date: OffsetDateTime) = viewModelScope.launch {
-        _selectedDate.emit(date)
+        _selectedDate.value = date
         taskRepository.getAllTasksByDate(date).collect { taskEntities ->
-            _selectedDayTasks.emit(taskEntities)
+            _selectedDayTasks.value = taskEntities
         }
     }
 
@@ -40,9 +40,9 @@ class WeeklyViewModel @Inject constructor (
     val weeklyTasks: StateFlow<List<TaskEntity>> = _weeklyTasks
 
     fun setDaysOfWeek(daysOfWeek: List<OffsetDateTime>) = viewModelScope.launch {
-        _daysOfWeek.emit(daysOfWeek)
+        _daysOfWeek.value = daysOfWeek
         taskRepository.getAllTasksByStartEndDateFlow(daysOfWeek.first(), daysOfWeek.last()).collect { taskEntities ->
-            _weeklyTasks.emit(taskEntities)
+            _weeklyTasks.value = taskEntities
         }
     }
 

@@ -26,14 +26,14 @@ class MonthlyViewModel @Inject constructor (
     val yearAndMonth: StateFlow<Pair<Int, Int>> = _yearAndMonth
 
     private fun setYearAndMonth(yearAndMonth: Pair<Int, Int>) = viewModelScope.launch {
-        _yearAndMonth.emit(yearAndMonth)
+        _yearAndMonth.value = yearAndMonth
     }
 
     private val _monthTasks = MutableStateFlow(listOf<TaskEntity>())
     val monthTasks: StateFlow<List<TaskEntity>> = _monthTasks
 
     fun getAllTasksByDates(daysOfMonth: List<OffsetDateTime>) = viewModelScope.launch {
-        _monthTasks.emit(taskRepository.getAllTasksByStartEndDate(daysOfMonth.first(), daysOfMonth.last()))
+        _monthTasks.value = taskRepository.getAllTasksByStartEndDate(daysOfMonth.first(), daysOfMonth.last())
     }
 
     val isCoachMonthlyDismissed = userPreferencesRepository.fetchMonthlyCoachMarkDismissedStatusFlow.stateIn(
