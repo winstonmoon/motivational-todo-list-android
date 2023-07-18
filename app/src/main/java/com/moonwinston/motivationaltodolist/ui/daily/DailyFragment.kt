@@ -81,22 +81,19 @@ class DailyFragment: BaseFragment<FragmentDailyBinding, DailyViewModel>() {
     override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.todayTasks.onEach { todayTasks ->
-                        adapter.submitList(todayTasks)
-                        val calculatedRate = calculateRate(todayTasks)
-                        val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
-                        mainViewModel.insertAchievementRate(achievementRate)
-                    }.launchIn(viewLifecycleOwner.lifecycleScope)
-                }
-                launch {
-                    viewModel.todayAchievementRate.onEach { rate ->
-                        val roundedAchievementRate = (rate * 100).roundToInt().toString() + "%"
-                        binding.achievementRate.text = roundedAchievementRate
-                        binding.dailyCustomPieChart.alpha = if (rate == 0.0F) 0.2F else 1.0F
-                        binding.dailyCustomPieChart.updatePercentage(rate)
-                    }.launchIn(viewLifecycleOwner.lifecycleScope)
-                }
+                viewModel.todayTasks.onEach { todayTasks ->
+                    adapter.submitList(todayTasks)
+                    val calculatedRate = calculateRate(todayTasks)
+                    val achievementRate = AchievementRateEntity(date = dateOfToday(), rate = calculatedRate)
+                    mainViewModel.insertAchievementRate(achievementRate)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+                viewModel.todayAchievementRate.onEach { rate ->
+                    val roundedAchievementRate = (rate * 100).roundToInt().toString() + "%"
+                    binding.achievementRate.text = roundedAchievementRate
+                    binding.dailyCustomPieChart.alpha = if (rate == 0.0F) 0.2F else 1.0F
+                    binding.dailyCustomPieChart.updatePercentage(rate)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
             }
         }
     }
