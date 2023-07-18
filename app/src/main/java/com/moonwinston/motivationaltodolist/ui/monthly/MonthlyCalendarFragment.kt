@@ -41,20 +41,17 @@ class MonthlyCalendarFragment: BaseFragment<FragmentMonthlyCalendarBinding, Mont
     override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.yearAndMonth.onEach { yearAndMonth ->
-                        binding.monthTextView.text = Month.of(yearAndMonth.second)
-                            .getDisplayName(TextStyle.SHORT, Locale.getDefault())
-                    }.launchIn(viewLifecycleOwner.lifecycleScope)
-                }
+                viewModel.yearAndMonth.onEach { yearAndMonth ->
+                    binding.monthTextView.text = Month.of(yearAndMonth.second).getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+
                 viewModel.getAllTasksByDates(daysOfMonth)
-                launch {
-                    viewModel.monthTasks.onEach { taskEntities ->
-                        val adapter = MonthlyCalendarAdapter(taskEntities)
-                        binding.calendarRecyclerView.adapter = adapter
-                        adapter.submitList(daysOfMonth)
-                    }.launchIn(viewLifecycleOwner.lifecycleScope)
-                }
+
+                viewModel.monthTasks.onEach { taskEntities ->
+                    val adapter = MonthlyCalendarAdapter(taskEntities)
+                    binding.calendarRecyclerView.adapter = adapter
+                    adapter.submitList(daysOfMonth)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
             }
         }
     }

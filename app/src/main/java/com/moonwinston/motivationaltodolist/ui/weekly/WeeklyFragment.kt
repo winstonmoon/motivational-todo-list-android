@@ -94,26 +94,23 @@ class WeeklyFragment: BaseFragment<FragmentWeeklyBinding, WeeklyViewModel>() {
     override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.selectedDate.onEach { selectedDate ->
-                        binding.weeklyTitleTextView.text = createWeeklyTitle(
-                            date = selectedDate,
-                            language = mainViewModel.languageIndex.value
-                        )
-                        drawRedDotOnSelectedDate(date = selectedDate)
-                    }.launchIn(viewLifecycleOwner.lifecycleScope)
-                }
-                launch {
-                    viewModel.selectedDayTasks.onEach { selectedDayTasks ->
-                        adapter.submitList(selectedDayTasks)
-                        val calculatedRate = calculateRate(selectedDayTasks)
-                        val achievementRate = AchievementRateEntity(
-                            date = viewModel.selectedDate.value,
-                            rate = calculatedRate
-                        )
-                        mainViewModel.insertAchievementRate(achievementRate)
-                    }.launchIn(viewLifecycleOwner.lifecycleScope)
-                }
+                viewModel.selectedDate.onEach { selectedDate ->
+                    binding.weeklyTitleTextView.text = createWeeklyTitle(
+                        date = selectedDate,
+                        language = mainViewModel.languageIndex.value
+                    )
+                    drawRedDotOnSelectedDate(date = selectedDate)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+                viewModel.selectedDayTasks.onEach { selectedDayTasks ->
+                    adapter.submitList(selectedDayTasks)
+                    val calculatedRate = calculateRate(selectedDayTasks)
+                    val achievementRate = AchievementRateEntity(
+                        date = viewModel.selectedDate.value,
+                        rate = calculatedRate
+                    )
+                    mainViewModel.insertAchievementRate(achievementRate)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
             }
         }
     }

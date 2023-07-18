@@ -57,36 +57,33 @@ class WeeklyCalendarFragment: BaseFragment<FragmentWeeklyCalendarBinding, Weekly
     override fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.daysOfWeek.onEach { daysOfWeek ->
-                        binding.mondayCustomPieChart.pieChartViewDate = daysOfWeek[0]
-                        binding.tuesdayCustomPieChart.pieChartViewDate = daysOfWeek[1]
-                        binding.wednesdayCustomPieChart.pieChartViewDate = daysOfWeek[2]
-                        binding.thursdayCustomPieChart.pieChartViewDate = daysOfWeek[3]
-                        binding.fridayCustomPieChart.pieChartViewDate = daysOfWeek[4]
-                        binding.saturdayCustomPieChart.pieChartViewDate = daysOfWeek[5]
-                        binding.sundayCustomPieChart.pieChartViewDate = daysOfWeek[6]
-                    }.launchIn(viewLifecycleOwner.lifecycleScope)
-                }
-                launch {
-                    viewModel.weeklyTasks.onEach { taskEntities ->
-                        val weeklyRates = viewModel.getWeeklyRateListsFromAllTasks(taskEntities)
-                        binding.mondayCustomPieChart.alpha = if (weeklyRates[0] == 0F) 0.2F else 1F
-                        binding.tuesdayCustomPieChart.alpha = if (weeklyRates[1] == 0F) 0.2F else 1F
-                        binding.wednesdayCustomPieChart.alpha = if (weeklyRates[2] == 0F) 0.2F else 1F
-                        binding.thursdayCustomPieChart.alpha = if (weeklyRates[3] == 0F) 0.2F else 1F
-                        binding.fridayCustomPieChart.alpha = if (weeklyRates[4] == 0F) 0.2F else 1F
-                        binding.saturdayCustomPieChart.alpha = if (weeklyRates[5] == 0F) 0.2F else 1F
-                        binding.sundayCustomPieChart.alpha = if (weeklyRates[6] == 0F) 0.2F else 1F
-                        binding.mondayCustomPieChart.updatePercentage(weeklyRates[0])
-                        binding.tuesdayCustomPieChart.updatePercentage(weeklyRates[1])
-                        binding.wednesdayCustomPieChart.updatePercentage(weeklyRates[2])
-                        binding.thursdayCustomPieChart.updatePercentage(weeklyRates[3])
-                        binding.fridayCustomPieChart.updatePercentage(weeklyRates[4])
-                        binding.saturdayCustomPieChart.updatePercentage(weeklyRates[5])
-                        binding.sundayCustomPieChart.updatePercentage(weeklyRates[6])
-                    }.launchIn(viewLifecycleOwner.lifecycleScope)
-                }
+                viewModel.daysOfWeek.onEach { daysOfWeek ->
+                    binding.mondayCustomPieChart.pieChartViewDate = daysOfWeek[0]
+                    binding.tuesdayCustomPieChart.pieChartViewDate = daysOfWeek[1]
+                    binding.wednesdayCustomPieChart.pieChartViewDate = daysOfWeek[2]
+                    binding.thursdayCustomPieChart.pieChartViewDate = daysOfWeek[3]
+                    binding.fridayCustomPieChart.pieChartViewDate = daysOfWeek[4]
+                    binding.saturdayCustomPieChart.pieChartViewDate = daysOfWeek[5]
+                    binding.sundayCustomPieChart.pieChartViewDate = daysOfWeek[6]
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+                viewModel.weeklyTasks.onEach { taskEntities ->
+                    val weeklyRates = viewModel.getWeeklyRateListsFromAllTasks(taskEntities)
+                    binding.mondayCustomPieChart.alpha = if (weeklyRates[0] == 0F) 0.2F else 1F
+                    binding.tuesdayCustomPieChart.alpha = if (weeklyRates[1] == 0F) 0.2F else 1F
+                    binding.wednesdayCustomPieChart.alpha = if (weeklyRates[2] == 0F) 0.2F else 1F
+                    binding.thursdayCustomPieChart.alpha = if (weeklyRates[3] == 0F) 0.2F else 1F
+                    binding.fridayCustomPieChart.alpha = if (weeklyRates[4] == 0F) 0.2F else 1F
+                    binding.saturdayCustomPieChart.alpha = if (weeklyRates[5] == 0F) 0.2F else 1F
+                    binding.sundayCustomPieChart.alpha = if (weeklyRates[6] == 0F) 0.2F else 1F
+                    binding.mondayCustomPieChart.updatePercentage(weeklyRates[0])
+                    binding.tuesdayCustomPieChart.updatePercentage(weeklyRates[1])
+                    binding.wednesdayCustomPieChart.updatePercentage(weeklyRates[2])
+                    binding.thursdayCustomPieChart.updatePercentage(weeklyRates[3])
+                    binding.fridayCustomPieChart.updatePercentage(weeklyRates[4])
+                    binding.saturdayCustomPieChart.updatePercentage(weeklyRates[5])
+                    binding.sundayCustomPieChart.updatePercentage(weeklyRates[6])
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
             }
         }
     }
