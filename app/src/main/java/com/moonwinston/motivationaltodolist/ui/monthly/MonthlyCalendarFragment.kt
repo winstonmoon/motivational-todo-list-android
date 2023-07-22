@@ -45,8 +45,6 @@ class MonthlyCalendarFragment: BaseFragment<FragmentMonthlyCalendarBinding, Mont
                     binding.monthTextView.text = Month.of(yearAndMonth.second).getDisplayName(TextStyle.SHORT, Locale.getDefault())
                 }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-                viewModel.getAllTasksByDates(daysOfMonth)
-
                 viewModel.monthTasks.onEach { taskEntities ->
                     val adapter = MonthlyCalendarAdapter(taskEntities)
                     binding.calendarRecyclerView.adapter = adapter
