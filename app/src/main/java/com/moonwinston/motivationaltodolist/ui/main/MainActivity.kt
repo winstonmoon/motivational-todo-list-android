@@ -7,7 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
@@ -26,15 +29,21 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.ActivityMainBinding
 import com.moonwinston.motivationaltodolist.receiver.AlarmReceiver
-import com.moonwinston.motivationaltodolist.ui.base.BaseActivity
-import com.moonwinston.motivationaltodolist.utils.*
+import com.moonwinston.motivationaltodolist.utils.Notification
+import com.moonwinston.motivationaltodolist.utils.getZonedEpochMilliFromOffset
+import com.moonwinston.motivationaltodolist.utils.mediumFormatStyleFormatter
+import com.moonwinston.motivationaltodolist.utils.setLanguage
+import com.moonwinston.motivationaltodolist.utils.setNightMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
-    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
-    override val viewModel: MainViewModel by viewModels()
+class MainActivity: AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: MainViewModel by viewModels()
+
     private val MY_REQUEST_CODE = 1
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var listener: InstallStateUpdatedListener
@@ -67,15 +76,14 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
         firebaseAnalytics = Firebase.analytics
 //        MobileAds.initialize(this) {}
         alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    }
 
-    override fun initViews() {
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         val navController = findNavController(R.id.fragment)
         binding.bottomNavigationView.setupWithNavController(navController)
-    }
-    override fun initListeners() {
-    }
-    override fun initObservers() {
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -114,17 +122,19 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        appUpdateManager
-            .appUpdateInfo
-            .addOnSuccessListener { appUpdateInfo ->
-                if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-                    popupSnackbarForCompleteUpdate()
-                }
+        lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onResume(owner: LifecycleOwner) {
+                appUpdateManager
+                    .appUpdateInfo
+                    .addOnSuccessListener { appUpdateInfo ->
+                        if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                            popupSnackbarForCompleteUpdate()
+                        }
+                    }
             }
+        })
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
