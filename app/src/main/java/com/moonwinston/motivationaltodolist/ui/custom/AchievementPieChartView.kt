@@ -50,8 +50,9 @@ class AchievementPieChartView @JvmOverloads constructor(
         val right = centerX + width / 1.5
         val bottom = centerY + height / 1.5
         val rectF = RectF(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
-        val paint = Paint()
-        paint.style = Paint.Style.STROKE;
+        val paint = Paint().apply {
+            style = Paint.Style.STROKE
+        }
 
         drawBackgroundPieChart(canvas, rectF, paint)
         drawInnerPieChart(canvas, rectF, paint)
