@@ -9,7 +9,6 @@ import java.time.OffsetDateTime
 import java.util.*
 
 class AddDialogViewModel : ViewModel() {
-
     private val _date = MutableStateFlow(OffsetDateTime.now())
     val date: StateFlow<OffsetDateTime> = _date
 

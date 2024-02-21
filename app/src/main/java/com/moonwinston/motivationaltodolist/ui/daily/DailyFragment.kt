@@ -21,22 +21,17 @@ import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.ui.TaskAdapter
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
-import com.moonwinston.motivationaltodolist.utils.Language
 import com.moonwinston.motivationaltodolist.utils.calculateRate
 import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.time.OffsetDateTime
-import java.time.format.TextStyle
-import java.util.Locale
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class DailyFragment: Fragment() {
-
     private lateinit var binding: FragmentDailyBinding
 
     private val viewModel: DailyViewModel by viewModels()
@@ -74,8 +69,7 @@ class DailyFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.dailyTitleTextView.text = createDailyTitle(language = mainViewModel.languageIndex.value)
+        binding.dailyTitleTextView.text = viewModel.createDailyTitle(language = mainViewModel.languageIndex.value)
         binding.dailyTodoRecyclerView.adapter = adapter
 
         binding.settingsButton.setOnClickListener {
@@ -132,18 +126,5 @@ class DailyFragment: Fragment() {
                 }
             }
         })
-    }
-
-    private fun createDailyTitle(language: Int): String {
-        val today = resources.getString(R.string.text_today)
-        val wordYear = resources.getString(R.string.label_year)
-        val wordDay = resources.getString(R.string.label_day)
-        val year = LocalDate.now().year
-        val month = LocalDate.now().month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-        val day = LocalDate.now().dayOfMonth
-        return when (Language.values()[language]) {
-            Language.ENGLISH -> "$today, $month $day, $year"
-            else -> "$year$wordYear $month $day$wordDay $today"
-        }
     }
 }

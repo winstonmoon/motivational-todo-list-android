@@ -5,17 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.R
-import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
 import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
-import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
-import com.moonwinston.motivationaltodolist.ui.monthly.MonthlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -23,7 +19,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RewardsFragment: Fragment() {
-
     private lateinit var binding: FragmentRewardsBinding
 
     private val viewModel: RewardsViewModel by viewModels()
@@ -41,7 +36,6 @@ class RewardsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.rewardsRecyclerView.adapter = adapter
 
         binding.settingsButton.setOnClickListener {

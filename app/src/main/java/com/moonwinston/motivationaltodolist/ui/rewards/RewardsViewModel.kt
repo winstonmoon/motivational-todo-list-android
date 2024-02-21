@@ -13,7 +13,6 @@ import javax.inject.Inject
 class RewardsViewModel @Inject constructor(
     private val achievementRateRepository: AchievementRateRepository
 ) : ViewModel() {
-
     val completedTask = achievementRateRepository.getAllCompleteRate().stateIn(
         initialValue = emptyList(),
         started = SharingStarted.Eagerly,

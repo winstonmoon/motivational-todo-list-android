@@ -8,7 +8,6 @@ const val START_POSITION = Int.MAX_VALUE / 2
 
 class WeeklyScreenSlidePagerAdapter(fragment: Fragment) :
     FragmentStateAdapter(fragment) {
-
     override fun createFragment(position: Int): WeeklyCalendarFragment {
         val diffWeek = position - START_POSITION
         val fragment = WeeklyCalendarFragment()

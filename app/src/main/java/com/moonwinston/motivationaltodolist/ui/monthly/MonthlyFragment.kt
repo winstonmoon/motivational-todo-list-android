@@ -13,8 +13,6 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyBinding
-import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
-import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import com.moonwinston.motivationaltodolist.utils.Language
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,11 +21,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.Month
 import java.time.format.TextStyle
-import java.util.*
+import java.util.Locale
 
 @AndroidEntryPoint
 class MonthlyFragment: Fragment() {
-
     private lateinit var binding: FragmentMonthlyBinding
 
     private val viewModel: MonthlyViewModel by activityViewModels()
@@ -44,7 +41,6 @@ class MonthlyFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initDisplayCoachMark()
         binding.calendarViewPager.adapter = MonthlyScreenSlidePagerAdapter(this@MonthlyFragment)
         binding.calendarViewPager.setCurrentItem(START_POSITION, false)

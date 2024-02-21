@@ -19,7 +19,6 @@ class MainViewModel @Inject constructor(
     private val achievementRateRepository: AchievementRateRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
-
     fun insertTask(taskEntity: TaskEntity) = viewModelScope.launch {
         taskRepository.insertTask(taskEntity)
     }

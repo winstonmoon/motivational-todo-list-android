@@ -19,7 +19,6 @@ class WeeklyViewModel @Inject constructor (
     private val taskRepository: TaskRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
-
     private val _selectedDate = MutableStateFlow(OffsetDateTime.now())
     val selectedDate: StateFlow<OffsetDateTime> = _selectedDate
 

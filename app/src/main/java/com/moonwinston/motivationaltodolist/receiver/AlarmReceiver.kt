@@ -9,7 +9,6 @@ import androidx.core.app.NotificationCompat
 import com.moonwinston.motivationaltodolist.R
 
 class AlarmReceiver : BroadcastReceiver() {
-
     companion object {
         const val NOTIFICATION_ID = 0
         const val PRIMARY_CHANNEL_ID = "primary_notification_channel"

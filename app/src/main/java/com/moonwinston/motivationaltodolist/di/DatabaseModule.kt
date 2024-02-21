@@ -17,7 +17,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object DatabaseModule {
-
     private val MIGRATION_2_3 = object : Migration(2, 3) {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL("CREATE TABLE `task_temp` (`uid` INTEGER NOT NULL, `taskDate` TEXT NOT NULL, `task` TEXT NOT NULL, `isCompleted` INTEGER NOT NULL, PRIMARY KEY(`uid`))")

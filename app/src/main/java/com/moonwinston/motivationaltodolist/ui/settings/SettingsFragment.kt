@@ -10,15 +10,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.moonwinston.motivationaltodolist.BuildConfig
 import com.moonwinston.motivationaltodolist.R
-import com.moonwinston.motivationaltodolist.databinding.FragmentRewardsBinding
 import com.moonwinston.motivationaltodolist.databinding.FragmentSettingsBinding
-import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SettingsFragment: Fragment() {
-
     private lateinit var binding: FragmentSettingsBinding
 
     private val viewModel: MainViewModel by activityViewModels()
@@ -34,7 +31,6 @@ class SettingsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.notify.text = resources.getStringArray(R.array.notify_array)[viewModel.notifyIndex.value]
         binding.theme.text = resources.getStringArray(R.array.theme_array)[viewModel.themeIndex.value]
         binding.language.text = resources.getStringArray(R.array.language_array)[viewModel.languageIndex.value]
