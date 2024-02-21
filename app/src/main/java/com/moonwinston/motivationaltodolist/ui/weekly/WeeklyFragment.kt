@@ -1,9 +1,15 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
@@ -11,12 +17,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.moonwinston.motivationaltodolist.DmlState
 import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.AchievementRateEntity
-import com.moonwinston.motivationaltodolist.ui.TaskAdapter
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyBinding
-import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
+import com.moonwinston.motivationaltodolist.ui.TaskAdapter
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
-import com.moonwinston.motivationaltodolist.utils.*
+import com.moonwinston.motivationaltodolist.utils.Language
+import com.moonwinston.motivationaltodolist.utils.calculateRate
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -24,12 +31,13 @@ import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.OffsetDateTime
 import java.time.format.TextStyle
-import java.util.*
+import java.util.Locale
 
 @AndroidEntryPoint
-class WeeklyFragment: BaseFragment<FragmentWeeklyBinding, WeeklyViewModel>() {
-    override fun getViewBinding() = FragmentWeeklyBinding.inflate(layoutInflater)
-    override val viewModel: WeeklyViewModel by activityViewModels()
+class WeeklyFragment: Fragment() {
+    private lateinit var binding: FragmentWeeklyBinding
+
+    private val viewModel: WeeklyViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
 
     private val adapter = TaskAdapter(
@@ -53,7 +61,17 @@ class WeeklyFragment: BaseFragment<FragmentWeeklyBinding, WeeklyViewModel>() {
         }
     )
 
-    override fun initViews() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentWeeklyBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initDisplayCoachMark()
         setToday()
         val slideAdapter = WeeklyScreenSlidePagerAdapter(this@WeeklyFragment)
@@ -74,8 +92,7 @@ class WeeklyFragment: BaseFragment<FragmentWeeklyBinding, WeeklyViewModel>() {
             }
         })
         binding.weeklyTodoRecyclerView.adapter = adapter
-    }
-    override fun initListeners() {
+
         binding.settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_weekly_to_settings)
         }
@@ -90,8 +107,7 @@ class WeeklyFragment: BaseFragment<FragmentWeeklyBinding, WeeklyViewModel>() {
             )
             it.findNavController().navigate(R.id.action_weekly_to_add, bundle)
         }
-    }
-    override fun initObservers() {
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.selectedDate.onEach { selectedDate ->
@@ -113,11 +129,12 @@ class WeeklyFragment: BaseFragment<FragmentWeeklyBinding, WeeklyViewModel>() {
                 }.launchIn(viewLifecycleOwner.lifecycleScope)
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        setToday()
+        viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onResume(owner: LifecycleOwner) {
+                setToday()
+            }
+        })
     }
 
     private fun setToday() {

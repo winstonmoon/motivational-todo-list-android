@@ -1,12 +1,15 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.moonwinston.motivationaltodolist.databinding.FragmentWeeklyCalendarBinding
-import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -15,9 +18,10 @@ import kotlinx.coroutines.launch
 const val DIFF_WEEK = "diffWeek"
 
 @AndroidEntryPoint
-class WeeklyCalendarFragment: BaseFragment<FragmentWeeklyCalendarBinding, WeeklyViewModel>() {
-    override fun getViewBinding() = FragmentWeeklyCalendarBinding.inflate(layoutInflater)
-    override val viewModel: WeeklyViewModel by activityViewModels()
+class WeeklyCalendarFragment: Fragment() {
+    private lateinit var binding: FragmentWeeklyCalendarBinding
+
+    private val viewModel: WeeklyViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +33,17 @@ class WeeklyCalendarFragment: BaseFragment<FragmentWeeklyCalendarBinding, Weekly
         viewModel.setDaysOfWeek(daysOfWeek)
     }
 
-    override fun initViews() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentWeeklyCalendarBinding.inflate(inflater, container, false)
+        return binding.root
     }
-    override fun initListeners() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.mondayCustomPieChart.setOnClickListener {
             viewModel.setSelectedDate(binding.mondayCustomPieChart.pieChartViewDate)
         }
@@ -53,8 +65,7 @@ class WeeklyCalendarFragment: BaseFragment<FragmentWeeklyCalendarBinding, Weekly
         binding.sundayCustomPieChart.setOnClickListener {
             viewModel.setSelectedDate(binding.sundayCustomPieChart.pieChartViewDate)
         }
-    }
-    override fun initObservers() {
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.daysOfWeek.onEach { daysOfWeek ->

@@ -15,7 +15,8 @@ import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.databinding.DialogAddBinding
 import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
-import com.moonwinston.motivationaltodolist.utils.*
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
+import com.moonwinston.motivationaltodolist.utils.getEpochMilli
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalTime
 import java.time.OffsetDateTime

@@ -11,10 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.moonwinston.motivationaltodolist.databinding.FragmentDailyBinding
 import com.moonwinston.motivationaltodolist.databinding.FragmentMonthlyCalendarBinding
-import com.moonwinston.motivationaltodolist.ui.base.BaseFragment
-import com.moonwinston.motivationaltodolist.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -22,13 +19,12 @@ import kotlinx.coroutines.launch
 import java.time.Month
 import java.time.OffsetDateTime
 import java.time.format.TextStyle
-import java.util.*
+import java.util.Locale
 
 const val DIFF_MONTH = "diffMonth"
 
 @AndroidEntryPoint
 class MonthlyCalendarFragment: Fragment() {
-
     private lateinit var binding: FragmentMonthlyCalendarBinding
 
     private val viewModel: MonthlyViewModel by activityViewModels()
@@ -56,7 +52,6 @@ class MonthlyCalendarFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.yearAndMonth.onEach { yearAndMonth ->

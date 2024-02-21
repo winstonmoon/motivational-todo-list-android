@@ -21,7 +21,6 @@ class MonthlyViewModel @Inject constructor (
     private val taskRepository: TaskRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
-
     private val _yearAndMonth = MutableStateFlow(Pair(1970,1))
     val yearAndMonth: StateFlow<Pair<Int, Int>> = _yearAndMonth
 

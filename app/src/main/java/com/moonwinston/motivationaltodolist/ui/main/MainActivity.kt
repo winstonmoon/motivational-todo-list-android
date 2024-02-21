@@ -39,7 +39,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity: AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: MainViewModel by viewModels()
@@ -74,9 +73,8 @@ class MainActivity: AppCompatActivity() {
             }
         }
         firebaseAnalytics = Firebase.analytics
-//        MobileAds.initialize(this) {}
-        alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
