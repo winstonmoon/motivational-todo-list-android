@@ -111,7 +111,7 @@ class WeeklyFragment: Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.selectedDate.onEach { selectedDate ->
-                    binding.weeklyTitleTextView.text = createWeeklyTitle(
+                    binding.weeklyTitleTextView.text = viewModel.createWeeklyTitle(
                         date = selectedDate,
                         language = mainViewModel.languageIndex.value
                     )
@@ -139,27 +139,11 @@ class WeeklyFragment: Fragment() {
 
     private fun setToday() {
         viewModel.setSelectedDate(dateOfToday())
-        binding.weeklyTitleTextView.text = createWeeklyTitle(
+        binding.weeklyTitleTextView.text = viewModel.createWeeklyTitle(
                 date = dateOfToday(),
                 language = mainViewModel.languageIndex.value
             )
         drawRedDotOnSelectedDate(date = dateOfToday())
-    }
-
-    private fun createWeeklyTitle(date: OffsetDateTime, language: Int): String {
-        val wordYear = resources.getString(R.string.label_year)
-        val wordDay = resources.getString(R.string.label_day)
-        val today = resources.getString(R.string.text_today)
-        val year = date.year
-        val month = date.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-        val day = date.dayOfMonth
-        val dayOfWeek =
-            if (date.isEqual(dateOfToday())) today
-            else date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
-        return when (Language.values()[language]) {
-            Language.ENGLISH -> "$dayOfWeek, $month $day, $year"
-            else -> "$year$wordYear $month $day$wordDay $dayOfWeek"
-        }
     }
 
     private fun drawRedDotOnSelectedDate(date: OffsetDateTime) {

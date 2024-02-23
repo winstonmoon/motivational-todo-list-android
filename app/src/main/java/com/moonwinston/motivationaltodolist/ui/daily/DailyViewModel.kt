@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DailyViewModel @Inject constructor(
-    application: MotivationalTodoListApplication,
+    application: Application,
     private val taskRepository: TaskRepository,
     private val achievementRateRepository: AchievementRateRepository,
     private val userPreferencesRepository: UserPreferencesRepository
