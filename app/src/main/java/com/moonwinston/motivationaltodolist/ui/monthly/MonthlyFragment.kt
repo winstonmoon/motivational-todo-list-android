@@ -53,18 +53,9 @@ class MonthlyFragment: Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.yearAndMonth.onEach { yearAndMonth ->
-                    binding.monthlyTitleTextView.text = createMonthlyTitle(yearAndMonth.first, yearAndMonth.second)
+                    binding.monthlyTitleTextView.text = viewModel.createMonthlyTitle(yearAndMonth.first, yearAndMonth.second, mainViewModel.languageIndex.value)
                 }.launchIn(viewLifecycleOwner.lifecycleScope)
             }
-        }
-    }
-
-    private fun createMonthlyTitle(year: Int, month: Int): String {
-        val wordYear = resources.getString(R.string.label_year)
-        val month = Month.of(month).getDisplayName(TextStyle.SHORT, Locale.getDefault())
-        return when (Language.values()[mainViewModel.languageIndex.value]) {
-            Language.ENGLISH -> "$month, $year"
-            else -> "$year$wordYear $month"
         }
     }
 

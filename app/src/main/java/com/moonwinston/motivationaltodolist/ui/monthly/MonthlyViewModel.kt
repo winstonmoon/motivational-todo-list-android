@@ -1,26 +1,33 @@
 package com.moonwinston.motivationaltodolist.ui.monthly
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
+import com.moonwinston.motivationaltodolist.utils.Language
 import com.moonwinston.motivationaltodolist.utils.nonExistDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.Month
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
+import java.time.format.TextStyle
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class MonthlyViewModel @Inject constructor (
+    application: Application,
     private val taskRepository: TaskRepository,
     private val userPreferencesRepository: UserPreferencesRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
     private val _yearAndMonth = MutableStateFlow(Pair(1970,1))
     val yearAndMonth: StateFlow<Pair<Int, Int>> = _yearAndMonth
 
@@ -73,5 +80,14 @@ class MonthlyViewModel @Inject constructor (
         val year = daysOfMonth.last().year
         val month = daysOfMonth.last().monthValue
         setYearAndMonth(Pair(year, month))
+    }
+
+    fun createMonthlyTitle(year: Int, month: Int, selectedLanguage: Int): String {
+        val wordYear = getApplication<Application>().resources.getString(R.string.label_year)
+        val month = Month.of(month).getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        return when (Language.values()[selectedLanguage]) {
+            Language.ENGLISH -> "$month, $year"
+            else -> "$year$wordYear $month"
+        }
     }
 }

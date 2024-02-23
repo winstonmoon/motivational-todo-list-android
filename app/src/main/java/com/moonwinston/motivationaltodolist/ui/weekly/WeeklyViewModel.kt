@@ -1,24 +1,31 @@
 package com.moonwinston.motivationaltodolist.ui.weekly
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.moonwinston.motivationaltodolist.R
 import com.moonwinston.motivationaltodolist.data.TaskEntity
 import com.moonwinston.motivationaltodolist.data.TaskRepository
 import com.moonwinston.motivationaltodolist.data.UserPreferencesRepository
+import com.moonwinston.motivationaltodolist.utils.Language
 import com.moonwinston.motivationaltodolist.utils.calculateRate
+import com.moonwinston.motivationaltodolist.utils.dateOfToday
 import com.moonwinston.motivationaltodolist.utils.getDateExceptTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.*
+import java.time.format.TextStyle
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class WeeklyViewModel @Inject constructor (
+    application: Application,
     private val taskRepository: TaskRepository,
     private val userPreferencesRepository: UserPreferencesRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
     private val _selectedDate = MutableStateFlow(OffsetDateTime.now())
     val selectedDate: StateFlow<OffsetDateTime> = _selectedDate
 
@@ -106,5 +113,21 @@ class WeeklyViewModel @Inject constructor (
         weeklyRates.add(calculateRate(satList))
         weeklyRates.add(calculateRate(sunList))
         return weeklyRates
+    }
+
+    fun createWeeklyTitle(date: OffsetDateTime, language: Int): String {
+        val wordYear = getApplication<Application>().resources.getString(R.string.label_year)
+        val wordDay = getApplication<Application>().resources.getString(R.string.label_day)
+        val today = getApplication<Application>().resources.getString(R.string.text_today)
+        val year = date.year
+        val month = date.month.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        val day = date.dayOfMonth
+        val dayOfWeek =
+            if (date.isEqual(dateOfToday())) today
+            else date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
+        return when (Language.values()[language]) {
+            Language.ENGLISH -> "$dayOfWeek, $month $day, $year"
+            else -> "$year$wordYear $month $day$wordDay $dayOfWeek"
+        }
     }
 }
